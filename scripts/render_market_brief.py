@@ -19,11 +19,33 @@ INDEX_REL_DEFAULT = "../../../index.html"
 _TONES = {"up", "down", "warn", "flat", "unknown"}
 # "무신호" 판정 토큰(미확인/no signal). 값이 비었거나 이 토큰이면 nosignal 처리.
 _NOSIGNAL_TOKENS = {"미확인", "no signal", "n/a", "na", "—", "-"}
+# H1 제목의 끝-날짜를 분리하는 em-dash(—). 예: "한국 시장 마감 — 2026-06-23".
+_EM_DASH = "—"
 
 
 def esc(x):
     """HTML 특수문자를 이스케이프한다(속성/본문 공용)."""
     return html.escape(str(x), quote=True)
+
+
+def _h1_html(title: str) -> str:
+    """H1 표시용 HTML 을 만든다(데이터 불변 · 표시 마크업만 추가).
+
+    제목이 em-dash(—)로 본문과 끝-날짜를 가르면, 트레일링 날짜 토큰을
+    줄바꿈 불가 span(``.h1-date``)으로 감싸 "— 2026-06-23"이 하이픈에서
+    어색하게 쪼개지지 않게 한다. em-dash 가 없으면 제목을 그대로 이스케이프.
+
+    @param title 페이로드 title(예: "한국 시장 마감 — 2026-06-23")
+    @returns H1 내부 HTML 문자열(이스케이프 완료)
+    """
+    title = str(title)
+    if _EM_DASH in title:
+        head, _sep, tail = title.rpartition(_EM_DASH)  # 마지막 em-dash 기준 → 끝-날짜 분리
+        head, tail = head.strip(), tail.strip()
+        if head and tail:
+            return (f'{esc(head)} <span class="dash">{_EM_DASH}</span> '
+                    f'<span class="h1-date">{esc(tail)}</span>')
+    return esc(title)
 
 
 def _tone(m: dict) -> str:
@@ -239,7 +261,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <header class="masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">{esc(payload.get("market","Market"))} · {esc(payload.get("window","Brief"))}</span><span class="stamp"><b>{esc(payload.get("generated",""))}</b></span></span></div></header>
 <section class="hero">
 <div class="kicker">{kicker()}</div>
-<h1>{esc(payload.get("title","Market Brief"))}</h1>
+<h1>{_h1_html(payload.get("title","Market Brief"))}</h1>
 <p class="takeaway" data-label="한 줄 결론">{esc(takeaway)}</p>
 <div class="meta-grid"><div class="meta-card"><div class="label">Generated</div><div class="value">{esc(payload.get("generated",""))}</div></div><div class="meta-card"><div class="label">Source</div><div class="value">{esc(payload.get("source",""))}</div></div><div class="meta-card"><div class="label">Data quality</div><div class="value">{esc(payload.get("data_quality",""))}</div></div><div class="meta-card"><div class="label">Use</div><div class="value">{esc(payload.get("use","Market sensitivity journal"))}</div></div></div>
 </section>

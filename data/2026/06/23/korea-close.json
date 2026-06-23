@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-23-kr-close",
+  "date": "2026-06-23",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/06/23/korea-close.html",
+
+  "title": "한국 시장 마감 — 2026-06-23",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · 연합뉴스 RSS",
+  "generated": "Generated KST 2026-06-23 17:03",
+  "source": "Naver Finance · 연합뉴스 economy RSS",
+  "data_quality": "정상 브리프 가능",
+  "use": "시장 민감도 일지",
+  "takeaway": "코스피·코스닥이 서킷브레이커성 급락으로 마감했고, 원화 약세·외국인 대규모 순매도·파생/변동성 스트레스가 한국 위험자산 할인율을 동시에 끌어올린 날입니다.",
+
+  "metrics": [
+    { "name": "KOSPI", "value": "8,203.84", "tone": "down", "note": "-910.71 / -9.99% · Naver Finance 2026.06.23" },
+    { "name": "KOSDAQ", "value": "891.52", "tone": "down", "note": "-76.88 / -7.94% · Naver Finance 2026.06.23" },
+    { "name": "KOSPI200", "value": "1,321.70", "tone": "down", "note": "-155.52 / -10.53% · Naver Finance 2026.06.23" },
+    { "name": "KOSPI200 선물", "value": "1,340.40", "tone": "down", "note": "-150.10 / -10.07% · Naver Finance 2026.06.23" },
+    { "name": "USD/KRW 15:30 종가", "value": "1,539.1원", "tone": "warn", "note": "+2.1원 · 연합뉴스 15:30:47 KST" },
+    { "name": "USD/KRW 17:01 참고", "value": "1,539.20원", "tone": "warn", "note": "+0.70원 · Naver/Hana Bank posted rate, 17:01 KST" },
+    { "name": "채권시장", "value": "국고 3년 3.770%", "tone": "warn", "note": "연합뉴스 16:40:53 KST: 국고채 금리 혼조" },
+    { "name": "변동성/파생", "value": "V-KOSPI 90선 근접", "tone": "warn", "note": "연합뉴스 16:04:02 KST; KOSPI200 선물 -10.07%" },
+    { "name": "외국인 수급", "value": "4조 순매도", "tone": "warn", "note": "연합뉴스 16:06:26 KST: 외국인 4조 순매도·달러 강세" },
+    { "name": "국내 주체별 수급", "value": "미확인", "tone": "flat", "note": "injected data에 세부 국내 주체별 수급 없음" },
+    { "name": "업종/섹터", "value": "미확인", "tone": "flat", "note": "injected data에 업종별 등락 없음" }
+  ],
+
+  "drivers": [
+    { "label": "외국인 위험 축소 + 달러 강세", "text": "연합뉴스가 외국인 4조 순매도와 환율 1,540원 근접을 같은 날 보도해, 지수·환율·수급 압력이 동시에 잡혔습니다." },
+    { "label": "시장 기능 스트레스", "text": "8%대 급락 중 코스피 서킷브레이커와 사이드카가 발동됐고, 종가 기준 KOSPI200 선물도 -10.07%로 파생시장 스트레스가 컸습니다." },
+    { "label": "금리 신호는 혼조", "text": "국고채 3년물이 연 3.770%로 보도됐지만 방향성은 혼조라, 오늘의 1차 압력은 금리 단독보다 환율·수급·변동성 조합으로 보는 게 안전합니다." }
+  ],
+
+  "theses": [
+    { "name": "비상장 커머스", "signal": "높음", "level": 3, "lead": "비상장 consumer / pre-IPO 할인율 민감도", "body": "국내 주식 변동성 확대, 원화 약세, 외국인 이탈은 IPO 밸류·상장 타이밍·소비심리 기대에 부담입니다. 다만 논지의 핵심은 여전히 RCPS 전환, 판관비 레버리지, PB/플랫폼 성장 같은 내부 실행 지표입니다." },
+    { "name": "글로벌 증권사", "signal": "중간", "level": 2, "lead": "변동성은 거래활동에 양면적", "body": "한국 급락 자체가 글로벌 증권사 논지를 직접 훼손하진 않습니다. 글로벌 리스크 오프가 확산되면 고객자산·마진·현금 믹스와 NII 민감도를 같이 봐야 합니다." },
+    { "name": "미국 온라인 게이밍", "signal": "낮음·중간", "level": 2, "lead": "소비 / 멀티플 스트레스 테스트", "body": "한국 지수 급락은 직접 매출 변수는 아닙니다. 다만 위험자산 전반의 멀티플 압축과 소비심리 약화가 discretionary spend 논지에 어떤 압력을 주는지 확인해야 합니다." },
+    { "name": "Compute futures watch", "signal": "간접", "level": 1, "lead": "글로벌 달러 유동성 / AI capex 조건", "body": "오늘 한국 마감만으로 compute 가격 논지는 바뀌지 않습니다. 단, 달러 유동성 긴축이 동반되면 AI infra financing과 capacity prepayment 조건은 별도 센서로 봐야 합니다." }
+  ],
+
+  "watch": [
+    "외국인 순매도가 연속되는지, 아니면 단일 리스크 오프 매물인지.",
+    "USD/KRW 15:30 종가가 1,540원대에 안착하는지, 되돌림이 나오는지.",
+    "KOSPI200 선물 basis/장중 매매중단성 이벤트와 V-KOSPI가 진정되는지.",
+    "국고채 3년물 3.770% 부근에서 금리가 주식 급락을 방어하는 안전자산 흐름으로 전환되는지."
+  ],
+
+  "risks": [
+    "오늘 브리프는 injected script의 Naver Finance/Yonhap same-date 데이터에 한정합니다. 업종별·국내 주체별 수급은 미확인입니다. 코스피 급락을 단일 매크로 원인으로 환원하지 않고, 환율·외국인 수급·파생시장 스트레스의 동시 발생으로 해석합니다.",
+    "비상장 커머스 민감도 해석은 매매 지시가 아니라 할인율·상장 환경·소비심리 변수 점검입니다.",
+    "내일 환율이 되돌리고 외국인 순매도가 멈추며 KOSPI200 선물이 안정되면, 오늘 신호는 구조적 훼손보다 단기 유동성 충격 쪽으로 낮춰볼 수 있습니다.",
+    "반대로 환율 1,540원대 안착, 외국인 순매도 연속, V-KOSPI 고공권 유지가 겹치면 한국 비상장/내수 노출 논지의 할인율 스트레스가 커집니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "정상 브리프 가능" },
+    { "label": "미확인", "value": "업종별·국내 주체별 수급" },
+    { "label": "Source/date", "value": "Naver Finance · 연합뉴스 RSS · 2026-06-23" }
+  ]
+}

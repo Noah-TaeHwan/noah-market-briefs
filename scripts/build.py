@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""data/ 의 브리프 JSON들로부터 사이트(브리프 HTML + 아카이브 index)를 빌드한다.
+
+데이터/화면 분리의 '화면' 쪽:
+  - cron 에이전트은 data/YYYY/MM/DD/<window>.json 에 **데이터만** 쌓는다.
+  - 이 스크립트가 그 JSON들을 읽어 **항상 같은 디자인**의 사이트를 생성한다.
+
+핵심 사고: "나는 HTML을 손으로 안 짠다. data/ 에 JSON을 넣고 build.py를 돌린다."
+의존성 없음(표준 라이브러리만). 사용:
+  python3 scripts/build.py            # 레포 루트 기준으로 전체 빌드
+
+@returns build()는 {'live': n, 'sample': m, 'pages': k} 요약 dict를 돌려준다.
+"""
+from __future__ import annotations
+import json
+import sys
+from pathlib import Path
+
+# render_market_brief 는 같은 scripts/ 디렉토리의 형제 모듈이다. 어디서 실행하든
+# (다른 cwd, 모듈 import 등) 형제를 찾도록 scripts/ 를 모듈 검색 경로 맨 앞에 넣는다.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from render_market_brief import render, esc  # noqa: E402
+
+# 레포 루트 = 이 파일(scripts/build.py)의 두 단계 위.
+REPO = Path(__file__).resolve().parent.parent
+
+# 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)
+MARKET_LABEL = {"US": "U.S.", "KR": "Korea"}
+WINDOW_LABEL = {"preopen": "장 시작 전", "close": "장 마감"}
+
+
+def load_records(data_dir: Path) -> list:
+    """data_dir 하위의 모든 *.json 브리프 레코드를 읽어 최신순으로 돌려준다.
+
+    @param data_dir 브리프 JSON 루트(예: <repo>/data)
+    @returns dict 리스트. date 내림차순 → window_code 순으로 정렬(최신이 맨 앞).
+    """
+    records = []
+    for path in sorted(data_dir.rglob("*.json")):
+        rec = json.loads(path.read_text(encoding="utf-8"))
+        rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
+        records.append(rec)
+    # 최신순: 날짜 내림차순. 같은 날이면 close 가 preopen 보다 뒤(=위)로.
+    records.sort(key=lambda r: (r.get("date", ""), r.get("window_code", "")), reverse=True)
+    return records
+
+
+def write_brief_pages(records: list, site_root: Path) -> int:
+    """각 레코드를 render() 로 HTML 문서로 만들어 out_path 에 쓴다.
+
+    @returns 쓴 페이지 수
+    """
+    count = 0
+    for rec in records:
+        out = site_root / rec["out_path"]          # 예: 2026/06/23/korea-close.html
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(render(rec), encoding="utf-8")
+        count += 1
+    return count
+
+
+def _archive_card(rec: dict) -> str:
+    """index 의 아카이브 카드 <li> 하나를 만든다. sample 은 'Sample' 로 표기."""
+    is_sample = rec.get("status") == "sample"
+    market = MARKET_LABEL.get(rec.get("market_code", ""), rec.get("market", ""))
+    # 라이브는 윈도 라벨, 샘플은 'Sample' 을 명시 → 샘플을 라이브로 착각하지 않게.
+    right = "Sample" if is_sample else WINDOW_LABEL.get(rec.get("window_code", ""), rec.get("window", ""))
+    return (
+        f'<li data-market="{esc(rec.get("market_code",""))}" '
+        f'data-window="{esc(rec.get("window_code",""))}" '
+        f'data-status="{esc(rec.get("status",""))}">'
+        f'<a href="{esc(rec.get("out_path",""))}">'
+        f'<span class="ar-date">{esc(rec.get("date",""))}</span>'
+        f'<span class="ar-title">{esc(rec.get("title",""))}</span>'
+        f'<span class="ar-meta">{esc(market)} · {esc(right)}</span>'
+        f'</a></li>'
+    )
+
+
+def build_index_html(records: list) -> str:
+    """레코드들로 정직한 카드형 아카이브 index.html 문자열을 만든다.
+
+    - 히어로 Status = 'N live · M sample' (live/sample 개수를 데이터에서 계산)
+    - 시장(US/KR)·윈도(장전/마감) 필터 (no-JS 환경에선 전부 표시)
+    """
+    live = sum(1 for r in records if r.get("status") == "live")
+    sample = sum(1 for r in records if r.get("status") == "sample")
+    status_value = f"{live} live · {sample} sample"
+    cards = "".join(_archive_card(r) for r in records)
+
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Noah Market Briefs</title>
+<meta name="description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 반드시 출처와 날짜를 붙인다."/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="assets/brief.css"/>
+<style>
+.filterbar{{display:flex;gap:10px;margin:0 0 4px}}
+.filterbar select{{font-family:var(--mono);font-size:12px;color:var(--ink-soft);background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="masthead"><span class="wordmark">Noah <span class="tag">Market Briefs</span></span><span class="masthead-meta">정적 시장 일지<br/>Source-backed · 2026</span></header>
+<section class="hero">
+<div class="kicker"><span class="badge">Static Archive</span><span class="badge">U.S. · Korea</span><span class="badge">Pre-open · Close</span></div>
+<h1>날짜별 시장 일지와<br/>보유논지 민감도.</h1>
+<p class="takeaway" data-label="About">Slack에는 5줄 요약만, 여기에는 날짜별 시장 일지와 보유논지 민감도를 누적합니다. 숫자에는 반드시 출처와 날짜를 붙이고, 확정 종가가 아니면 그대로 명시합니다.</p>
+<div class="meta-grid"><div class="meta-card"><div class="label">Structure</div><div class="value">YYYY / MM / DD / window</div></div><div class="meta-card"><div class="label">Markets</div><div class="value">U.S. · Korea</div></div><div class="meta-card"><div class="label">Windows</div><div class="value">Pre-open · Close</div></div><div class="meta-card"><div class="label">Status</div><div class="value">{esc(status_value)}</div></div></div>
+</section>
+<section class="section">
+<h2>Archive</h2>
+<div class="filterbar"><select id="f-market"><option value="">All markets</option><option value="KR">Korea</option><option value="US">U.S.</option></select><select id="f-window"><option value="">All windows</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select></div>
+<ul class="archive-list">{cards}</ul>
+</section>
+<footer class="footer"><span>Generated by scripts/build.py — data/ 의 JSON에서 렌더.</span><span>Source discipline — no unsourced macro numbers in production briefs.</span></footer>
+</main>
+<script>
+(function(){{
+  var m=document.getElementById('f-market'), w=document.getElementById('f-window');
+  var items=[].slice.call(document.querySelectorAll('.archive-list li'));
+  function apply(){{
+    items.forEach(function(li){{
+      var ok=(!m.value||li.dataset.market===m.value)&&(!w.value||li.dataset.window===w.value);
+      li.style.display=ok?'':'none';
+    }});
+  }}
+  m.addEventListener('change',apply); w.addEventListener('change',apply);
+}})();
+</script>
+</body>
+</html>'''
+
+
+def build(repo_root: Path = REPO) -> dict:
+    """data/ → 브리프 HTML + index.html 전체 빌드. 요약 dict 반환."""
+    records = load_records(repo_root / "data")
+    pages = write_brief_pages(records, repo_root)
+    (repo_root / "index.html").write_text(build_index_html(records), encoding="utf-8")
+    return {
+        "live": sum(1 for r in records if r.get("status") == "live"),
+        "sample": sum(1 for r in records if r.get("status") == "sample"),
+        "pages": pages,
+    }
+
+
+def main():
+    summary = build()
+    print(f"built {summary['pages']} brief page(s): "
+          f"{summary['live']} live · {summary['sample']} sample → index.html")
+
+
+if __name__ == "__main__":
+    main()

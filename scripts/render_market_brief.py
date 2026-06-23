@@ -57,14 +57,25 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         )
 
     def theses():
-        """보유논지 민감도 카드를 만든다(signal: 시그널 태그 또는 민감도 핀)."""
-        return "".join(
-            f'<article class="thesis-card"><div class="thesis-head">'
-            f'<span class="thesis-name">{esc(t.get("name",""))}</span>'
-            f'<span class="signal">{esc(t.get("signal",""))}</span></div>'
-            f'<div class="thesis-body">{esc(t.get("body",""))}</div></article>'
-            for t in payload.get("theses", [])
-        )
+        """보유논지 민감도 카드를 만든다.
+
+        @note signal=시그널 태그 텍스트. 선택 필드 level(1~3)이 있으면
+              ``signal lvl{n}`` 클래스로 ●○○ 민감도 핀을 붙이고, lead가 있으면
+              본문 앞에 굵은 리드 줄을 둔다. 둘 다 없으면 기존 동작과 동일(하위호환).
+        """
+        out = []
+        for t in payload.get("theses", []):
+            lvl = t.get("level")
+            sig_cls = "signal lvl%d" % lvl if lvl in (1, 2, 3) else "signal"
+            lead = t.get("lead", "")
+            lead_html = f'<span class="thesis-lead">{esc(lead)}</span>' if lead else ""
+            out.append(
+                f'<article class="thesis-card"><div class="thesis-head">'
+                f'<span class="thesis-name">{esc(t.get("name",""))}</span>'
+                f'<span class="{sig_cls}">{esc(t.get("signal",""))}</span></div>'
+                f'<div class="thesis-body">{lead_html}{esc(t.get("body",""))}</div></article>'
+            )
+        return "".join(out)
 
     def quality():
         """data quality 패널(라벨/값 셀)을 만든다. 없으면 빈 문자열."""

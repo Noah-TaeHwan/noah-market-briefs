@@ -36,10 +36,16 @@ def load_records(data_dir: Path) -> list:
 
     @param data_dir 브리프 JSON 루트(예: <repo>/data)
     @returns dict 리스트. date 내림차순 → window_code 순으로 정렬(최신이 맨 앞).
+        깨진 JSON 레코드는 stderr 경고 후 skip(한 회차 결함이 전체 빌드를 막지 않게).
     """
     records = []
     for path in sorted(data_dir.rglob("*.json")):
-        rec = json.loads(path.read_text(encoding="utf-8"))
+        try:
+            rec = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as e:
+            # cron(LLM)이 깨진 JSON을 쓴 회차 1건이 빌드 전체를 죽이지 않게 skip.
+            print(f"⚠️  건너뜀(JSON 파싱 실패): {path} — {e}", file=sys.stderr)
+            continue
         rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
         records.append(rec)
     # 최신순: 날짜 내림차순. 같은 날이면 close(rank 1)가 preopen(rank 0)보다 위로.
@@ -54,12 +60,18 @@ def write_brief_pages(records: list, site_root: Path) -> int:
     """각 레코드를 render() 로 HTML 문서로 만들어 out_path 에 쓴다.
 
     out_path 는 데이터(cron이 생성)이므로 site_root 밖으로 탈출하지 못하게 가드한다.
+    out_path 가 비어 있으면(누락) 그 레코드만 skip — 절대경로/.. 탈출은 보안상 raise.
     @returns 쓴 페이지 수
     """
     count = 0
     root = site_root.resolve()
     for rec in records:
-        out = (site_root / rec["out_path"]).resolve()   # 예: 2026/06/23/korea-close.html
+        rel = rec.get("out_path")
+        if not rel:                                     # out_path 누락 → KeyError 대신 skip
+            print(f"⚠️  건너뜀(out_path 없음): {rec.get('_src', rec.get('date', '?'))}",
+                  file=sys.stderr)
+            continue
+        out = (site_root / rel).resolve()               # 예: 2026/06/23/korea-close.html
         if not out.is_relative_to(root):                # 절대경로/.. 로 site_root 밖 탈출 차단
             raise ValueError(f"out_path가 site_root를 벗어남: {rec.get('out_path')!r}")
         out.parent.mkdir(parents=True, exist_ok=True)

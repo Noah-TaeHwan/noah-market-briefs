@@ -177,5 +177,37 @@ class TestWindowSort(unittest.TestCase):
             self.assertEqual(recs[1]["window_code"], "preopen")
 
 
+class TestLoadRecordsRobustness(unittest.TestCase):
+    """깨진 JSON·out_path 누락 레코드 1건이 빌드 전체를 죽이지 않고 skip되는지.
+
+    cron(LLM)이 매일 data/ 에 JSON을 쓰므로, 한 회차의 malformed/불완전 레코드가
+    아카이브 전체 빌드를 막으면 안 된다(fail-closed → 한 회차만 skip).
+    """
+
+    def test_malformed_json_is_skipped(self):
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d) / "data" / "2026" / "06" / "23"
+            dd.mkdir(parents=True)
+            (dd / "ok.json").write_text(json.dumps({
+                "date": "2026-06-23", "window_code": "close",
+                "out_path": "2026/06/23/ok.html", "title": "ok"}), encoding="utf-8")
+            (dd / "bad.json").write_text('{"date": "2026-06-23",', encoding="utf-8")  # 깨짐
+            recs = B.load_records(Path(d) / "data")
+            self.assertEqual(len(recs), 1)                       # 깨진 건 skip, 정상만
+            self.assertEqual(recs[0]["out_path"], "2026/06/23/ok.html")
+
+    def test_write_pages_skips_missing_out_path(self):
+        with tempfile.TemporaryDirectory() as d:
+            site = Path(d)
+            recs = [
+                {"title": "no out_path", "metrics": [], "theses": []},   # out_path 없음 → skip
+                {"out_path": "2026/06/23/ok.html", "title": "ok", "metrics": [],
+                 "theses": [], "drivers": [], "watch": [], "risks": []},
+            ]
+            n = B.write_brief_pages(recs, site)                  # KeyError 없이 정상만 쓴다
+            self.assertEqual(n, 1)
+            self.assertTrue((site / "2026/06/23/ok.html").exists())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

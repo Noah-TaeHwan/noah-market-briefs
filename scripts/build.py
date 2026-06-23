@@ -27,6 +27,8 @@ REPO = Path(__file__).resolve().parent.parent
 # 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)
 MARKET_LABEL = {"US": "U.S.", "KR": "Korea"}
 WINDOW_LABEL = {"preopen": "장 시작 전", "close": "장 마감"}
+# 같은 날 내 최신순 랭크: close(장 마감, 늦음) > preopen(장 시작 전, 이름)
+WINDOW_RANK = {"preopen": 0, "close": 1}
 
 
 def load_records(data_dir: Path) -> list:
@@ -40,19 +42,26 @@ def load_records(data_dir: Path) -> list:
         rec = json.loads(path.read_text(encoding="utf-8"))
         rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
         records.append(rec)
-    # 최신순: 날짜 내림차순. 같은 날이면 close 가 preopen 보다 뒤(=위)로.
-    records.sort(key=lambda r: (r.get("date", ""), r.get("window_code", "")), reverse=True)
+    # 최신순: 날짜 내림차순. 같은 날이면 close(rank 1)가 preopen(rank 0)보다 위로.
+    records.sort(
+        key=lambda r: (r.get("date", ""), WINDOW_RANK.get(r.get("window_code", ""), 0)),
+        reverse=True,
+    )
     return records
 
 
 def write_brief_pages(records: list, site_root: Path) -> int:
     """각 레코드를 render() 로 HTML 문서로 만들어 out_path 에 쓴다.
 
+    out_path 는 데이터(cron이 생성)이므로 site_root 밖으로 탈출하지 못하게 가드한다.
     @returns 쓴 페이지 수
     """
     count = 0
+    root = site_root.resolve()
     for rec in records:
-        out = site_root / rec["out_path"]          # 예: 2026/06/23/korea-close.html
+        out = (site_root / rec["out_path"]).resolve()   # 예: 2026/06/23/korea-close.html
+        if not out.is_relative_to(root):                # 절대경로/.. 로 site_root 밖 탈출 차단
+            raise ValueError(f"out_path가 site_root를 벗어남: {rec.get('out_path')!r}")
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render(rec), encoding="utf-8")
         count += 1

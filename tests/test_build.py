@@ -131,5 +131,51 @@ class TestLoadAndIntegration(unittest.TestCase):
             self.assertNotIn('class="meter"', us)
 
 
+class TestOutPathGuard(unittest.TestCase):
+    """out_path(데이터)가 site_root 밖으로 파일을 쓰지 못하게 막는다."""
+
+    def _rec(self, out_path):
+        return {"out_path": out_path, "title": "t", "market": "KR", "window": "close",
+                "metrics": [], "drivers": [], "theses": [], "watch": [], "risks": []}
+
+    def test_rejects_absolute_out_path(self):
+        with tempfile.TemporaryDirectory() as d:
+            site = Path(d) / "site"; site.mkdir()
+            outside = Path(d) / "outside.html"          # site_root 밖의 절대경로
+            with self.assertRaises(ValueError):
+                B.write_brief_pages([self._rec(str(outside))], site)
+            self.assertFalse(outside.exists())
+
+    def test_rejects_parent_escape(self):
+        with tempfile.TemporaryDirectory() as d:
+            site = Path(d) / "site"; site.mkdir()
+            with self.assertRaises(ValueError):
+                B.write_brief_pages([self._rec("../escaped.html")], site)
+            self.assertFalse((Path(d) / "escaped.html").exists())
+
+    def test_allows_normal_path(self):
+        with tempfile.TemporaryDirectory() as d:
+            site = Path(d)
+            n = B.write_brief_pages([self._rec("2026/06/23/korea-close.html")], site)
+            self.assertEqual(n, 1)
+            self.assertTrue((site / "2026/06/23/korea-close.html").exists())
+
+
+class TestWindowSort(unittest.TestCase):
+    """같은 날짜에서 close(장 마감, 늦음)가 preopen(장 시작 전, 이름)보다 위(최신)로 정렬된다."""
+
+    def test_same_date_close_before_preopen(self):
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d) / "data" / "2026" / "06" / "24"
+            dd.mkdir(parents=True)
+            (dd / "korea-preopen.json").write_text(
+                json.dumps({"date": "2026-06-24", "window_code": "preopen"}))
+            (dd / "korea-close.json").write_text(
+                json.dumps({"date": "2026-06-24", "window_code": "close"}))
+            recs = B.load_records(Path(d) / "data")
+            self.assertEqual(recs[0]["window_code"], "close")    # close가 먼저(최신)
+            self.assertEqual(recs[1]["window_code"], "preopen")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

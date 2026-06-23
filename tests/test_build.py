@@ -161,5 +161,21 @@ class TestOutPathGuard(unittest.TestCase):
             self.assertTrue((site / "2026/06/23/korea-close.html").exists())
 
 
+class TestWindowSort(unittest.TestCase):
+    """같은 날짜에서 close(장 마감, 늦음)가 preopen(장 시작 전, 이름)보다 위(최신)로 정렬된다."""
+
+    def test_same_date_close_before_preopen(self):
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d) / "data" / "2026" / "06" / "24"
+            dd.mkdir(parents=True)
+            (dd / "korea-preopen.json").write_text(
+                json.dumps({"date": "2026-06-24", "window_code": "preopen"}))
+            (dd / "korea-close.json").write_text(
+                json.dumps({"date": "2026-06-24", "window_code": "close"}))
+            recs = B.load_records(Path(d) / "data")
+            self.assertEqual(recs[0]["window_code"], "close")    # close가 먼저(최신)
+            self.assertEqual(recs[1]["window_code"], "preopen")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

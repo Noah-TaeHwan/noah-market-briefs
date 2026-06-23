@@ -27,6 +27,8 @@ REPO = Path(__file__).resolve().parent.parent
 # 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)
 MARKET_LABEL = {"US": "U.S.", "KR": "Korea"}
 WINDOW_LABEL = {"preopen": "장 시작 전", "close": "장 마감"}
+# 같은 날 내 최신순 랭크: close(장 마감, 늦음) > preopen(장 시작 전, 이름)
+WINDOW_RANK = {"preopen": 0, "close": 1}
 
 
 def load_records(data_dir: Path) -> list:
@@ -40,8 +42,11 @@ def load_records(data_dir: Path) -> list:
         rec = json.loads(path.read_text(encoding="utf-8"))
         rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
         records.append(rec)
-    # 최신순: 날짜 내림차순. 같은 날이면 close 가 preopen 보다 뒤(=위)로.
-    records.sort(key=lambda r: (r.get("date", ""), r.get("window_code", "")), reverse=True)
+    # 최신순: 날짜 내림차순. 같은 날이면 close(rank 1)가 preopen(rank 0)보다 위로.
+    records.sort(
+        key=lambda r: (r.get("date", ""), WINDOW_RANK.get(r.get("window_code", ""), 0)),
+        reverse=True,
+    )
     return records
 
 

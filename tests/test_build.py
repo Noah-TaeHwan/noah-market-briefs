@@ -185,6 +185,50 @@ class TestWindowSort(unittest.TestCase):
             self.assertEqual(recs[1]["window_code"], "preopen")
 
 
+class TestGenerationTimeOrder(unittest.TestCase):
+    """같은 세션 날짜 안에서 '리포트가 실제 생성되는 시각'(KST cron) 순으로 최신이 위로 정렬.
+
+    생성 순서(이른→늦은): KR 장전(08:30) → KR 마감(16:30) → US 장전(22:00) → US 마감(익일 06:00).
+    날짜만으로는 같은 날 KR/US 마감이 묶여 가장 오래된 KR 마감이 위로 오던 문제를 (시장·윈도)
+    복합 랭크로 교정한다.
+    """
+
+    def _write(self, root, market, window, date="2026-06-23"):
+        ymd = date.replace("-", "/")
+        dd = root / "data" / ymd
+        dd.mkdir(parents=True, exist_ok=True)
+        (dd / f"{market}-{window}.json").write_text(json.dumps({
+            "date": date, "market_code": market, "window_code": window,
+            "out_path": f"{ymd}/{market}-{window}.html"}), encoding="utf-8")
+
+    def test_same_date_recency_order(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            # 입력 순서를 일부러 섞어 둠 — 정렬이 입력 순서와 무관함을 보이기 위해
+            self._write(root, "KR", "close")
+            self._write(root, "US", "preopen")
+            self._write(root, "KR", "preopen")
+            self._write(root, "US", "close")
+            recs = B.load_records(root / "data")
+        order = [(r["market_code"], r["window_code"]) for r in recs]
+        self.assertEqual(order, [
+            ("US", "close"),     # 익일 06:00 — 가장 최신
+            ("US", "preopen"),   # 22:00
+            ("KR", "close"),     # 16:30
+            ("KR", "preopen"),   # 08:30 — 가장 오래됨
+        ])
+
+    def test_next_day_preopen_above_prev_day_us_close(self):
+        # D+1 KR 장전(생성 D+1 08:30)이 D US 마감(생성 D+1 06:00)보다 최신 → 위로
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self._write(root, "US", "close", date="2026-06-23")
+            self._write(root, "KR", "preopen", date="2026-06-24")
+            recs = B.load_records(root / "data")
+        self.assertEqual(recs[0]["date"], "2026-06-24")
+        self.assertEqual((recs[0]["market_code"], recs[0]["window_code"]), ("KR", "preopen"))
+
+
 class TestLoadRecordsRobustness(unittest.TestCase):
     """깨진 JSON·out_path 누락 레코드 1건이 빌드 전체를 죽이지 않고 skip되는지.
 

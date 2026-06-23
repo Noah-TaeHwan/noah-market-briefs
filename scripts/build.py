@@ -27,15 +27,39 @@ REPO = Path(__file__).resolve().parent.parent
 # 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)
 MARKET_LABEL = {"US": "U.S.", "KR": "Korea"}
 WINDOW_LABEL = {"preopen": "장 시작 전", "close": "장 마감"}
-# 같은 날 내 최신순 랭크: close(장 마감, 늦음) > preopen(장 시작 전, 이름)
+# 시장 모르는 레코드(합성/레거시) 폴백: preopen < close
 WINDOW_RANK = {"preopen": 0, "close": 1}
+
+# 같은 '세션 날짜' 안에서 리포트가 실제 생성되는 시각 순서(이른→늦은, 숫자가 클수록 최신).
+# cron 스케줄(KST) 근거: KR 장전 08:30 → KR 마감 16:30 → US 장전 22:00 → US 마감 익일 06:00.
+# 정렬은 (date, 이 랭크) 내림차순 → 한/미·장전/마감을 실제 발표 시각 순으로 최신이 맨 위.
+# (date 만으로 정렬하면 같은 날 KR/US 마감이 묶여 가장 오래된 KR 마감이 위로 오는 문제 교정.)
+GEN_ORDER_RANK = {
+    ("KR", "preopen"): 0,
+    ("KR", "close"): 1,
+    ("US", "preopen"): 2,
+    ("US", "close"): 3,
+}
+
+
+def recency_rank(rec: dict) -> int:
+    """같은 날짜 내 생성-시각 순위(클수록 최신).
+
+    (시장, 윈도) 복합 랭크. 미지의 시장은 윈도(preopen<close)만으로 폴백한다.
+    @param rec 브리프 레코드(market_code·window_code 사용)
+    @returns int 생성 시각 순위(클수록 최신)
+    """
+    key = (rec.get("market_code", ""), rec.get("window_code", ""))
+    if key in GEN_ORDER_RANK:
+        return GEN_ORDER_RANK[key]
+    return WINDOW_RANK.get(rec.get("window_code", ""), 0)
 
 
 def load_records(data_dir: Path) -> list:
     """data_dir 하위의 모든 *.json 브리프 레코드를 읽어 최신순으로 돌려준다.
 
     @param data_dir 브리프 JSON 루트(예: <repo>/data)
-    @returns dict 리스트. date 내림차순 → window_code 순으로 정렬(최신이 맨 앞).
+    @returns dict 리스트. date 내림차순 → 생성 시각 순위(recency_rank) 내림차순 정렬(최신이 맨 앞).
         깨진 JSON 레코드는 stderr 경고 후 skip(한 회차 결함이 전체 빌드를 막지 않게).
     """
     records = []
@@ -48,9 +72,9 @@ def load_records(data_dir: Path) -> list:
             continue
         rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
         records.append(rec)
-    # 최신순: 날짜 내림차순. 같은 날이면 close(rank 1)가 preopen(rank 0)보다 위로.
+    # 최신순: 날짜 내림차순 → 같은 날은 생성 시각 순위(KR장전<KR마감<US장전<US마감 익일) 내림차순.
     records.sort(
-        key=lambda r: (r.get("date", ""), WINDOW_RANK.get(r.get("window_code", ""), 0)),
+        key=lambda r: (r.get("date", ""), recency_rank(r)),
         reverse=True,
     )
     return records

@@ -48,11 +48,15 @@ def load_records(data_dir: Path) -> list:
 def write_brief_pages(records: list, site_root: Path) -> int:
     """각 레코드를 render() 로 HTML 문서로 만들어 out_path 에 쓴다.
 
+    out_path 는 데이터(cron이 생성)이므로 site_root 밖으로 탈출하지 못하게 가드한다.
     @returns 쓴 페이지 수
     """
     count = 0
+    root = site_root.resolve()
     for rec in records:
-        out = site_root / rec["out_path"]          # 예: 2026/06/23/korea-close.html
+        out = (site_root / rec["out_path"]).resolve()   # 예: 2026/06/23/korea-close.html
+        if not out.is_relative_to(root):                # 절대경로/.. 로 site_root 밖 탈출 차단
+            raise ValueError(f"out_path가 site_root를 벗어남: {rec.get('out_path')!r}")
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render(rec), encoding="utf-8")
         count += 1

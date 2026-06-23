@@ -117,18 +117,26 @@ class TestLoadAndIntegration(unittest.TestCase):
             self.assertIn('class="idx feature"', kr)            # 히어로 숫자 = KOSPI
             self.assertIn("mcard nosignal", kr)                 # 미확인 = 무신호 카드
 
-    def test_us_close_renders_with_sample_markers(self):
-        """us-close(sample) 는 라이브로 착각되지 않게 샘플 마커가 보존된다."""
-        recs = B.load_records(REPO / "data")
-        with tempfile.TemporaryDirectory() as d:
-            site = Path(d)
-            B.write_brief_pages(recs, site)
-            us = (site / "2026/06/23/us-close.html").read_text(encoding="utf-8")
-            self.assertIn("샘플 값", us)                         # 메트릭 노트 샘플 명시
-            self.assertIn("MVP sample", us)                      # 히어로 배지 샘플 명시
-            # us-close 는 thesis level/lead 가 없으므로 핀/리드가 붙지 않아야 한다.
-            self.assertNotIn("thesis-lead", us)
-            self.assertNotIn('class="meter"', us)
+    def test_sample_markers_render_and_no_false_pins(self):
+        """샘플 성격 레코드의 노트가 렌더에 그대로 나와 라이브로 오인되지 않고,
+        level/lead 없는 thesis엔 민감도 핀/리드가 붙지 않는다.
+
+        실제 data/ 파일을 읽지 않는 합성 픽스처 — cron이 매일 data/ 를 갱신해도
+        깨지지 않는다(이전 버전은 us-close 가 'sample'이라 가정해 cron이 live로
+        승격하자 깨졌다). 샘플 마커 렌더 로직만 검증한다.
+        """
+        html = render({
+            "title": "샘플 마감", "market": "United States", "window": "U.S. Close",
+            "note": "MVP sample · source pipeline not connected",
+            "metrics": [
+                {"name": "S&P 500", "value": "+0.4%", "tone": "up", "note": "샘플 값 · 실제 데이터 아님"},
+            ],
+            "theses": [{"name": "글로벌 증권사", "signal": "NII vs activity", "body": "본문"}],  # level/lead 없음
+        })
+        self.assertIn("샘플 값", html)            # 메트릭 노트 그대로 렌더
+        self.assertIn("MVP sample", html)          # 히어로 노트 그대로 렌더
+        self.assertNotIn("thesis-lead", html)      # level/lead 없으면 리드 줄 없음
+        self.assertNotIn('class="meter"', html)    # 핀 미터도 없음
 
 
 class TestOutPathGuard(unittest.TestCase):

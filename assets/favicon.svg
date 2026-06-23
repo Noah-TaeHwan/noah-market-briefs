@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Noah Market Briefs">
-  <rect width="32" height="32" rx="7" fill="#1b2030"/>
-  <text x="16" y="22.2" text-anchor="middle" fill="#f4ede0"
+  <rect width="32" height="32" rx="7" fill="#0b0f17"/>
+  <text x="16" y="22.2" text-anchor="middle" fill="#ece3d1"
         font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700">N</text>
-  <rect x="9" y="24.6" width="14" height="1.7" rx="0.85" fill="#927339"/>
+  <rect x="9" y="24.6" width="14" height="1.7" rx="0.85" fill="#c79a4e"/>
 </svg>

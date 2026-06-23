@@ -4,55 +4,149 @@
   "date": "2026-06-23",
   "market_code": "US",
   "window_code": "close",
-  "status": "sample",
+  "status": "live",
   "out_path": "2026/06/23/us-close.html",
-
   "title": "미국 시장 마감 — 2026-06-23",
   "market": "United States",
   "window": "U.S. Close",
-  "note": "MVP sample · source pipeline not connected",
-  "generated": "2026-06-23 08:57 KST",
-  "source": "Prototype sample",
-  "data_quality": "데이터 미연동",
-  "use": "Layout review only",
-  "takeaway": "한 줄 결론이 먼저 옵니다. 오늘 시장을 설명하는 핵심 driver와 노아 보유논지 민감도를 한 화면에서 분리해서 봅니다.",
-
+  "note": "정규장 마감 확인",
+  "generated": "2026-06-24 06:00 KST / 2026-06-23 17:00 ET",
+  "source": "CNBC Quote API / exchange quote cache, 2026-06-23 17:00 ET",
+  "data_quality": "정규 거래일(TRADING_DAY)·주요 지수 CLOSE 확인. DXY·WTI는 주입 데이터에서 미확인.",
+  "use": "시장 마감 브리프 · 투자 권유 아님",
+  "takeaway": "미국장은 기술주 중심으로 약세가 컸고, 10년물 금리는 소폭 하락했지만 VIX가 19.49로 뛰어 위험선호 둔화 신호가 더 선명했습니다.",
   "metrics": [
-    { "name": "S&P 500", "value": "+0.4%", "tone": "up", "note": "샘플 값 · 실제 데이터 아님" },
-    { "name": "Nasdaq", "value": "+0.7%", "tone": "up", "note": "샘플 값 · 실제 데이터 아님" },
-    { "name": "U.S. 10Y", "value": "4.12%", "tone": "down", "note": "금리 민감도 카드 자리" },
-    { "name": "USD/KRW", "value": "1,38x", "tone": "flat", "note": "FX translation / risk appetite" },
-    { "name": "WTI", "value": "+1.2%", "tone": "up", "note": "공급충격 vs 수요 구분" },
-    { "name": "Credit/Risk", "value": "Watch", "tone": "flat", "note": "스프레드·변동성 자리" }
+    {
+      "name": "S&P 500",
+      "value": "7,365.46 / -1.436%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-06-23 16:20 ET 정규장 close; trading_day_type=TRADING_DAY"
+    },
+    {
+      "name": "Nasdaq Composite",
+      "value": "25,587.039 / -2.215%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-06-23 17:00 ET; reg_last_time=17:00 ET"
+    },
+    {
+      "name": "Dow Jones",
+      "value": "51,666.84 / -0.09%",
+      "tone": "flat",
+      "note": "CNBC Quote API, 2026-06-23 16:20 ET 정규장 close"
+    },
+    {
+      "name": "U.S. 10Y",
+      "value": "4.499% / -0.008%p",
+      "tone": "down",
+      "note": "Tradeweb via CNBC Quote API, 2026-06-23 17:00 ET"
+    },
+    {
+      "name": "10Y Treasury Future",
+      "value": "109.3125 / +0.07%",
+      "tone": "up",
+      "note": "CBOT Sep'26 future, CNBC Quote API, 2026-06-23 16:50 ET; settlePrice 109.375"
+    },
+    {
+      "name": "S&P 500 Future",
+      "value": "7,440.75 / -1.33%",
+      "tone": "down",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-06-23 16:50 ET; settleDate 2026-06-23"
+    },
+    {
+      "name": "Nasdaq 100 Future",
+      "value": "29,721.50 / -3.04%",
+      "tone": "down",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-06-23 16:50 ET; settleDate 2026-06-23"
+    },
+    {
+      "name": "VIX",
+      "value": "19.49 / +12.789%",
+      "tone": "warn",
+      "note": "CBOE via CNBC Quote API, 2026-06-23 16:15 ET"
+    },
+    {
+      "name": "VIX Future",
+      "value": "19.50 / +5.6865%",
+      "tone": "warn",
+      "note": "CBOE Futures Exchange Jul'26, CNBC Quote API, 2026-06-23 16:49 ET; settlePrice 19.5058"
+    },
+    {
+      "name": "DXY / WTI",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "주입된 CNBC Quote API snapshot에 유효 quote 없음; 추정하지 않음"
+    }
   ],
-
   "drivers": [
-    { "label": "금리", "text": "장기금리 변화가 duration·NII·risk appetite에 주는 영향을 분리합니다." },
-    { "label": "섹터", "text": "AI/반도체 쏠림인지, 소비·금융으로 확산되는지 구분합니다." },
-    { "label": "유동성/FX", "text": "달러·크레딧·변동성 신호를 지수 방향과 별도로 봅니다." }
+    {
+      "label": "기술주 약세",
+      "text": "Nasdaq(-2.215%)과 Nasdaq 100 선물(-3.04%)이 S&P 500(-1.436%)보다 더 크게 밀려, 지수 약세가 성장·기술 duration 쪽에 더 집중됐습니다."
+    },
+    {
+      "label": "금리 완충은 제한적",
+      "text": "10년물은 4.499%로 0.8bp 하락했고 Treasury futures도 소폭 상승했지만, 주식 하락을 막을 만큼 risk appetite를 회복시키지는 못했습니다."
+    },
+    {
+      "label": "변동성 재가격",
+      "text": "VIX가 19.49(+12.789%)로 올라 옵션시장이 단순한 하루 조정보다 헤지 수요 확대를 반영했습니다. 구체적 뉴스 원인은 이 스냅샷만으로는 확인하지 않습니다."
+    }
   ],
-
   "theses": [
-    { "name": "글로벌 증권사", "signal": "NII vs activity", "body": "금리 하락은 NII에는 부담일 수 있지만, 계좌·DARTs·customer equity 모멘텀이 상쇄하는지 확인합니다." },
-    { "name": "미국 온라인 게이밍", "signal": "Risk appetite", "body": "위험선호 회복은 우호적일 수 있으나 discretionary 소비 둔화와 별도로 읽습니다." },
-    { "name": "비상장 커머스", "signal": "Indirect", "body": "미국 지수 하루 움직임은 직접 논지 변화가 아니고, 한국 IPO 심리·소비·원화로 전달될 때만 중요합니다." },
-    { "name": "Compute futures watch", "signal": "AI capex", "body": "AI capex 뉴스와 H100 spot/forward 가격·표준화 가능성은 분리해서 봅니다." }
+    {
+      "name": "글로벌 증권사",
+      "signal": "금리·거래활동 민감도 분리",
+      "level": 2,
+      "lead": "10년물 소폭 하락 + VIX 상승",
+      "body": "금리 하락은 NII 민감도에는 부담 방향일 수 있지만, 변동성 상승은 DARTs·거래활동에는 우호적일 수 있습니다. 오늘 신호는 한쪽 결론보다 NII와 activity를 분리해서 다음 월간 operating data를 보자는 쪽입니다."
+    },
+    {
+      "name": "미국 온라인 게이밍",
+      "signal": "risk appetite / discretionary beta",
+      "level": 2,
+      "lead": "성장주 약세와 VIX 상승",
+      "body": "위험선호 둔화는 고멀티플·소비/엔터 beta에 부담입니다. 다만 iCasino operating thesis는 하루 지수보다 매출 성장·현금흐름·규제/주별 침투율 데이터로 검증해야 합니다."
+    },
+    {
+      "name": "비상장 커머스",
+      "signal": "IPO 심리·원화/한국 risk appetite 간접 경로",
+      "level": 1,
+      "lead": "미국 기술주 조정",
+      "body": "미국장 하루 조정은 비상장 커머스 논지를 직접 바꾸지 않습니다. 다만 Nasdaq 약세와 VIX 상승이 한국 IPO risk appetite나 원화/성장주 할인율로 이어지는지는 별도 확인 포인트입니다."
+    },
+    {
+      "name": "Compute futures watch",
+      "signal": "AI capex·duration proxy",
+      "level": 2,
+      "lead": "Nasdaq 100 선물 -3.04%",
+      "body": "AI·컴퓨트 인프라 기대가 들어간 duration 자산은 할인율보다 sentiment와 capex narrative 변화에 민감합니다. 오늘 데이터는 compute-power futures 논지에 ‘가격 표준화’보다 ‘AI capex 기대 재가격’ 센서를 더 켜게 합니다."
+    }
   ],
-
   "watch": [
-    "10Y 하락이 하루짜리인지, term premium/auction/funding까지 같이 움직이는지",
-    "기술주 쏠림이 금융·소비·small cap으로 확산되는지",
-    "달러 약세가 EM/원화 쪽 risk appetite로 이어지는지"
+    "10년물 4.50% 부근에서 하락이 이어지는지, 아니면 주식 약세와 별개로 다시 상승하는지",
+    "VIX 19~20선이 하루 헤지 수요인지, VIX futures curve까지 위험회피로 바뀌는지",
+    "Nasdaq 100 선물 약세가 다음 정규장에서 S&P breadth·금융/소비 섹터로 확산되는지"
   ],
-
   "risks": [
-    "샘플 리포트라 실제 시장 숫자·출처는 연결하지 않았습니다.",
-    "실제 운영에서는 Reuters/CNBC/FRED 등 출처와 날짜를 header에 고정해야 합니다."
+    "CNBC quote-cache 기반 브리프라 뉴스 원인·섹터별 등락은 별도 출처로 확인하지 않았습니다.",
+    "DXY·WTI는 주입 데이터에 유효 값이 없어 미확인 처리했습니다.",
+    "하루 지수 움직임을 보유논지 변화로 과대해석하지 않습니다."
   ],
-
   "quality": [
-    { "label": "Status", "value": "Prototype" },
-    { "label": "Numbers", "value": "샘플 placeholder" },
-    { "label": "Production rule", "value": "출처·날짜 없는 숫자 금지" }
+    {
+      "label": "Session",
+      "value": "TRADING_DAY / CLOSE"
+    },
+    {
+      "label": "Index timestamps",
+      "value": "last_time/reg_last_time 2026-06-23 16:20~17:00 ET"
+    },
+    {
+      "label": "Cache timestamp",
+      "value": "Tue Jun 23 17:00:30 EDT 2026"
+    },
+    {
+      "label": "Unavailable",
+      "value": "DXY, WTI quote fields absent"
+    }
   ]
 }

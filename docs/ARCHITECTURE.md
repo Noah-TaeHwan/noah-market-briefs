@@ -88,3 +88,26 @@ git push
 3. bg/자동 세션에서는 `<cron 러너 설정>` 직접 수정이 classifier로 막힐 수 있어, **Noah가 직접** `러너 설정 편집` 로 적용.
 
 **전환 순서(안전):** ① build.py·렌더러가 main에 머지된 뒤 → ② cron 프롬프트를 JSON 방식으로 전환 → ③ 한 번 수동 실행해 `data/*.json` 생성 + build + push + Vercel 확인 → ④ 정상 확인 후 다음 자동 실행에 맡김.
+
+## Part B v2 — 투자 렌즈 + 어제 대비 변화 (template v2)
+
+브리프를 보유종목 비의존 **"투자 관점 읽기"** + **"어제 대비 변화"**로 재구성. render는 신·구 스키마를 모두 렌더한다(**백워드 호환** — 새 필드 없으면 해당 요소만 미표시).
+
+### 스키마 추가(전부 선택)
+- 최상위 `changes`: `[{ "dir": "up"|"down"|"flat", "text": "..." }]` — 직전 같은 (market,window) 브리프 대비 시장 변화 2~3개.
+- `theses[]` item에 `delta`: `{ "dir": "up"|"down"|"flat", "text": "어제 대비 한 줄" }`.
+- `theses[]` 내용 = **투자 렌즈**(보유종목 아님): `위험선호` / `금리·duration` / `환율·달러(원화)` / `변동성·헤지` (+필요시 `섹터·브레드스`). 각 = `{name(렌즈), signal(오늘 읽기), level 1-3, delta, body}`.
+
+### 렌더 동작
+- `changes[]` → 히어로 다음 "어제 대비 변화" 섹션(방향 칩 ▲▼=).
+- `theses` → "투자 관점 읽기" 섹션, 각 카드에 delta 한 줄.
+- watch 제목은 `window_code` 로 자동: `preopen`→"오늘 볼 센서", 그 외→"내일 볼 센서".
+
+### cron 프롬프트 애드덤 (4개 잡에 추가 — Noah가 `<cron 러너 설정>` 적용)
+> **투자 렌즈 + 어제 대비 변화 (template v2):**
+> - `theses[]` 를 **투자 관점 렌즈**로 채운다(보유종목 아님): 위험선호 / 금리·duration / 환율·달러(원화) / 변동성·헤지 (+필요시 섹터·브레드스). 각 렌즈 = `{name, signal(오늘 읽기), level 1-3, delta:{dir:up|down|flat, text:"어제 대비 한 줄"}, body}`. 데이터 근거 없으면 `미확인`.
+> - `changes[]` (2-3개): **직전 같은 (market,window) 브리프**(data/ 에서 가장 최근 같은 윈도 JSON)를 읽어 시장이 뭐가 바뀌었나. 각 = `{dir, text}`. 직전 브리프 없으면 changes 생략.
+> - 윈도 프레이밍: **장전 = 오늘 닥칠 환경(예측)**, **마감 = 오늘 받은 결과(회고)**. (watch 제목은 렌더가 window_code로 자동 전환.)
+> - 소스 디시플린(미확인·출처·날짜·추론 금지) 그대로.
+
+스펙: `docs/specs/2026-06-24-investing-brief-market-lenses-design.md`. **Phase 2**(다음 증분): build.py 가 (market,window,렌즈)별 레벨 히스토리를 집계해 ● 추이·스트릭(시장 흐름 저널).

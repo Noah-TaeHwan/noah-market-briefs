@@ -360,6 +360,18 @@ h1 .h1-date{white-space:nowrap;font-variant-numeric:tabular-nums}
 .idelta.up{color:var(--good)}
 .idelta.warn{color:var(--warn)}
 
+/* ── 어제 대비 변화: 방향 칩(▲▼=) + 변화 목록 + 렌즈 delta 한 줄 ──────── */
+.dir{font-weight:700;font-size:12px;margin-right:8px;line-height:1;font-feature-settings:"tnum"}
+.dir.up{color:var(--good)}
+.dir.down{color:var(--bad)}
+.dir.flat{color:var(--muted)}
+.change-list{list-style:none;margin:0;padding:0}
+.change-list li{display:flex;align-items:baseline;padding:9px 0;border-top:1px solid var(--line-soft);color:var(--ink-soft);font-size:15.5px;line-height:1.62}
+.change-list li:first-child{border-top:none;padding-top:2px}
+.chg-text{flex:1}
+.thesis-delta{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;font-size:13.5px;color:var(--muted)}
+.thesis-delta>span{color:var(--ink-soft)}
+
 /* ── 드라이버 — 넉넉한 행간 1.78 + 여유로운 문단 간격 ──────────────── */
 .driver-list{list-style:none;margin:0;padding:0;counter-reset:dl}
 .driver-list li{

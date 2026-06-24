@@ -204,7 +204,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             card_cls = {3: "thesis-card s-high", 2: "thesis-card s-mid"}.get(lvl, "thesis-card")
             delta = t.get("delta")
             delta_html = ""
-            if isinstance(delta, dict) and (delta.get("text") or delta.get("dir")):
+            if isinstance(delta, dict) and str(delta.get("text", "")).strip():
                 delta_html = (f'<div class="thesis-delta">{_dir_chip(delta.get("dir"))}'
                               f'<span>{esc(delta.get("text",""))}</span></div>')
             lead = t.get("lead", "")
@@ -257,16 +257,30 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return f'<div class="grid {grid_cls}">{"".join(present)}</div>'
 
     def changes_section():
-        """'어제 대비 변화' 섹션 — 직전 같은 윈도 브리프 대비 시장 변화. 없으면 빈 문자열."""
+        """'어제 대비 변화' 섹션 — 직전 같은 윈도 브리프 대비 시장 변화. 없으면 빈 문자열.
+
+        item 은 ``{dir,text}`` 권장이나, 문자열(줄 리스트)도 칩 없이 관대하게 렌더한다.
+        텍스트 없는 항목·잘못된 모양은 건너뛴다(한 회차 결함이 빌드를 죽이지 않게).
+        """
         items = payload.get("changes", [])
         if not items:
             return ""
-        lis = "".join(
-            f'<li>{_dir_chip(c.get("dir"))}<span class="chg-text">{esc(c.get("text",""))}</span></li>'
-            for c in items
-        )
+        rows = []
+        for c in items:
+            if isinstance(c, dict):
+                text = str(c.get("text", "")).strip()
+                if not text:
+                    continue
+                rows.append(f'<li>{_dir_chip(c.get("dir"))}'
+                            f'<span class="chg-text">{esc(text)}</span></li>')
+            else:                                   # 문자열 등: 칩 없이 텍스트만
+                text = str(c or "").strip()
+                if text:
+                    rows.append(f'<li><span class="chg-text">{esc(text)}</span></li>')
+        if not rows:
+            return ""
         return (f'<section class="section changes"><h2>어제 대비 변화</h2>'
-                f'<ul class="change-list">{lis}</ul></section>')
+                f'<ul class="change-list">{"".join(rows)}</ul></section>')
 
     takeaway = payload.get("takeaway", "")
     favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"

@@ -156,8 +156,8 @@ def build_index_html(records: list) -> str:
 <header class="masthead"><span class="wordmark">Noah <span class="tag">Market Briefs</span></span><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">정적 시장 일지 · 장 마감 후에도</span><span class="stamp"><b>Source-backed · 2026</b></span></span></div></header>
 <section class="hero">
 <div class="kicker"><span class="badge">Static Archive</span><span class="badge">U.S. · Korea</span><span class="badge">Pre-open · Close</span></div>
-<h1>날짜별 시장 일지와<br/>보유논지 민감도.</h1>
-<p class="takeaway" data-label="About">Slack에는 5줄 요약만, 여기에는 날짜별 시장 일지와 보유논지 민감도를 누적합니다. 숫자에는 반드시 출처와 날짜를 붙이고, 확정 종가가 아니면 그대로 명시합니다.</p>
+<h1>날짜별 시장 일지와<br/>투자 관점 읽기.</h1>
+<p class="takeaway" data-label="About">Slack에는 5줄 요약만, 여기에는 날짜별 시장 일지와 투자 관점 읽기를 누적합니다. 숫자에는 반드시 출처와 날짜를 붙이고, 확정 종가가 아니면 그대로 명시합니다.</p>
 <div class="meta-grid"><div class="meta-card"><div class="label">Structure</div><div class="value">YYYY / MM / DD / window</div></div><div class="meta-card"><div class="label">Markets</div><div class="value">U.S. · Korea</div></div><div class="meta-card"><div class="label">Windows</div><div class="value">Pre-open · Close</div></div><div class="meta-card"><div class="label">Status</div><div class="value">{esc(status_value)}</div></div></div>
 </section>
 <section class="section">

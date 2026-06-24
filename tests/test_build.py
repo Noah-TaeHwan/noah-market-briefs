@@ -334,5 +334,44 @@ class TestCssHasNewStyles(unittest.TestCase):
             self.assertIn(sel, css)
 
 
+class TestTemplateV2Robustness(unittest.TestCase):
+    """v2 새 필드의 잘못된 모양이 빌드를 죽이지 않고 관대/안전하게 처리되는지(adversarial)."""
+
+    def test_changes_string_items_render_lenient(self):
+        # changes 가 문자열 리스트(LLM이 '줄'로 오해)여도 크래시 없이 텍스트로 렌더
+        html = render({"changes": ["어제 risk-off→오늘 반등", "VIX 진정"]})
+        self.assertIn("change-list", html)
+        self.assertIn("어제 risk-off→오늘 반등", html)
+
+    def test_changes_dict_without_text_skipped(self):
+        html = render({"changes": [{"dir": "up"}, {"dir": "down", "text": "유효"}]})
+        self.assertIn("유효", html)
+        self.assertEqual(html.count("chg-text"), 1)    # 텍스트 없는 dict는 스킵
+
+    def test_changes_all_invalid_omits_section(self):
+        html = render({"changes": [{"dir": "up"}, ""]})  # 텍스트 있는 항목 0
+        self.assertNotIn("어제 대비 변화", html)
+
+    def test_delta_string_no_crash_and_omitted(self):
+        html = render({"theses": [{"name": "위험선호", "signal": "x",
+                                   "delta": "잘못된 모양", "body": "b"}]})
+        self.assertNotIn("thesis-delta", html)         # 문자열 delta 무시(크래시 없음)
+
+    def test_delta_dict_without_text_omitted(self):
+        html = render({"theses": [{"name": "위험선호", "signal": "x",
+                                   "delta": {"dir": "up"}, "body": "b"}]})
+        self.assertNotIn("thesis-delta", html)         # 외로운 화살표 방지
+
+    def test_dir_flat_and_unknown_fall_to_flat(self):
+        html = render({"changes": [{"dir": "flat", "text": "유지"},
+                                   {"dir": "sideways", "text": "미지"}]})
+        self.assertEqual(html.count('class="dir flat"'), 2)  # flat + 알수없음→flat
+
+    def test_index_landing_no_holdings_copy(self):
+        html = B.build_index_html([])
+        self.assertNotIn("보유논지", html)              # 랜딩 카피도 리네임 반영
+        self.assertIn("투자 관점 읽기", html)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

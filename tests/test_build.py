@@ -261,5 +261,78 @@ class TestLoadRecordsRobustness(unittest.TestCase):
             self.assertTrue((site / "2026/06/23/ok.html").exists())
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 템플릿 v2: 투자 렌즈 + 어제 대비 변화 (Phase 1)
+# ─────────────────────────────────────────────────────────────────────────────
+
+class TestChangesSection(unittest.TestCase):
+    """'어제 대비 변화'(changes[]) 섹션 + 방향 칩 렌더 / 없으면 미표시."""
+
+    def test_changes_render_with_dir_chips(self):
+        html = render({"changes": [
+            {"dir": "up", "text": "위험선호 회복"},
+            {"dir": "down", "text": "변동성 진정"},
+        ]})
+        self.assertIn("어제 대비 변화", html)
+        self.assertIn("change-list", html)
+        self.assertIn('class="dir up"', html)
+        self.assertIn('class="dir down"', html)
+        self.assertIn("위험선호 회복", html)
+
+    def test_no_changes_omits_section(self):
+        html = render({"metrics": [{"name": "x", "value": "1"}]})
+        self.assertNotIn("어제 대비 변화", html)
+        self.assertNotIn("change-list", html)
+
+
+class TestThesisDeltaAndRename(unittest.TestCase):
+    """투자 렌즈(thesis) delta 한 줄 + 섹션 제목 '투자 관점 읽기' / delta 없으면 미표시."""
+
+    def test_delta_renders(self):
+        html = render({"theses": [{
+            "name": "위험선호", "signal": "회복", "level": 2,
+            "delta": {"dir": "up", "text": "어제 약세→오늘 반등"}, "body": "본문",
+        }]})
+        self.assertIn("thesis-delta", html)
+        self.assertIn('class="dir up"', html)
+        self.assertIn("어제 약세→오늘 반등", html)
+
+    def test_no_delta_backward_compat(self):
+        html = render({"theses": [{"name": "글로벌 증권사", "signal": "x", "body": "b"}]})
+        self.assertNotIn("thesis-delta", html)       # delta 없으면 미표시
+        self.assertIn('class="thesis-card"', html)   # 카드는 정상 렌더
+
+    def test_section_renamed_to_investing_read(self):
+        html = render({"theses": [{"name": "위험선호", "signal": "x", "body": "b"}]})
+        self.assertIn("투자 관점 읽기", html)
+        self.assertNotIn("Noah 보유논지 민감도", html)
+
+
+class TestWatchHeadingWindowAware(unittest.TestCase):
+    """장전(preopen)=오늘 볼 센서 / 마감·기본=내일 볼 센서."""
+
+    def test_preopen_today(self):
+        html = render({"window_code": "preopen", "watch": ["x"]})
+        self.assertIn("오늘 볼 센서", html)
+        self.assertNotIn("내일 볼 센서", html)
+
+    def test_close_tomorrow(self):
+        html = render({"window_code": "close", "watch": ["x"]})
+        self.assertIn("내일 볼 센서", html)
+
+    def test_default_tomorrow(self):
+        html = render({"watch": ["x"]})              # window_code 없으면 기본 '내일'
+        self.assertIn("내일 볼 센서", html)
+
+
+class TestCssHasNewStyles(unittest.TestCase):
+    """새 마크업(.change-list/.dir/.thesis-delta)에 대응하는 CSS 존재(누락 회귀 방지)."""
+
+    def test_css_defines_change_and_delta(self):
+        css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
+        for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta"):
+            self.assertIn(sel, css)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -22,6 +22,21 @@ _NOSIGNAL_TOKENS = {"미확인", "no signal", "n/a", "na", "—", "-"}
 # H1 제목의 끝-날짜를 분리하는 em-dash(—). 예: "한국 시장 마감 — 2026-06-23".
 _EM_DASH = "—"
 
+# 어제 대비 방향 칩: up=▲ / down=▼ / flat== (색은 brief.css --good/--bad/--muted)
+_DIRS = {"up": "▲", "down": "▼", "flat": "="}
+
+
+def _dir_chip(d) -> str:
+    """어제 대비 방향 칩 HTML. up/down/flat 외 값은 flat 으로 떨어진다.
+
+    @param d 방향 문자열(up/down/flat)
+    @returns ``<span class="dir ...">`` 칩 HTML
+    """
+    d = str(d or "flat").strip().lower()
+    if d not in _DIRS:
+        d = "flat"
+    return f'<span class="dir {d}" aria-hidden="true">{_DIRS[d]}</span>'
+
 
 def esc(x):
     """HTML 특수문자를 이스케이프한다(속성/본문 공용)."""
@@ -170,11 +185,12 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return f'<section class="section"><h2>오늘의 핵심 driver</h2><ul class="driver-list">{lis}</ul></section>'
 
     def theses_section() -> str:
-        """보유논지 민감도 섹션. signal 태그 + 선택적 level 미터(●●●) + 선택적 lead.
+        """투자 관점 읽기(렌즈) 섹션. signal 태그 + 선택적 level 미터(●●●) +
+        선택적 delta(어제 대비 한 줄) + 선택적 lead.
 
-        @note level(1~3) 이 있으면 ``signal lvlN`` + 3-도트 미터를 달고, 카드 테두리
-              톤(s-high/s-mid)을 입힌다. lead 가 있으면 본문 앞 굵은 리드 줄. 둘 다
-              없으면 핀/미터/리드 없이 깔끔하게 degrade(예: us-close).
+        @note level(1~3) 이 있으면 ``signal lvlN`` + 3-도트 미터 + 카드 테두리 톤
+              (s-high/s-mid). delta(``{dir,text}``) 가 있으면 본문 앞 어제 대비 한 줄,
+              lead 가 있으면 굵은 리드 줄. 모두 없으면 깔끔하게 degrade(하위호환).
         """
         items = payload.get("theses", [])
         if not items:
@@ -186,6 +202,11 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             sig_cls = "signal lvl%d" % lvl if has_lvl else "signal"
             meter = '<span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>' if has_lvl else ""
             card_cls = {3: "thesis-card s-high", 2: "thesis-card s-mid"}.get(lvl, "thesis-card")
+            delta = t.get("delta")
+            delta_html = ""
+            if isinstance(delta, dict) and (delta.get("text") or delta.get("dir")):
+                delta_html = (f'<div class="thesis-delta">{_dir_chip(delta.get("dir"))}'
+                              f'<span>{esc(delta.get("text",""))}</span></div>')
             lead = t.get("lead", "")
             lead_html = f'<span class="thesis-lead">{esc(lead)}</span>' if lead else ""
             sig_inner = f'{esc(t.get("signal",""))} {meter}' if meter else esc(t.get("signal", ""))
@@ -193,17 +214,18 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                 f'<article class="{card_cls}"><div class="thesis-head">'
                 f'<span class="thesis-name">{esc(t.get("name",""))}</span>'
                 f'<span class="{sig_cls}">{sig_inner}</span></div>'
-                f'<div class="thesis-body">{lead_html}{esc(t.get("body",""))}</div></article>'
+                f'<div class="thesis-body">{delta_html}{lead_html}{esc(t.get("body",""))}</div></article>'
             )
-        return f'<section class="section"><h2>Noah 보유논지 민감도</h2><div class="thesis-stack">{"".join(out)}</div></section>'
+        return f'<section class="section"><h2>투자 관점 읽기</h2><div class="thesis-stack">{"".join(out)}</div></section>'
 
     def watch_section() -> str:
-        """내일 볼 센서 섹션. 없으면 빈 문자열."""
+        """볼 센서 섹션. 장전(preopen)이면 '오늘', 마감·기본이면 '내일'. 없으면 빈 문자열."""
         items = payload.get("watch", [])
         if not items:
             return ""
+        heading = "오늘 볼 센서" if payload.get("window_code") == "preopen" else "내일 볼 센서"
         lis = "".join(f'<li>{esc(w)}</li>' for w in items)
-        return f'<section class="section"><h2>내일 볼 센서</h2><ul class="watch-list">{lis}</ul></section>'
+        return f'<section class="section"><h2>{esc(heading)}</h2><ul class="watch-list">{lis}</ul></section>'
 
     def risks_section() -> str:
         """리스크 / 무효화 기준 섹션(번호 없는 h2). 없으면 빈 문자열."""
@@ -234,10 +256,23 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             return present[0]
         return f'<div class="grid {grid_cls}">{"".join(present)}</div>'
 
+    def changes_section():
+        """'어제 대비 변화' 섹션 — 직전 같은 윈도 브리프 대비 시장 변화. 없으면 빈 문자열."""
+        items = payload.get("changes", [])
+        if not items:
+            return ""
+        lis = "".join(
+            f'<li>{_dir_chip(c.get("dir"))}<span class="chg-text">{esc(c.get("text",""))}</span></li>'
+            for c in items
+        )
+        return (f'<section class="section changes"><h2>어제 대비 변화</h2>'
+                f'<ul class="change-list">{lis}</ul></section>')
+
     takeaway = payload.get("takeaway", "")
     favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"
 
     body_blocks = "\n".join(b for b in [
+        changes_section(),
         market_board(),
         grid_row("split", [drivers_section(), theses_section()]),
         grid_row("even", [watch_section(), risks_section()]),

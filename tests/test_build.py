@@ -62,6 +62,34 @@ class TestRenderMetricBoard(unittest.TestCase):
         self.assertIn("mcard nosignal", html)                 # 무신호 슬레이트 카드
         self.assertIn("nosig-chip", html)
 
+    def test_composite_values_render_as_readable_segments(self):
+        """슬래시로 묶인 여러 시장 숫자는 라벨|숫자 행으로 쪼개져 렌더된다."""
+        html = render({"metrics": [
+            {"name": "미국 전일 종가", "value": "Dow +0.14% / S&P 500 -0.01% / Nasdaq -0.46%", "tone": "flat"},
+            {"name": "미국 지수선물", "value": "S&P 500 선물 +0.32% / Nasdaq 100 선물 +0.38%", "tone": "up"},
+        ]})
+        self.assertIn('class="ival flat tnum has-segs"', html)
+        self.assertIn('class="metric-segs"', html)
+        self.assertIn('<span class="seg-label">Dow</span><span class="seg-num up tnum">+0.14%</span>', html)
+        self.assertIn('<span class="seg-label">S&amp;P 500</span><span class="seg-num down tnum">-0.01%</span>', html)
+
+    def test_source_only_index_note_renders_as_source_not_colored_delta(self):
+        """출처뿐인 note는 숫자 아래 컬러 delta가 아니라 작은 출처 줄로 렌더된다."""
+        html = render({"metrics": [
+            {"name": "미국 지수선물", "value": "S&P 500 선물 +0.32% / Nasdaq 100 선물 +0.38%", "tone": "up", "note": "CNBC quote-cache, 2026-06-25 19:19 EDT; futures, not close"},
+        ]})
+        self.assertIn('<div class="isrc">CNBC quote-cache, 2026-06-25 19:19 EDT; futures, not close</div>', html)
+        self.assertNotIn('class="idelta up tnum">CNBC quote-cache', html)
+
+    def test_six_macro_cards_use_three_columns_to_avoid_empty_grid_holes(self):
+        """6개 매크로 카드는 4열+빈칸 대신 3열×2행으로 렌더한다."""
+        metrics = [
+            {"name": "h", "value": "1"}, {"name": "i1", "value": "1"},
+            {"name": "i2", "value": "1"}, {"name": "i3", "value": "1"},
+        ] + [{"name": f"m{i}", "value": str(i)} for i in range(6)]
+        html = render({"metrics": metrics})
+        self.assertIn('class="macros mcols-3"', html)
+
 
 class TestIndex(unittest.TestCase):
     """정직한 아카이브 index: live/sample 카운트 + 샘플 표기 + 필터 속성."""

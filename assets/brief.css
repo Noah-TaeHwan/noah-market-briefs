@@ -339,6 +339,40 @@ h1 .h1-date{white-space:nowrap;font-variant-numeric:tabular-nums}
 }
 .mcard .mnote{margin-top:auto;padding-top:11px;font-family:var(--mono);font-size:9.5px;line-height:1.6;letter-spacing:.02em;color:var(--muted)}
 
+/* 복합 지표값: "A +x / B -y"를 한 줄 덩어리 대신 라벨|숫자 행으로 읽게 한다. */
+.idx .ival.has-segs,.mcard .mval.has-segs{
+  display:block;width:100%;line-height:normal;letter-spacing:0;color:var(--ink);text-shadow:none;
+}
+.idx .ival.has-segs{margin-top:18px;font-size:inherit}
+.idx.feature .ival.has-segs{margin-top:22px}
+.mcard .mval.has-segs{font-size:inherit}
+.metric-segs{display:grid;gap:7px;width:100%}
+.metric-seg{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:10px;
+  padding:7px 0;border-top:1px solid var(--line-soft);
+}
+.metric-seg:first-child{border-top:none;padding-top:0}
+.metric-seg.single{grid-template-columns:1fr}
+.seg-label{
+  min-width:0;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.025em;
+  line-height:1.38;color:var(--ink-soft);word-break:keep-all;
+}
+.seg-num{
+  font-family:var(--display);font-weight:560;line-height:1;letter-spacing:-0.02em;white-space:nowrap;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+}
+.idx .seg-num{font-size:clamp(20px,2vw,28px)}
+.idx.feature .seg-num{font-size:clamp(24px,2.6vw,36px)}
+.idx.feature .seg-label{font-size:11.5px;color:var(--muted)}
+.mcard .metric-segs{gap:5px}
+.mcard .metric-seg{padding:5px 0;gap:8px}
+.mcard .seg-label{font-size:10px;color:var(--muted)}
+.mcard .seg-num{font-size:clamp(17px,1.4vw,20px)}
+.metric-seg.single .seg-label{
+  font-family:var(--display);font-size:clamp(16px,1.45vw,20px);font-weight:520;
+  letter-spacing:-0.01em;line-height:1.28;color:var(--ink);
+}
+
 /* 무신호(미확인) — 차분한 슬레이트 + 해치 칩 */
 .mcard.nosignal{background:var(--surface)}
 .mcard.nosignal .mval{font-size:18px;color:var(--flat);display:inline-flex;align-items:center;gap:.5em}
@@ -356,6 +390,7 @@ h1 .h1-date{white-space:nowrap;font-variant-numeric:tabular-nums}
 .idx .ival.down::after,.mcard .mval.down::after{content:"▼";font-size:.34em;margin-left:.5em;transform:translateY(-.45em);opacity:.85}
 .idx .ival.up::after{content:"▲";font-size:.34em;margin-left:.5em;transform:translateY(-.6em);opacity:.85}
 .mcard .mval.up::after{content:"▲";font-size:.42em;margin-left:.4em;transform:translateY(-.5em);opacity:.85}
+.idx .ival.has-segs::after,.mcard .mval.has-segs::after{content:none}
 .idelta.down{color:var(--bad)}
 .idelta.up{color:var(--good)}
 .idelta.warn{color:var(--warn)}

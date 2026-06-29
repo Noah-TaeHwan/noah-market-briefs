@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-29-kr-close",
+  "date": "2026-06-29",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/06/29/korea-close.html",
+  "title": "한국 시장 마감 — 2026-06-29",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · 연합뉴스 economy RSS",
+  "generated": "Generated KST 2026-06-29 16:30",
+  "source": "Naver Finance daily index table · Naver/Hana Bank market index · Yonhap economy RSS",
+  "data_quality": "정상 브리프 가능 — KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가 확인; USD/KRW 15:30 종가 연합뉴스 확인; 국고채 금리 수치 미확인",
+  "use": "시장 민감도 일지",
+  "takeaway": "대형주 지수는 약보합에 머물렀지만 KOSDAQ은 급등했고, 원/달러 15:30 종가와 외국인 매도·변동성 headline은 한국 위험자산의 스트레스가 아직 풀리지 않았다는 신호입니다.",
+  "changes": [
+    {
+      "dir": "up",
+      "text": "KOSPI는 직전 브리프의 -5.81% 급락에서 오늘 -0.20% 약보합으로 낙폭이 크게 줄었습니다."
+    },
+    {
+      "dir": "up",
+      "text": "KOSDAQ은 직전 -4.10%에서 오늘 +8.13%로 급반등해 중소형 성장주 쪽 위험선호가 하루 단위로 되살아났습니다."
+    },
+    {
+      "dir": "down",
+      "text": "다만 USD/KRW 15:30 종가는 1,545.2원으로 보도됐고, 외국인 7.7조 매도 headline이 붙어 환율·수급 스트레스는 더 강하게 확인됐습니다."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "KOSPI",
+      "value": "8,394.65",
+      "tone": "down",
+      "note": "-16.56 / -0.20% · Naver Finance daily index table, 2026.06.29"
+    },
+    {
+      "name": "KOSDAQ",
+      "value": "920.57",
+      "tone": "up",
+      "note": "+69.20 / +8.13% · Naver Finance daily index table, 2026.06.29"
+    },
+    {
+      "name": "KOSPI200",
+      "value": "1,352.54",
+      "tone": "down",
+      "note": "-13.95 / -1.02% · Naver Finance daily index table, 2026.06.29"
+    },
+    {
+      "name": "KOSPI200 선물",
+      "value": "1,366.50",
+      "tone": "down",
+      "note": "-19.40 / -1.40% · Naver Finance daily index table, 2026.06.29"
+    },
+    {
+      "name": "USD/KRW 15:30 종가",
+      "value": "1,545.2원",
+      "tone": "warn",
+      "note": "+13.2원 · 연합뉴스 [외환] headline, 2026.06.29 15:31 KST"
+    },
+    {
+      "name": "USD/KRW 16:25 참고",
+      "value": "1,541.50원",
+      "tone": "warn",
+      "note": "+4.00원 · Naver/Hana Bank posted rate, 2026.06.29 16:25 KST; 15:30 종가 대체 아님"
+    },
+    {
+      "name": "채권시장",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected Yonhap/Naver context에 2026.06.29 국고채 종가 수익률 또는 채권시장 headline 없음"
+    },
+    {
+      "name": "변동성/옵션",
+      "value": "코스피 변동성지수 종가 기준 역대 최고 headline",
+      "tone": "warn",
+      "note": "연합뉴스 2026.06.29 16:04 KST; 수치 미제공, KOSPI200 선물 -1.40%는 Naver Finance"
+    },
+    {
+      "name": "외국인 수급",
+      "value": "7.7조 매도 headline",
+      "tone": "warn",
+      "note": "연합뉴스 2026.06.29 15:57 KST: 외국인 매도·환율 금융위기 후 최고 headline"
+    },
+    {
+      "name": "섹터/대형주",
+      "value": "삼성전자 4%대 급락, SK하이닉스 1%대 하락 headline",
+      "tone": "down",
+      "note": "연합뉴스 2026.06.29 16:02 KST; 개별 종가 수치 미확인"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "대형주 압박과 KOSDAQ 반등의 분리",
+      "text": "KOSPI는 -0.20%, KOSPI200은 -1.02%였지만 KOSDAQ은 +8.13%로 급등해, 전체 위험선호가 균일하게 회복됐다기보다 대형주·중소형 간 분화가 컸습니다."
+    },
+    {
+      "label": "환율·외국인 수급 스트레스",
+      "text": "연합뉴스는 원/달러 15:30 종가 1,545.2원과 외국인 7.7조 매도 headline을 같은 날 제시했습니다. 지수 낙폭 축소와 별개로 외국인 환산수익률 부담은 남아 있습니다."
+    },
+    {
+      "label": "파생·변동성 경계 유지",
+      "text": "KOSPI200 선물은 -1.40%로 하락했고, 코스피 변동성지수는 종가 기준 역대 최고 headline이 확인됐습니다. 수치가 없어 레벨은 단정하지 않지만 헤지 비용 경계는 유지됩니다."
+    }
+  ],
+  "theses": [
+    {
+      "name": "위험선호",
+      "signal": "KOSDAQ 급반등, 대형주는 약함",
+      "level": 2,
+      "delta": {
+        "dir": "up",
+        "text": "직전 KOSPI/KOSDAQ 동반 급락에서 오늘은 KOSDAQ +8.13%로 단기 위험선호가 일부 회복됐습니다."
+      },
+      "body": "비상장 커머스 같은 비상장 소비/IPO 논지에는 KOSDAQ 반등이 상장 심리에는 완충이지만, 대형 반도체 약세·외국인 매도·환율 상승이 함께 있어 할인율 부담이 해소됐다고 보긴 어렵습니다."
+    },
+    {
+      "name": "금리·duration",
+      "signal": "미확인",
+      "level": 1,
+      "delta": {
+        "dir": "flat",
+        "text": "오늘 injected source에는 국고채 종가 수익률이 없어 duration 신호를 갱신하지 않습니다."
+      },
+      "body": "채권시장 데이터가 없으므로 오늘의 주식 분화를 금리 하락 또는 금리 상승으로 설명하지 않습니다. 성장주 반등이 지속되려면 내일 국고채 3년·10년과 KOSDAQ 동행 여부를 확인해야 합니다."
+    },
+    {
+      "name": "환율·달러(원화)",
+      "signal": "15:30 종가 1,545.2원, 원화 약세 경계",
+      "level": 3,
+      "delta": {
+        "dir": "down",
+        "text": "직전 브리프에선 공식 15:30 종가가 미확인이었지만 오늘은 연합뉴스 기준 1,545.2원으로 높은 레벨이 확인됐습니다."
+      },
+      "body": "원화 약세와 외국인 매도 headline은 한국 위험자산의 달러 기준 성과와 IPO/프라이빗마켓 할인율에 직접 부담입니다. 글로벌 증권사 관점에서는 한국 단독 이슈보다 글로벌 달러 유동성·환전/거래활동 변화가 이어지는지 봐야 합니다."
+    },
+    {
+      "name": "변동성·헤지",
+      "signal": "V-KOSPI 경계 + 선물 약세",
+      "level": 3,
+      "delta": {
+        "dir": "flat",
+        "text": "KOSPI200 선물 낙폭은 -5.18%에서 -1.40%로 줄었지만, 변동성지수 역대 최고 headline이 남았습니다."
+      },
+      "body": "미국 온라인 게이밍·consumer discretionary처럼 멀티플 민감도가 있는 논지는 변동성 프리미엄이 낮아질 때까지 할인율 스트레스를 보수적으로 봐야 합니다. Compute futures watch는 오늘 한국 마감만으로 바뀌진 않지만, 달러 강세와 헤지 비용이 글로벌 risk budget을 압박하는지는 센서입니다."
+    },
+    {
+      "name": "섹터·브레드스",
+      "signal": "반도체 대형주 약세 vs KOSDAQ 강세",
+      "level": 2,
+      "delta": {
+        "dir": "flat",
+        "text": "직전에는 업종 headline이 미확인이었고, 오늘은 삼성전자·SK하이닉스 약세 headline만 확인됩니다."
+      },
+      "body": "대형 반도체가 약하고 KOSDAQ이 강한 조합은 지수 표면보다 내부 breadth가 복잡하다는 뜻입니다. 업종별 수익률·외국인 순매수 세부가 없어 섹터 로테이션으로 단정하지 않습니다."
+    }
+  ],
+  "watch": [
+    "USD/KRW 15:30 종가가 1,540원대 중반에 고착되는지, 또는 내일 되돌림이 나오는지.",
+    "KOSPI200 선물과 코스피 변동성지수: 선물 약세가 잦아들고 V-KOSPI headline 압력이 완화되는지.",
+    "국고채 3년·10년 종가 수익률: 성장주 반등이 duration 완화와 동행하는지, 아니면 환율 스트레스와 분리되는지.",
+    "외국인 매도가 삼성전자·SK하이닉스 중심으로 이어지는지, KOSDAQ 반등으로 breadth가 확산되는지."
+  ],
+  "risks": [
+    "오늘 브리프는 injected script의 Naver Finance/Naver-Hana/Yonhap same-date 데이터에 한정합니다.",
+    "국고채 금리 수치, 업종별 등락률, 주체별 상세 순매수 금액은 미확인입니다. 외국인 7.7조 매도는 연합뉴스 headline 기반이며 세부 산식은 확인하지 않았습니다.",
+    "코스피 변동성지수는 역대 최고 headline만 확인했고 수치는 제공되지 않아 레벨을 추정하지 않습니다.",
+    "이 브리프는 투자 권유나 매매 지시가 아니라 금리·환율·파생·브레드스 민감도 점검입니다."
+  ],
+  "quality": [
+    {
+      "label": "Status",
+      "value": "정상 브리프 가능"
+    },
+    {
+      "label": "Confirmed",
+      "value": "KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가; USD/KRW 15:30 종가 연합뉴스 확인"
+    },
+    {
+      "label": "미확인",
+      "value": "국고채 종가 수익률, 업종별 등락률, 주체별 상세 순매수, V-KOSPI 수치"
+    },
+    {
+      "label": "Source/date",
+      "value": "Naver Finance · Naver/Hana Bank market index · Yonhap economy RSS · 2026-06-29"
+    }
+  ]
+}

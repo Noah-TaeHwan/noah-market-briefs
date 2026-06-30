@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-01-kr-preopen",
+  "date": "2026-07-01",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "status": "live",
+  "out_path": "2026/07/01/korea-preopen.html",
+
+  "title": "한국 시장 전 — 2026-07-01",
+  "market": "Korea",
+  "window": "KRX pre-open, 30m before open",
+  "note": "Source: CNBC quote-cache · Naver Finance/Hana Bank · 연합뉴스 RSS",
+  "generated": "Generated KST 2026-07-01 08:30",
+  "source": "CNBC quote-cache 2026-06-30 U.S. close / 2026-07-01 08:30 KST · Naver Finance/Hana Bank 2026-07-01 08:26 KST · 연합뉴스 economy RSS 2026-07-01",
+  "data_quality": "부분 정상 — prior U.S. close, U.S. index futures, U.S. 10Y/Treasury futures, VIX/VIX futures, USD/KRW posted rate, same-date Korea-sensitive headlines 확인; DXY·oil·gold quote와 same-date Korea cash bond yield 및 KOSPI200 futures/options 장전 수치는 미확인",
+  "use": "한국 장전 매크로 민감도 일지",
+  "takeaway": "미국 전일 주식 강세와 VIX 하락은 한국 장전 위험선호에 우호적이지만, 10년물 4.461%와 USD/KRW 1,548.00원이 할인율·환율 부담을 키워 개장 후 외국인 수급과 선물 basis 확인이 필요합니다.",
+
+  "changes": [
+    { "dir": "down", "text": "미국 현물 강세는 유지됐지만 강도는 직전 브리프보다 낮아졌습니다: S&P 500 +0.792%, Nasdaq +1.524%(직전 +1.175%/+2.066%; CNBC quote-cache)." },
+    { "dir": "down", "text": "미국 10년물은 직전 4.374%에서 4.461%로 상승해 duration 부담이 커졌습니다(CNBC/Tradeweb 2026-06-30 close)." },
+    { "dir": "down", "text": "USD/KRW posted rate는 직전 1,542.00원에서 1,548.00원으로 높아졌습니다. 원화 부담은 어제보다 커진 쪽입니다(Naver/Hana 2026-07-01 08:26 KST)." },
+    { "dir": "up", "text": "VIX 현물은 직전 17.65에서 16.45로 낮아져 글로벌 헤지 부담은 완화됐습니다(CNBC/CBOE 2026-06-30)." }
+  ],
+
+  "metrics": [
+    { "name": "미국 전일 종가", "value": "Dow +0.26% / S&P 500 +0.792% / Nasdaq +1.524%", "tone": "up", "note": "CNBC quote-cache, 2026-06-30 U.S. close; prior-session closes" },
+    { "name": "미국 지수선물", "value": "Dow fut -0.19% / S&P 500 fut -0.05% / Nasdaq 100 fut +0.02%", "tone": "flat", "note": "CNBC quote-cache, 2026-06-30 19:19~19:20 EDT / 2026-07-01 08:19~08:20 KST; futures, not close" },
+    { "name": "미국 10년물", "value": "4.461%", "tone": "warn", "note": "CNBC/Tradeweb, 2026-06-30 17:05 EDT; +0.039ppt vs previous day close shown in source" },
+    { "name": "Treasury futures", "value": "10Y fut -0.20% / 30Y fut -0.61% / 5Y fut -0.12%", "tone": "warn", "note": "CNBC/CBOT, 2026-06-30 19:19 EDT; Treasury futures, not cash close" },
+    { "name": "VIX / 변동성", "value": "VIX 16.45 (-6.799%) / VIX Jul fut 18.05 (+0.5532%)", "tone": "up", "note": "CNBC/CBOE, VIX 2026-06-30 16:15 EDT; VIX futures 2026-06-30 19:14 EDT" },
+    { "name": "USD/KRW", "value": "1,548.00원", "tone": "warn", "note": "Naver Finance/Hana Bank posted rate, 2026-07-01 08:26 KST; change_abs 0.00, 보합 표시" },
+    { "name": "유가·DXY·금", "value": "미확인", "tone": "flat", "note": "injected CNBC quote-cache에서 DXY/CL.1/GC.1 상세 quote 누락" },
+    { "name": "한국 장전 헤드라인", "value": "코스피 상승세 지속 여부·국민연금 리밸런싱 재개 주목", "tone": "flat", "note": "연합뉴스 [마켓뷰], 2026-07-01 08:18 KST" },
+    { "name": "한국 채권시장", "value": "전일 국고 3년 3.703% headline", "tone": "flat", "note": "연합뉴스 2026-06-30 16:52~16:54 KST: 외국인 순매수세에 국고채 금리 하락; same-date 2026-07-01 cash yield는 source context에 없음" },
+    { "name": "한국 선물·옵션", "value": "미확인", "tone": "flat", "note": "source context에 same-date KOSPI200 futures/options 장전 수치 없음; 미국 VIX/VIX futures만 확인" }
+  ],
+
+  "drivers": [
+    { "label": "미국 위험선호는 우호적이지만 전일보다 강도 둔화", "text": "전일 Nasdaq +1.524%, S&P 500 +0.792%는 한국 반도체·성장주 심리에 우호적입니다. 다만 직전 브리프 대비 상승률은 낮아졌고 08:20 KST 전후 S&P 500 선물은 -0.05%라, 장전 모멘텀을 과장하긴 어렵습니다." },
+    { "label": "금리와 원화가 할인율 부담", "text": "미국 10년물은 4.461%로 올라왔고 Treasury futures도 하락했습니다. 동시에 Naver/Hana 기준 USD/KRW는 08:26 KST 1,548.00원으로 높아져, 성장주 멀티플·외국인 수급·비상장 consumer 할인율에는 부담입니다." },
+    { "label": "국내 수급 headline은 국민연금 리밸런싱에 초점", "text": "연합뉴스 장전 마켓뷰는 코스피 상승세 지속 여부와 국민연금 리밸런싱 재개를 주요 변수로 제시했습니다. 미국 기술주 훈풍이 들어오더라도 국내 기관·외국인 수급과 선물 basis가 실제 방향을 가를 가능성이 큽니다." }
+  ],
+
+  "theses": [
+    { "name": "위험선호", "signal": "우호적이나 확인 필요", "level": 2, "delta": { "dir": "down", "text": "미국 주식은 올랐지만 상승 강도는 직전 브리프보다 낮고 선물은 혼조입니다." }, "body": "미국 전일 종가와 VIX 하락은 개장 전 위험선호를 지지합니다. 다만 10년물 상승과 원화 약세가 동시에 있어, 한국 장에서는 반도체 대형주만 오르는지 아니면 코스피·코스닥 breadth로 확산되는지가 핵심입니다." },
+    { "name": "금리·duration", "signal": "부담 확대", "level": 2, "delta": { "dir": "down", "text": "미국 10년물이 4.374%에서 4.461%로 상승했습니다." }, "body": "duration 민감 성장주와 비상장 IPO 할인율에는 금리 상승이 부담입니다. 비상장 커머스 같은 pre-IPO consumer 논지는 금리 하루 변동으로 바뀌지 않지만, IPO 밸류·상장 환경을 볼 때 금리와 원화가 같이 불리해지는 조합은 discount rate 스트레스입니다." },
+    { "name": "환율·달러(원화)", "signal": "부담 확대", "level": 3, "delta": { "dir": "down", "text": "USD/KRW가 1,542.00원에서 1,548.00원으로 높아졌습니다." }, "body": "원화 약세는 한국 위험자산에 대한 외국인 수급과 국내 consumer 멀티플에 직접적인 심리 부담입니다. 오늘은 USD/KRW가 개장 후 1,550원선에 붙는지, 아니면 1,540원대 중반에서 안정되는지가 비상장 커머스·국내 IPO 환경 민감도의 1차 센서입니다." },
+    { "name": "변동성·헤지", "signal": "완화", "level": 2, "delta": { "dir": "up", "text": "VIX 현물은 17.65에서 16.45로 낮아졌습니다." }, "body": "VIX 하락은 글로벌 헤지 부담 완화 신호입니다. 다만 VIX futures는 소폭 플러스이고 국내 KOSPI200 선물·옵션 장전 수치가 없어, 국내 변동성 프리미엄은 개장 후 basis, 프로그램 매매, 옵션 프리미엄으로 확인해야 합니다." },
+    { "name": "섹터·브레드스", "signal": "반도체·성장주 우호, 내수는 환율 확인", "level": 2, "delta": { "dir": "flat", "text": "미국 기술주 훈풍은 이어졌지만 금리·원화 부담이 같이 커졌습니다." }, "body": "미국 Nasdaq 강세는 한국 반도체·AI 관련주에 우호적입니다. 반면 높은 USD/KRW와 금리는 내수/비상장 consumer 밸류에이션에 부담입니다. 오늘은 대형 기술주 상승이 코스닥·소비·플랫폼으로 확산되는지 분리해서 봐야 합니다." }
+  ],
+
+  "watch": [
+    "KOSPI/KOSDAQ 개장 30~60분: 미국 Nasdaq +1.524%가 반도체·AI 대형주뿐 아니라 시장 breadth로 확산되는지.",
+    "USD/KRW: 08:26 KST 1,548.00원 이후 서울 환시 초반 1,550원선 접근 여부와 외국인 현물 순매수/순매도 동반 여부.",
+    "파생/변동성 센서: KOSPI200 선물 basis, 프로그램 매매, V-KOSPI 또는 옵션 프리미엄이 VIX 하락을 따라 안정되는지.",
+    "채권 센서: 전일 국고채 금리 하락 headline 이후 오늘 국내 금리가 미국 10년물 상승을 따라가는지, 아니면 국내 수급·성장 우려로 안정되는지."
+  ],
+
+  "risks": [
+    "이 브리프는 2026-07-01 08:30 KST injected snapshot 기준입니다. 미국 지수선물은 futures/pre-market 값이며 종가가 아닙니다.",
+    "DXY·유가·금 세부 quote와 same-date 한국 국고채 cash yield, KOSPI200 futures/options 장전 수치는 source context에 없어 미확인으로 남깁니다.",
+    "한국 채권시장 수치는 same-date 장전 현금금리가 아니라 전일 연합뉴스 headline입니다. 오늘 국내 채권 방향으로 단정하지 않습니다.",
+    "무효화 기준은 미국 기술주 강세에도 개장 후 USD/KRW 1,550원선 접근, 외국인 순매도, KOSPI200 선물 basis 악화가 동시에 나타나는 경우입니다. 반대로 원화 안정·외국인 순매수·breadth 확산이 확인되면 장전 위험선호 신호가 강화됩니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "부분 정상" },
+    { "label": "Confirmed", "value": "prior U.S. close, U.S. futures, U.S. 10Y/Treasury futures, VIX/VIX futures, USD/KRW posted rate, same-date Yonhap headlines" },
+    { "label": "Unconfirmed", "value": "DXY/oil/gold quote details, same-date Korea cash bond yield, KOSPI200 futures/options market data" },
+    { "label": "Source/date", "value": "CNBC quote-cache 2026-06-30/07-01 · Naver/Hana 2026-07-01 08:26 KST · Yonhap RSS 2026-07-01" }
+  ]
+}

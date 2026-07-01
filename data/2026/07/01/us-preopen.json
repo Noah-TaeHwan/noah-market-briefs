@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-01-us-preopen",
+  "date": "2026-07-01",
+  "market_code": "US",
+  "window_code": "preopen",
+  "status": "live",
+  "out_path": "2026/07/01/us-preopen.html",
+
+  "title": "미국 시장 전 — 2026-07-01",
+  "market": "United States",
+  "window": "U.S. Pre-open",
+  "note": "U.S. equities regular open 약 30분 전 · DST schedule 22:00 KST",
+  "generated": "Generated KST 2026-07-01 22:00 · ET 2026-07-01 09:00",
+  "source": "CNBC Quote API / exchange quote cache, generated 2026-07-01 09:00 EDT",
+  "data_quality": "정상 pre-open snapshot 가능 · prior close는 2026-06-30, current pre-open은 2026-07-01 08:49~09:00 EDT · DXY/USD-KRW/WTI/Gold 미확인",
+  "use": "시장 민감도 일지 · 투자 권유 아님",
+  "takeaway": "미국 장전은 전일 지수 종가가 강했지만, 10년물 4.49%대 재상승과 Nasdaq 100 선물 약세가 겹치며 개장 전에는 duration·AI/기술주 민감도가 다시 커진 환경입니다.",
+
+  "changes": [
+    { "dir": "up", "text": "전일 종가는 S&P 500 7,499.36, Nasdaq 26,213.72로 직전 브리프의 prior close보다 높아졌지만, 오늘 장전 선물은 S&P 500 -0.26%, Nasdaq 100 -0.90%로 추격 매수 강도는 약해졌습니다." },
+    { "dir": "up", "text": "U.S. 10Y는 직전 장전 4.390%에서 4.493%로 뛰어 duration·멀티플 할인율 부담이 뚜렷하게 커졌습니다." },
+    { "dir": "down", "text": "VIX는 직전 장전 17.64에서 16.82로 낮아졌지만, 오늘은 전일 대비 +2.25%라 변동성 완화만으로 risk-on을 단정하기 어렵습니다." }
+  ],
+
+  "metrics": [
+    { "name": "S&P 500 전일 종가", "value": "7,499.36", "tone": "up", "note": "+58.93 / +0.792% · CNBC quote cache · last_time 2026-06-30; prior-session close" },
+    { "name": "Nasdaq 전일 종가", "value": "26,213.72", "tone": "up", "note": "+393.576 / +1.524% · CNBC quote cache · last_time 2026-06-30; prior-session close" },
+    { "name": "Dow 전일 종가", "value": "52,319.20", "tone": "up", "note": "+136.46 / +0.262% · CNBC quote cache · last_time 2026-06-30; prior-session close" },
+    { "name": "S&P 500 선물", "value": "7,528.75", "tone": "down", "note": "-19.50 / -0.26% · CME quote cache · 2026-07-01 08:50 EDT; close 아님" },
+    { "name": "Nasdaq 100 선물", "value": "30,249.50", "tone": "warn", "note": "-274.00 / -0.90% · CME quote cache · 2026-07-01 08:50 EDT; close 아님" },
+    { "name": "Dow 선물", "value": "52,529.00", "tone": "down", "note": "-141.00 / -0.27% · CBOT quote cache · 2026-07-01 08:50 EDT; close 아님" },
+    { "name": "U.S. 10Y", "value": "4.493%", "tone": "up", "note": "+0.071%p · Tradeweb/CNBC quote cache · 2026-07-01 09:00 EDT" },
+    { "name": "10Y Treasury future", "value": "109.4844", "tone": "down", "note": "-0.4063 / -0.37% · CBOT quote cache · 2026-07-01 08:50 EDT" },
+    { "name": "30Y Treasury future", "value": "112.4063", "tone": "down", "note": "-1.0938 / -0.96% · CBOT quote cache · 2026-07-01 08:50 EDT" },
+    { "name": "VIX", "value": "16.82", "tone": "up", "note": "+0.37 / +2.249% · CBOE quote cache · 2026-07-01 09:00 EDT" },
+    { "name": "VIX future Jul'26", "value": "18.25", "tone": "up", "note": "+0.2993 / +1.6673% · CFE quote cache · 2026-07-01 08:49 EDT" },
+    { "name": "DXY / USD-KRW", "value": "미확인", "tone": "flat", "note": "injected CNBC snapshot에 유효 quote 없음" },
+    { "name": "Oil / Gold", "value": "미확인", "tone": "flat", "note": "CL.1 / GC.1 quote fields 미제공; 추정하지 않음" }
+  ],
+
+  "drivers": [
+    { "label": "금리 재상승", "text": "U.S. 10Y가 4.493%(+7.1bp)로 올라가고 10년·30년 Treasury futures가 각각 -0.37%, -0.96% 약세라, 오늘 장전의 핵심 압력은 duration 할인율 쪽입니다." },
+    { "label": "기술주 선물 약세", "text": "전일 Nasdaq 종가가 +1.524%였지만 08:50 EDT Nasdaq 100 선물은 -0.90%로 S&P 500 선물(-0.26%)보다 더 약해, 개장 전 부담이 대형 기술주·AI duration에 집중됩니다." },
+    { "label": "변동성은 낮은 레벨에서 반등", "text": "VIX 레벨은 16.82로 직전 브리프보다 낮지만 전일 대비 +2.249%, 7월 VIX future도 +1.6673%라 옵션시장은 저변동성 지속보다 헤지 재가격을 일부 반영합니다." }
+  ],
+
+  "theses": [
+    {
+      "name": "위험선호",
+      "signal": "둔화",
+      "level": 2,
+      "delta": { "dir": "down", "text": "전일 지수 종가는 높아졌지만 오늘 장전 지수선물이 모두 마이너스로 돌아섰습니다." },
+      "body": "글로벌 증권사에는 전일 강세 종가가 고객자산 mark-to-market에는 우호적이지만, 오늘 장전 선물 약세와 VIX 반등은 장중 거래활동 증가와 고객자산 변동성 리스크를 같이 봐야 한다는 신호입니다. 미국 온라인 게이밍에는 위험선호 둔화가 discretionary/고멀티플 심리에 부담일 수 있어 개장 후 breadth 확인이 필요합니다."
+    },
+    {
+      "name": "금리·duration",
+      "signal": "부담 상승",
+      "level": 3,
+      "delta": { "dir": "up", "text": "10Y가 직전 장전 4.390%에서 4.493%로 상승했고 Treasury futures도 전 구간 약세입니다." },
+      "body": "Compute futures watch와 AI capex duration 논지는 오늘 가장 민감합니다. 10Y 재상승이 Nasdaq 100 선물 약세와 동시에 나타나면서, GPU/AI 인프라 장기 현금흐름·financing 조건에 대한 할인율 스트레스가 커질 수 있습니다."
+    },
+    {
+      "name": "환율·달러(원화)",
+      "signal": "미확인",
+      "level": 1,
+      "delta": { "dir": "flat", "text": "DXY/USD-KRW는 직전과 오늘 모두 injected snapshot에서 유효 quote 미제공입니다." },
+      "body": "비상장 커머스 IPO/한국 성장주 할인율 민감도는 미국 금리와 위험선호 신호만으로는 부족하고, 달러·원화 전이 확인이 필요합니다. 이번 snapshot만으로 원화 심리나 한국 IPO 환경 변화를 단정하지 않습니다."
+    },
+    {
+      "name": "변동성·헤지",
+      "signal": "저레벨 반등",
+      "level": 2,
+      "delta": { "dir": "flat", "text": "VIX 레벨은 직전 장전보다 낮지만 오늘 전일 대비로는 상승했고 VIX future도 올랐습니다." },
+      "body": "낮은 VIX 레벨은 미국 온라인 게이밍·Compute/AI duration 멀티플에 완전한 스트레스 국면은 아니라는 완충입니다. 다만 선물 약세와 VIX/VIX future 동반 상승이 이어지면 헤지 수요가 장중 risk-off를 증폭할 수 있습니다."
+    }
+  ],
+
+  "watch": [
+    "09:30~10:00 EDT 현물 개장 후 Nasdaq 100 선물 약세가 mega-cap/AI breadth 약화로 확인되는지, 아니면 전일 강세의 단기 숨고르기인지.",
+    "U.S. 10Y가 4.49% 위에서 더 올라 Treasury futures 약세가 duration 주식 압력으로 이어지는지.",
+    "VIX 16~17선 레벨과 7월 VIX future 상승이 장중 헤지 수요 확대를 계속 보여주는지.",
+    "DXY/USD-KRW는 snapshot 미확인이므로, 원화·한국 IPO 심리 전이는 별도 데이터 확인 전까지 보류."
+  ],
+
+  "risks": [
+    "현재 수치는 2026-07-01 09:00 EDT 장전 quote cache입니다. 선물·VIX pre-open 값은 정규장 종가가 아닙니다.",
+    "DXY, USD-KRW, WTI, Gold는 injected snapshot에 유효 값이 없어 미확인으로 처리했습니다.",
+    "개장 후 10Y가 안정되고 Nasdaq breadth가 회복되면 오늘 장전 신호는 구조적 논지 훼손보다 전일 강세 뒤 포지셔닝 조정으로 낮춰볼 수 있습니다.",
+    "반대로 10Y 상승, Nasdaq 100 약세, VIX future 상승이 동시에 지속되면 Compute/AI duration과 미국 온라인 게이밍 고멀티플 민감도는 장중 더 커집니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "정상 pre-open snapshot" },
+    { "label": "Session", "value": "trading_day_type=TRADING_DAY · generated_at 2026-07-01 09:00 EDT / 22:00 KST" },
+    { "label": "Prior close", "value": "indices last_time 2026-06-30 · reg_last_time 2026-06-30T00:00:00.000-0400" },
+    { "label": "Current pre-open", "value": "futures/rates/VIX 2026-07-01 08:49~09:00 EDT" },
+    { "label": "Market fields", "value": "curmktstatus=REG_MKT for futures/rates/VIX; mainmktstatus=CLOSE on prior index cache" },
+    { "label": "미확인", "value": "DXY/USD-KRW/WTI/Gold" },
+    { "label": "Source/date", "value": "CNBC Quote API / exchange quote cache · 2026-07-01" }
+  ]
+}

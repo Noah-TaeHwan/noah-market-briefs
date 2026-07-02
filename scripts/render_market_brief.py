@@ -318,6 +318,10 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     def watch_section() -> str:
         """볼 센서 섹션. 장전(preopen)이면 '오늘', 마감·기본이면 '내일'. 없으면 빈 문자열."""
         items = payload.get("watch", [])
+        # Once the hypothesis loop is present, `next_hypotheses[]` is the primary forward-looking
+        # state. Hide the legacy watch list so the page does not show the old "내일 볼 센서" contract.
+        if payload.get("next_hypotheses"):
+            return ""
         if not items:
             return ""
         heading = "오늘 볼 센서" if payload.get("window_code") == "preopen" else "내일 볼 센서"
@@ -400,6 +404,26 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             return ""
         return f'<section class="section"><h2>다음 체크 가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
 
+    def today_learning_section() -> str:
+        """오늘의 학습 / 오늘 배운 점.
+
+        payload can pass `today_learning` as a string or list of strings. This is the
+        brief-level lesson distilled from hypothesis review and data-quality gaps.
+        """
+        items = payload.get("today_learning", [])
+        if isinstance(items, str):
+            items = [items]
+        if not items:
+            return ""
+        rows = []
+        for item in items:
+            text = str(item or "").strip()
+            if text:
+                rows.append(f'<li><span class="learn-text">{esc(text)}</span></li>')
+        if not rows:
+            return ""
+        return f'<section class="section learning"><h2>오늘 배운 점</h2><ul class="learning-list">{"".join(rows)}</ul></section>'
+
     def risks_section() -> str:
         """리스크 / 무효화 기준 섹션(번호 없는 h2). 없으면 빈 문자열."""
         items = payload.get("risks", [])
@@ -461,6 +485,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     body_blocks = "\n".join(b for b in [
         changes_section(),
         hypothesis_review_section(),
+        today_learning_section(),
         market_board(),
         grid_row("split", [drivers_section(), theses_section()]),
         grid_row("even", [next_hypotheses_section(), watch_section()]),

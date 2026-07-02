@@ -353,6 +353,13 @@ class TestWatchHeadingWindowAware(unittest.TestCase):
         self.assertIn("내일 볼 센서", html)
 
 
+    def test_hypothesis_loop_suppresses_legacy_watch_heading(self):
+        html = render({"window_code": "close", "watch": ["legacy"], "next_hypotheses": [{"hypothesis": "next"}]})
+        self.assertIn("다음 체크 가설", html)
+        self.assertNotIn("내일 볼 센서", html)
+        self.assertNotIn("legacy", html)
+
+
 class TestHypothesisLoopSections(unittest.TestCase):
     """이전 가설 검증 + 다음 체크 가설 루프 렌더링."""
 
@@ -365,6 +372,7 @@ class TestHypothesisLoopSections(unittest.TestCase):
                 "reason": "환율 레벨은 맞았지만 순매도 금액은 미확인",
                 "lesson": "다음부터 현물/선물 순매도 금액을 같이 확인",
             }],
+            "today_learning": "환율 레벨만으로 수급 강도를 말하지 말고 공식 종가·수급 금액·선물 basis를 같이 본다.",
             "next_hypotheses": [{
                 "hypothesis": "KOSPI200 선물 급락이 basis 악화로 이어지는지 확인",
                 "observable": "KOSPI200 선물 basis, 외국인 선물 순매도",
@@ -374,7 +382,8 @@ class TestHypothesisLoopSections(unittest.TestCase):
         })
         self.assertIn("이전 가설 검증", html)
         self.assertIn("부분 적중", html)
-        self.assertIn("학습", html)
+        self.assertIn("오늘 배운 점", html)
+        self.assertIn("공식 종가", html)
         self.assertIn("다음 체크 가설", html)
         self.assertIn("반증 조건", html)
 
@@ -389,7 +398,7 @@ class TestCssHasNewStyles(unittest.TestCase):
 
     def test_css_defines_change_delta_and_hypothesis(self):
         css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
-        for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta", ".hypothesis-stack", ".verdict"):
+        for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta", ".hypothesis-stack", ".verdict", ".learning-list"):
             self.assertIn(sel, css)
 
 

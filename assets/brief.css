@@ -452,6 +452,23 @@ h1 .h1-date{white-space:nowrap;font-variant-numeric:tabular-nums}
 .signal.lvl1{color:var(--flat);background:rgba(124,133,150,.08);border-color:rgba(124,133,150,.3)}
 .signal.lvl1 .meter i:nth-child(1){background:var(--flat);box-shadow:0 0 6px 0 rgba(124,133,150,.4)}
 
+/* ── 가설 검증 루프 — 이전 가설→근거→학습→다음 체크포인트 ───────── */
+.hypothesis-stack{display:grid;gap:13px}
+.hcard{
+  padding:17px 19px;background:var(--surface-2);border:1px solid var(--line-soft);
+  border-left:2px solid var(--brass-dim);border-radius:12px;
+}
+.hcard.next{border-left-color:var(--brass)}
+.hhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
+.hname{font-family:var(--display);font-size:17px;font-weight:560;line-height:1.45;color:var(--ink)}
+.verdict{
+  flex:none;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  color:var(--brass-bright);background:rgba(199,154,78,.08);border:1px solid var(--line);
+  border-radius:999px;padding:4px 9px;white-space:nowrap;
+}
+.hbody{color:var(--ink-soft);font-size:14.5px;line-height:1.7;font-weight:var(--body-weight)}
+.hbody p{margin:8px 0 0}.hbody p:first-child{margin-top:0}.hbody b{color:var(--brass-bright);font-weight:600}
+
 /* ── 리스트: watch / risk — 넉넉한 행간 1.76 + 여유 패딩 ──────────── */
 .watch-list,.risk-list{list-style:none;margin:0;padding:0}
 .watch-list li,.risk-list li{

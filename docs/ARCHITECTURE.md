@@ -52,7 +52,7 @@ tests/test_build.py               # 회귀 테스트(python3 tests/test_build.py
 | `status` | `"live"` / `"sample"` | **샘플은 index에서 `Sample` 로 표기** — 샘플을 라이브로 착각 금지 |
 | `out_path` | `"2026/06/23/korea-close.html"` | 렌더 결과 HTML 경로 |
 
-**렌더 payload** (render_market_brief.py가 사용): `title`, `market`, `window`, `note`(선택, 히어로 배지), `generated`, `source`, `data_quality`, `use`(선택), `takeaway`, `metrics[]`{name,value,tone(`up`/`down`/`flat`/`warn`),note}, `drivers[]`{label,text}, `theses[]`{name,signal,`level`(선택 1~3 → ●○○ 핀),`lead`(선택 굵은 리드),body}, `watch[]`, `risks[]`, `quality[]`{label,value}(선택).
+**렌더 payload** (render_market_brief.py가 사용): `title`, `market`, `window`, `note`(선택, 히어로 배지), `generated`, `source`, `data_quality`, `use`(선택), `takeaway`, `metrics[]`{name,value,tone(`up`/`down`/`flat`/`warn`),note}, `drivers[]`{label,text}, `changes[]`{dir,text}(선택), `hypothesis_review[]`{previous_hypothesis,verdict,evidence,reason,lesson}(선택), `next_hypotheses[]`{hypothesis,observable,invalidation,horizon}(선택), `theses[]`{name,signal,`level`(선택 1~3 → ●○○ 핀),`lead`(선택 굵은 리드),body}(선택·기본 미사용), `watch[]`, `risks[]`, `quality[]`{label,value}(선택).
 
 > 확장 규칙: 새 필드는 **선택(optional)으로 추가**. 렌더러는 `.get(key, default)` 라 빠진 필드는 빈 값으로 우아하게 처리 → 옛 레코드가 깨지지 않는다.
 
@@ -111,3 +111,24 @@ git push
 > - 소스 디시플린(미확인·출처·날짜·추론 금지) 그대로.
 
 스펙: `docs/specs/2026-06-24-investing-brief-market-lenses-design.md`. **Phase 2**(다음 증분): build.py 가 (market,window,렌즈)별 레벨 히스토리를 집계해 ● 추이·스트릭(시장 흐름 저널).
+
+## Part B v3 — 가설 검증 루프 (hypothesis learning loop)
+
+브리프의 `오늘/내일 볼 센서`를 단순 체크리스트가 아니라 **가설 → 다음 회차 검증 → 학습 → 다음 가설** 루프로 고도화한다. 목적은 예측 맞히기 게임이 아니라, 매일의 시장 해석 프레임을 소스 기반으로 개선하는 것이다.
+
+### 스키마 추가(전부 선택)
+- `hypothesis_review`: 직전 같은 `(market_code, window_code)` 브리프의 `next_hypotheses[]`를 이번 데이터로 검증한 결과. 각 item = `{previous_hypothesis, verdict, evidence, reason, lesson}`. `verdict`는 `적중` / `부분 적중` / `반증` / `미검증`처럼 짧게 쓴다.
+- `next_hypotheses`: 다음 같은 윈도 브리프에서 검증할 관찰 가능한 가설. 각 item = `{hypothesis, observable, invalidation, horizon}`. 가설은 방향성 단정이 아니라 검증 가능한 if/then 또는 watchpoint로 쓴다.
+
+### 렌더 동작
+- `hypothesis_review[]` → "이전 가설 검증" 섹션. 근거·판단·학습을 분리해 표시.
+- `next_hypotheses[]` → "다음 체크 가설" 섹션. 관찰값·반증 조건·검증 시점을 분리해 표시.
+- `watch[]`는 보조 체크리스트로 남길 수 있지만, 기본 운영의 주된 다음 회차 상태는 `next_hypotheses[]`다.
+
+### cron 프롬프트 애드덤 (4개 잡 공통)
+> **가설 검증 루프 (template v3):**
+> - 직전 같은 `(market_code, window_code)` 브리프 JSON을 읽고, 그 안의 `next_hypotheses[]`를 이번 데이터로 검증해 `hypothesis_review[]`를 작성한다. 직전 가설이 없으면 `hypothesis_review`는 생략.
+> - 각 검증은 `previous_hypothesis`, `verdict`, `evidence`, `reason`, `lesson`을 포함한다. 숫자·근거는 이번 run의 source-backed 데이터만 사용하고, 데이터가 부족하면 `미검증`으로 둔다.
+> - 이번 브리프 끝에는 다음 같은 윈도에서 확인할 `next_hypotheses[]` 2~3개를 만든다. 각 가설은 `hypothesis`, `observable`, `invalidation`, `horizon`을 포함한다.
+> - Slack에는 `이전 가설 검증` 1~2줄 + `오늘의 학습` 1줄 + `다음 체크 가설` 1~2개만 간결히 넣고, HTML에는 JSON 필드가 렌더되게 한다.
+> - 특정 보유명(비상장 커머스/미국 온라인 게이밍/글로벌 증권사 등)은 Noah가 명시하지 않으면 쓰지 않는다. 가설은 시장 구조·환율·금리·유동성·변동성·섹터 breadth 중심으로 작성한다.

@@ -353,12 +353,43 @@ class TestWatchHeadingWindowAware(unittest.TestCase):
         self.assertIn("내일 볼 센서", html)
 
 
-class TestCssHasNewStyles(unittest.TestCase):
-    """새 마크업(.change-list/.dir/.thesis-delta)에 대응하는 CSS 존재(누락 회귀 방지)."""
+class TestHypothesisLoopSections(unittest.TestCase):
+    """이전 가설 검증 + 다음 체크 가설 루프 렌더링."""
 
-    def test_css_defines_change_and_delta(self):
+    def test_hypothesis_review_and_next_hypotheses_render(self):
+        html = render({
+            "hypothesis_review": [{
+                "previous_hypothesis": "원화 약세가 외국인 매도 압력을 키운다",
+                "verdict": "부분 적중",
+                "evidence": "USD/KRW 1,555.8원, 외국인 순매도 headline",
+                "reason": "환율 레벨은 맞았지만 순매도 금액은 미확인",
+                "lesson": "다음부터 현물/선물 순매도 금액을 같이 확인",
+            }],
+            "next_hypotheses": [{
+                "hypothesis": "KOSPI200 선물 급락이 basis 악화로 이어지는지 확인",
+                "observable": "KOSPI200 선물 basis, 외국인 선물 순매도",
+                "invalidation": "basis 안정·외국인 선물 순매수",
+                "horizon": "next KR session",
+            }],
+        })
+        self.assertIn("이전 가설 검증", html)
+        self.assertIn("부분 적중", html)
+        self.assertIn("학습", html)
+        self.assertIn("다음 체크 가설", html)
+        self.assertIn("반증 조건", html)
+
+    def test_invalid_hypothesis_items_omit_sections(self):
+        html = render({"hypothesis_review": [{"verdict": "부분"}], "next_hypotheses": [{"foo": "bar"}]})
+        self.assertNotIn("이전 가설 검증", html)
+        self.assertNotIn("다음 체크 가설", html)
+
+
+class TestCssHasNewStyles(unittest.TestCase):
+    """새 마크업(.change-list/.dir/.thesis-delta/.hypothesis-stack)에 대응하는 CSS 존재."""
+
+    def test_css_defines_change_delta_and_hypothesis(self):
         css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
-        for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta"):
+        for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta", ".hypothesis-stack", ".verdict"):
             self.assertIn(sel, css)
 
 

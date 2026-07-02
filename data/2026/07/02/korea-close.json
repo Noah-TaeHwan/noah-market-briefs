@@ -135,5 +135,26 @@
       "label": "Source/date",
       "value": "Naver Finance · Naver/Hana Bank market index · Yonhap economy RSS · 2026-07-02"
     }
+  ],
+  "hypothesis_review": [],
+  "next_hypotheses": [
+    {
+      "hypothesis": "USD/KRW 15:30 종가가 1,550원대 위에 남으면 외국인 수급 스트레스 headline이 다음 한국장에도 이어지는지 확인한다.",
+      "observable": "USD/KRW 15:30 종가, 외국인 현물/선물 순매도 방향과 가능하면 금액, 장후 posted rate 되돌림 여부",
+      "invalidation": "USD/KRW가 1,550원 아래로 내려가거나 외국인 순매수/선물 basis 안정이 동반되면 환율발 수급 스트레스 가설은 약해진다.",
+      "horizon": "next KR close"
+    },
+    {
+      "hypothesis": "KOSPI200 선물 -7%대 급락이 하루짜리 현물 충격이 아니라 헤지 압력 지속으로 이어지는지 확인한다.",
+      "observable": "KOSPI200 선물 등락률, basis, 옵션/내재변동성 또는 변동성 headline, 프로그램/외국인 선물 수급",
+      "invalidation": "현물 반등과 함께 선물 basis가 안정되고 변동성 headline이 진정되면 헤지 압력 지속 가설은 약해진다.",
+      "horizon": "next KR session / next KR close"
+    },
+    {
+      "hypothesis": "반도체 대형주 급락이 대형주 리더십 훼손으로 확산되는지, 아니면 단일 섹터 shock으로 흡수되는지 확인한다.",
+      "observable": "삼성전자·SK하이닉스 후속 등락, KOSPI200 vs KOSDAQ 상대 움직임, 업종 breadth, 외국인 대형주 수급 headline",
+      "invalidation": "반도체 반등과 KOSDAQ/KOSPI breadth 동반 회복이 확인되면 전시장 확산 가설은 약해진다.",
+      "horizon": "next KR close"
+    }
   ]
 }

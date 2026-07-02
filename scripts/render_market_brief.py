@@ -324,6 +324,82 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         lis = "".join(f'<li>{esc(w)}</li>' for w in items)
         return f'<section class="section"><h2>{esc(heading)}</h2><ul class="watch-list">{lis}</ul></section>'
 
+    def hypothesis_review_section() -> str:
+        """직전 브리프의 체크 가설을 이번 데이터로 검증한 결과.
+
+        item 은 ``{previous_hypothesis|hypothesis, verdict, evidence, reason, lesson}`` 권장.
+        문자열만 들어와도 크래시 없이 단순 카드로 렌더한다.
+        """
+        items = payload.get("hypothesis_review", [])
+        if not items:
+            return ""
+        rows = []
+        for item in items:
+            if isinstance(item, dict):
+                hyp = str(item.get("previous_hypothesis") or item.get("hypothesis") or "").strip()
+                verdict = str(item.get("verdict") or "검증").strip()
+                evidence = str(item.get("evidence") or "").strip()
+                reason = str(item.get("reason") or "").strip()
+                lesson = str(item.get("lesson") or "").strip()
+                if not any([hyp, evidence, reason, lesson]):
+                    continue
+                body_parts = []
+                if evidence:
+                    body_parts.append(f'<p><b>근거</b> — {esc(evidence)}</p>')
+                if reason:
+                    body_parts.append(f'<p><b>판단</b> — {esc(reason)}</p>')
+                if lesson:
+                    body_parts.append(f'<p><b>학습</b> — {esc(lesson)}</p>')
+                rows.append(
+                    f'<article class="hcard"><div class="hhead"><span class="hname">{esc(hyp)}</span>'
+                    f'<span class="verdict">{esc(verdict)}</span></div>'
+                    f'<div class="hbody">{"".join(body_parts)}</div></article>'
+                )
+            else:
+                text = str(item or "").strip()
+                if text:
+                    rows.append(f'<article class="hcard"><div class="hbody">{esc(text)}</div></article>')
+        if not rows:
+            return ""
+        return f'<section class="section"><h2>이전 가설 검증</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+
+    def next_hypotheses_section() -> str:
+        """다음 회차에서 검증할 관찰 가능한 가설.
+
+        item 은 ``{hypothesis, observable, invalidation, horizon}`` 권장. 예측 확정이 아니라
+        다음 cron이 판정할 체크포인트로 렌더한다.
+        """
+        items = payload.get("next_hypotheses", [])
+        if not items:
+            return ""
+        rows = []
+        for item in items:
+            if isinstance(item, dict):
+                hyp = str(item.get("hypothesis") or "").strip()
+                obs = str(item.get("observable") or "").strip()
+                inv = str(item.get("invalidation") or "").strip()
+                horizon = str(item.get("horizon") or "").strip()
+                if not any([hyp, obs, inv, horizon]):
+                    continue
+                meta = []
+                if obs:
+                    meta.append(f'<p><b>관찰값</b> — {esc(obs)}</p>')
+                if inv:
+                    meta.append(f'<p><b>반증 조건</b> — {esc(inv)}</p>')
+                if horizon:
+                    meta.append(f'<p><b>검증 시점</b> — {esc(horizon)}</p>')
+                rows.append(
+                    f'<article class="hcard next"><div class="hhead"><span class="hname">{esc(hyp)}</span></div>'
+                    f'<div class="hbody">{"".join(meta)}</div></article>'
+                )
+            else:
+                text = str(item or "").strip()
+                if text:
+                    rows.append(f'<article class="hcard next"><div class="hbody">{esc(text)}</div></article>')
+        if not rows:
+            return ""
+        return f'<section class="section"><h2>다음 체크 가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+
     def risks_section() -> str:
         """리스크 / 무효화 기준 섹션(번호 없는 h2). 없으면 빈 문자열."""
         items = payload.get("risks", [])
@@ -384,9 +460,11 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 
     body_blocks = "\n".join(b for b in [
         changes_section(),
+        hypothesis_review_section(),
         market_board(),
         grid_row("split", [drivers_section(), theses_section()]),
-        grid_row("even", [watch_section(), risks_section()]),
+        grid_row("even", [next_hypotheses_section(), watch_section()]),
+        risks_section(),
         quality_section(),
     ] if b)
 

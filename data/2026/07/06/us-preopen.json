@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-06-us-preopen",
+  "date": "2026-07-06",
+  "market_code": "US",
+  "window_code": "preopen",
+  "status": "live",
+  "out_path": "2026/07/06/us-preopen.html",
+  "title": "미국 시장 전 — 2026-07-06",
+  "market": "United States",
+  "window": "U.S. Pre-open",
+  "note": "미국 시장은 정규시장 개장 약 30분 전, KST 22:00 기준 사전 확인 창입니다.",
+  "generated": "Generated KST 2026-07-06 22:00 · ET 2026-07-06 09:00",
+  "source": "CNBC Quote API / exchange quote cache, generated 2026-07-06 09:00 EDT",
+  "data_quality": "정상 pre-open snapshot 가능 · DXY/USD-KRW 미확인",
+  "use": "시장 민감도 일지 · 투자 권유 아님",
+  "takeaway": "Nasdaq 100 선물 급락과 VIX 상승이 기술주 하방 압력을 강화하고, 10년물 하락이 금리 충격보다 포지셔닝·리스크오프 흐름이 두드러집니다.",
+  "metrics": [
+    {
+      "name": "Nasdaq 100 선물",
+      "value": "29,905.50",
+      "tone": "down",
+      "note": "-349.50 / -1.18% · CME quote cache · 2026-07-06 08:50 EDT; close 아님"
+    },
+    {
+      "name": "Dow Jones Fut",
+      "value": "53,139.00",
+      "tone": "down",
+      "note": "-44.00 / -0.08% · CBOT quote cache · 2026-07-06 08:50 EDT; close 아님"
+    },
+    {
+      "name": "S&P 500 선물",
+      "value": "7,560.00",
+      "tone": "up",
+      "note": "+31.75 / +0.42% · CME quote cache · 2026-07-06 08:50 EDT; close 아님"
+    },
+    {
+      "name": "U.S. 10Y",
+      "value": "4.461%",
+      "tone": "down",
+      "note": "-0.018%p · Tradeweb/CNBC quote cache · 2026-07-06 09:00 EDT"
+    },
+    {
+      "name": "VIX",
+      "value": "16.35",
+      "tone": "up",
+      "note": "+0.54 / +3.42% · CBOE quote cache · 2026-07-06 09:00 EDT"
+    },
+    {
+      "name": "VIX 미래 (Jul'26)",
+      "value": "19.30",
+      "tone": "up",
+      "note": "+0.85 / +4.60% · CFE quote cache · 2026-07-06 08:50 EDT"
+    },
+    {
+      "name": "DXY / USD-KRW",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected snapshot에 유효 quote 없음"
+    },
+    {
+      "name": "Oil / Gold",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "CL.1 / GC.1 quote fields 미제공; 추정하지 않음"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "기술주 선물 압력",
+      "text": "Nasdaq 100 선물이 2.98% 급락해 기술주 duration 리스크가 크게 증가하고 있습니다."
+    },
+    {
+      "label": "금리 하락은 포지셔닝 변화",
+      "text": "10년물 수익률이 0.018%p 하락해 금리 충격보다 포지셔닝·리스크오프 조정에 집중됩니다."
+    },
+    {
+      "label": "변동성 재가격",
+      "text": "VIX가 3.42% 상승해 옵션 헤지 수요와 변동성 프리미엄이 확대되고 있습니다."
+    }
+  ],
+  "next_hypotheses": [
+    {
+      "hypothesis": "기술주 실적 발표가 하락 추세를 유지시킬지",
+      "observable": "다음 영업시간 내 주요 테크 기업(NVDA, AAPL) 실적 발표 및 주가 반응",
+      "invalidation": "실적 호조와 함께 Nasdaq 100이 회복세로 전환될 경우",
+      "horizon": "2026-07-07"
+    },
+    {
+      "hypothesis": "10년물 수익률 추가 하락이 채권·주식 상관관계를 재점화시킬지",
+      "observable": "10년물 수익률이 4.4% 이하로 추가 하락할 경우",
+      "invalidation": "수익률이 안정세로 전환되거나 상승할 경우",
+      "horizon": "2026-07-08"
+    }
+  ],
+  "watch": [
+    "09:30~10:00 EDT 현물 개장 직전 Nasdaq 100 선물 약세 지속 여부",
+    "10년물 수익률이 4.49% 이하로 추가 하락 여부",
+    "VIX가 20선 이상을 유지하며 VIX 선물 구조가 헤지 수요를 보여주는지"
+  ],
+  "risks": [
+    "현재 수치는 2026-07-06 09:00 EDT 장전 quote cache이며, 선물·VIX 값은 정규장 종가가 아님을 명시",
+    "DXY, USD-KRW, WTI, Gold 관련 데이터가 제공되지 않아 미확인으로 처리",
+    "Nasdaq 100 선물 급락이 개장 후 빠르게 회복될 경우 신호의 구조적 의미가 약화될 수 있음"
+  ],
+  "quality": [
+    {
+      "label": "Status",
+      "value": "정상 pre-open snapshot"
+    },
+    {
+      "label": "Session",
+      "value": "trading_day_type=TRADING_DAY · generated_at 2026-07-06 09:00 EDT"
+    },
+    {
+      "label": "Prior close",
+      "value": "indices last_time 2026-07-02"
+    },
+    {
+      "label": "Current pre-open",
+      "value": "futures/rates/VIX 2026-07-06 08:49~09:00 EDT"
+    },
+    {
+      "label": "미확인",
+      "value": "DXY/USD-KRW/WTI/Gold"
+    },
+    {
+      "label": "Source/date",
+      "value": "CNBC Quote API / exchange quote cache · 2026-07-06"
+    }
+  ]
+}

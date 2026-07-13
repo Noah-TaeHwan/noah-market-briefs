@@ -440,6 +440,8 @@ class TestTemplateV2Robustness(unittest.TestCase):
         self.assertNotIn("보유논지", html)              # 랜딩 카피도 리네임 반영
         self.assertNotIn("투자 관점 읽기", html)
         self.assertIn("가설 기반 시장 읽기", html)
+        self.assertIn("YYYY / MM / DD / 시점", html)
+        self.assertNotIn("YYYY / MM / DD / window", html)
 
 
 class TestKoreanPublicLabels(unittest.TestCase):

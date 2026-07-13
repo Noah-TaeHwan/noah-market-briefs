@@ -158,7 +158,7 @@ def build_index_html(records: list) -> str:
 <div class="kicker"><span class="badge">정적 아카이브</span><span class="badge">미국 · 한국</span><span class="badge">장 시작 전 · 장 마감</span></div>
 <h1>날짜별 시장 일지와<br/>가설 기반 시장 읽기.</h1>
 <p class="takeaway" data-label="소개">Slack에는 핵심 요약만, 여기에는 날짜별 시장 일지와 가설 검증을 누적합니다. 숫자에는 반드시 출처와 날짜를 붙이고, 확정 종가가 아니면 그대로 명시합니다.</p>
-<div class="meta-grid"><div class="meta-card"><div class="label">경로</div><div class="value">YYYY / MM / DD / window</div></div><div class="meta-card"><div class="label">시장</div><div class="value">미국 · 한국</div></div><div class="meta-card"><div class="label">시점</div><div class="value">장 시작 전 · 장 마감</div></div><div class="meta-card"><div class="label">상태</div><div class="value">{esc(status_value)}</div></div></div>
+<div class="meta-grid"><div class="meta-card"><div class="label">경로</div><div class="value">YYYY / MM / DD / 시점</div></div><div class="meta-card"><div class="label">시장</div><div class="value">미국 · 한국</div></div><div class="meta-card"><div class="label">시점</div><div class="value">장 시작 전 · 장 마감</div></div><div class="meta-card"><div class="label">상태</div><div class="value">{esc(status_value)}</div></div></div>
 </section>
 <section class="section">
 <h2>브리프 목록</h2>

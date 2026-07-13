@@ -104,12 +104,12 @@ class TestIndex(unittest.TestCase):
 
     def test_live_sample_count(self):
         html = B.build_index_html(self._records())
-        self.assertIn("1 live · 1 sample", html)
+        self.assertIn("공개 1개 · 샘플 1개", html)
 
     def test_sample_is_marked_not_live(self):
         html = B.build_index_html(self._records())
-        self.assertIn("Sample", html)                  # 샘플 카드는 'Sample' 배지로 명시
-        self.assertIn('ar-badge sample', html)
+        self.assertIn("샘플", html)                    # 샘플 카드는 '샘플' 배지로 명시
+        self.assertNotIn('ar-badge live">샘플', html)
         self.assertIn('data-status="sample"', html)
         self.assertIn('ar-badge live', html)           # 라이브 카드는 'Live' 배지
 
@@ -438,7 +438,26 @@ class TestTemplateV2Robustness(unittest.TestCase):
     def test_index_landing_no_holdings_copy(self):
         html = B.build_index_html([])
         self.assertNotIn("보유논지", html)              # 랜딩 카피도 리네임 반영
-        self.assertIn("투자 관점 읽기", html)
+        self.assertNotIn("투자 관점 읽기", html)
+        self.assertIn("가설 기반 시장 읽기", html)
+
+
+class TestKoreanPublicLabels(unittest.TestCase):
+    """고정 UI와 전환일 파이프라인 용어는 HTML에서 한국어로 보여야 한다."""
+
+    def test_fixed_labels_and_transition_terms_are_localized(self):
+        html = render({
+            "market": "Korea", "window": "Close", "generated": "Generated KST 2026-07-13",
+            "title": "한국 시장 마감 — 2026-07-13", "takeaway": "요약",
+            "source": "Naver Finance daily index tables · Yonhap economy RSS",
+            "quality": [{"label": "Source/date", "value": "same-date"}],
+            "drivers": [{"label": "headline", "text": "same-date headline"}],
+            "next_hypotheses": [{"hypothesis": "가설", "horizon": "next KR close"}],
+        })
+        for translated in ("생성 시각", "출처", "데이터 품질", "용도", "핵심 동인", "브리프 목록", "투자 권유 아님", "다음 한국장 마감", "헤드라인", "동일 날짜"):
+            self.assertIn(translated, html)
+        for legacy in (">Generated<", ">Source<", "Data quality", "오늘의 핵심 driver", "Archive index", "Not investment advice", "next KR close"):
+            self.assertNotIn(legacy, html)
 
 
 if __name__ == "__main__":

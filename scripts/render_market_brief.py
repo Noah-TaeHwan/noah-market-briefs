@@ -25,6 +25,37 @@ _EM_DASH = "—"
 # 어제 대비 방향 칩: up=▲ / down=▼ / flat== (색은 brief.css --good/--bad/--muted)
 _DIRS = {"up": "▲", "down": "▼", "flat": "="}
 
+# 과거 JSON에 남은 공통 UI/파이프라인 용어를 화면에서만 한국어화한다.
+# 출처명·티커·URL은 데이터 원문을 보존한다.
+_DISPLAY_REPLACEMENTS = (
+    ("Naver Finance daily index tables", "네이버 금융 일별 지수표"),
+    ("Naver Finance market index", "네이버 금융 시장지수"),
+    ("Yonhap economy RSS", "연합뉴스 경제 RSS"),
+    ("Hana Bank posted rate", "하나은행 고시 환율"),
+    ("Generated KST", "생성 시각 KST"),
+    ("script snapshot; actual run timestamp", "스크립트 스냅샷; 실제 실행 시각"),
+    ("injected snapshot", "수집 스냅샷"),
+    ("same-date", "동일 날짜"),
+    ("next KR close", "다음 한국장 마감"),
+    ("next Korea pre-open / next Korea session", "다음 한국장 개장 전 / 정규장"),
+    ("Source:", "출처:"),
+    ("headline", "헤드라인"),
+)
+_QUALITY_LABELS = {
+    "Status": "상태",
+    "Confirmed": "확인된 데이터",
+    "Unconfirmed": "미확인 데이터",
+    "Unavailable": "미확인 데이터",
+    "Source/date": "출처/기준일",
+    "Run timestamp": "실행 시각",
+    "Index timestamps": "지수 기준 시각",
+    "Cache timestamp": "수집 시각",
+    "Prior close": "직전 종가",
+    "Current pre-open": "현재 장전",
+    "Session": "세션",
+    "Korea context": "한국 시장 맥락",
+}
+
 
 def _dir_chip(d) -> str:
     """어제 대비 방향 칩 HTML. up/down/flat 외 값은 flat 으로 떨어진다.
@@ -41,6 +72,19 @@ def _dir_chip(d) -> str:
 def esc(x):
     """HTML 특수문자를 이스케이프한다(속성/본문 공용)."""
     return html.escape(str(x), quote=True)
+
+
+def _public_text(value) -> str:
+    """사용자 화면의 공통 영문 파이프라인 용어만 국문화한다."""
+    text = str(value or "")
+    for before, after in _DISPLAY_REPLACEMENTS:
+        text = text.replace(before, after)
+    return text
+
+
+def pesc(value) -> str:
+    """사용자 화면 텍스트를 국문화한 뒤 HTML 이스케이프한다."""
+    return esc(_public_text(value))
 
 
 def _value_tone(text: str, fallback: str) -> str:
@@ -202,12 +246,12 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     def kicker():
         """히어로 상단 배지(시장·윈도우·선택적 note)를 만든다."""
         parts = [
-            f'<span class="badge">{esc(payload.get("market","Market"))}</span>',
-            f'<span class="badge">{esc(payload.get("window","Brief"))}</span>',
+            f'<span class="badge">{pesc(payload.get("market","시장"))}</span>',
+            f'<span class="badge">{pesc(payload.get("window","브리프"))}</span>',
         ]
         note = payload.get("note", "")
         if note:
-            parts.append(f'<span class="badge">{esc(note)}</span>')
+            parts.append(f'<span class="badge">{pesc(note)}</span>')
         return "".join(parts)
 
     def idx_card(m: dict, feature: bool = False) -> str:
@@ -218,17 +262,17 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         cls = "idx feature" if feature else "idx"
         ival_tone = "" if nosig else tone
         if nosig:
-            val_html = f'{esc(m.get("value","미확인") or "미확인")} <span class="nosig-chip">no signal</span>'
+            val_html = f'{pesc(m.get("value","미확인") or "미확인")} <span class="nosig-chip">신호 없음</span>'
             has_segs = False
         else:
             has_segs, val_html = _metric_value_html(m.get("value", ""), tone)
         wire = f'<div class="wire {tone if tone in ("up","down","warn") else ""}" aria-hidden="true"></div>' if feature else ""
-        delta_html = f'<div class="idelta {ival_tone} tnum">{esc(delta)}</div>' if delta else ""
-        src_html = f'<div class="isrc">{esc(src)}</div>' if src else ""
+        delta_html = f'<div class="idelta {ival_tone} tnum">{pesc(delta)}</div>' if delta else ""
+        src_html = f'<div class="isrc">{pesc(src)}</div>' if src else ""
         val_cls = f'ival {ival_tone} tnum' + (' has-segs' if has_segs else '')
         return (
             f'<article class="{cls}">'
-            f'<div class="iname">{esc(m.get("name",""))}</div>'
+            f'<div class="iname">{pesc(m.get("name",""))}</div>'
             f'<div class="{val_cls}">{val_html}</div>'
             f'{delta_html}{wire}{src_html}</article>'
         )
@@ -239,18 +283,18 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if _is_nosignal(m):
             return (
                 f'<div class="mcard nosignal">'
-                f'<div class="mname">{esc(m.get("name",""))}</div>'
-                f'<div class="mval">{esc(m.get("value","미확인") or "미확인")} '
-                f'<span class="nosig-chip">no signal</span></div>'
-                f'<div class="mnote">{esc(m.get("note",""))}</div></div>'
+                f'<div class="mname">{pesc(m.get("name",""))}</div>'
+                f'<div class="mval">{pesc(m.get("value","미확인") or "미확인")} '
+                f'<span class="nosig-chip">신호 없음</span></div>'
+                f'<div class="mnote">{pesc(m.get("note",""))}</div></div>'
             )
         has_segs, val_html = _metric_value_html(m.get("value", ""), tone)
         val_cls = f'mval {tone} tnum' + (' has-segs' if has_segs else '')
         return (
             f'<div class="mcard">'
-            f'<div class="mname">{esc(m.get("name",""))}</div>'
+            f'<div class="mname">{pesc(m.get("name",""))}</div>'
             f'<div class="{val_cls}">{val_html}</div>'
-            f'<div class="mnote">{esc(m.get("note",""))}</div></div>'
+            f'<div class="mnote">{pesc(m.get("note",""))}</div></div>'
         )
 
     def market_board() -> str:
@@ -276,10 +320,10 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if not items:
             return ""
         lis = "".join(
-            f'<li><b>{esc(d.get("label",""))}</b> — {esc(d.get("text",""))}</li>'
+            f'<li><b>{pesc(d.get("label",""))}</b> — {pesc(d.get("text",""))}</li>'
             for d in items
         )
-        return f'<section class="section"><h2>오늘의 핵심 driver</h2><ul class="driver-list">{lis}</ul></section>'
+        return f'<section class="section"><h2>오늘의 핵심 동인</h2><ul class="driver-list">{lis}</ul></section>'
 
     def theses_section() -> str:
         """투자 관점 읽기(렌즈) 섹션. signal 태그 + 선택적 level 미터(●●●) +
@@ -325,7 +369,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if not items:
             return ""
         heading = "오늘 볼 센서" if payload.get("window_code") == "preopen" else "내일 볼 센서"
-        lis = "".join(f'<li>{esc(w)}</li>' for w in items)
+        lis = "".join(f'<li>{pesc(w)}</li>' for w in items)
         return f'<section class="section"><h2>{esc(heading)}</h2><ul class="watch-list">{lis}</ul></section>'
 
     def hypothesis_review_section() -> str:
@@ -349,20 +393,20 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                     continue
                 body_parts = []
                 if evidence:
-                    body_parts.append(f'<p><b>근거</b> — {esc(evidence)}</p>')
+                    body_parts.append(f'<p><b>근거</b> — {pesc(evidence)}</p>')
                 if reason:
-                    body_parts.append(f'<p><b>판단</b> — {esc(reason)}</p>')
+                    body_parts.append(f'<p><b>판단</b> — {pesc(reason)}</p>')
                 if lesson:
-                    body_parts.append(f'<p><b>학습</b> — {esc(lesson)}</p>')
+                    body_parts.append(f'<p><b>학습</b> — {pesc(lesson)}</p>')
                 rows.append(
-                    f'<article class="hcard"><div class="hhead"><span class="hname">{esc(hyp)}</span>'
-                    f'<span class="verdict">{esc(verdict)}</span></div>'
+                    f'<article class="hcard"><div class="hhead"><span class="hname">{pesc(hyp)}</span>'
+                    f'<span class="verdict">{pesc(verdict)}</span></div>'
                     f'<div class="hbody">{"".join(body_parts)}</div></article>'
                 )
             else:
                 text = str(item or "").strip()
                 if text:
-                    rows.append(f'<article class="hcard"><div class="hbody">{esc(text)}</div></article>')
+                    rows.append(f'<article class="hcard"><div class="hbody">{pesc(text)}</div></article>')
         if not rows:
             return ""
         return f'<section class="section"><h2>이전 가설 검증</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
@@ -387,19 +431,19 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                     continue
                 meta = []
                 if obs:
-                    meta.append(f'<p><b>관찰값</b> — {esc(obs)}</p>')
+                    meta.append(f'<p><b>관찰값</b> — {pesc(obs)}</p>')
                 if inv:
-                    meta.append(f'<p><b>반증 조건</b> — {esc(inv)}</p>')
+                    meta.append(f'<p><b>반증 조건</b> — {pesc(inv)}</p>')
                 if horizon:
-                    meta.append(f'<p><b>검증 시점</b> — {esc(horizon)}</p>')
+                    meta.append(f'<p><b>검증 시점</b> — {pesc(horizon)}</p>')
                 rows.append(
-                    f'<article class="hcard next"><div class="hhead"><span class="hname">{esc(hyp)}</span></div>'
+                    f'<article class="hcard next"><div class="hhead"><span class="hname">{pesc(hyp)}</span></div>'
                     f'<div class="hbody">{"".join(meta)}</div></article>'
                 )
             else:
                 text = str(item or "").strip()
                 if text:
-                    rows.append(f'<article class="hcard next"><div class="hbody">{esc(text)}</div></article>')
+                    rows.append(f'<article class="hcard next"><div class="hbody">{pesc(text)}</div></article>')
         if not rows:
             return ""
         return f'<section class="section"><h2>다음 체크 가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
@@ -419,7 +463,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         for item in items:
             text = str(item or "").strip()
             if text:
-                rows.append(f'<li><span class="learn-text">{esc(text)}</span></li>')
+                rows.append(f'<li><span class="learn-text">{pesc(text)}</span></li>')
         if not rows:
             return ""
         return f'<section class="section learning"><h2>오늘 배운 점</h2><ul class="learning-list">{"".join(rows)}</ul></section>'
@@ -429,7 +473,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         items = payload.get("risks", [])
         if not items:
             return ""
-        lis = "".join(f'<li>{esc(r)}</li>' for r in items)
+        lis = "".join(f'<li>{pesc(r)}</li>' for r in items)
         return f'<section class="section"><h2 class="no-index">리스크 / 무효화 기준</h2><ul class="risk-list">{lis}</ul></section>'
 
     def quality_section() -> str:
@@ -438,11 +482,11 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if not items:
             return ""
         cells = "".join(
-            f'<div><div class="label">{esc(q.get("label",""))}</div>'
-            f'<div class="value">{esc(q.get("value",""))}</div></div>'
+            f'<div><div class="label">{pesc(_QUALITY_LABELS.get(str(q.get("label", "")), q.get("label", "")))}</div>'
+            f'<div class="value">{pesc(q.get("value",""))}</div></div>'
             for q in items
         )
-        return f'<section class="section"><h2 class="no-index">Data quality</h2><div class="quality">{cells}</div></section>'
+        return f'<section class="section"><h2 class="no-index">데이터 품질</h2><div class="quality">{cells}</div></section>'
 
     def grid_row(grid_cls: str, sections: list) -> str:
         """두 섹션을 한 그리드 줄로 묶는다. 하나만 있으면 풀-width, 없으면 생략."""
@@ -507,15 +551,15 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 </head>
 <body>
 <main class="shell">
-<header class="masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">{esc(payload.get("market","Market"))} · {esc(payload.get("window","Brief"))}</span><span class="stamp"><b>{esc(payload.get("generated",""))}</b></span></span></div></header>
+<header class="masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">{pesc(payload.get("market","시장"))} · {pesc(payload.get("window","브리프"))}</span><span class="stamp"><b>{pesc(payload.get("generated",""))}</b></span></span></div></header>
 <section class="hero">
 <div class="kicker">{kicker()}</div>
-<h1>{_h1_html(payload.get("title","Market Brief"))}</h1>
-<p class="takeaway" data-label="한 줄 결론">{esc(takeaway)}</p>
-<div class="meta-grid"><div class="meta-card"><div class="label">Generated</div><div class="value">{esc(payload.get("generated",""))}</div></div><div class="meta-card"><div class="label">Source</div><div class="value">{esc(payload.get("source",""))}</div></div><div class="meta-card"><div class="label">Data quality</div><div class="value">{esc(payload.get("data_quality",""))}</div></div><div class="meta-card"><div class="label">Use</div><div class="value">{esc(payload.get("use","Market sensitivity journal"))}</div></div></div>
+<h1>{_h1_html(_public_text(payload.get("title","시장 브리프")))}</h1>
+<p class="takeaway" data-label="한 줄 결론">{pesc(takeaway)}</p>
+<div class="meta-grid"><div class="meta-card"><div class="label">생성 시각</div><div class="value">{pesc(payload.get("generated",""))}</div></div><div class="meta-card"><div class="label">출처</div><div class="value">{pesc(payload.get("source",""))}</div></div><div class="meta-card"><div class="label">데이터 품질</div><div class="value">{pesc(payload.get("data_quality",""))}</div></div><div class="meta-card"><div class="label">용도</div><div class="value">{pesc(payload.get("use","시장 민감도 일지"))}</div></div></div>
 </section>
 {body_blocks}
-<footer class="footer"><span><a href="{esc(index_rel)}">← Archive index</a></span><span>Not investment advice · source-backed only</span></footer>
+<footer class="footer"><span><a href="{esc(index_rel)}">← 브리프 목록</a></span><span>투자 권유 아님 · 출처 확인 데이터만 사용</span></footer>
 </main>
 </body>
 </html>'''

@@ -59,13 +59,13 @@ class TestSlackBriefRenderer(unittest.TestCase):
 
     def test_transition_terms_are_localized_before_delivery(self):
         record = self._record()
-        record["source"] = "Naver Finance daily index tables · Yonhap economy RSS (2026-07-13)"
+        record["source"] = "SOURCE: NAVER FINANCE DAILY INDEX TABLES · YONHAP ECONOMY RSS · NAVER/HANA BANK POSTED RATE; SNAPSHOT GENERATED KST (2026-07-13)"
         record["drivers"][0]["text"] = "same-date headline 확인"
         record["next_hypotheses"][0]["horizon"] = "next KR close"
         output = render_record(record)
-        for translated in ("네이버 금융 일별 지수표", "연합뉴스 경제 RSS", "동일 날짜", "헤드라인", "다음 한국장 마감"):
+        for translated in ("네이버 금융 일별 지수표", "연합뉴스 경제 RSS", "네이버 금융/하나은행 고시 환율", "수집 시각 KST", "동일 날짜", "헤드라인", "다음 한국장 마감"):
             self.assertIn(translated, output)
-        for legacy in ("Naver Finance daily index tables", "Yonhap economy RSS", "same-date", "headline", "next KR close"):
+        for legacy in ("SOURCE:", "Naver Finance daily index tables", "Yonhap economy RSS", "NAVER/HANA BANK POSTED RATE", "SNAPSHOT GENERATED", "same-date", "headline", "next KR close"):
             self.assertNotIn(legacy, output)
 
 

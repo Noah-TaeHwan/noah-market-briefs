@@ -28,10 +28,17 @@ _DIRS = {"up": "▲", "down": "▼", "flat": "="}
 # 과거 JSON에 남은 공통 UI/파이프라인 용어를 화면에서만 한국어화한다.
 # 출처명·티커·URL은 데이터 원문을 보존한다.
 _DISPLAY_REPLACEMENTS = (
+    ("NAVER/HANA BANK POSTED RATE", "네이버 금융/하나은행 고시 환율"),
     ("Naver Finance daily index tables", "네이버 금융 일별 지수표"),
+    ("Naver Finance daily index table", "네이버 금융 일별 지수표"),
     ("Naver Finance market index", "네이버 금융 시장지수"),
+    ("Naver Finance", "네이버 금융"),
     ("Yonhap economy RSS", "연합뉴스 경제 RSS"),
+    ("Yonhap", "연합뉴스"),
     ("Hana Bank posted rate", "하나은행 고시 환율"),
+    ("SNAPSHOT GENERATED KST", "수집 시각 KST"),
+    ("fetched", "수집"),
+    ("published", "게시"),
     ("Generated KST", "생성 시각 KST"),
     ("script snapshot; actual run timestamp", "스크립트 스냅샷; 실제 실행 시각"),
     ("injected snapshot", "수집 스냅샷"),
@@ -78,7 +85,7 @@ def _public_text(value) -> str:
     """사용자 화면의 공통 영문 파이프라인 용어만 국문화한다."""
     text = str(value or "")
     for before, after in _DISPLAY_REPLACEMENTS:
-        text = text.replace(before, after)
+        text = re.sub(re.escape(before), after, text, flags=re.IGNORECASE)
     return text
 
 

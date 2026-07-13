@@ -450,13 +450,14 @@ class TestKoreanPublicLabels(unittest.TestCase):
             "market": "Korea", "window": "Close", "generated": "Generated KST 2026-07-13",
             "title": "한국 시장 마감 — 2026-07-13", "takeaway": "요약",
             "source": "Naver Finance daily index tables · Yonhap economy RSS",
+            "note": "SOURCE: NAVER FINANCE DAILY INDEX TABLES · YONHAP ECONOMY RSS · NAVER/HANA BANK POSTED RATE; SNAPSHOT GENERATED KST",
             "quality": [{"label": "Source/date", "value": "same-date"}],
             "drivers": [{"label": "headline", "text": "same-date headline"}],
             "next_hypotheses": [{"hypothesis": "가설", "horizon": "next KR close"}],
         })
-        for translated in ("생성 시각", "출처", "데이터 품질", "용도", "핵심 동인", "브리프 목록", "투자 권유 아님", "다음 한국장 마감", "헤드라인", "동일 날짜"):
+        for translated in ("생성 시각", "출처", "데이터 품질", "용도", "핵심 동인", "브리프 목록", "투자 권유 아님", "다음 한국장 마감", "헤드라인", "동일 날짜", "수집 시각 KST", "네이버 금융/하나은행 고시 환율"):
             self.assertIn(translated, html)
-        for legacy in (">Generated<", ">Source<", "Data quality", "오늘의 핵심 driver", "Archive index", "Not investment advice", "next KR close"):
+        for legacy in (">Generated<", ">Source<", "SOURCE:", "SNAPSHOT GENERATED", "Data quality", "오늘의 핵심 driver", "Archive index", "Not investment advice", "next KR close"):
             self.assertNotIn(legacy, html)
 
 

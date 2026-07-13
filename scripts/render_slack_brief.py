@@ -21,10 +21,18 @@ PUBLIC_BASE_URL = "https://noah-market-briefs.vercel.app/market-briefs"
 # 새 cron은 처음부터 한국어 값을 쓰지만, v2 전환일의 현재 레코드도 같은 화면 품질을
 # 갖도록 반복되는 공개 파이프라인 표현만 표시 시점에 번역한다.
 _DISPLAY_REPLACEMENTS = (
+    ("NAVER/HANA BANK POSTED RATE", "네이버 금융/하나은행 고시 환율"),
     ("Naver Finance daily index tables", "네이버 금융 일별 지수표"),
+    ("Naver Finance daily index table", "네이버 금융 일별 지수표"),
     ("Naver Finance market index", "네이버 금융 시장지수"),
+    ("Naver Finance", "네이버 금융"),
     ("Yonhap economy RSS", "연합뉴스 경제 RSS"),
+    ("Yonhap", "연합뉴스"),
     ("Hana Bank posted rate", "하나은행 고시 환율"),
+    ("SNAPSHOT GENERATED KST", "수집 시각 KST"),
+    ("Source:", "출처:"),
+    ("fetched", "수집"),
+    ("published", "게시"),
     ("next KR close", "다음 한국장 마감"),
     ("next Korea pre-open / next Korea session", "다음 한국장 개장 전 / 정규장"),
     ("same-date", "동일 날짜"),
@@ -39,7 +47,7 @@ def _clean(value: object) -> str:
     """한 줄 Slack 텍스트로 정규화하고, 반복되는 UI 용어를 국문화한다."""
     text = re.sub(r"\s+", " ", str(value or "")).strip()
     for before, after in _DISPLAY_REPLACEMENTS:
-        text = text.replace(before, after)
+        text = re.sub(re.escape(before), after, text, flags=re.IGNORECASE)
     return text
 
 

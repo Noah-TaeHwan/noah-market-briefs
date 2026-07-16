@@ -1,0 +1,180 @@
+{
+  "schema_version": 2,
+  "slug": "2026-07-16-us-close",
+  "date": "2026-07-16",
+  "market_code": "US",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/07/16/us-close.html",
+  "title": "미국 시장 마감 — 2026-07-16",
+  "market": "미국",
+  "window": "정규장 마감",
+  "note": "CNBC quote-cache 스냅샷 · 2026-07-16 16:45 EDT (KST 2026-07-17 05:45) · 3대 지수 상태=CLOSE",
+  "generated": "생성 시각 KST 2026-07-17 05:45:25 · ET 2026-07-16 16:45:25",
+  "source": "CNBC Quote API / 거래소 quote cache · 2026-07-16 16:45:25 EDT (KST 2026-07-17 05:45:25)",
+  "data_quality": "정규 거래일(TRADING_DAY)입니다. S&P 500·Nasdaq Composite·Dow 모두 mainmktstatus=CLOSE 및 reg_last_time을 확인했습니다. 미 10년물은 16:41 EDT, VIX는 16:15 EDT, 국채·지수·VIX 선물은 16:34~16:35 EDT quote로 현물 마감과 분리해 표기합니다. DXY·WTI·Gold·USD/KRW에는 유효 가격 필드가 없어 미확인으로 둡니다.",
+  "use": "시장 마감 브리프 · 투자 권유 아님",
+  "takeaway": "미국 현물 3대 지수는 모두 하락했고 Nasdaq Composite(-1.474%)가 S&P 500(-0.51%)과 Dow(-0.20%)보다 크게 밀렸습니다. 미 10년물의 source change는 +0.012%p, VIX는 +6.765%, VIX 선물은 +3.3001%로 동반 상승했습니다. 이는 위험회피·할인율 부담의 가격 조합이지만, 이 스냅샷만으로 단일 원인이나 추세 지속을 확정하지 않습니다.",
+  "changes": [
+    {
+      "dir": "down",
+      "text": "직전 저장 미국장 마감(2026-07-15)의 S&P 500 +0.382%, Nasdaq Composite +0.621%, Dow +0.29%와 달리 이번에는 세 지수가 모두 하락했습니다. Nasdaq Composite의 하락폭(-1.474%)이 S&P 500(-0.51%)·Dow(-0.20%)보다 컸습니다. CNBC Quote API / 거래소 quote cache, 2026-07-15·2026-07-16."
+    },
+    {
+      "dir": "up",
+      "text": "미 10년물은 직전 저장 마감의 4.551%에서 4.557%로 +0.006%p 높아졌고, 10년 미 국채선물은 이번 quote에서 -0.10%였습니다. 다만 현재 source의 previous_day_closing은 4.545% 및 change +0.012%p로 표시돼, 서로 다른 quote 시각을 단일 종가 변화로 과장하지 않습니다. CNBC Quote API / Tradeweb·CBOT, 2026-07-15·2026-07-16."
+    },
+    {
+      "dir": "up",
+      "text": "VIX는 직전 저장 마감의 15.67에서 16.73으로 +6.765% 상승했고, VIX 선물 quote는 16.55에서 18.65로 높아졌습니다. 같은 시각대의 스냅샷 비교상 변동성 가격은 높아졌지만, 현재 source의 VIX 선물 일간 change는 +3.3001%이므로 기준 시각 차이를 함께 보존합니다. CNBC Quote API / CBOE·CBOE Futures Exchange, 2026-07-15·2026-07-16."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "S&P 500",
+      "value": "7,533.77 / -0.51%",
+      "tone": "down",
+      "note": "CNBC Quote API / INDEX 거래소 quote cache · 2026-07-16 16:20:00 EDT; reg_last_time 동일, trading_day_type=TRADING_DAY, mainmktstatus=CLOSE, previous_day_closing 7,572.40"
+    },
+    {
+      "name": "Nasdaq Composite",
+      "value": "25,881.946 / -1.474%",
+      "tone": "down",
+      "note": "CNBC Quote API / NASDAQ 거래소 quote cache · 2026-07-16 16:45:25 EDT; reg_last_time 동일, trading_day_type=TRADING_DAY, mainmktstatus=CLOSE, previous_day_closing 26,269.227"
+    },
+    {
+      "name": "Dow Jones",
+      "value": "52,552.97 / -0.20%",
+      "tone": "down",
+      "note": "CNBC Quote API / Dow Jones Global Indexes 거래소 quote cache · 2026-07-16 16:20:01 EDT; reg_last_time 동일, trading_day_type=TRADING_DAY, mainmktstatus=CLOSE, previous_day_closing 52,658.64"
+    },
+    {
+      "name": "미 10년물",
+      "value": "4.557% / source change +0.012%p",
+      "tone": "warn",
+      "note": "Tradeweb / CNBC Quote API 거래소 quote cache · 2026-07-16 16:41:23 EDT; previous_day_closing 4.545%, source change +0.012"
+    },
+    {
+      "name": "VIX",
+      "value": "16.73 / +6.765%",
+      "tone": "warn",
+      "note": "CBOE / CNBC Quote API 거래소 quote cache · 2026-07-16 16:15:01 EDT; reg_last_time 동일, trading_day_type=TRADING_DAY, previous_day_closing 15.67"
+    },
+    {
+      "name": "10년 미 국채선물",
+      "value": "109.1875 / -0.10%",
+      "tone": "down",
+      "note": "CBOT / CNBC Quote API 거래소 quote cache · 2026-07-16 16:34:45 EDT; settlePrice 109.1406, settleDate 2026-07-16; 현물 정규장 마감 후 quote"
+    },
+    {
+      "name": "지수선물(현금장 마감 후)",
+      "value": "S&P 500 -0.58% / Nasdaq 100 -1.73% / Dow -0.32%",
+      "tone": "down",
+      "note": "CME·CBOT / CNBC Quote API 거래소 quote cache · 2026-07-16 16:35:00~16:35:22 EDT; S&P 500·Nasdaq 100·Dow 선물, 현물 정규장 마감 후 quote"
+    },
+    {
+      "name": "VIX 선물",
+      "value": "18.65 / +3.3001%",
+      "tone": "warn",
+      "note": "CBOE Futures Exchange / CNBC Quote API 거래소 quote cache · 2026-07-16 16:34:27 EDT; settlePrice 18.508, settleDate 2026-07-16; 현물 정규장 마감 후 quote"
+    },
+    {
+      "name": "DXY / WTI / Gold / USD-KRW",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "CNBC Quote API 주입 스냅샷 · 2026-07-16 16:45:25 EDT; DXY·CL.1·GC.1·USD/KRW에 유효 가격 필드가 없어 추정하지 않음"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "현물 위험회피 가격 조합",
+      "text": "S&P 500(-0.51%), Nasdaq Composite(-1.474%), Dow(-0.20%)가 모두 하락했고 Nasdaq Composite의 하락폭이 가장 컸습니다. 이 스냅샷에는 섹터 breadth나 뉴스 원인이 없어 특정 업종·사건의 인과로 확장하지 않습니다. CNBC Quote API / 거래소 quote cache, 2026-07-16."
+    },
+    {
+      "label": "금리·변동성 가격의 동반 압력",
+      "text": "미 10년물은 4.557%(source change +0.012%p), 10년 미 국채선물은 -0.10%, VIX는 +6.765%, VIX 선물은 +3.3001%였습니다. 할인율·옵션 변동성 가격이 함께 높아진 관측값이지만, 원인은 이 데이터만으로 단정하지 않습니다. CNBC Quote API / Tradeweb·CBOT·CBOE, 2026-07-16 16:15~16:41 EDT."
+    },
+    {
+      "label": "사후장 선물의 동반 약세",
+      "text": "16:35 EDT 지수선물은 S&P 500 -0.58%, Nasdaq 100 -1.73%, Dow -0.32%로 모두 하락했습니다. 이는 현물 마감 뒤의 별도 시점 가격이므로 다음 정규장 방향 예측으로 사용하지 않고 다음 마감의 현물·변동성 조합으로 확인합니다. CNBC Quote API / CME·CBOT, 2026-07-16."
+    }
+  ],
+  "hypothesis_review": [
+    {
+      "previous_hypothesis": "VIX 15.67과 VIX 선물 16.55의 하락이 다음 정규장에도 유지되고 Nasdaq Composite가 상대강세를 보이면, 현물 위험선호 가격 조합의 지속 여부를 확인한다.",
+      "verdict": "반증",
+      "evidence": "VIX는 16.73(+6.765%), VIX 선물은 18.65(+3.3001%)였고, Nasdaq Composite는 -1.474%로 S&P 500(-0.51%)과 Dow(-0.20%)보다 약했습니다. CNBC Quote API / CBOE·CBOE Futures Exchange·NASDAQ, 2026-07-16.",
+      "reason": "직전 가설의 관찰 조건인 변동성 동반 하락과 Nasdaq 상대강세가 모두 이번 정규장 마감에서 충족되지 않았습니다. 하루의 반증은 새로운 하락 추세의 확정이 아닙니다.",
+      "lesson": "현물·VIX·VIX 선물의 조합은 위험선호 조건을 빠르게 반증할 수 있지만, 추세 판정에는 다음 회차의 재확인이 필요합니다."
+    },
+    {
+      "previous_hypothesis": "미 10년물이 4.551% 부근 이하이고 10년 미 국채선물이 강한 상태가 이어질 때, Nasdaq 상대강세가 동행하는지 확인한다.",
+      "verdict": "반증",
+      "evidence": "미 10년물은 4.557%이고 current source change는 +0.012%p, 10년 미 국채선물은 -0.10%였으며 Nasdaq Composite는 -1.474%로 S&P 500(-0.51%)·Dow(-0.20%)보다 약했습니다. CNBC Quote API / Tradeweb·CBOT·NASDAQ, 2026-07-16.",
+      "reason": "직전 저장 마감 대비 수익률은 4.551%→4.557%로 높아졌고 국채선물은 약세였으며 Nasdaq 상대강세도 나타나지 않았습니다. current source의 이전 종가 기준은 4.545%이므로, 절대 변화폭보다 금리·국채선물·현물 상대성의 결합으로만 판단합니다.",
+      "lesson": "수익률 단일 수준보다 수익률·국채선물·현물 상대성의 조합이 할인율 민감도를 검수하는 데 더 견고합니다."
+    },
+    {
+      "previous_hypothesis": "이번 사후장 Nasdaq 100 선물 -0.27%의 상대약세가 다음 정규장 현물에서도 재현되는지 확인한다.",
+      "verdict": "적중",
+      "evidence": "다음 정규장 현물에서 Nasdaq Composite는 -1.474%로 S&P 500(-0.51%)과 Dow(-0.20%)보다 약했습니다. CNBC Quote API / NASDAQ·INDEX·Dow Jones Global Indexes, 2026-07-16.",
+      "reason": "직전 사후장 Nasdaq 100 선물의 상대약세는 이번 현물의 Nasdaq Composite 상대약세로 관찰됐습니다. 다만 Nasdaq 100 선물과 Nasdaq Composite는 동일 지수가 아니며, 단일 회차는 예측력 증명이 아닙니다.",
+      "lesson": "사후장 선물은 다음 현물의 검증 가설로만 보존하고, 판단은 다음 정규장 현물·변동성·금리 조합으로 확인합니다."
+    }
+  ],
+  "today_learning": "현물 하락, Nasdaq 상대약세, 금리·변동성 상승이 함께 나타난 가격 조합은 직전 회차의 위험선호 가설을 낮췄습니다. 다만 DXY·원자재·USD/KRW가 미확인이고 하루의 가격 조합이어서, 단일 원인·일방향 추세로 읽지 않습니다.",
+  "next_hypotheses": [
+    {
+      "hypothesis": "VIX 16.73과 VIX 선물 18.65가 다음 정규장에 함께 낮아지고 Nasdaq Composite의 상대약세가 완화되면, 이번 위험회피 가격 조합의 지속 여부를 재검증한다.",
+      "observable": "다음 미국 정규장 마감의 VIX·VIX 선물 수준과 변화율, S&P 500·Nasdaq Composite·Dow의 등락률 및 Nasdaq 상대 성과.",
+      "invalidation": "VIX와 VIX 선물이 함께 상승하고 Nasdaq Composite가 S&P 500·Dow보다 계속 약하면 변동성 완화·상대약세 완화 가설을 낮춘다.",
+      "horizon": "다음 미국 정규장 마감"
+    },
+    {
+      "hypothesis": "미 10년물이 4.557% 부근 아래로 안정되고 10년 미 국채선물이 반등할 때 Nasdaq 상대성과가 개선되는지 확인한다.",
+      "observable": "다음 미국 정규장 마감의 미 10년물 수익률, 10년 미 국채선물, S&P 500·Nasdaq Composite의 같은 날짜 등락률과 기준 시각.",
+      "invalidation": "미 10년물이 하락하고 국채선물이 반등해도 Nasdaq Composite가 S&P 500보다 약하면 단순 금리·성장주 동행 가설을 낮춘다.",
+      "horizon": "다음 미국 정규장 마감"
+    },
+    {
+      "hypothesis": "이번 사후장 Nasdaq 100 선물 -1.73%의 상대약세가 다음 정규장 현물에서도 재현되는지 확인한다.",
+      "observable": "다음 미국 정규장 마감의 Nasdaq Composite·S&P 500·Dow 등락률과 VIX·VIX 선물의 방향.",
+      "invalidation": "Nasdaq Composite가 S&P 500과 Dow를 모두 앞서고 VIX·VIX 선물이 하락하면 사후장 상대약세 가설을 낮춘다.",
+      "horizon": "다음 미국 정규장 마감"
+    }
+  ],
+  "theses": [],
+  "risks": [
+    "DXY·WTI·Gold·USD/KRW의 유효 quote가 없어 달러·유가·원화 채널은 미확인입니다.",
+    "지수선물·미 국채선물·VIX 선물은 현물 정규장 마감 후 quote이며 다음 정규장 방향을 보장하지 않습니다.",
+    "미 10년물의 source previous_day_closing(4.545%)은 직전 저장 브리프의 quote(4.551%)와 달라, 서로 다른 기준 시각의 변화폭을 단일 종가 변화로 해석하지 않습니다.",
+    "하루의 금리·주식·변동성 동행은 가격 조합일 뿐, 통화정책이나 특정 사건의 인과를 확정하는 근거가 아닙니다.",
+    "이 브리프는 시장 데이터 요약이며 투자 권유나 매매 지시가 아닙니다."
+  ],
+  "quality": [
+    {
+      "label": "상태",
+      "value": "정규 거래일 · trading_day_type=TRADING_DAY"
+    },
+    {
+      "label": "생성 시각",
+      "value": "KST 2026-07-17 05:45:25 · ET 2026-07-16 16:45:25"
+    },
+    {
+      "label": "현물 정규장 기준",
+      "value": "S&P 500 16:20:00 EDT, Dow 16:20:01 EDT, Nasdaq Composite 16:45:25 EDT; 각 reg_last_time과 mainmktstatus=CLOSE 확인"
+    },
+    {
+      "label": "채권·파생·옵션 기준",
+      "value": "미 10년물 16:41:23 EDT, 국채·지수선물 16:34~16:35 EDT, VIX 16:15:01 EDT, VIX 선물 16:34:27 EDT"
+    },
+    {
+      "label": "미확인 데이터",
+      "value": "DXY, WTI, Gold, USD/KRW"
+    },
+    {
+      "label": "출처/기준일",
+      "value": "CNBC Quote API / 거래소 quote cache · 2026-07-16"
+    }
+  ]
+}

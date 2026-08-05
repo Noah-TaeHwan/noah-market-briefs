@@ -7,15 +7,20 @@ build.py 테스트(test_build.py)는 렌더 파이프라인을 테스트하고,
 
 실행: python3 tests/test_verify.py  (또는 python3 -m unittest discover -s tests)
 """
+import io
 import json
 import sys
+import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
-from verify_brief import verify_record, verify_file, Severity  # noqa: E402
+from verify_brief import (  # noqa: E402
+    Severity, load_named_holdings, main, verify_file, verify_record,
+)
 
 
 def _valid_record():
@@ -279,6 +284,60 @@ class TestRealData(unittest.TestCase):
             errors = [f for f in findings if f.severity == Severity.ERROR]
             self.assertEqual(errors, [], f"{jf.name}에 ERROR가 있음:\n"
                              + "\n".join(f"  [{f.severity.value}] {f.message}" for f in errors))
+
+
+class TestNamedHoldingsFile(unittest.TestCase):
+    """감시 목록은 저장소 밖 파일에서만 온다 — 없으면 검사가 조용히 비활성된다."""
+
+    def test_missing_file_returns_empty(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(load_named_holdings(Path(d) / "none.local"), ())
+
+    def test_reads_lines_and_skips_comments_and_blanks(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "holdings.local"
+            p.write_text("# 주석\n\n  이름A  \n이름B\n", encoding="utf-8")
+            self.assertEqual(load_named_holdings(p), ("이름A", "이름B"))
+
+
+class TestVerifyCli(unittest.TestCase):
+    """CLI exit code 계약 — 0=ERROR 없음, 1=ERROR 있음."""
+
+    def _run(self, payload) -> tuple[int, str]:
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "brief.json"
+            p.write_text(payload if isinstance(payload, str)
+                         else json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = main([str(p)])
+            return code, buf.getvalue()
+
+    def test_valid_record_exits_zero(self):
+        code, out = self._run(_valid_record())
+        self.assertEqual(code, 0)
+        self.assertIn("0 ERROR", out)
+
+    def test_missing_index_meta_exits_one(self):
+        """index 메타(INDEX_META_REQUIRED)가 빠지면 ERROR — 인덱스에 실을 수 없는 레코드다."""
+        for field in ("date", "market_code", "window_code", "status", "out_path"):
+            rec = _valid_record()
+            del rec[field]
+            with self.subTest(missing=field):
+                code, out = self._run(rec)
+                self.assertEqual(code, 1)
+                self.assertIn("ERROR", out)
+
+    def test_malformed_json_exits_one_without_raising(self):
+        code, out = self._run("{ this is not json }")
+        self.assertEqual(code, 1)
+        self.assertIn("JSON 파싱 실패", out)
+
+    def test_missing_file_exits_one(self):
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = main([str(REPO / "data" / "does-not-exist.json")])
+        self.assertEqual(code, 1)
 
 
 if __name__ == "__main__":

@@ -463,5 +463,37 @@ class TestKoreanPublicLabels(unittest.TestCase):
             self.assertNotIn(legacy, html)
 
 
+class TestBuildSummary(unittest.TestCase):
+    """build() 요약 dict — cron 로그와 CI가 이 숫자로 회차 누락을 알아챈다."""
+
+    def _write(self, data_dir: Path, name: str, status: str, date: str):
+        p = data_dir / "2026" / "06" / "23"
+        p.mkdir(parents=True, exist_ok=True)
+        (p / f"{name}.json").write_text(json.dumps({
+            "schema_version": 2, "date": date, "market_code": "KR", "window_code": "close",
+            "status": status, "out_path": f"2026/06/23/{name}.html",
+            "title": f"테스트 브리프 {name}", "takeaway": "요약",
+        }, ensure_ascii=False), encoding="utf-8")
+
+    def test_counts_live_sample_and_pages(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data"
+            self._write(data, "korea-close", "live", "2026-06-23")
+            self._write(data, "us-close", "sample", "2026-06-23")
+            summary = B.build(root)
+            self.assertEqual(summary, {"live": 1, "sample": 1, "pages": 2})
+            self.assertTrue((root / "index.html").exists())
+            self.assertTrue((root / "2026/06/23/korea-close.html").exists())
+
+    def test_empty_data_dir_builds_index_with_zero_counts(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "data").mkdir()
+            summary = B.build(root)
+            self.assertEqual(summary, {"live": 0, "sample": 0, "pages": 0})
+            self.assertTrue((root / "index.html").exists())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

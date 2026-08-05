@@ -81,6 +81,20 @@ def esc(x):
     return html.escape(str(x), quote=True)
 
 
+# 링크 미리보기 카드가 잘라내는 길이. 문장 중간에서 끊기면 말줄임을 붙인다.
+_OG_DESC_MAX = 200
+
+
+def _og_desc(text) -> str:
+    """링크 공유 미리보기용 설명문을 만든다.
+
+    @param text 원문(브리프의 한 줄 결론). 비면 빈 문자열을 돌려 메타를 비운다.
+    @returns 공백이 정리되고 _OG_DESC_MAX 이하로 잘린 문자열.
+    """
+    s = " ".join(str(text or "").split())
+    return s if len(s) <= _OG_DESC_MAX else s[:_OG_DESC_MAX - 1].rstrip() + "…"
+
+
 def _public_text(value) -> str:
     """사용자 화면의 공통 영문 파이프라인 용어만 국문화한다."""
     text = str(value or "")
@@ -369,8 +383,8 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     def watch_section() -> str:
         """볼 센서 섹션. 장전(preopen)이면 '오늘', 마감·기본이면 '내일'. 없으면 빈 문자열."""
         items = payload.get("watch", [])
-        # Once the hypothesis loop is present, `next_hypotheses[]` is the primary forward-looking
-        # state. Hide the legacy watch list so the page does not show the old "내일 볼 센서" contract.
+        # 가설 루프가 있으면 `next_hypotheses[]`가 앞을 보는 주 상태다. 레거시 watch 목록을
+        # 숨겨서 옛 "내일 볼 센서" 계약이 화면에 같이 뜨지 않게 한다.
         if payload.get("next_hypotheses"):
             return ""
         if not items:
@@ -458,8 +472,10 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     def today_learning_section() -> str:
         """오늘의 학습 / 오늘 배운 점.
 
-        payload can pass `today_learning` as a string or list of strings. This is the
-        brief-level lesson distilled from hypothesis review and data-quality gaps.
+        payload는 `today_learning`을 문자열 또는 문자열 리스트로 줄 수 있다.
+        가설 검증과 데이터 품질 공백에서 뽑아낸 브리프 단위의 학습이다.
+
+        @returns 학습 섹션 HTML. 항목이 없으면 빈 문자열.
         """
         items = payload.get("today_learning", [])
         if isinstance(items, str):
@@ -550,6 +566,11 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{esc(payload.get("title","Market Brief"))}</title>
+<meta name="description" content="{esc(_og_desc(takeaway))}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="{esc(payload.get("title","Market Brief"))}"/>
+<meta property="og:description" content="{esc(_og_desc(takeaway))}"/>
+<meta name="twitter:card" content="summary"/>
 <link rel="icon" type="image/svg+xml" href="{esc(favicon_rel)}"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>

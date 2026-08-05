@@ -2,14 +2,18 @@
 """Slack 최종 출력 계약 — 내부 진단 누출 없이 한국어 브리프만 렌더한다."""
 from __future__ import annotations
 
+import io
+import json
 import sys
+import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
-from render_slack_brief import render_record  # noqa: E402
+from render_slack_brief import _html_link, main, render_record  # noqa: E402
 
 
 class TestSlackBriefRenderer(unittest.TestCase):
@@ -67,6 +71,47 @@ class TestSlackBriefRenderer(unittest.TestCase):
             self.assertIn(translated, output)
         for legacy in ("SOURCE:", "Naver Finance daily index tables", "Yonhap economy RSS", "NAVER/HANA BANK POSTED RATE", "SNAPSHOT GENERATED", "same-date", "headline", "next KR close"):
             self.assertNotIn(legacy, output)
+
+
+class TestHtmlLinkGuard(unittest.TestCase):
+    """out_path 가 링크로 나가기 전 형태를 강제한다 — Slack 메시지가 임의 URL을 싣지 않게."""
+
+    def test_accepts_canonical_out_path(self):
+        link = _html_link("2026/07/13/korea-close.html")
+        self.assertIn("https://noah-market-briefs.vercel.app/market-briefs/2026/07/13/korea-close.html", link)
+
+    def test_rejects_traversal_and_malformed_paths(self):
+        for bad in ("../../etc/passwd",
+                    "2026/7/13/korea-close.html",        # 월이 두 자리가 아님
+                    "2026/07/13/korea-close.txt",        # .html 아님
+                    "2026/07/13/Korea-Close.html",       # 대문자 불허
+                    "https://example.com/evil.html",
+                    ""):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                _html_link(bad)
+
+
+class TestSlackCli(unittest.TestCase):
+    """CLI는 계약 위반 시 원인을 숨기고 '발행 보류'만 알리며 exit 1 을 낸다."""
+
+    def _run(self, payload) -> tuple[int, str]:
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "brief.json"
+            p.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = main([str(p)])
+            return code, buf.getvalue()
+
+    def test_invalid_record_holds_publication(self):
+        code, out = self._run({"title": "제목만 있고 나머지가 없음"})
+        self.assertEqual(code, 1)
+        self.assertIn("발행 보류", out)
+
+    def test_hold_message_does_not_leak_internal_cause(self):
+        _, out = self._run({"title": "제목만 있고 나머지가 없음"})
+        for forbidden in ("Traceback", "ValueError", "/var/", "tempfile"):
+            self.assertNotIn(forbidden, out)
 
 
 if __name__ == "__main__":

@@ -16,9 +16,10 @@ cron(LLM)이 매일 data/ 에 JSON을 쓰므로, 한 회차의 결함이 조용�
 from __future__ import annotations
 import enum
 import json
+import re
 import sys
 from pathlib import Path
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -85,8 +86,11 @@ class Finding:
 # ── 헬퍼 ────────────────────────────────────────────────────────────────
 
 def _looks_numeric(value: str) -> bool:
-    """값이 숫자(지수·환율·금리 등)처럼 보이는지 — 쉼표·%·원·마이너스 허용."""
-    import re
+    """값이 숫자(지수·환율·금리 등)처럼 보이는지 — 쉼표·%·원·마이너스 허용.
+
+    @param value 검사할 값
+    @returns 숫자로 보이면 True
+    """
     cleaned = re.sub(r'[,\.\d\-+%원]', '', str(value)).strip()
     return len(cleaned) == 0 and bool(re.search(r'\d', str(value)))
 

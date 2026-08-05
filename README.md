@@ -12,6 +12,11 @@
   <img src="https://img.shields.io/badge/의존성-0-brightgreen" alt="런타임 의존성 없음">
 </p>
 
+<sub><i>Daily KR/US market briefs as a static archive. A cron agent appends one JSON record per session;
+a stdlib-only deterministic builder renders every page from it. The LLM-written records are treated as
+untrusted input — gated by schema and source-discipline validation, with malformed sessions isolated
+rather than crashing the build. 83 regression tests, no runtime dependencies.</i></sub>
+
 미국·한국 시장의 장전/마감 브리핑을 날짜별로 쌓는 정적 아카이브입니다.
 cron 에이전트가 매일 4회 시장 스냅샷을 JSON으로 적재하고, 빌드 스크립트가 같은 디자인의 HTML로 렌더합니다.
 
@@ -81,7 +86,7 @@ $ python3 scripts/build.py
 built 65 brief page(s): 65 live · 0 sample → index.html
 
 $ python3 -m unittest discover -s tests
-Ran 71 tests in 1.082s
+Ran 83 tests in 0.352s
 
 OK
 ```

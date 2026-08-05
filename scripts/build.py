@@ -2,7 +2,7 @@
 """data/ 의 브리프 JSON들로부터 사이트(브리프 HTML + 아카이브 index)를 빌드한다.
 
 데이터/화면 분리의 '화면' 쪽:
-  - cron 에이전트은 data/YYYY/MM/DD/<window>.json 에 **데이터만** 쌓는다.
+  - cron 에이전트는 data/YYYY/MM/DD/<window>.json 에 **데이터만** 쌓는다.
   - 이 스크립트가 그 JSON들을 읽어 **항상 같은 디자인**의 사이트를 생성한다.
 
 핵심 사고: "나는 HTML을 손으로 안 짠다. data/ 에 JSON을 넣고 build.py를 돌린다."

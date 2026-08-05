@@ -65,7 +65,7 @@ tests/test_build.py               # 회귀 테스트(python3 tests/test_build.py
 
 ## Part B — cron 전환 계약 (⚠️ Noah가 적용, 아직 미적용)
 
-지금 cron 에이전트은 **HTML을 직접 손으로 작성**한다 → 디자인이 매번 흔들리고, 디커플링이 완성되지 않는다. 아래로 바꾸면 "다음 cron 브리프도 자동으로 같은 디자인"이 **진짜로** 성립한다.
+지금 cron 에이전트는 **HTML을 직접 손으로 작성**한다 → 디자인이 매번 흔들리고, 디커플링이 완성되지 않는다. 아래로 바꾸면 "다음 cron 브리프도 자동으로 같은 디자인"이 **진짜로** 성립한다.
 
 **대상 잡:** macro-analyst 프로필 cron — `<job-id:KR-close>`(KR close), `<job-id:US-close>`(US close), `<job-id:KR-preopen>`(KR preopen), `<job-id:US-preopen>`(US preopen).
 
@@ -82,10 +82,10 @@ git push
 ```
 (Slack 링크 형식은 그대로 — Vercel URL이 같은 HTML 경로를 가리킨다.)
 
-**🔴 durability 경고:** 위 cron 프롬프트는 `<cron 러너 설정 파일>`(**버전관리 안 됨**)에 산다 → 러너 재배포·재시작 때 지워질 수 있다. 따라서 이 계약을 적용한 뒤:
+**🔴 durability 경고:** 위 cron 프롬프트는 cron 러너 설정 파일(저장소 밖, **버전관리 안 됨**)에 산다 → 러너 재배포·재시작 때 지워질 수 있다. 따라서 이 계약을 적용한 뒤:
 1. **이 문서(`docs/ARCHITECTURE.md`)가 정본** — 지워지면 여기서 다시 적용.
 2. `recurring-market-briefings` 스킬의 `SKILL.md` 에도 같은 계약을 미러링.
-3. bg/자동 세션에서는 `<cron 러너 설정>` 직접 수정이 classifier로 막힐 수 있어, **Noah가 직접** `러너 설정 편집` 로 적용.
+3. 자동 세션에서는 러너 설정 직접 수정이 막힐 수 있어, **소유자가 직접** 적용한다.
 
 **전환 순서(안전):** ① build.py·렌더러가 main에 머지된 뒤 → ② cron 프롬프트를 JSON 방식으로 전환 → ③ 한 번 수동 실행해 `data/*.json` 생성 + build + push + Vercel 확인 → ④ 정상 확인 후 다음 자동 실행에 맡김.
 
@@ -103,7 +103,7 @@ git push
 - `theses` → "투자 관점 읽기" 섹션, 각 카드에 delta 한 줄.
 - watch 제목은 `window_code` 로 자동: `preopen`→"오늘 볼 센서", 그 외→"내일 볼 센서".
 
-### cron 프롬프트 애드덤 (4개 잡에 추가 — Noah가 `<cron 러너 설정>` 적용)
+### cron 프롬프트 애드덤 (4개 잡에 추가 — 소유자가 러너 설정에 적용)
 > **투자 렌즈 + 어제 대비 변화 (template v2):**
 > - `theses[]` 를 **투자 관점 렌즈**로 채운다(보유종목 아님): 위험선호 / 금리·duration / 환율·달러(원화) / 변동성·헤지 (+필요시 섹터·브레드스). 각 렌즈 = `{name, signal(오늘 읽기), level 1-3, delta:{dir:up|down|flat, text:"어제 대비 한 줄"}, body}`. 데이터 근거 없으면 `미확인`.
 > - `changes[]` (2-3개): **직전 같은 (market,window) 브리프**(data/ 에서 가장 최근 같은 윈도 JSON)를 읽어 시장이 뭐가 바뀌었나. 각 = `{dir, text}`. 직전 브리프 없으면 changes 생략.
@@ -131,4 +131,4 @@ git push
 > - 각 검증은 `previous_hypothesis`, `verdict`, `evidence`, `reason`, `lesson`을 포함한다. 숫자·근거는 이번 run의 source-backed 데이터만 사용하고, 데이터가 부족하면 `미검증`으로 둔다.
 > - 이번 브리프 끝에는 다음 같은 윈도에서 확인할 `next_hypotheses[]` 2~3개를 만든다. 각 가설은 `hypothesis`, `observable`, `invalidation`, `horizon`을 포함한다.
 > - Slack에는 `이전 가설 검증` 1~2줄 + `오늘의 학습` 1줄 + `다음 체크 가설` 1~2개만 간결히 넣고, HTML에는 JSON 필드가 렌더되게 한다.
-> - 특정 보유명(비상장 커머스/미국 온라인 게이밍/글로벌 증권사 등)은 Noah가 명시하지 않으면 쓰지 않는다. 가설은 시장 구조·환율·금리·유동성·변동성·섹터 breadth 중심으로 작성한다.
+> - 특정 보유명은 소유자가 명시하지 않으면 쓰지 않는다. 가설은 시장 구조·환율·금리·유동성·변동성·섹터 breadth 중심으로 작성한다.

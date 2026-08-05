@@ -189,43 +189,55 @@ class TestHypothesisFieldCompleteness(unittest.TestCase):
                             for f in findings))
 
 
+# 감시 목록은 저장소에 두지 않으므로(verify_brief.load_named_holdings 참고)
+# 테스트는 실제 이름 대신 합성 이름을 주입해 검사 로직만 검증한다.
+_TEST_HOLDINGS = ("테스트보유A", "테스트보유B")
+
+
 class TestNamedHoldingsExclusion(unittest.TestCase):
     """v2 공개 계약 — named holdings는 어느 공개 필드에도 없어야 한다."""
 
     def test_clean_theses_pass(self):
         rec = _valid_record()
         rec["theses"] = [{"name": "위험선호", "signal": "회복", "body": "본문"}]
-        findings = verify_record(rec)
+        findings = verify_record(rec, _TEST_HOLDINGS)
         holdings_errors = [f for f in findings if "holdings" in f.message.lower()
                            or "논지" in f.message]
         self.assertEqual(holdings_errors, [])
 
     def test_named_holdings_in_theses_is_error(self):
         rec = _valid_record()
-        rec["theses"] = [{"name": "비상장 커머스", "signal": "높음", "body": "본문"}]
-        findings = verify_record(rec)
+        rec["theses"] = [{"name": "테스트보유A", "signal": "높음", "body": "본문"}]
+        findings = verify_record(rec, _TEST_HOLDINGS)
         self.assertTrue(any(f.severity == Severity.ERROR and "논지" in f.message
                             for f in findings))
 
-    def test_ibkr_in_theses_is_error(self):
+    def test_second_named_holding_in_theses_is_error(self):
         rec = _valid_record()
-        rec["theses"] = [{"name": "글로벌 증권사", "signal": "NII", "body": "본문"}]
-        findings = verify_record(rec)
+        rec["theses"] = [{"name": "테스트보유B", "signal": "NII", "body": "본문"}]
+        findings = verify_record(rec, _TEST_HOLDINGS)
         self.assertTrue(any(f.severity == Severity.ERROR and "논지" in f.message
                             for f in findings))
 
     def test_named_holding_in_risk_is_error_for_v2(self):
         rec = _valid_record()
-        rec["risks"] = ["비상장 커머스 할인율을 따로 점검"]
-        findings = verify_record(rec)
+        rec["risks"] = ["테스트보유A 할인율을 따로 점검"]
+        findings = verify_record(rec, _TEST_HOLDINGS)
         self.assertTrue(any(f.severity == Severity.ERROR and "risks[0]" in f.message
                             for f in findings))
 
     def test_schema_v1_legacy_archive_is_not_retroactively_rejected(self):
         rec = _valid_record()
         rec["schema_version"] = 1
-        rec["theses"] = [{"name": "비상장 커머스", "signal": "legacy", "body": "과거 기록"}]
-        errors = [f for f in verify_record(rec) if f.severity == Severity.ERROR]
+        rec["theses"] = [{"name": "테스트보유A", "signal": "legacy", "body": "과거 기록"}]
+        errors = [f for f in verify_record(rec, _TEST_HOLDINGS) if f.severity == Severity.ERROR]
+        self.assertEqual(errors, [])
+
+    def test_empty_holdings_list_disables_the_check(self):
+        """목록이 비면(로컬 파일 없음) 어떤 이름도 위반으로 보지 않는다."""
+        rec = _valid_record()
+        rec["theses"] = [{"name": "테스트보유A", "signal": "높음", "body": "본문"}]
+        errors = [f for f in verify_record(rec, ()) if f.severity == Severity.ERROR]
         self.assertEqual(errors, [])
 
 

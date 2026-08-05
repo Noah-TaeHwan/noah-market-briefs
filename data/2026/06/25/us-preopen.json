@@ -72,7 +72,7 @@
       "signal": "완화",
       "level": 2,
       "delta": { "dir": "down", "text": "VIX가 전일 장전 19.07에서 17.83으로 하락했고 VIX future도 -4.27%입니다." },
-      "body": "옵션시장 헤지 압력이 낮아진 것은 미국 온라인 게이밍와 Compute/AI duration 멀티플에 단기 완충입니다. 반대로 개장 후 VIX가 19~20선으로 되돌아가면 장전 risk-on 신호는 약해집니다."
+      "body": "옵션시장 헤지 압력이 낮아진 것은 미국 온라인 게이밍과 Compute/AI duration 멀티플에 단기 완충입니다. 반대로 개장 후 VIX가 19~20선으로 되돌아가면 장전 risk-on 신호는 약해집니다."
     }
   ],
 

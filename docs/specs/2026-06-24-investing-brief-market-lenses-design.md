@@ -1,7 +1,7 @@
 # 일일 투자 브리프 재설계 — 시장 읽기 렌즈 + 어제 대비 변화
 
 **상태:** 설계 승인됨 (2026-06-24, Noah) · 구현 대기(writing-plans)
-**대상 레포:** `noah-market-briefs` (cron 프롬프트 계약은 `<cron 러너 설정>` + `docs/ARCHITECTURE.md`)
+**대상 레포:** `noah-market-briefs` (cron 프롬프트 계약은 러너 설정 + `docs/ARCHITECTURE.md`)
 
 ## Context / 배경
 
@@ -9,7 +9,7 @@
 
 남은 레버는 브리프의 **출력 가치(인사이트·유용성)**다. Noah 우선순위(2026-06-24):
 
-- 특정 **보유종목 민감도(비상장 커머스/글로벌 증권사/미국 온라인 게이밍/Compute)는 보류** — 지금은 일반 **"주식 투자 / 투자" 관점**의 매일 브리프(한국/미국·장전/마감)를 받아보는 것 자체가 핵심.
+- 특정 **보유종목 민감도는 보류** — 지금은 일반 **"주식 투자 / 투자" 관점**의 매일 브리프(한국/미국·장전/마감)를 받아보는 것 자체가 핵심.
 - 그 핵심 가치 = **"시장 읽기 + 어제 대비 변화"**. 매일 받아보며 시장 흐름 감을 익히는 저널.
 
 이 스펙은 기존 "보유논지 민감도" 섹션을 **종목 비의존 "투자 관점 렌즈"**로 재구성하고, **"어제(직전 같은 윈도) 대비 변화"**를 더해 아카이브 누적이 **시장 흐름 저널**이 되게 한다.
@@ -58,7 +58,7 @@
 1. **데이터 스키마** (`data/**/*.json`): `theses[]` item에 `delta` 추가, 최상위 `changes[]` 추가. **백워드 호환** — 없으면 graceful(섹션 미표시).
 2. **`scripts/render_market_brief.py`**: ⓐ `changes[]` 블록 렌더, ⓑ 렌즈/지표 `delta` 칩 렌더, ⓒ 섹션 제목 변경. 렌즈는 기존 thesis 카드 구조 재사용 → 변경 최소.
 3. **`scripts/build.py`**: **Phase 1 변화 없음**(load/정렬/가드 그대로). **Phase 2**: `(market, window, lens_name)`별 레벨 히스토리 집계 → ● 추이·스트릭 데이터를 render에 전달.
-4. **프롬프트/계약**: cron이 **직전 같은 윈도 JSON을 읽어** 렌즈 평가·`delta`·`changes[]` 작성, 윈도별 프레이밍 적용. 정본 = `docs/ARCHITECTURE.md`(+ SKILL.md 미러). **런타임 cron 프롬프트(`<cron 러너 설정>`) 수정은 classifier 차단 → Noah가 적용**(레포엔 계약 문서만).
+4. **프롬프트/계약**: cron이 **직전 같은 윈도 JSON을 읽어** 렌즈 평가·`delta`·`changes[]` 작성, 윈도별 프레이밍 적용. 정본 = `docs/ARCHITECTURE.md`(+ SKILL.md 미러). **런타임 cron 프롬프트 수정은 소유자가 러너 설정에 적용**(레포엔 계약 문서만).
 5. **`assets/brief.css`**: `changes` 블록 · `delta` 칩 · (Phase 2)히스토리 점 스타일. 기존 Lamplight Ledger 톤 유지.
 
 ## Data flow
@@ -94,4 +94,4 @@ cron(스냅샷 데이터 + 직전 같은 윈도 브리프 JSON 읽기)
 
 - 렌즈 세트: **위험선호 · 금리·duration · 환율·달러/원화 · 변동성·헤지** (+ 섹터·브레드스 옵션). KR/US 공통 코어, 본문 강조만 시장별.
 - 비교 기준: **직전 같은 (market, window) 브리프**.
-- cron 프롬프트(`<cron 러너 설정>`)는 Noah가 적용; 레포엔 `docs/ARCHITECTURE.md` 계약이 정본.
+- cron 프롬프트는 소유자가 러너 설정에 적용; 레포엔 `docs/ARCHITECTURE.md` 계약이 정본.

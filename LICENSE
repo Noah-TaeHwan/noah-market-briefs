@@ -1,0 +1,34 @@
+적용 범위 (Scope)
+
+아래 MIT 라이선스는 이 저장소의 **코드와 디자인 자산**에만 적용됩니다.
+  - scripts/, tests/, assets/, vercel.json, 빌드 산출물의 HTML 구조·스타일
+
+브리프 **콘텐츠**는 MIT 대상이 아니며 저작권자가 모든 권리를 보유합니다.
+  - data/ 의 브리프 레코드, 2026/ 의 브리프 본문 텍스트, index.html 의 브리프 문구
+  - 무단 복제·재배포를 허용하지 않습니다.
+  - 브리프에 인용된 시장 수치의 권리는 각 원출처(CNBC, 네이버 금융, 하나은행,
+    연합뉴스 등)에 있으며, 이 저장소는 원문을 재배포하지 않습니다.
+
+--------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2026 Noah-TaeHwan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

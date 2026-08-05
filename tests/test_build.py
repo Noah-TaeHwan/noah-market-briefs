@@ -28,14 +28,14 @@ class TestRenderTheses(unittest.TestCase):
 
     def test_level_and_lead(self):
         html = render({"theses": [
-            {"name": "비상장 커머스", "signal": "높음", "level": 3, "lead": "리드줄", "body": "본문"}
+            {"name": "위험선호", "signal": "높음", "level": 3, "lead": "리드줄", "body": "본문"}
         ]})
         self.assertIn('class="signal lvl3"', html)            # ●●● 민감도 핀
         self.assertIn('<span class="meter"', html)            # 도트 미터
         self.assertIn('<span class="thesis-lead">리드줄</span>', html)
 
     def test_backward_compat_no_level(self):
-        html = render({"theses": [{"name": "글로벌 증권사", "signal": "NII", "body": "b"}]})
+        html = render({"theses": [{"name": "금리·duration", "signal": "NII", "body": "b"}]})
         self.assertIn('class="signal"', html)                 # lvl 클래스 없음
         self.assertNotIn("thesis-lead", html)
         self.assertNotIn('class="meter"', html)               # 핀 없으면 미터도 없음
@@ -141,7 +141,7 @@ class TestLoadAndIntegration(unittest.TestCase):
             kr = (site / "2026/06/23/korea-close.html").read_text(encoding="utf-8")
             for token in ("8,203.84", "-9.99%", "1,539.1원", "국고 3년 3.770%", "4조 순매도"):
                 self.assertIn(token, kr)
-            self.assertIn("lvl3", kr)                           # 비상장 커머스 민감도 핀
+            self.assertIn("lvl3", kr)                           # 렌즈 민감도 핀
             self.assertIn('class="idx feature"', kr)            # 히어로 숫자 = KOSPI
             self.assertIn("mcard nosignal", kr)                 # 미확인 = 무신호 카드
 
@@ -159,7 +159,7 @@ class TestLoadAndIntegration(unittest.TestCase):
             "metrics": [
                 {"name": "S&P 500", "value": "+0.4%", "tone": "up", "note": "샘플 값 · 실제 데이터 아님"},
             ],
-            "theses": [{"name": "글로벌 증권사", "signal": "NII vs activity", "body": "본문"}],  # level/lead 없음
+            "theses": [{"name": "금리·duration", "signal": "NII vs activity", "body": "본문"}],  # level/lead 없음
         })
         self.assertIn("샘플 값", html)            # 메트릭 노트 그대로 렌더
         self.assertIn("MVP sample", html)          # 히어로 노트 그대로 렌더
@@ -326,7 +326,7 @@ class TestThesisDeltaAndRename(unittest.TestCase):
         self.assertIn("어제 약세→오늘 반등", html)
 
     def test_no_delta_backward_compat(self):
-        html = render({"theses": [{"name": "글로벌 증권사", "signal": "x", "body": "b"}]})
+        html = render({"theses": [{"name": "금리·duration", "signal": "x", "body": "b"}]})
         self.assertNotIn("thesis-delta", html)       # delta 없으면 미표시
         self.assertIn('class="thesis-card"', html)   # 카드는 정상 렌더
 

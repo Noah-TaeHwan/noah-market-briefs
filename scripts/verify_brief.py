@@ -33,14 +33,26 @@ VALID_TONES = {"up", "down", "flat", "warn"}
 # schema_version=1은 이 정책 도입 전의 읽기 전용 아카이브라, 과거 화면을 소급 변조하지
 # 않도록 기존 렌더 호환성만 유지한다. 새 cron은 반드시 schema_version=2를 작성한다.
 PUBLIC_OMISSION_SCHEMA_VERSION = 2
-NAMED_HOLDINGS = (
-    "글로벌 증권사",
-    "글로벌 증권사",
-    "Compute futures watch",
-    "비상장 커머스",
-    "글로벌 증권사",
-    "미국 온라인 게이밍",
-)
+
+# 감시할 보유명 목록은 그 자체가 비공개 정보라 저장소에 두지 않는다.
+# 아래 파일이 있으면 한 줄에 하나씩 읽어 쓴다(.gitignore 대상, 없으면 검사는 무해하게 비활성).
+NAMED_HOLDINGS_FILE = Path(__file__).resolve().parent.parent / "data" / ".named-holdings.local"
+
+
+def load_named_holdings(path: Path = NAMED_HOLDINGS_FILE) -> tuple[str, ...]:
+    """감시할 보유명 목록을 로컬 파일에서 읽는다.
+
+    목록을 코드에 상수로 박으면 숨기려는 이름이 저장소에 그대로 남는다. 그래서
+    목록은 버전관리 밖 파일에만 두고, 없으면 빈 튜플을 돌려 검사를 건너뛴다.
+
+    @param path 보유명 목록 파일 경로. 한 줄에 하나, `#` 로 시작하는 줄과 빈 줄은 무시한다.
+    @returns 보유명 튜플. 파일이 없거나 읽을 수 없으면 빈 튜플.
+    """
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return ()
+    return tuple(s.strip() for s in lines if s.strip() and not s.lstrip().startswith("#"))
 
 # hypothesis_review / next_hypotheses 필수 하위 필드
 HYPOTHESIS_REVIEW_REQUIRED = {"previous_hypothesis", "verdict", "evidence", "reason", "lesson"}
@@ -216,20 +228,28 @@ def _public_strings(value: object, path: str = "$") -> list[tuple[str, str]]:
     return []
 
 
-def _check_named_holdings(rec: dict) -> list[Finding]:
+def _check_named_holdings(rec: dict, named_holdings: tuple[str, ...] | None = None) -> list[Finding]:
     """v2+ 공개 브리프의 어느 필드에도 named holdings가 없어야 한다.
 
     schema_version=1은 정책 도입 전 아카이브다. 이를 새 계약 위반으로 오판해
     전체 회귀 테스트를 막지 않되, 새 cron이 쓰는 v2 레코드부터는 risks·drivers·theses
     같은 우회 경로까지 모두 검사한다.
+
+    @param rec 검증할 브리프 레코드
+    @param named_holdings 감시할 보유명 튜플. None이면 로컬 목록 파일에서 읽는다.
+    @returns 계약 위반 Finding 리스트. 목록이 비면 항상 빈 리스트.
     """
     version = rec.get("schema_version", 1)
     if not isinstance(version, int) or version < PUBLIC_OMISSION_SCHEMA_VERSION:
         return []
 
+    holdings = load_named_holdings() if named_holdings is None else named_holdings
+    if not holdings:
+        return []
+
     findings: list[Finding] = []
     for path, text in _public_strings(rec):
-        for holding in NAMED_HOLDINGS:
+        for holding in holdings:
             if holding.casefold() in text.casefold():
                 findings.append(Finding(
                     Severity.ERROR,
@@ -260,13 +280,18 @@ def _check_drivers(rec: dict) -> list[Finding]:
 
 # ── 공개 API ────────────────────────────────────────────────────────────────
 
-def verify_record(rec: dict) -> list[Finding]:
-    """브리프 JSON 레코드 1건을 검증하고 Finding 리스트를 반환한다."""
+def verify_record(rec: dict, named_holdings: tuple[str, ...] | None = None) -> list[Finding]:
+    """브리프 JSON 레코드 1건을 검증하고 Finding 리스트를 반환한다.
+
+    @param rec 검증할 브리프 레코드
+    @param named_holdings 보유명 생략 계약을 검사할 이름 튜플. None이면 로컬 목록 파일을 쓴다.
+    @returns Finding 리스트. 비어 있으면 위반 없음.
+    """
     findings: list[Finding] = []
     findings += _check_index_meta(rec)
     findings += _check_metrics(rec)
     findings += _check_hypothesis_fields(rec)
-    findings += _check_named_holdings(rec)
+    findings += _check_named_holdings(rec, named_holdings)
     findings += _check_drivers(rec)
     return findings
 

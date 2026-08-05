@@ -135,7 +135,7 @@ class TestThesisDeltaAndRename(unittest.TestCase):
         self.assertIn("어제 약세→오늘 반등", html)
 
     def test_no_delta_backward_compat(self):
-        html = render({"theses": [{"name": "글로벌 증권사", "signal": "x", "body": "b"}]})
+        html = render({"theses": [{"name": "금리·duration", "signal": "x", "body": "b"}]})
         self.assertNotIn("thesis-delta", html)      # delta 없으면 미표시
         self.assertIn('class="thesis-card"', html)  # 카드는 정상 렌더
 

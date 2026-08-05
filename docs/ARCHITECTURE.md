@@ -131,4 +131,4 @@ git push
 > - 각 검증은 `previous_hypothesis`, `verdict`, `evidence`, `reason`, `lesson`을 포함한다. 숫자·근거는 이번 run의 source-backed 데이터만 사용하고, 데이터가 부족하면 `미검증`으로 둔다.
 > - 이번 브리프 끝에는 다음 같은 윈도에서 확인할 `next_hypotheses[]` 2~3개를 만든다. 각 가설은 `hypothesis`, `observable`, `invalidation`, `horizon`을 포함한다.
 > - Slack에는 `이전 가설 검증` 1~2줄 + `오늘의 학습` 1줄 + `다음 체크 가설` 1~2개만 간결히 넣고, HTML에는 JSON 필드가 렌더되게 한다.
-> - 특정 보유명(비상장 커머스/미국 온라인 게이밍/글로벌 증권사 등)은 Noah가 명시하지 않으면 쓰지 않는다. 가설은 시장 구조·환율·금리·유동성·변동성·섹터 breadth 중심으로 작성한다.
+> - 특정 보유명은 소유자가 명시하지 않으면 쓰지 않는다. 가설은 시장 구조·환율·금리·유동성·변동성·섹터 breadth 중심으로 작성한다.

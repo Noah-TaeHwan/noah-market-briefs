@@ -652,10 +652,13 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         )
         if not handoff and not missing_rows:
             return watch_section()
+        # f-string 표현식 안에 백슬래시를 두면 Python 3.11 이하에서 SyntaxError다
+        # (PEP 701은 3.12부터). 지원 매트릭스에 3.11이 있으므로 밖에서 조립한다.
+        handoff_html = f"<p>{pesc(handoff)}</p>" if handoff else ""
+        missing_html = f'<ul class="missing-list">{missing_rows}</ul>' if missing_rows else ""
         return (
             '<section class="section handoff"><h2>다음 인계와 미확인 데이터</h2>'
-            f'{f"<p>{pesc(handoff)}</p>" if handoff else ""}'
-            f'{f"<ul class=\"missing-list\">{missing_rows}</ul>" if missing_rows else ""}</section>'
+            f"{handoff_html}{missing_html}</section>"
         )
 
     def provenance_section() -> str:

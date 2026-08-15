@@ -41,6 +41,47 @@ def _valid_record():
     }
 
 
+def _valid_v3_record():
+    """통과해야 하는 PublicBriefV3 최소 공개 레코드."""
+    return {
+        "schema_version": 3,
+        "brief_id": "brief-2026-07-07-kr-close",
+        "market_code": "KR",
+        "window_code": "close",
+        "market_session_date": "2026-07-07",
+        "generated_at_utc": "2026-07-07T07:30:00Z",
+        "cutoff_at_utc": "2026-07-07T07:20:00Z",
+        "market_timezone": "Asia/Seoul",
+        "status": "published",
+        "evidence_status": "confirmed",
+        "methodology_version": "public-brief-v3",
+        "public_receipt_sha256": "a" * 64,
+        "out_path": "2026/07/07/korea-close.html",
+        "title": "한국 시장 마감 — 2026-07-07",
+        "sources": [{
+            "source_id": "source-market-close",
+            "publisher": "Synthetic Public Source",
+            "title": "Market close",
+            "url": "https://example.test/market-close",
+            "as_of": "2026-07-07T07:00:00Z",
+            "retrieved_at": "2026-07-07T07:20:00Z",
+            "source_type": "market_data",
+            "status": "confirmed",
+        }],
+        "metrics": [{
+            "metric_id": "metric-kospi", "label": "KOSPI", "name": "KOSPI",
+            "value": "7,656.31", "unit": "points", "delta": "-4.91%",
+            "as_of": "2026-07-07T07:00:00Z", "tone": "down", "note": "공개 출처",
+            "source_ids": ["source-market-close"], "evidence_status": "confirmed",
+        }],
+        "claims": [{
+            "claim_id": "claim-market-close", "kind": "fact", "text": "공개 시장 종가 관측",
+            "as_of": "2026-07-07T07:00:00Z", "source_ids": ["source-market-close"],
+            "evidence_status": "confirmed",
+        }],
+    }
+
+
 class TestIndexMetaValidation(unittest.TestCase):
     """필수 index-meta 필드 검증."""
 
@@ -91,6 +132,226 @@ class TestIndexMetaValidation(unittest.TestCase):
         self.assertTrue(any(f.severity == Severity.ERROR and "out_path" in f.message
                             for f in findings))
 
+    def test_unsupported_schema_version_is_error(self):
+        rec = _valid_record()
+        rec["schema_version"] = 4
+        self.assertTrue(any(f.severity == Severity.ERROR and "schema_version" in f.message
+                            for f in verify_record(rec)))
+
+    def test_out_path_must_be_canonical_public_brief_path(self):
+        for out_path in (
+            "/tmp/brief.html", "../brief.html", "https://example.test/brief.html",
+            "2026/07/brief.html", "2026/07/07/brief.htm", "2026/07/07/Brief.html",
+            "2026/07/07/link.html/..",
+        ):
+            rec = _valid_record()
+            rec["out_path"] = out_path
+            self.assertTrue(any(f.severity == Severity.ERROR and "out_path" in f.message
+                                for f in verify_record(rec)), out_path)
+
+    def test_out_path_date_must_match_legacy_and_v3_session_date(self):
+        legacy = _valid_record()
+        legacy["out_path"] = "2026/07/08/korea-close.html"
+        v3 = _valid_v3_record()
+        v3["out_path"] = "2026/07/08/korea-close.html"
+        for rec in (legacy, v3):
+            self.assertTrue(any(f.severity == Severity.ERROR and "out_path" in f.message
+                                for f in verify_record(rec)))
+
+
+class TestPublicBriefV3(unittest.TestCase):
+    """PublicBriefV3 공개 메타데이터·출처·개인정보 차단 계약."""
+
+    def _errors(self, rec):
+        return [f.message for f in verify_record(rec) if f.severity == Severity.ERROR]
+
+    def test_valid_v3_record_has_no_errors(self):
+        self.assertEqual(self._errors(_valid_v3_record()), [])
+
+    def test_v3_rejects_unknown_top_level_field(self):
+        rec = _valid_v3_record()
+        rec["operator_note"] = "synthetic internal memo"
+        self.assertTrue(any("operator_note" in message for message in self._errors(rec)))
+
+    def test_v3_requires_public_metadata_and_valid_enums(self):
+        rec = _valid_v3_record()
+        del rec["public_receipt_sha256"]
+        rec["status"] = "live"
+        rec["evidence_status"] = "unverified"
+        errors = self._errors(rec)
+        self.assertTrue(any("public_receipt_sha256" in message for message in errors))
+        self.assertTrue(any("status" in message for message in errors))
+        self.assertTrue(any("evidence_status" in message for message in errors))
+
+    def test_v3_validates_sources_and_metric_claim_references(self):
+        rec = _valid_v3_record()
+        rec["sources"][0]["url"] = "http://example.test/not-https"
+        rec["metrics"][0]["source_ids"] = ["missing-source"]
+        rec["claims"][0]["kind"] = "unsupported"
+        rec["claims"][0]["source_ids"] = "source-market-close"
+        errors = self._errors(rec)
+        self.assertTrue(any("https" in message for message in errors))
+        self.assertTrue(any("missing-source" in message for message in errors))
+        self.assertTrue(any("claims[0].kind" in message for message in errors))
+        self.assertTrue(any("claims[0].source_ids" in message for message in errors))
+
+    def test_v3_corrected_requires_correction_receipt_fields(self):
+        rec = _valid_v3_record()
+        rec["status"] = "corrected"
+        errors = self._errors(rec)
+        for field in ("correction_note", "corrected_at", "supersedes"):
+            self.assertTrue(any(field in message for message in errors))
+
+    def test_v3_rejects_private_identifiers_or_paths_recursively(self):
+        rec = _valid_v3_record()
+        rec["drivers"] = [
+            {"label": "a", "text": "/Users/synthetic/note.txt"},
+            {"label": "b", "text": ".tradingcodex/cache"},
+            {"label": "c", "text": "trading/research/synthetic"},
+            {"label": "d", "text": "workflow_synthetic_123"},
+        ]
+        errors = self._errors(rec)
+        self.assertEqual(sum("비공개" in message for message in errors), 4)
+
+    def test_v3_rejects_unknown_nested_fields_and_wrong_types(self):
+        rec = _valid_v3_record()
+        rec["sources"][0]["internal_path"] = "safe-looking"
+        rec["claims"][0]["as_of"] = "2026-07-07 07:00:00"
+        rec["claims"][0]["extra"] = "no"
+        rec["metrics"][0]["unit"] = 1
+        rec["metrics"][0]["extra"] = "no"
+        errors = self._errors(rec)
+        for field in ("sources[0].internal_path", "claims[0].as_of", "claims[0].extra", "metrics[0].unit", "metrics[0].extra"):
+            self.assertTrue(any(field in message for message in errors))
+
+    def test_v3_validates_canonical_dates_timezone_and_cutoff(self):
+        rec = _valid_v3_record()
+        rec["market_session_date"] = "2026/07/07"
+        rec["generated_at_utc"] = "2026-07-07T07:20:00Z"
+        rec["cutoff_at_utc"] = "2026-07-07T07:30:00Z"
+        rec["market_timezone"] = "Not/AZone"
+        rec["sources"][0]["retrieved_at"] = "2026-07-07"
+        rec["corrected_at"] = "2026-07-07T07:20:00+00:00"
+        errors = self._errors(rec)
+        for field in ("market_session_date", "cutoff_at_utc", "market_timezone", "sources[0].retrieved_at", "corrected_at"):
+            self.assertTrue(any(field in message for message in errors))
+        rec["generated_at_utc"] = "2026-07-07T07:20:00+00:00"
+        self.assertTrue(any("generated_at_utc" in message for message in self._errors(rec)))
+
+    def test_v3_allows_benign_private_sector_phrase(self):
+        rec = _valid_v3_record()
+        rec["sources"][0]["title"] = "Private Sector Employment Report"
+        self.assertEqual(self._errors(rec), [])
+
+    def test_v3_accepts_closed_public_support_fields(self):
+        rec = _valid_v3_record()
+        rec.update({
+            "summary": "공개 요약", "next_handoff": "다음 공개 점검",
+            "changes": [{"dir": "down", "text": "지수 하락", "source_ids": ["source-market-close"],
+                         "evidence_status": "confirmed"}],
+            "drivers": [{"label": "금리", "text": "공개 관측", "source_ids": ["source-market-close"],
+                         "evidence_status": "confirmed"}],
+            "counterevidence": [{"text": "반대 공개 관측", "source_ids": ["source-market-close"],
+                                   "evidence_status": "partial"}],
+            "hypotheses": [{"hypothesis_id": "hyp-1", "text": "가설", "observable": "관측값",
+                              "invalidation": "반증값", "horizon": "다음 장", "source_ids": ["source-market-close"],
+                              "evidence_status": "partial"}],
+            "reviews": [{"review_id": "review-1", "hypothesis_id": "hyp-1", "verdict": "부분 적중",
+                         "evidence": "근거", "reason": "이유", "lesson": "교훈",
+                         "source_ids": ["source-market-close"], "evidence_status": "confirmed"}],
+            "missing_data": [{"label": "수급", "reason": "공개 시차", "evidence_status": "not_proven"}],
+            "quality": [{"label": "source/date", "value": "same-date"}],
+            "risks": ["변동성 확대"], "today_learning": ["공개 근거를 재확인"],
+        })
+        self.assertEqual(self._errors(rec), [])
+
+    def test_v3_rejects_open_or_legacy_renderer_fields(self):
+        rec = _valid_v3_record()
+        rec.update({
+            "changes": [{"dir": "sideways", "text": "x", "source_ids": ["source-market-close"],
+                         "evidence_status": "confirmed", "extra": "x"}],
+            "drivers": [{"label": "d", "text": "x", "source_ids": [], "evidence_status": "confirmed"}],
+            "counterevidence": [{"text": "x", "source_ids": ["missing"], "evidence_status": "confirmed"}],
+            "hypotheses": [{"hypothesis_id": "h", "text": "x", "observable": "o", "invalidation": "i",
+                              "horizon": "next", "source_ids": "source-market-close", "evidence_status": "confirmed"}],
+            "reviews": [{"review_id": "r", "hypothesis_id": "h", "verdict": "v", "evidence": "e",
+                         "reason": "r", "lesson": "l", "source_ids": ["source-market-close"],
+                         "evidence_status": "unknown"}],
+            "missing_data": [{"label": "x", "reason": "x", "evidence_status": "partial", "extra": "x"}],
+            "quality": [{"label": "x", "value": "y", "extra": "x"}],
+            "risks": [{"text": "x"}], "today_learning": ["ok", 1], "theses": [],
+        })
+        errors = self._errors(rec)
+        for field in ("changes[0].dir", "changes[0].extra", "drivers[0].source_ids",
+                      "counterevidence[0].source_ids", "hypotheses[0].source_ids",
+                      "reviews[0].evidence_status", "missing_data[0].extra", "quality[0].extra",
+                      "risks[0]", "today_learning[1]", "theses"):
+            self.assertTrue(any(field in message for message in errors))
+
+    def test_v3_privacy_uses_bounded_paths_and_explicit_keys(self):
+        rec = _valid_v3_record()
+        rec["drivers"] = [{"label": "x", "text": "/home/synthetic/file"}]
+        rec["sources"][0]["account_id"] = "public-looking"
+        errors = self._errors(rec)
+        self.assertGreaterEqual(sum("비공개" in message for message in errors), 2)
+
+    def test_v3_metadata_wrong_types_return_errors_without_crashing(self):
+        rec = _valid_v3_record()
+        rec.update({
+            "brief_id": {}, "market_code": [], "window_code": True, "market_session_date": {},
+            "generated_at_utc": [], "cutoff_at_utc": {}, "market_timezone": [], "status": {},
+            "evidence_status": [], "methodology_version": True, "public_receipt_sha256": {},
+            "out_path": [], "title": {}, "date": [], "correction_note": {}, "corrected_at": [],
+            "supersedes": {}, "summary": [], "next_handoff": {},
+        })
+        errors = self._errors(rec)
+        for field in ("brief_id", "market_code", "window_code", "market_session_date", "generated_at_utc",
+                      "cutoff_at_utc", "market_timezone", "status", "evidence_status", "methodology_version",
+                      "public_receipt_sha256", "out_path", "title", "date", "correction_note", "corrected_at",
+                      "supersedes", "summary", "next_handoff"):
+            self.assertTrue(any(field in message for message in errors))
+
+    def test_v3_schema_version_must_be_exact_int_three(self):
+        for version in (True, 3.0):
+            rec = _valid_v3_record()
+            rec["schema_version"] = version
+            self.assertTrue(any("schema_version" in message for message in self._errors(rec)))
+
+    def test_v3_zero_metric_and_optional_omission_are_strict_clean(self):
+        rec = _valid_v3_record()
+        metric = rec["metrics"][0]
+        metric["value"] = 0
+        for key in ("tone", "note", "name"):
+            metric.pop(key, None)
+        findings = verify_record(rec)
+        self.assertEqual([f for f in findings if f.severity == Severity.ERROR], [])
+        self.assertEqual([f for f in findings if f.severity == Severity.WARNING], [])
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
+            json.dump(rec, f)
+            f.flush()
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(main(["--strict", f.name]), 0)
+
+    def test_confirmed_v3_requires_sources_and_linked_public_evidence(self):
+        empty = _valid_v3_record()
+        empty.update({"summary": "근거 없는 요약", "sources": [], "metrics": [], "claims": []})
+        source_only = _valid_v3_record()
+        source_only.update({"summary": "연결 없는 요약", "metrics": [], "claims": []})
+        for rec, token in ((empty, "sources"), (source_only, "source_ids")):
+            self.assertTrue(any(token in message for message in self._errors(rec)))
+
+    def test_not_proven_v3_allows_empty_evidence(self):
+        rec = _valid_v3_record()
+        rec.update({"evidence_status": "not_proven", "sources": [], "metrics": [], "claims": []})
+        self.assertEqual(self._errors(rec), [])
+
+    def test_confirmed_v3_requires_confirmed_source_and_confirmed_item(self):
+        rec = _valid_v3_record()
+        rec["sources"][0]["status"] = "not_proven"
+        rec["metrics"][0]["evidence_status"] = "partial"
+        rec["claims"][0]["evidence_status"] = "partial"
+        self.assertTrue(any("confirmed" in message for message in self._errors(rec)))
+
 
 class TestMetricsValidation(unittest.TestCase):
     """metrics[] 톤·필드 검증."""
@@ -124,6 +385,16 @@ class TestMetricsValidation(unittest.TestCase):
         findings = verify_record(rec)
         self.assertTrue(any(f.severity == Severity.ERROR and "value" in f.message
                             for f in findings))
+
+    def test_legacy_unhashable_enums_and_tone_are_errors_not_exceptions(self):
+        rec = _valid_record()
+        rec["market_code"] = ["KR"]
+        rec["window_code"] = {"close": True}
+        rec["status"] = ["live"]
+        rec["metrics"] = [{"name": "X", "value": "1", "tone": {"flat": True}}]
+        errors = [f.message for f in verify_record(rec) if f.severity == Severity.ERROR]
+        for field in ("market_code", "window_code", "status", "tone"):
+            self.assertTrue(any(field in message for message in errors))
 
 
 class TestSourceDiscipline(unittest.TestCase):

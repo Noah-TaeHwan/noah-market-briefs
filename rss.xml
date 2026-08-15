@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Noah Market Briefs</title>
+    <link>https://noah-market-briefs.vercel.app/market-briefs</link>
+    <description>근거 상태를 함께 공개하는 정적 시장 브리프</description>
+    <language>ko</language>
+  </channel>
+</rss>

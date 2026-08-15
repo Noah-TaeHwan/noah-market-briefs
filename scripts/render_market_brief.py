@@ -9,11 +9,13 @@ Example:
   python3 scripts/render_market_brief.py input.json 2026/06/23/us-close.html
 """
 from __future__ import annotations
-import argparse, html, json, re
+import argparse, hashlib, html, json, re
 from pathlib import Path
 
 CSS_REL_DEFAULT = "../../../assets/brief.css"
 INDEX_REL_DEFAULT = "../../../index.html"
+SITE_URL = "https://noah-market-briefs.vercel.app/market-briefs"
+OG_IMAGE_URL = f"{SITE_URL}/docs/images/index.png"
 
 # 톤 화이트리스트 — 알 수 없는 값은 무신호(slate)로 떨어진다.
 _TONES = {"up", "down", "warn", "flat", "unknown"}
@@ -248,7 +250,16 @@ def _split_note(note: str):
     return note.strip(), ""
 
 
-def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX_REL_DEFAULT) -> str:
+def _source_anchor(source_id) -> str:
+    """source_id를 안전하고 결정적인 HTML fragment id로 바꾼다."""
+    raw = str(source_id or "")
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "-", raw).strip("-")[:48] or "source"
+    digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:10]
+    return f"source-{slug}-{digest}"
+
+
+def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX_REL_DEFAULT,
+           page_context: dict | None = None) -> str:
     """페이로드를 완성된 브리프 HTML 문서 문자열로 렌더링한다(Lamplight Ledger).
 
     데이터 주도 규칙:
@@ -261,8 +272,27 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                    use/takeaway/metrics/drivers/theses/watch/risks/quality)
     @param css_rel 문서 기준 brief.css 상대 경로
     @param index_rel 문서 기준 아카이브 인덱스 상대 경로
+    @param page_context 선택적 canonical_url 및 older/newer 인접 페이지 정보
     @returns 단일 HTML 문서 문자열
     """
+    page_context = page_context or {}
+    is_legacy = payload.get("schema_version", 1) < 3
+
+    def source_refs(item: dict) -> str:
+        """claim/metric에서 페이지 하단 공개 출처 앵커로 연결한다."""
+        refs = item.get("source_ids", []) if isinstance(item, dict) else []
+        if not refs:
+            return ""
+        links = " · ".join(
+            f'<a href="#{esc(_source_anchor(ref))}">{esc(ref)}</a>' for ref in refs
+        )
+        return f'<span class="source-refs">출처 {links}</span>'
+
+    def item_evidence(item: dict) -> str:
+        """항목별 근거 상태를 색상 외 한국어 텍스트로 표시한다."""
+        status = str(item.get("evidence_status", "not_proven"))
+        label = {"confirmed": "확인", "partial": "일부", "not_proven": "미검증"}.get(status, "미검증")
+        return f'<span class="item-evidence {esc(status)}">{label}</span>'
 
     def kicker():
         """히어로 상단 배지(시장·윈도우·선택적 note)를 만든다."""
@@ -293,9 +323,9 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         val_cls = f'ival {ival_tone} tnum' + (' has-segs' if has_segs else '')
         return (
             f'<article class="{cls}">'
-            f'<div class="iname">{pesc(m.get("name",""))}</div>'
+            f'<div class="iname">{pesc(m.get("label", m.get("name","")))}</div>'
             f'<div class="{val_cls}">{val_html}</div>'
-            f'{delta_html}{wire}{src_html}</article>'
+            f'{delta_html}{wire}{src_html}{source_refs(m)}</article>'
         )
 
     def mcard(m: dict) -> str:
@@ -304,18 +334,18 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if _is_nosignal(m):
             return (
                 f'<div class="mcard nosignal">'
-                f'<div class="mname">{pesc(m.get("name",""))}</div>'
+                f'<div class="mname">{pesc(m.get("label", m.get("name","")))}</div>'
                 f'<div class="mval">{pesc(m.get("value","미확인") or "미확인")} '
                 f'<span class="nosig-chip">신호 없음</span></div>'
-                f'<div class="mnote">{pesc(m.get("note",""))}</div></div>'
+                f'<div class="mnote">{pesc(m.get("note",""))}</div>{source_refs(m)}</div>'
             )
         has_segs, val_html = _metric_value_html(m.get("value", ""), tone)
         val_cls = f'mval {tone} tnum' + (' has-segs' if has_segs else '')
         return (
             f'<div class="mcard">'
-            f'<div class="mname">{pesc(m.get("name",""))}</div>'
+            f'<div class="mname">{pesc(m.get("label", m.get("name","")))}</div>'
             f'<div class="{val_cls}">{val_html}</div>'
-            f'<div class="mnote">{pesc(m.get("note",""))}</div></div>'
+            f'<div class="mnote">{pesc(m.get("note",""))}</div>{source_refs(m)}</div>'
         )
 
     def market_board() -> str:
@@ -341,7 +371,8 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         if not items:
             return ""
         lis = "".join(
-            f'<li><b>{pesc(d.get("label",""))}</b> — {pesc(d.get("text",""))}</li>'
+            f'<li><b>{pesc(d.get("label", d.get("name","")))}</b> — '
+            f'{pesc(d.get("text", d.get("takeaway","")))} {source_refs(d)}</li>'
             for d in items
         )
         return f'<section class="section"><h2>오늘의 핵심 동인</h2><ul class="driver-list">{lis}</ul></section>'
@@ -536,7 +567,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                 if not text:
                     continue
                 rows.append(f'<li>{_dir_chip(c.get("dir"))}'
-                            f'<span class="chg-text">{esc(text)}</span></li>')
+                            f'<span class="chg-text">{esc(text)} {source_refs(c)}</span></li>')
             else:                                   # 문자열 등: 칩 없이 텍스트만
                 text = str(c or "").strip()
                 if text:
@@ -546,19 +577,163 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return (f'<section class="section changes"><h2>어제 대비 변화</h2>'
                 f'<ul class="change-list">{"".join(rows)}</ul></section>')
 
-    takeaway = payload.get("takeaway", "")
+    def claims_section() -> str:
+        """v3 공개 주장에 사실/분석/가설 텍스트 라벨과 출처 링크를 단다."""
+        labels = {"fact": "사실", "analysis": "분석", "hypothesis": "가설"}
+        rows = []
+        for claim in payload.get("claims", []):
+            if not isinstance(claim, dict) or not claim.get("text"):
+                continue
+            kind = labels.get(str(claim.get("kind", "analysis")), "분석")
+            rows.append(
+                f'<li><span class="claim-kind">{kind}</span>{item_evidence(claim)}<span>{pesc(claim["text"])} '
+                f'{source_refs(claim)}</span></li>'
+            )
+        return (f'<section class="section"><h2>주장과 해석</h2><ul class="claim-list">{"".join(rows)}</ul></section>'
+                if rows else "")
+
+    def counterevidence_section() -> str:
+        """v3 반대 근거를 주장 바로 뒤에 표시한다."""
+        rows = []
+        for item in payload.get("counterevidence", []):
+            if not isinstance(item, dict) or not item.get("text"):
+                continue
+            rows.append(
+                f'<li>{item_evidence(item)}<span>{pesc(item["text"])} {source_refs(item)}</span></li>'
+            )
+        return (f'<section class="section"><h2>반대 근거</h2><ul class="counterevidence-list">{"".join(rows)}</ul></section>'
+                if rows else "")
+
+    def reviews_section() -> str:
+        """v3 reviews를 근거·판단·학습 순서로 렌더한다."""
+        rows = []
+        for item in payload.get("reviews", []):
+            if not isinstance(item, dict):
+                continue
+            title = item.get("hypothesis_id", "이전 가설")
+            parts = "".join(
+                f'<p><b>{label}</b> — {pesc(item.get(key, ""))}</p>'
+                for key, label in (("evidence", "근거"), ("reason", "판단"), ("lesson", "학습"))
+                if item.get(key)
+            )
+            rows.append(
+                f'<article class="hcard"><div class="hhead"><span class="hname">{pesc(title)}</span>'
+                f'<span class="verdict">{pesc(item.get("verdict", "검증"))}</span></div>'
+                f'<div class="hbody">{parts}{source_refs(item)}</div></article>'
+            )
+        return (f'<section class="section"><h2>가설 검토</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+                if rows else "")
+
+    def hypotheses_section() -> str:
+        """v3 가설을 관찰값·반증 조건·시점과 함께 렌더한다."""
+        rows = []
+        for item in payload.get("hypotheses", []):
+            if not isinstance(item, dict) or not item.get("text"):
+                continue
+            meta = "".join(
+                f'<p><b>{label}</b> — {pesc(item.get(key, ""))}</p>'
+                for key, label in (("observable", "관찰값"), ("invalidation", "반증 조건"), ("horizon", "검증 시점"))
+                if item.get(key)
+            )
+            rows.append(
+                f'<article class="hcard next"><div class="hhead"><span class="hname">{pesc(item["text"])}</span></div>'
+                f'<div class="hbody">{meta}{source_refs(item)}</div></article>'
+            )
+        return (f'<section class="section"><h2>가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+                if rows else "")
+
+    def handoff_section() -> str:
+        """다음 회차 인계와 미확인 데이터를 본문 뒤에 둔다."""
+        handoff = str(payload.get("next_handoff", "")).strip()
+        missing = payload.get("missing_data", [])
+        missing_rows = "".join(
+            f'<li><b>{pesc(item.get("label", "미확인"))}</b> — {pesc(item.get("reason", ""))}</li>'
+            for item in missing if isinstance(item, dict)
+        )
+        if not handoff and not missing_rows:
+            return watch_section()
+        return (
+            '<section class="section handoff"><h2>다음 인계와 미확인 데이터</h2>'
+            f'{f"<p>{pesc(handoff)}</p>" if handoff else ""}'
+            f'{f"<ul class=\"missing-list\">{missing_rows}</ul>" if missing_rows else ""}</section>'
+        )
+
+    def provenance_section() -> str:
+        """공개 출처와 생성/품질 정보를 native details에 넣는다."""
+        if is_legacy:
+            source_html = '<p class="archive-warning">레거시 · 원문 출처 링크 미제공</p>'
+        else:
+            rows = []
+            for source in payload.get("sources", []):
+                if not isinstance(source, dict):
+                    continue
+                anchor = _source_anchor(source.get("source_id"))
+                rows.append(
+                    f'<li id="{esc(anchor)}"><a href="{esc(source.get("url", ""))}">'
+                    f'{pesc(source.get("publisher", "출처"))} · {pesc(source.get("title", ""))}</a>'
+                    f'<span>{pesc(source.get("as_of", ""))} · {pesc(source.get("status", ""))}</span></li>'
+                )
+            source_html = f'<ul class="source-list">{"".join(rows)}</ul>' if rows else '<p>공개 출처 없음</p>'
+        quality = quality_section()
+        legacy_meta = "" if not is_legacy else (
+            '<dl class="provenance-archive">'
+            f'<dt>출처</dt><dd>{pesc(payload.get("source", "미제공"))}</dd>'
+            f'<dt>데이터 품질</dt><dd>{pesc(payload.get("data_quality", "미기록"))}</dd>'
+            f'<dt>용도</dt><dd>{pesc(payload.get("use", "시장 민감도 일지"))}</dd></dl>'
+        )
+        return (
+            '<details class="provenance"><summary>근거와 생성 정보</summary>'
+            f'<p class="provenance-meta">생성 {pesc(payload.get("generated_at_utc", payload.get("generated", "미기록")))}</p>'
+            f'{source_html}{legacy_meta}{quality}</details>'
+        )
+
+    def adjacent_nav() -> str:
+        """빌드가 전달한 이전/다음 브리프 링크를 표시한다."""
+        links = []
+        for key, label in (("older", "← 오래된 브리프"), ("newer", "새 브리프 →")):
+            item = page_context.get(key)
+            if item:
+                links.append(f'<a class="adjacent-{key}" href="{esc(item.get("href", ""))}">{label}<span>{esc(item.get("title", ""))}</span></a>')
+        return f'<nav class="adjacent-nav" aria-label="인접 브리프">{"".join(links)}</nav>' if links else ""
+
+    takeaway = payload.get("summary", payload.get("takeaway", ""))
+    meta_takeaway = (f"레거시 미검증 · {takeaway}" if takeaway else "레거시 미검증") if is_legacy else takeaway
     favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"
+    rss_rel = index_rel.rsplit("/", 1)[0] + "/rss.xml" if "/" in index_rel else "rss.xml"
+    canonical_url = page_context.get("canonical_url") or (
+        f'{SITE_URL}/{str(payload.get("out_path", "")).lstrip("/")}' if payload.get("out_path") else SITE_URL
+    )
+    status_labels = {
+        "live": "공개", "published": "공개", "sample": "샘플", "partial": "부분 공개",
+        "skipped_market_closed": "휴장으로 건너뜀", "failed": "생성 실패", "corrected": "정정됨",
+    }
+    evidence_labels = {"confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증"}
+    status = str(payload.get("status", "기록"))
+    evidence = "archive_unverified" if is_legacy else str(payload.get("evidence_status", "not_proven"))
+    evidence_label = "레거시 · 원문 출처 링크 미제공" if is_legacy else evidence_labels.get(evidence, evidence)
+    date = payload.get("market_session_date", payload.get("date", "날짜 미기록"))
+    correction = payload.get("correction_note", "")
+    correction_html = f'<p class="correction-note"><b>정정</b> {pesc(correction)}</p>' if correction else ""
 
     body_blocks = "\n".join(b for b in [
+        market_board(),
         changes_section(),
+        drivers_section(),
+        claims_section(),
+        counterevidence_section(),
+        theses_section(),
+        reviews_section(),
         hypothesis_review_section(),
         today_learning_section(),
-        market_board(),
-        grid_row("split", [drivers_section(), theses_section()]),
-        grid_row("even", [next_hypotheses_section(), watch_section()]),
+        hypotheses_section(),
+        next_hypotheses_section(),
         risks_section(),
-        quality_section(),
+        handoff_section(),
+        provenance_section(),
     ] if b)
+
+    published_time = payload.get("generated_at_utc", "")
+    modified_time = payload.get("corrected_at", published_time)
 
     return f'''<!doctype html>
 <html lang="ko">
@@ -566,11 +741,17 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{esc(payload.get("title","Market Brief"))}</title>
-<meta name="description" content="{esc(_og_desc(takeaway))}"/>
+<meta name="description" content="{esc(_og_desc(meta_takeaway))}"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{esc(payload.get("title","Market Brief"))}"/>
-<meta property="og:description" content="{esc(_og_desc(takeaway))}"/>
-<meta name="twitter:card" content="summary"/>
+<meta property="og:description" content="{esc(_og_desc(meta_takeaway))}"/>
+<meta property="og:url" content="{esc(canonical_url)}"/>
+<meta property="og:image" content="{OG_IMAGE_URL}"/>
+<meta property="article:published_time" content="{esc(published_time)}"/>
+<meta property="article:modified_time" content="{esc(modified_time)}"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="{esc(canonical_url)}"/>
+<link rel="alternate" type="application/rss+xml" title="Noah Market Briefs RSS" href="{esc(rss_rel)}"/>
 <link rel="icon" type="image/svg+xml" href="{esc(favicon_rel)}"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -578,17 +759,41 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <link rel="stylesheet" href="{esc(css_rel)}"/>
 </head>
 <body>
+<a class="skip-link" href="#brief-summary">요약으로 건너뛰기</a>
 <main class="shell">
-<header class="masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">{pesc(payload.get("market","시장"))} · {pesc(payload.get("window","브리프"))}</span><span class="stamp"><b>{pesc(payload.get("generated",""))}</b></span></span></div></header>
-<section class="hero">
+<header class="masthead compact-masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="브리프 탐색"><a href="{esc(index_rel)}">브리프 목록</a><button id="share-button" type="button">공유</button><span id="share-status" role="status" aria-live="polite"></span></nav></header>
+<section class="hero brief-hero" id="brief-summary">
 <div class="kicker">{kicker()}</div>
 <h1>{_h1_html(_public_text(payload.get("title","시장 브리프")))}</h1>
+<div class="brief-status" aria-label="브리프 상태"><span>{pesc(date)}</span><span class="status-text {esc(status)}">{pesc(status_labels.get(status, status))}</span><span class="evidence-text {esc(evidence)}">{pesc(evidence_label)}</span></div>
+{correction_html}
 <p class="takeaway" data-label="한 줄 결론">{pesc(takeaway)}</p>
-<div class="meta-grid"><div class="meta-card"><div class="label">생성 시각</div><div class="value">{pesc(payload.get("generated",""))}</div></div><div class="meta-card"><div class="label">출처</div><div class="value">{pesc(payload.get("source",""))}</div></div><div class="meta-card"><div class="label">데이터 품질</div><div class="value">{pesc(payload.get("data_quality",""))}</div></div><div class="meta-card"><div class="label">용도</div><div class="value">{pesc(payload.get("use","시장 민감도 일지"))}</div></div></div>
 </section>
 {body_blocks}
-<footer class="footer"><span><a href="{esc(index_rel)}">← 브리프 목록</a></span><span>투자 권유 아님 · 출처 확인 데이터만 사용</span></footer>
+{adjacent_nav()}
+<footer class="footer"><span><a href="{esc(index_rel)}">← 브리프 목록</a></span><span>투자 권유 아님 · 근거 상태를 본문에 명시</span></footer>
 </main>
+<script>
+(function(){{
+  var button=document.getElementById('share-button'),status=document.getElementById('share-status');
+  function copied(){{status.textContent='링크를 복사했습니다.';}}
+  function copyFailed(){{status.textContent='자동 복사에 실패했습니다. 주소창의 링크를 직접 복사해 주세요.';}}
+  function manualCopy(){{
+    var input=document.createElement('textarea');input.value=location.href;input.setAttribute('readonly','');
+    input.style.position='fixed';input.style.opacity='0';document.body.appendChild(input);input.select();
+    try{{var ok=document.execCommand('copy');input.remove();if(ok) copied();else copyFailed();}}
+    catch(error){{input.remove();copyFailed();}}
+  }}
+  function fallback(){{
+    if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(location.href).then(copied,manualCopy);return;}}
+    manualCopy();
+  }}
+  button.addEventListener('click',function(){{
+    if(navigator.share){{navigator.share({{title:document.title,url:location.href}}).catch(function(error){{if(error.name!=='AbortError') fallback();}});}}
+    else fallback();
+  }});
+}})();
+</script>
 </body>
 </html>'''
 

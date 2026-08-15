@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "market": "KR",
+      "window": "preopen",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    },
+    {
+      "market": "KR",
+      "window": "close",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    },
+    {
+      "market": "US",
+      "window": "preopen",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    },
+    {
+      "market": "US",
+      "window": "close",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    }
+  ]
+}

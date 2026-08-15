@@ -11,16 +11,19 @@
 실행: python3 tests/test_build.py   (또는 python3 -m unittest discover -s tests)
 """
 import json
+import io
+import os
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 import build as B                       # noqa: E402
-from render_market_brief import render  # noqa: E402
+from render_market_brief import _source_anchor, render  # noqa: E402
 
 
 class TestRenderTheses(unittest.TestCase):
@@ -127,8 +130,12 @@ class TestLoadAndIntegration(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             dd = Path(d) / "data" / "x"
             dd.mkdir(parents=True)
-            (dd / "old.json").write_text(json.dumps({"date": "2026-06-20", "window_code": "close"}))
-            (dd / "new.json").write_text(json.dumps({"date": "2026-06-23", "window_code": "close"}))
+            (dd / "old.json").write_text(json.dumps({"schema_version": 2, "date": "2026-06-20",
+                "market_code": "KR", "window_code": "close", "status": "live",
+                "out_path": "2026/06/20/old.html", "title": "old"}))
+            (dd / "new.json").write_text(json.dumps({"schema_version": 2, "date": "2026-06-23",
+                "market_code": "KR", "window_code": "close", "status": "live",
+                "out_path": "2026/06/23/new.html", "title": "new"}))
             recs = B.load_records(Path(d) / "data")
             self.assertEqual(recs[0]["date"], "2026-06-23")    # 최신이 맨 앞
 
@@ -205,9 +212,13 @@ class TestWindowSort(unittest.TestCase):
             dd = Path(d) / "data" / "2026" / "06" / "24"
             dd.mkdir(parents=True)
             (dd / "korea-preopen.json").write_text(
-                json.dumps({"date": "2026-06-24", "window_code": "preopen"}))
+                json.dumps({"schema_version": 2, "date": "2026-06-24", "market_code": "KR",
+                            "window_code": "preopen", "status": "live",
+                            "out_path": "2026/06/24/korea-preopen.html", "title": "장전"}))
             (dd / "korea-close.json").write_text(
-                json.dumps({"date": "2026-06-24", "window_code": "close"}))
+                json.dumps({"schema_version": 2, "date": "2026-06-24", "market_code": "KR",
+                            "window_code": "close", "status": "live",
+                            "out_path": "2026/06/24/korea-close.html", "title": "마감"}))
             recs = B.load_records(Path(d) / "data")
             self.assertEqual(recs[0]["window_code"], "close")    # close가 먼저(최신)
             self.assertEqual(recs[1]["window_code"], "preopen")
@@ -226,8 +237,9 @@ class TestGenerationTimeOrder(unittest.TestCase):
         dd = root / "data" / ymd
         dd.mkdir(parents=True, exist_ok=True)
         (dd / f"{market}-{window}.json").write_text(json.dumps({
-            "date": date, "market_code": market, "window_code": window,
-            "out_path": f"{ymd}/{market}-{window}.html"}), encoding="utf-8")
+            "schema_version": 2, "date": date, "market_code": market, "window_code": window,
+            "status": "live", "out_path": f"{ymd}/{market.lower()}-{window}.html",
+            "title": f"{market} {window}"}), encoding="utf-8")
 
     def test_same_date_recency_order(self):
         with tempfile.TemporaryDirectory() as d:
@@ -256,6 +268,11 @@ class TestGenerationTimeOrder(unittest.TestCase):
         self.assertEqual(recs[0]["date"], "2026-06-24")
         self.assertEqual((recs[0]["market_code"], recs[0]["window_code"]), ("KR", "preopen"))
 
+    def test_rank_comment_does_not_claim_obsolete_cron_times(self):
+        source = (REPO / "scripts" / "build.py").read_text(encoding="utf-8")
+        self.assertNotIn("KR 장전 08:30", source)
+        self.assertNotIn("US 마감 익일 06:00", source)
+
 
 class TestLoadRecordsRobustness(unittest.TestCase):
     """깨진 JSON·out_path 누락 레코드 1건이 빌드 전체를 죽이지 않고 skip되는지.
@@ -269,8 +286,8 @@ class TestLoadRecordsRobustness(unittest.TestCase):
             dd = Path(d) / "data" / "2026" / "06" / "23"
             dd.mkdir(parents=True)
             (dd / "ok.json").write_text(json.dumps({
-                "date": "2026-06-23", "window_code": "close",
-                "out_path": "2026/06/23/ok.html", "title": "ok"}), encoding="utf-8")
+                "schema_version": 2, "date": "2026-06-23", "market_code": "KR", "window_code": "close",
+                "status": "live", "out_path": "2026/06/23/ok.html", "title": "ok"}), encoding="utf-8")
             (dd / "bad.json").write_text('{"date": "2026-06-23",', encoding="utf-8")  # 깨짐
             recs = B.load_records(Path(d) / "data")
             self.assertEqual(len(recs), 1)                       # 깨진 건 skip, 정상만
@@ -401,6 +418,19 @@ class TestCssHasNewStyles(unittest.TestCase):
         for sel in (".change-list", ".dir.up", ".dir.down", ".thesis-delta", ".hypothesis-stack", ".verdict", ".learning-list"):
             self.assertIn(sel, css)
 
+    def test_filter_focus_keeps_explicit_two_pixel_outline(self):
+        css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
+        self.assertNotIn(".filterbar select:focus-visible{outline:none", css)
+        self.assertIn(".filterbar select:focus-visible{outline:2px solid", css)
+
+    def test_metadata_specificity_floor_is_twelve_pixels(self):
+        css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
+        override = ".badge,.idx.feature .iname,.idx .seg-label,.idx.feature .seg-label,.mcard .seg-label{font-size:12px}"
+        single_override = ".metric-seg.single .seg-label{font-size:clamp(16px,1.45vw,20px)}"
+        self.assertIn(override, css)
+        self.assertGreater(css.rfind(override), css.find(".idx.feature .iname{font-size:11.5px"))
+        self.assertGreater(css.rfind(single_override), css.rfind(override))
+
 
 class TestTemplateV2Robustness(unittest.TestCase):
     """v2 새 필드의 잘못된 모양이 빌드를 죽이지 않고 관대/안전하게 처리되는지(adversarial)."""
@@ -493,6 +523,431 @@ class TestBuildSummary(unittest.TestCase):
             summary = B.build(root)
             self.assertEqual(summary, {"live": 0, "sample": 0, "pages": 0})
             self.assertTrue((root / "index.html").exists())
+
+
+class TestPublicBriefV3BuildGate(unittest.TestCase):
+    """v3 검증 ERROR는 정적 공개 페이지와 index에서 모두 제외한다."""
+
+    def _v3_record(self, title: str, out_path: str) -> dict:
+        return {
+            "schema_version": 3, "brief_id": f"brief-{title}", "market_code": "KR",
+            "window_code": "close", "market_session_date": "2026-07-07",
+            "generated_at_utc": "2026-07-07T07:30:00Z", "cutoff_at_utc": "2026-07-07T07:20:00Z",
+            "market_timezone": "Asia/Seoul", "status": "published", "evidence_status": "confirmed",
+            "methodology_version": "public-brief-v3", "public_receipt_sha256": "b" * 64,
+            "out_path": out_path, "title": title,
+            "sources": [{"source_id": "source-public", "publisher": "Synthetic Public Source",
+                         "title": "Market close", "url": "https://example.test/close",
+                         "as_of": "2026-07-07T07:00:00Z", "retrieved_at": "2026-07-07T07:20:00Z",
+                         "source_type": "market_data", "status": "confirmed"}],
+            "metrics": [{"name": "KOSPI", "value": "7,656.31", "tone": "down",
+                         "metric_id": "metric-kospi", "label": "KOSPI", "unit": "points",
+                         "delta": "-4.91%", "as_of": "2026-07-07T07:00:00Z",
+                         "source_ids": ["source-public"], "evidence_status": "confirmed"}],
+        }
+
+    def test_invalid_v3_is_rejected_and_valid_v3_uses_session_date(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            accepted = self._v3_record("공개 브리프", "2026/07/07/accepted.html")
+            rejected = self._v3_record("거부 브리프", "2026/07/07/rejected.html")
+            rejected["operator_note"] = "synthetic internal note"
+            (data / "accepted.json").write_text(json.dumps(accepted, ensure_ascii=False), encoding="utf-8")
+            (data / "rejected.json").write_text(json.dumps(rejected, ensure_ascii=False), encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                summary = B.build(root)
+            index = (root / "index.html").read_text(encoding="utf-8")
+            self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
+            self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertFalse((root / "2026/07/07/rejected.html").exists())
+            self.assertIn("2026-07-07", index)
+            self.assertIn("공개 1개 · 샘플 0개", index)
+            self.assertNotIn("거부 브리프", index)
+            self.assertIn("rejected 1", stderr.getvalue())
+            self.assertNotIn("v3 verification", stderr.getvalue())
+
+    def test_object_metadata_is_rejected_without_blocking_valid_v3(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            accepted = self._v3_record("정상 브리프", "2026/07/07/accepted.html")
+            rejected = self._v3_record("오류 브리프", "2026/07/07/rejected.html")
+            rejected["status"] = {"invalid": "published"}
+            (data / "accepted.json").write_text(json.dumps(accepted, ensure_ascii=False), encoding="utf-8")
+            (data / "rejected.json").write_text(json.dumps(rejected, ensure_ascii=False), encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                summary = B.build(root)
+            self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
+            self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertFalse((root / "2026/07/07/rejected.html").exists())
+            self.assertIn("rejected 1", stderr.getvalue())
+
+
+class TestLegacyBuildGate(unittest.TestCase):
+    """v1/v2도 검증 ERROR가 있으면 공개 빌드에서 제외한다."""
+
+    def test_invalid_v1_and_v2_records_are_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            for version in (1, 2):
+                (data / f"invalid-v{version}.json").write_text(json.dumps({
+                    "schema_version": version, "date": "2026-07-07", "market_code": "KR",
+                    "window_code": "close", "status": "live",
+                }), encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                summary = B.build(root)
+            self.assertEqual(summary, {"live": 0, "sample": 0, "pages": 0})
+            self.assertNotIn("invalid-v1", (root / "index.html").read_text(encoding="utf-8"))
+            self.assertIn("rejected 2", stderr.getvalue())
+
+    def test_invalid_out_path_is_rejected_without_blocking_other_outputs(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            valid = {
+                "schema_version": 2, "date": "2026-07-07", "market_code": "KR", "window_code": "close",
+                "status": "live", "out_path": "2026/07/07/accepted.html", "title": "정상 브리프",
+            }
+            invalid = {**valid, "out_path": "../escape.html", "title": "거부 브리프"}
+            (data / "accepted.json").write_text(json.dumps(valid, ensure_ascii=False), encoding="utf-8")
+            (data / "rejected.json").write_text(json.dumps(invalid, ensure_ascii=False), encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                summary = B.build(root)
+            self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
+            self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertFalse((root.parent / "escape.html").exists())
+            self.assertTrue((root / "index.html").exists())
+            self.assertTrue((root / "latest.json").exists())
+            self.assertTrue((root / "rss.xml").exists())
+            self.assertIn("rejected 1", stderr.getvalue())
+
+    def test_unhashable_legacy_enum_and_tone_are_isolated(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            valid = {
+                "schema_version": 2, "date": "2026-07-07", "market_code": "KR", "window_code": "close",
+                "status": "live", "out_path": "2026/07/07/accepted.html", "title": "정상 브리프",
+            }
+            invalid = {**valid, "market_code": ["KR"], "metrics": [{"name": "X", "value": "1", "tone": {"flat": True}}]}
+            (data / "accepted.json").write_text(json.dumps(valid, ensure_ascii=False), encoding="utf-8")
+            (data / "rejected.json").write_text(json.dumps(invalid, ensure_ascii=False), encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                summary = B.build(root)
+            self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
+            self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertIn("rejected 1", stderr.getvalue())
+
+
+class TestStaleBriefCleanup(unittest.TestCase):
+    """빌드는 데이터에 없는 날짜형 브리프 페이지만 제거한다."""
+
+    def test_removes_orphan_pages_without_touching_other_html_or_symlinks(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / "site"
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            (data / "accepted.json").write_text(json.dumps({
+                "schema_version": 2, "date": "2026-07-07", "market_code": "KR", "window_code": "close",
+                "status": "live", "out_path": "2026/07/07/accepted.html", "title": "정상 브리프",
+            }), encoding="utf-8")
+            stale = root / "2026" / "07" / "07" / "rejected.html"
+            stale.parent.mkdir(parents=True, exist_ok=True)
+            stale.write_text("old rejected", encoding="utf-8")
+            for path in (root / "assets" / "keep.html", root / "docs" / "keep.html"):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("keep", encoding="utf-8")
+            outside = Path(d) / "outside"
+            outside.mkdir()
+            (outside / "orphan.html").write_text("outside", encoding="utf-8")
+            linked_parent = root / "2027" / "07"
+            linked_parent.mkdir(parents=True)
+            os.symlink(outside, linked_parent / "09")
+
+            summary = B.build(root)
+
+            self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
+            self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertFalse(stale.exists())
+            self.assertEqual((root / "assets/keep.html").read_text(encoding="utf-8"), "keep")
+            self.assertEqual((root / "docs/keep.html").read_text(encoding="utf-8"), "keep")
+            self.assertTrue((outside / "orphan.html").exists())
+
+
+class TestEvidenceFirstIndex(unittest.TestCase):
+    """첫 화면 최신 슬롯, 날짜 그룹, 필터 접근성 계약."""
+
+    def _rec(self, market, window, date, status="published", **extra):
+        rec = {
+            "schema_version": 3, "market_code": market, "window_code": window,
+            "market_session_date": date, "status": status,
+            "evidence_status": "confirmed", "title": f"{market} {window} {date}",
+            "out_path": f"{date.replace('-', '/')}/{market}-{window}.html",
+            "metrics": [{"label": "지수", "value": date[-2:]}],
+        }
+        rec.update(extra)
+        return rec
+
+    def test_latest_slots_are_fixed_order_and_use_latest_per_slot(self):
+        records = [
+            self._rec("US", "close", "2026-07-16"),
+            self._rec("KR", "preopen", "2026-07-15"),
+            self._rec("KR", "preopen", "2026-07-17"),
+            self._rec("US", "preopen", "2026-07-14"),
+        ]
+        slots = B.latest_slots(records)
+        self.assertEqual([(m, w) for m, w, _ in slots], [
+            ("KR", "preopen"), ("KR", "close"), ("US", "preopen"), ("US", "close"),
+        ])
+        self.assertEqual(slots[0][2]["market_session_date"], "2026-07-17")
+        self.assertIsNone(slots[1][2])
+        page = B.build_index_html(records)
+        self.assertLess(page.index('data-slot="KR-preopen"'), page.index('data-slot="KR-close"'))
+        self.assertIn("아직 기록 없음", page)
+        self.assertIn('data-stale-date="2026-07-17"', page)
+        self.assertIn("오래된 기록", page)
+        self.assertNotIn("live-dot", page)
+
+    def test_archive_groups_and_filter_accessibility_markup(self):
+        records = [
+            self._rec("KR", "close", "2026-07-17"),
+            self._rec("US", "preopen", "2026-07-16", status="partial"),
+        ]
+        page = B.build_index_html(records)
+        self.assertIn('<nav class="site-nav" aria-label="주요 탐색">', page)
+        self.assertIn('class="skip-link" href="#latest"', page)
+        self.assertIn('id="archive-result-count" role="status" aria-live="polite"', page)
+        self.assertIn('class="archive-group" data-date="2026-07-17"', page)
+        self.assertIn("group.hidden=visible===0", page)
+        self.assertIn("방법론·검증 코드", page)
+
+
+class TestEvidenceFirstDetail(unittest.TestCase):
+    """상세 페이지의 점진적 공개 순서와 공개 근거 링크 계약."""
+
+    def test_legacy_unfurl_description_is_warned_without_changing_v3(self):
+        legacy = render({"schema_version": 2, "title": "레거시", "takeaway": "과거 요약"})
+        v3 = render({"schema_version": 3, "title": "V3", "summary": "검증 요약"})
+        for attribute in ('name="description"', 'property="og:description"'):
+            self.assertIn(f'<meta {attribute} content="레거시 미검증 · 과거 요약"', legacy)
+            self.assertIn(f'<meta {attribute} content="검증 요약"', v3)
+        self.assertNotIn("레거시 미검증 · 검증 요약", v3)
+
+    def test_legacy_warning_and_section_order(self):
+        page = render({
+            "schema_version": 2, "date": "2026-07-17", "status": "live",
+            "title": "레거시", "takeaway": "요약", "metrics": [{"name": "지수", "value": "1"}],
+            "changes": [{"dir": "up", "text": "변화"}], "drivers": [{"label": "동인", "text": "본문"}],
+            "risks": ["위험"], "watch": ["다음"], "quality": [{"label": "Status", "value": "ok"}],
+        })
+        self.assertIn("레거시 · 원문 출처 링크 미제공", page)
+        self.assertNotIn("출처 확인 데이터만 사용", page)
+        order = ["한 줄 결론", "숫자로 보는 시장", "어제 대비 변화", "오늘의 핵심 동인",
+                 "리스크 / 무효화 기준", "내일 볼 센서", "근거와 생성 정보"]
+        self.assertEqual(sorted(page.index(text) for text in order), [page.index(text) for text in order])
+
+    def test_v3_sources_claims_and_field_fallbacks_are_linked(self):
+        page = render({
+            "schema_version": 3, "status": "published", "evidence_status": "confirmed",
+            "market_session_date": "2026-07-17", "title": "V3", "summary": "검증 요약",
+            "metrics": [{"label": "KOSPI", "value": "3000", "source_ids": ["s1"],
+                         "evidence_status": "confirmed"}],
+            "claims": [
+                {"kind": "fact", "text": "사실 문장", "source_ids": ["s1"], "evidence_status": "confirmed"},
+                {"kind": "analysis", "text": "분석 문장", "source_ids": ["s1"], "evidence_status": "partial"},
+                {"kind": "hypothesis", "text": "가설 문장", "source_ids": [], "evidence_status": "not_proven"},
+            ],
+            "drivers": [{"label": "드라이버", "text": "설명", "source_ids": ["s1"]}],
+            "sources": [{"source_id": "s1", "publisher": "거래소", "title": "마감 데이터",
+                         "url": "https://example.test/source", "as_of": "2026-07-17T07:00:00Z",
+                         "retrieved_at": "2026-07-17T07:10:00Z", "status": "confirmed"}],
+        })
+        anchor = _source_anchor("s1")
+        self.assertIn(f'id="{anchor}"', page)
+        self.assertIn('href="https://example.test/source"', page)
+        self.assertGreaterEqual(page.count(f'href="#{anchor}"'), 3)
+        for label in ("사실", "분석", "가설"):
+            self.assertIn(f'<span class="claim-kind">{label}</span>', page)
+        self.assertIn("KOSPI", page)
+        self.assertIn("드라이버", page)
+
+    def test_counterevidence_follows_claims_with_item_evidence_and_sources(self):
+        page = render({
+            "schema_version": 3, "status": "published", "evidence_status": "confirmed",
+            "claims": [
+                {"kind": "fact", "text": "확인 주장", "source_ids": ["s1"],
+                 "evidence_status": "confirmed"},
+                {"kind": "analysis", "text": "부분 주장", "source_ids": ["s1"],
+                 "evidence_status": "partial"},
+            ],
+            "counterevidence": [{"text": "반대 데이터", "source_ids": ["s1"],
+                                  "evidence_status": "not_proven"}],
+            "sources": [{"source_id": "s1", "publisher": "거래소", "title": "원문",
+                         "url": "https://example.test/source", "as_of": "2026-07-17",
+                         "status": "confirmed"}],
+        })
+        self.assertLess(page.index("주장과 해석"), page.index("반대 근거"))
+        self.assertIn('<span class="item-evidence confirmed">확인</span>', page)
+        self.assertIn('<span class="item-evidence partial">일부</span>', page)
+        self.assertIn('<span class="item-evidence not_proven">미검증</span>', page)
+        self.assertIn("반대 데이터", page)
+        anchor = _source_anchor("s1")
+        self.assertIn(f'href="#{anchor}"', page)
+
+    def test_source_anchor_hash_prevents_slug_and_empty_collisions(self):
+        source_ids = ["a b", "a-b", "!!!"]
+        anchors = [_source_anchor(source_id) for source_id in source_ids]
+        self.assertEqual(len(set(anchors)), len(anchors))
+        page = render({
+            "schema_version": 3,
+            "claims": [{"kind": "fact", "text": source_id, "source_ids": [source_id],
+                        "evidence_status": "confirmed"} for source_id in source_ids],
+            "sources": [{"source_id": source_id, "publisher": "p", "title": source_id,
+                         "url": "https://example.test", "as_of": "2026-07-17", "status": "confirmed"}
+                        for source_id in source_ids],
+        })
+        for anchor in anchors:
+            self.assertIn(f'id="{anchor}"', page)
+            self.assertIn(f'href="#{anchor}"', page)
+
+    def test_canonical_og_share_rss_and_adjacent_nav(self):
+        context = {
+            "canonical_url": "https://noah-market-briefs.vercel.app/market-briefs/2026/07/17/x.html",
+            "older": {"title": "이전", "href": "older.html"},
+            "newer": {"title": "다음", "href": "newer.html"},
+        }
+        page = render({"schema_version": 3, "title": "V3", "summary": "요약",
+                       "generated_at_utc": "2026-07-17T07:30:00Z"}, page_context=context)
+        self.assertIn('<link rel="canonical" href="https://noah-market-briefs.vercel.app/market-briefs/2026/07/17/x.html"', page)
+        self.assertIn('<meta property="og:url" content="https://noah-market-briefs.vercel.app/market-briefs/2026/07/17/x.html"', page)
+        self.assertIn('content="https://noah-market-briefs.vercel.app/market-briefs/docs/images/index.png"', page)
+        self.assertIn('name="twitter:card" content="summary_large_image"', page)
+        self.assertIn('type="application/rss+xml"', page)
+        self.assertIn('id="share-button"', page)
+        self.assertIn("navigator.share", page)
+        self.assertIn('id="share-status" role="status" aria-live="polite"', page)
+        self.assertIn('aria-label="인접 브리프"', page)
+        self.assertIn('href="older.html"', page)
+        self.assertIn('href="newer.html"', page)
+        self.assertIn("then(copied,manualCopy)", page)
+        self.assertIn("if(ok) copied();else copyFailed();", page)
+        self.assertIn("자동 복사에 실패했습니다. 주소창의 링크를 직접 복사해 주세요.", page)
+
+    def test_write_pages_computes_relative_assets_index_and_rss_for_deep_path(self):
+        record = {
+            "schema_version": 3, "title": "깊은 경로", "status": "published",
+            "out_path": "archive/2026/07/17/deep/brief.html",
+        }
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            B.write_brief_pages([record], root)
+            page = (root / record["out_path"]).read_text(encoding="utf-8")
+        self.assertIn('href="../../../../../assets/brief.css"', page)
+        self.assertIn('href="../../../../../assets/favicon.svg"', page)
+        self.assertIn('href="../../../../../index.html"', page)
+        self.assertIn('href="../../../../../rss.xml"', page)
+
+
+class TestEvidenceFeedsAndStatuses(unittest.TestCase):
+    """동일 검증 레코드로 만드는 latest.json/RSS와 상태 표시 계약."""
+
+    def _rec(self, market, window, status, version=3, **extra):
+        rec = {
+            "schema_version": version, "market_code": market, "window_code": window,
+            "market_session_date": "2026-07-17", "date": "2026-07-17", "status": status,
+            "evidence_status": "confirmed", "title": f"{market}-{window}-{status}",
+            "out_path": f"2026/07/17/{market}-{window}-{status}.html",
+            "sources": [{"source_id": "source-public", "status": "confirmed"}],
+            "metrics": [{"source_ids": ["source-public"], "evidence_status": "confirmed"}],
+        }
+        rec.update(extra)
+        return rec
+
+    def test_status_badges_are_explicit_and_failed_is_not_live(self):
+        labels = {
+            "live": "공개", "published": "공개", "sample": "샘플", "partial": "부분 공개",
+            "skipped_market_closed": "휴장으로 건너뜀", "failed": "생성 실패", "corrected": "정정됨",
+        }
+        for status, label in labels.items():
+            badge = B.status_badge({"schema_version": 3, "status": status})
+            self.assertIn(label, badge)
+            if status in {"failed", "skipped_market_closed"}:
+                self.assertNotIn('status-badge live', badge)
+        self.assertIn("레거시 미검증", B.status_badge({"schema_version": 2, "status": "live"}))
+
+    def test_latest_json_and_rss_are_deterministic_and_legacy_safe(self):
+        legacy_v1 = self._rec("KR", "preopen", "live", version=1,
+                              title="SECRET_HOLDING_TITLE", out_path="secret/holding-v1.html")
+        legacy_v2 = self._rec("KR", "close", "live", version=2,
+                              title="SECRET_V2_TITLE", out_path="secret/holding-v2.html")
+        v3 = self._rec("US", "close", "published", summary="검증된 요약")
+        records = [v3, legacy_v1, legacy_v2]
+        latest_a = B.build_latest_json(records)
+        latest_b = B.build_latest_json(list(reversed(records)))
+        rss = B.build_rss_xml(records)
+        self.assertEqual(latest_a, latest_b)
+        self.assertIn('"evidence_status": "legacy_unverified"', latest_a)
+        for secret in ("SECRET_HOLDING_TITLE", "SECRET_V2_TITLE", "secret/holding-v1.html", "secret/holding-v2.html"):
+            self.assertNotIn(secret, latest_a)
+            self.assertNotIn(secret, rss)
+        self.assertIn("검증된 요약", latest_a)
+        self.assertIn("검증된 요약", rss)
+        self.assertNotIn("legacy_unverified", rss)
+
+    def test_summary_requires_public_or_corrected_confirmed_v3(self):
+        records = [
+            self._rec("KR", "preopen", "published", summary="ALLOW_PUBLISHED"),
+            self._rec("KR", "close", "corrected", summary="ALLOW_CORRECTED"),
+            self._rec("US", "preopen", "failed", summary="BLOCK_FAILED"),
+            self._rec("US", "close", "partial", summary="BLOCK_PARTIAL"),
+            self._rec("KR", "preopen", "published", evidence_status="partial",
+                      summary="BLOCK_EVIDENCE_PARTIAL", out_path="2026/07/17/partial-evidence.html"),
+            self._rec("KR", "close", "published", evidence_status="not_proven",
+                      summary="BLOCK_NOT_PROVEN", out_path="2026/07/17/not-proven.html"),
+        ]
+        rss = B.build_rss_xml(records)
+        latest_status = B.build_latest_json(records[:4])
+        latest_evidence = B.build_latest_json(records[4:])
+        self.assertIn("ALLOW_PUBLISHED", rss)
+        self.assertIn("ALLOW_CORRECTED", rss)
+        self.assertIn("ALLOW_PUBLISHED", latest_status)
+        self.assertIn("ALLOW_CORRECTED", latest_status)
+        for blocked in ("BLOCK_FAILED", "BLOCK_PARTIAL", "BLOCK_EVIDENCE_PARTIAL", "BLOCK_NOT_PROVEN"):
+            self.assertNotIn(blocked, rss)
+            self.assertNotIn(blocked, latest_status + latest_evidence)
+
+    def test_confirmed_summary_without_linked_evidence_never_enters_feed(self):
+        rec = self._rec("KR", "close", "published", summary="BLOCK_EMPTY_EVIDENCE",
+                        sources=[], metrics=[])
+        self.assertNotIn("BLOCK_EMPTY_EVIDENCE", B.build_latest_json([rec]))
+        self.assertNotIn("BLOCK_EMPTY_EVIDENCE", B.build_rss_xml([rec]))
+
+    def test_confirmed_summary_requires_confirmed_source_and_item(self):
+        rec = self._rec("KR", "close", "published", summary="BLOCK_PARTIAL_EVIDENCE",
+                        sources=[{"source_id": "source-public", "status": "not_proven"}],
+                        metrics=[{"source_ids": ["source-public"], "evidence_status": "partial"}])
+        self.assertNotIn("BLOCK_PARTIAL_EVIDENCE", B.build_latest_json([rec]))
+        self.assertNotIn("BLOCK_PARTIAL_EVIDENCE", B.build_rss_xml([rec]))
+
+    def test_build_writes_both_feed_files(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "data").mkdir()
+            B.build(root)
+            self.assertTrue((root / "latest.json").exists())
+            self.assertTrue((root / "rss.xml").exists())
 
 
 if __name__ == "__main__":

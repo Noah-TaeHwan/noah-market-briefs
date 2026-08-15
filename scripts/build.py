@@ -13,16 +13,22 @@
 """
 from __future__ import annotations
 import json
+import posixpath
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # render_market_brief 는 같은 scripts/ 디렉토리의 형제 모듈이다. 어디서 실행하든
 # (다른 cwd, 모듈 import 등) 형제를 찾도록 scripts/ 를 모듈 검색 경로 맨 앞에 넣는다.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_market_brief import render, esc  # noqa: E402
+from verify_brief import Severity, verify_record  # noqa: E402
 
 # 레포 루트 = 이 파일(scripts/build.py)의 두 단계 위.
 REPO = Path(__file__).resolve().parent.parent
+SITE_URL = "https://noah-market-briefs.vercel.app/market-briefs"
+OG_IMAGE_URL = f"{SITE_URL}/docs/images/index.png"
+VERIFY_URL = "https://github.com/Noah-TaeHwan/noah-market-briefs/blob/main/scripts/verify_brief.py"
 
 # 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)
 MARKET_LABEL = {"US": "미국", "KR": "한국"}
@@ -30,16 +36,25 @@ WINDOW_LABEL = {"preopen": "장 시작 전", "close": "장 마감"}
 # 시장 모르는 레코드(합성/레거시) 폴백: preopen < close
 WINDOW_RANK = {"preopen": 0, "close": 1}
 
-# 같은 '세션 날짜' 안에서 리포트가 실제 생성되는 시각 순서(이른→늦은, 숫자가 클수록 최신).
-# cron 스케줄(KST) 근거: KR 장전 08:30 → KR 마감 16:30 → US 장전 22:00 → US 마감 익일 06:00.
-# 정렬은 (date, 이 랭크) 내림차순 → 한/미·장전/마감을 실제 발표 시각 순으로 최신이 맨 위.
-# (date 만으로 정렬하면 같은 날 KR/US 마감이 묶여 가장 오래된 KR 마감이 위로 오는 문제 교정.)
+# 같은 세션 날짜 안의 브리프 순서(숫자가 클수록 뒤 세션).
+# 정렬은 (date, 이 랭크) 내림차순으로 시장·세션의 일관된 표시 순서를 유지한다.
 GEN_ORDER_RANK = {
     ("KR", "preopen"): 0,
     ("KR", "close"): 1,
     ("US", "preopen"): 2,
     ("US", "close"): 3,
 }
+LATEST_SLOT_ORDER = (("KR", "preopen"), ("KR", "close"), ("US", "preopen"), ("US", "close"))
+
+STATUS_LABELS = {
+    "live": "공개", "published": "공개", "sample": "샘플", "partial": "부분 공개",
+    "skipped_market_closed": "휴장으로 건너뜀", "failed": "생성 실패", "corrected": "정정됨",
+}
+EVIDENCE_LABELS = {
+    "confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증",
+    "legacy_unverified": "레거시 미검증",
+}
+LINKED_EVIDENCE_FIELDS = ("claims", "metrics", "changes", "drivers", "counterevidence", "hypotheses", "reviews")
 
 
 def recency_rank(rec: dict) -> int:
@@ -55,6 +70,87 @@ def recency_rank(rec: dict) -> int:
     return WINDOW_RANK.get(rec.get("window_code", ""), 0)
 
 
+def _record_date(rec: dict) -> str:
+    """v3 세션 날짜를 우선하고, 기존 레코드는 date 호환 필드를 쓴다."""
+    return str(rec.get("market_session_date", rec.get("date", "")))
+
+
+def is_published(rec: dict) -> bool:
+    """공개 카운트에 포함할 기존 live 및 v3 published 상태인지 확인한다."""
+    return rec.get("status") in {"live", "published"}
+
+
+def _is_legacy(rec: dict) -> bool:
+    """v1/v2 또는 버전 없는 기존 레코드인지 확인한다."""
+    return rec.get("schema_version", 1) < 3
+
+
+def _evidence_status(rec: dict) -> str:
+    """화면/피드에 쓸 공개 근거 상태를 정규화한다."""
+    return "legacy_unverified" if _is_legacy(rec) else str(rec.get("evidence_status", "not_proven"))
+
+
+def status_badge(rec: dict) -> str:
+    """상태와 근거를 텍스트로 함께 표시한다."""
+    status = str(rec.get("status", "failed"))
+    status_label = STATUS_LABELS.get(status, status)
+    evidence = _evidence_status(rec)
+    return (
+        f'<span class="ar-badge {esc(status)} status-badge">{esc(status_label)}</span>'
+        f'<span class="evidence-badge {esc(evidence)}">{esc(EVIDENCE_LABELS.get(evidence, evidence))}</span>'
+    )
+
+
+def latest_slots(records: list[dict]) -> list[tuple[str, str, dict | None]]:
+    """KR 장전→KR 마감→US 장전→US 마감 고정 슬롯별 최신 레코드를 고른다."""
+    slots = []
+    for market, window in LATEST_SLOT_ORDER:
+        matches = [r for r in records if r.get("market_code") == market and r.get("window_code") == window]
+        latest = max(
+            matches,
+            key=lambda r: (_record_date(r), recency_rank(r), str(r.get("out_path", ""))),
+            default=None,
+        )
+        slots.append((market, window, latest))
+    return slots
+
+
+def _load_records(data_dir: Path) -> tuple[list[dict], int]:
+    """레코드를 읽고 v3 검증 ERROR 건수와 함께 반환한다."""
+    records: list[dict] = []
+    rejected = 0
+    for path in sorted(data_dir.rglob("*.json")):
+        try:
+            rec = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as e:
+            # cron(LLM)이 깨진 JSON을 쓴 회차 1건이 빌드 전체를 죽이지 않게 skip.
+            print(f"⚠️  건너뜀(JSON 파싱 실패): {path} — {e}", file=sys.stderr)
+            rejected += 1
+            continue
+        if not isinstance(rec, dict):
+            print(f"⚠️  건너뜀(최상위 JSON이 dict 아님): {path}", file=sys.stderr)
+            rejected += 1
+            continue
+        try:
+            errors = [f for f in verify_record(rec) if f.severity == Severity.ERROR]
+        except Exception:
+            print(f"⚠️  건너뜀(검증 예외): {path}", file=sys.stderr)
+            rejected += 1
+            continue
+        if errors:
+            print(f"⚠️  건너뜀(검증 ERROR {len(errors)}건): {path}", file=sys.stderr)
+            rejected += 1
+            continue
+        rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
+        records.append(rec)
+    # 최신순: 날짜 내림차순 → 같은 날은 생성 시각 순위(KR장전<KR마감<US장전<US마감 익일) 내림차순.
+    records.sort(
+        key=lambda r: (_record_date(r), recency_rank(r)),
+        reverse=True,
+    )
+    return records, rejected
+
+
 def load_records(data_dir: Path) -> list:
     """data_dir 하위의 모든 *.json 브리프 레코드를 읽어 최신순으로 돌려준다.
 
@@ -62,22 +158,42 @@ def load_records(data_dir: Path) -> list:
     @returns dict 리스트. date 내림차순 → 생성 시각 순위(recency_rank) 내림차순 정렬(최신이 맨 앞).
         깨진 JSON 레코드는 stderr 경고 후 skip(한 회차 결함이 전체 빌드를 막지 않게).
     """
-    records = []
-    for path in sorted(data_dir.rglob("*.json")):
-        try:
-            rec = json.loads(path.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError) as e:
-            # cron(LLM)이 깨진 JSON을 쓴 회차 1건이 빌드 전체를 죽이지 않게 skip.
-            print(f"⚠️  건너뜀(JSON 파싱 실패): {path} — {e}", file=sys.stderr)
-            continue
-        rec["_src"] = str(path)  # 디버그용(어느 파일에서 왔는지)
-        records.append(rec)
-    # 최신순: 날짜 내림차순 → 같은 날은 생성 시각 순위(KR장전<KR마감<US장전<US마감 익일) 내림차순.
-    records.sort(
-        key=lambda r: (r.get("date", ""), recency_rank(r)),
-        reverse=True,
-    )
+    records, _ = _load_records(data_dir)
     return records
+
+
+def _brief_page_parts(path: Path) -> tuple[str, str, str, str] | None:
+    """데이터가 생성하는 YYYY/MM/DD/*.html 경로만 식별한다."""
+    parts = path.parts
+    if (len(parts) != 4 or not all(part.isdigit() for part in parts[:3])
+            or (len(parts[0]), len(parts[1]), len(parts[2])) != (4, 2, 2)
+            or path.suffix != ".html"):
+        return None
+    return parts
+
+
+def _remove_orphan_brief_pages(records: list[dict], site_root: Path) -> None:
+    """검증된 데이터에 없는 날짜형 브리프 HTML만 제거한다."""
+    root = site_root.resolve()
+    expected = {
+        parts for rec in records
+        if isinstance(rec.get("out_path"), str)
+        if (parts := _brief_page_parts(Path(rec["out_path"]))) is not None
+    }
+    for year in root.iterdir():
+        if year.is_symlink() or not year.is_dir() or len(year.name) != 4 or not year.name.isdigit():
+            continue
+        for month in year.iterdir():
+            if month.is_symlink() or not month.is_dir() or len(month.name) != 2 or not month.name.isdigit():
+                continue
+            for day in month.iterdir():
+                if day.is_symlink() or not day.is_dir() or len(day.name) != 2 or not day.name.isdigit():
+                    continue
+                for page in day.glob("*.html"):
+                    if page.is_symlink() or not page.is_file():
+                        continue
+                    if page.relative_to(root).parts not in expected:
+                        page.unlink()
 
 
 def write_brief_pages(records: list, site_root: Path) -> int:
@@ -89,7 +205,8 @@ def write_brief_pages(records: list, site_root: Path) -> int:
     """
     count = 0
     root = site_root.resolve()
-    for rec in records:
+    page_records = [r for r in records if r.get("out_path")]
+    for index, rec in enumerate(page_records):
         rel = rec.get("out_path")
         if not rel:                                     # out_path 누락 → KeyError 대신 skip
             print(f"⚠️  건너뜀(out_path 없음): {rec.get('_src', rec.get('date', '?'))}",
@@ -99,7 +216,25 @@ def write_brief_pages(records: list, site_root: Path) -> int:
         if not out.is_relative_to(root):                # 절대경로/.. 로 site_root 밖 탈출 차단
             raise ValueError(f"out_path가 site_root를 벗어남: {rec.get('out_path')!r}")
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(render(rec), encoding="utf-8")
+        current_dir = posixpath.dirname(str(rel)) or "."
+
+        def adjacent(target: dict | None) -> dict | None:
+            """현재 페이지 기준 인접 페이지 상대 링크를 만든다."""
+            if not target:
+                return None
+            return {
+                "title": target.get("title", ""),
+                "href": posixpath.relpath(str(target["out_path"]), current_dir),
+            }
+
+        context = {
+            "canonical_url": f"{SITE_URL}/{str(rel).lstrip('/')}",
+            "newer": adjacent(page_records[index - 1] if index else None),
+            "older": adjacent(page_records[index + 1] if index + 1 < len(page_records) else None),
+        }
+        css_rel = posixpath.relpath("assets/brief.css", current_dir)
+        index_rel = posixpath.relpath("index.html", current_dir)
+        out.write_text(render(rec, css_rel=css_rel, index_rel=index_rel, page_context=context), encoding="utf-8")
         count += 1
     return count
 
@@ -110,20 +245,61 @@ def _archive_card(rec: dict) -> str:
     - meta = '시장 · 윈도' 라벨(라이브/샘플 공통).
     - 우측 배지로 live/sample 을 명시 → 샘플을 라이브로 착각하지 않게.
     """
-    is_sample = rec.get("status") == "sample"
     market = MARKET_LABEL.get(rec.get("market_code", ""), rec.get("market", ""))
     window = WINDOW_LABEL.get(rec.get("window_code", ""), rec.get("window", ""))
-    badge = ('<span class="ar-badge sample">샘플</span>' if is_sample
-             else '<span class="ar-badge live">공개</span>')
     return (
         f'<li data-market="{esc(rec.get("market_code",""))}" '
         f'data-window="{esc(rec.get("window_code",""))}" '
         f'data-status="{esc(rec.get("status",""))}">'
         f'<a href="{esc(rec.get("out_path",""))}">'
-        f'<span class="ar-date">{esc(rec.get("date",""))}</span>'
+        f'<span class="ar-date">{esc(_record_date(rec))}</span>'
         f'<span class="ar-title">{esc(rec.get("title",""))}</span>'
-        f'<span class="ar-meta">{esc(market)} · {esc(window)} {badge}</span>'
+        f'<span class="ar-meta">{esc(market)} · {esc(window)} {status_badge(rec)}</span>'
         f'</a></li>'
+    )
+
+
+def _latest_card(market: str, window: str, rec: dict | None) -> str:
+    """첫 화면의 최신 고정 슬롯 카드 하나를 만든다."""
+    market_label = MARKET_LABEL[market]
+    window_label = WINDOW_LABEL[window]
+    slot = f"{market}-{window}"
+    if rec is None:
+        return (
+            f'<article class="latest-card empty" data-slot="{slot}">'
+            f'<p class="latest-market">{market_label} · {window_label}</p>'
+            '<p class="empty-title">아직 기록 없음</p><p class="latest-empty">검증된 세션이 생성되면 표시됩니다.</p>'
+            '</article>'
+        )
+    date = _record_date(rec)
+    metrics = rec.get("metrics", [])[:3]
+    metric_html = "".join(
+        f'<li><span>{esc(m.get("label", m.get("name", "지표")))}</span>'
+        f'<strong>{esc(m.get("value", "미확인"))}</strong></li>'
+        for m in metrics if isinstance(m, dict)
+    )
+    return (
+        f'<article class="latest-card" data-slot="{slot}">'
+        f'<p class="latest-market">{market_label} · {window_label}</p>'
+        f'<time class="latest-date" datetime="{esc(date)}">{esc(date)}</time>'
+        f'<span class="stale-text" data-stale-date="{esc(date)}">기준일 {esc(date)}</span>'
+        f'<h3><a href="{esc(rec.get("out_path", ""))}">{esc(rec.get("title", "시장 브리프"))}</a></h3>'
+        f'<ul class="latest-metrics">{metric_html}</ul>'
+        f'<div class="latest-status">{status_badge(rec)}</div>'
+        f'<a class="card-permalink" href="{esc(rec.get("out_path", ""))}" aria-label="{esc(rec.get("title", "시장 브리프"))} 영구 링크">브리프 읽기 →</a>'
+        '</article>'
+    )
+
+
+def _archive_groups(records: list) -> str:
+    """날짜별 아카이브 그룹 HTML을 만든다."""
+    grouped: dict[str, list[dict]] = {}
+    for rec in records:
+        grouped.setdefault(_record_date(rec), []).append(rec)
+    return "".join(
+        f'<section class="archive-group" data-date="{esc(date)}"><h3>{esc(date)}</h3>'
+        f'<ul class="archive-list">{"".join(_archive_card(rec) for rec in grouped[date])}</ul></section>'
+        for date in sorted(grouped, reverse=True)
     )
 
 
@@ -133,10 +309,11 @@ def build_index_html(records: list) -> str:
     - 히어로 Status = 'N live · M sample' (live/sample 개수를 데이터에서 계산)
     - 시장(US/KR)·윈도(장전/마감) 필터 (no-JS 환경에선 전부 표시)
     """
-    live = sum(1 for r in records if r.get("status") == "live")
+    live = sum(1 for r in records if is_published(r))
     sample = sum(1 for r in records if r.get("status") == "sample")
     status_value = f"공개 {live}개 · 샘플 {sample}개"
-    cards = "".join(_archive_card(r) for r in records)
+    latest = "".join(_latest_card(*slot) for slot in latest_slots(records))
+    groups = _archive_groups(records)
 
     return f'''<!doctype html>
 <html lang="ko">
@@ -148,7 +325,11 @@ def build_index_html(records: list) -> str:
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Noah Market Briefs"/>
 <meta property="og:description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 반드시 출처와 날짜를 붙인다."/>
-<meta name="twitter:card" content="summary"/>
+<meta property="og:url" content="{SITE_URL}"/>
+<meta property="og:image" content="{OG_IMAGE_URL}"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="{SITE_URL}"/>
+<link rel="alternate" type="application/rss+xml" title="Noah Market Briefs RSS" href="rss.xml"/>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -156,45 +337,137 @@ def build_index_html(records: list) -> str:
 <link rel="stylesheet" href="assets/brief.css"/>
 </head>
 <body>
-<main class="shell">
-<header class="masthead"><span class="wordmark">Noah <span class="tag">Market Briefs</span></span><div class="masthead-meta"><span class="live-dot" aria-hidden="true"></span><span><span class="stamp">정적 시장 일지 · 장 마감 후에도</span><span class="stamp"><b>출처 확인 · 2026</b></span></span></div></header>
-<section class="hero">
-<div class="kicker"><span class="badge">정적 아카이브</span><span class="badge">미국 · 한국</span><span class="badge">장 시작 전 · 장 마감</span></div>
-<h1>날짜별 시장 일지와<br/>가설 기반 시장 읽기.</h1>
-<p class="takeaway" data-label="소개">Slack에는 핵심 요약만, 여기에는 날짜별 시장 일지와 가설 검증을 누적합니다. 숫자에는 반드시 출처와 날짜를 붙이고, 확정 종가가 아니면 그대로 명시합니다.</p>
-<div class="meta-grid"><div class="meta-card"><div class="label">경로</div><div class="value">YYYY / MM / DD / 시점</div></div><div class="meta-card"><div class="label">시장</div><div class="value">미국 · 한국</div></div><div class="meta-card"><div class="label">시점</div><div class="value">장 시작 전 · 장 마감</div></div><div class="meta-card"><div class="label">상태</div><div class="value">{esc(status_value)}</div></div></div>
-</section>
-<section class="section">
-<h2>브리프 목록</h2>
+<a class="skip-link" href="#latest">최신 브리프로 건너뛰기</a>
+<main class="shell home-shell">
+<header class="masthead compact-masthead"><a class="wordmark" href="index.html">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="주요 탐색"><a href="#latest">최신</a><a href="#archive">아카이브</a><a href="{VERIFY_URL}">방법론·검증 코드</a></nav></header>
+<section class="compact-hero" aria-labelledby="home-title"><div><p class="eyebrow">Evidence-first market journal</p><h1 id="home-title">확인된 기록부터 읽는 시장 브리프</h1></div><p class="status-strip">{esc(status_value)} · 정적 생성 · 투자 권유 아님</p></section>
+<p class="home-note">가설 기반 시장 읽기 · 경로 YYYY / MM / DD / 시점</p>
+<section class="latest-section" id="latest" aria-labelledby="latest-title"><div class="section-head"><h2 id="latest-title">최신 4개 세션</h2><p>한국 장전·마감, 미국 장전·마감 고정 순서</p></div><div class="latest-grid">{latest}</div></section>
+<section class="section archive-section" id="archive">
+<div class="section-head"><h2>날짜별 아카이브</h2><p id="archive-result-count" role="status" aria-live="polite">{len(records)}개 기록</p></div>
 <div class="filterbar"><select id="f-market" aria-label="시장 필터"><option value="">전체 시장</option><option value="KR">한국</option><option value="US">미국</option></select><select id="f-window" aria-label="윈도 필터"><option value="">전체 시점</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select></div>
-<ul class="archive-list">{cards}</ul>
+<div class="archive-groups">{groups}</div>
 </section>
-<footer class="footer"><span>data/ JSON에서 자동 생성.</span><span>출처 없는 거시 수치는 공개 브리프에 사용하지 않습니다.</span></footer>
+<footer class="footer"><span>data/ JSON에서 자동 생성.</span><a href="{VERIFY_URL}">방법론·검증 코드</a></footer>
 </main>
 <script>
 (function(){{
   var m=document.getElementById('f-market'), w=document.getElementById('f-window');
   var items=[].slice.call(document.querySelectorAll('.archive-list li'));
+  var groups=[].slice.call(document.querySelectorAll('.archive-group'));
+  var count=document.getElementById('archive-result-count');
   function apply(){{
+    var shown=0;
     items.forEach(function(li){{
       var ok=(!m.value||li.dataset.market===m.value)&&(!w.value||li.dataset.window===w.value);
-      li.style.display=ok?'':'none';
+      li.hidden=!ok;if(ok) shown+=1;
     }});
+    groups.forEach(function(group){{var visible=group.querySelectorAll('li:not([hidden])').length;group.hidden=visible===0;}});
+    count.textContent=shown+'개 기록';
   }}
   m.addEventListener('change',apply); w.addEventListener('change',apply);
+  var now=new Date(), today=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+  document.querySelectorAll('[data-stale-date]').forEach(function(node){{
+    var p=node.dataset.staleDate.split('-').map(Number), then=Date.UTC(p[0],p[1]-1,p[2]);
+    var days=Math.floor((today-then)/86400000);node.textContent=(days>=3?'오래된 기록':'최신 기록')+' · '+node.dataset.staleDate;
+  }});
 }})();
 </script>
 </body>
 </html>'''
 
 
+def _has_linked_evidence(rec: dict) -> bool:
+    """피드 요약을 허용할 confirmed source-linked 공개 근거가 있는지 확인한다."""
+    sources = rec.get("sources")
+    if not isinstance(sources, list):
+        return False
+    source_ids = {source.get("source_id") for source in sources
+                  if (isinstance(source, dict) and source.get("status") == "confirmed"
+                      and isinstance(source.get("source_id"), str))}
+    if not source_ids:
+        return False
+    for field in LINKED_EVIDENCE_FIELDS:
+        for item in rec.get(field, []) if isinstance(rec.get(field), list) else []:
+            refs = item.get("source_ids") if isinstance(item, dict) else None
+            if (isinstance(item, dict) and item.get("evidence_status") == "confirmed"
+                    and isinstance(refs, list)
+                    and any(isinstance(ref, str) and ref in source_ids for ref in refs)):
+                return True
+    return False
+
+
+def _feed_item(rec: dict) -> dict:
+    """v3 피드에 허용된 공개 메타데이터만 복사한다."""
+    item = {
+        "market": rec.get("market_code", ""),
+        "window": rec.get("window_code", ""),
+        "date": _record_date(rec),
+        "title": rec.get("title", ""),
+        "path": rec.get("out_path", ""),
+        "status": rec.get("status", ""),
+        "evidence_status": _evidence_status(rec),
+    }
+    if (rec.get("status") in {"published", "corrected"}
+            and rec.get("evidence_status") == "confirmed" and rec.get("summary")
+            and _has_linked_evidence(rec)):
+        item["summary"] = rec["summary"]
+    return item
+
+
+def build_latest_json(records: list) -> str:
+    """고정 4개 최신 슬롯 JSON을 결정론적으로 만든다."""
+    items = []
+    for market, window, rec in latest_slots(records):
+        if rec and rec.get("schema_version") == 3:
+            items.append(_feed_item(rec))
+        else:
+            legacy = bool(rec and _is_legacy(rec))
+            items.append({
+                "market": market,
+                "window": window,
+                "status": "legacy_unverified" if legacy else "missing",
+                "evidence_status": "legacy_unverified" if legacy else "not_proven",
+            })
+    return json.dumps({"version": 1, "items": items}, ensure_ascii=False, indent=2) + "\n"
+
+
+def build_rss_xml(records: list) -> str:
+    """검증을 통과한 같은 레코드 목록으로 안전한 RSS 2.0을 만든다."""
+    rss = ET.Element("rss", {"version": "2.0"})
+    channel = ET.SubElement(rss, "channel")
+    for tag, value in (("title", "Noah Market Briefs"), ("link", SITE_URL),
+                       ("description", "근거 상태를 함께 공개하는 정적 시장 브리프"),
+                       ("language", "ko")):
+        ET.SubElement(channel, tag).text = value
+    for rec in records:
+        if rec.get("schema_version") != 3:
+            continue
+        safe = _feed_item(rec)
+        item = ET.SubElement(channel, "item")
+        ET.SubElement(item, "title").text = str(safe["title"])
+        url = f"{SITE_URL}/{str(safe['path']).lstrip('/')}"
+        ET.SubElement(item, "link").text = url
+        ET.SubElement(item, "guid", {"isPermaLink": "true"}).text = url
+        ET.SubElement(item, "category").text = str(safe["status"])
+        ET.SubElement(item, "category").text = str(safe["evidence_status"])
+        ET.SubElement(item, "description").text = str(safe.get("summary", safe["evidence_status"]))
+    ET.indent(rss, space="  ")
+    return '<?xml version="1.0" encoding="utf-8"?>\n' + ET.tostring(rss, encoding="unicode") + "\n"
+
+
 def build(repo_root: Path = REPO) -> dict:
     """data/ → 브리프 HTML + index.html 전체 빌드. 요약 dict 반환."""
-    records = load_records(repo_root / "data")
+    records, rejected = _load_records(repo_root / "data")
+    _remove_orphan_brief_pages(records, repo_root)
     pages = write_brief_pages(records, repo_root)
     (repo_root / "index.html").write_text(build_index_html(records), encoding="utf-8")
+    (repo_root / "latest.json").write_text(build_latest_json(records), encoding="utf-8")
+    (repo_root / "rss.xml").write_text(build_rss_xml(records), encoding="utf-8")
+    if rejected:
+        print(f"build rejected {rejected} record(s) due to parse or verification ERROR", file=sys.stderr)
     return {
-        "live": sum(1 for r in records if r.get("status") == "live"),
+        "live": sum(1 for r in records if is_published(r)),
         "sample": sum(1 for r in records if r.get("status") == "sample"),
         "pages": pages,
     }

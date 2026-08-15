@@ -18,8 +18,11 @@ import enum
 import json
 import re
 import sys
+from datetime import date, datetime
 from pathlib import Path
 from dataclasses import dataclass
+from urllib.parse import urlparse
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -29,6 +32,58 @@ VALID_MARKET_CODES = {"KR", "US"}
 VALID_WINDOW_CODES = {"preopen", "close"}
 VALID_STATUSES = {"live", "sample"}
 VALID_TONES = {"up", "down", "flat", "warn"}
+SUPPORTED_SCHEMA_VERSIONS = {1, 2, 3}
+
+V3_REQUIRED_FIELDS = {
+    "schema_version", "brief_id", "market_code", "window_code", "market_session_date",
+    "generated_at_utc", "cutoff_at_utc", "market_timezone", "status", "evidence_status",
+    "methodology_version", "public_receipt_sha256", "out_path", "title", "sources",
+}
+V3_REQUIRED_STRING_FIELDS = {
+    "brief_id", "market_code", "window_code", "market_session_date", "generated_at_utc", "cutoff_at_utc",
+    "market_timezone", "status", "evidence_status", "methodology_version", "public_receipt_sha256",
+    "out_path", "title",
+}
+V3_OPTIONAL_STRING_FIELDS = {"correction_note", "supersedes", "summary", "next_handoff"}
+V3_RENDERER_FIELDS = {
+    "metrics", "summary", "next_handoff", "changes", "drivers", "counterevidence", "hypotheses",
+    "reviews", "missing_data", "quality", "risks", "today_learning",
+}
+# date는 기존 index 표시를 위한 호환 별칭일 뿐이며, v3의 기준 날짜는 market_session_date다.
+V3_ALLOWED_FIELDS = V3_REQUIRED_FIELDS | V3_RENDERER_FIELDS | {
+    "date", "claims", "correction_note", "corrected_at", "supersedes",
+}
+V3_STATUSES = {"published", "partial", "skipped_market_closed", "failed", "corrected"}
+V3_EVIDENCE_STATUSES = {"confirmed", "partial", "not_proven"}
+V3_SOURCE_REQUIRED = {
+    "source_id", "publisher", "title", "url", "as_of", "retrieved_at", "source_type", "status",
+}
+V3_CLAIM_REQUIRED = {"claim_id", "kind", "text", "as_of", "source_ids", "evidence_status"}
+V3_CLAIM_KINDS = {"fact", "analysis", "hypothesis"}
+V3_LINKED_EVIDENCE_FIELDS = ("claims", "metrics", "changes", "drivers", "counterevidence", "hypotheses", "reviews")
+V3_METRIC_REQUIRED = {"metric_id", "label", "value", "unit", "delta", "as_of", "source_ids", "evidence_status"}
+V3_METRIC_OPTIONAL = {"tone", "note", "name"}
+V3_CHANGES_REQUIRED = {"dir", "text", "source_ids", "evidence_status"}
+V3_DRIVERS_REQUIRED = {"label", "text", "source_ids", "evidence_status"}
+V3_COUNTEREVIDENCE_REQUIRED = {"text", "source_ids", "evidence_status"}
+V3_HYPOTHESES_REQUIRED = {"hypothesis_id", "text", "observable", "invalidation", "horizon", "source_ids", "evidence_status"}
+V3_REVIEWS_REQUIRED = {"review_id", "hypothesis_id", "verdict", "evidence", "reason", "lesson", "source_ids", "evidence_status"}
+V3_MISSING_DATA_REQUIRED = {"label", "reason", "evidence_status"}
+V3_QUALITY_REQUIRED = {"label", "value"}
+V3_PRIVATE_KEY_NAMES = {
+    "private", "internal", "private_id", "internal_id", "private_path", "internal_path", "workflow_id", "artifact_id",
+    "snapshot_id", "dataset_id", "calculation_id", "account", "account_id", "portfolio", "portfolio_id",
+    "holding", "holdings", "position", "positions", "strategy", "strategy_id", "investor_context",
+    "workflow_run_id",
+}
+V3_PRIVATE_VALUE_PATTERN = re.compile(
+    r"(?:^|[\\/])(?:Users|home)[\\/]|(?:^|[\\/])(?:private|internal)(?:[\\/]|$)|"
+    r"(?:^|[\\/])\.tradingcodex(?:[\\/]|$)|"
+    r"(?:^|[\\/])trading[\\/]research(?:[\\/]|$)|"
+    r"\b(?:workflow|artifact|snapshot|dataset|calculation)[_:-][A-Za-z0-9][A-Za-z0-9_-]*\b",
+    re.IGNORECASE,
+)
+UTC_ISO_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z")
 
 # 공개 기본 브리프(v2+)는 보유종목·개별 논지 이름을 어떤 공개 필드에도 넣지 않는다.
 # schema_version=1은 이 정책 도입 전의 읽기 전용 아카이브라, 과거 화면을 소급 변조하지
@@ -110,31 +165,31 @@ def _check_index_meta(rec: dict) -> list[Finding]:
         if key not in rec or not rec.get(key):
             findings.append(Finding(Severity.ERROR, f"index-meta '{key}'({label}) 누락"))
 
-    # enum 검증
-    mc = rec.get("market_code")
-    if mc and mc not in VALID_MARKET_CODES:
-        findings.append(Finding(Severity.ERROR,
-                                f"market_code '{mc}' 무효 (허용: {VALID_MARKET_CODES})"))
+    # enum 검증 — JSON list/dict도 Finding ERROR로 끝내고 set membership에 넘기지 않는다.
+    for key, allowed in (("market_code", VALID_MARKET_CODES), ("window_code", VALID_WINDOW_CODES),
+                         ("status", VALID_STATUSES)):
+        value = rec.get(key)
+        if value is not None and not isinstance(value, str):
+            findings.append(Finding(Severity.ERROR, f"{key}: 문자열 필요"))
+        elif value and value not in allowed:
+            findings.append(Finding(Severity.ERROR, f"{key} '{value}' 무효 (허용: {allowed})"))
 
-    wc = rec.get("window_code")
-    if wc and wc not in VALID_WINDOW_CODES:
-        findings.append(Finding(Severity.ERROR,
-                                f"window_code '{wc}' 무효 (허용: {VALID_WINDOW_CODES})"))
-
-    st = rec.get("status")
-    if st and st not in VALID_STATUSES:
-        findings.append(Finding(Severity.ERROR,
-                                f"status '{st}' 무효 (허용: {VALID_STATUSES})"))
+    date_value = rec.get("date")
+    if date_value is not None and not isinstance(date_value, str):
+        findings.append(Finding(Severity.ERROR, "date: 문자열 필요"))
 
     version = rec.get("schema_version")
     if version is not None and (isinstance(version, bool) or not isinstance(version, int) or version < 1):
         findings.append(Finding(Severity.ERROR,
                                 f"schema_version '{version}' 무효 (1 이상의 정수 필요)"))
+    elif version is not None and version not in SUPPORTED_SCHEMA_VERSIONS:
+        findings.append(Finding(Severity.ERROR,
+                                f"schema_version '{version}' 미지원 (허용: {SUPPORTED_SCHEMA_VERSIONS})"))
 
-    # out_path → date 일관성 (경고 수준)
+    # out_path → date 일관성 (경고 수준; 공개 경로 계약은 _check_public_out_path에서 ERROR 처리)
     op = rec.get("out_path", "")
     dt = rec.get("date", "")
-    if op and dt:
+    if isinstance(op, str) and isinstance(dt, str) and op and dt:
         date_slash = dt.replace("-", "/")
         if date_slash not in op:
             findings.append(Finding(Severity.WARNING,
@@ -145,6 +200,9 @@ def _check_index_meta(rec: dict) -> list[Finding]:
 
 def _check_metrics(rec: dict) -> list[Finding]:
     findings: list[Finding] = []
+    version = rec.get("schema_version")
+    if isinstance(version, int) and not isinstance(version, bool) and version == 3:
+        return findings  # v3는 닫힌 Metric 계약이 value=0과 선택 필드를 직접 검증한다.
     metrics = rec.get("metrics", [])
     if not isinstance(metrics, list):
         findings.append(Finding(Severity.ERROR, "metrics가 list가 아님"))
@@ -157,20 +215,29 @@ def _check_metrics(rec: dict) -> list[Finding]:
             continue
 
         # value 필수
-        if not m.get("value"):
+        value_raw = m.get("value")
+        if value_raw is None or value_raw == "":
             findings.append(Finding(Severity.ERROR, f"{prefix}: value 누락"))
+        elif isinstance(value_raw, bool) or not isinstance(value_raw, (str, int, float)):
+            findings.append(Finding(Severity.ERROR, f"{prefix}: value는 문자열 또는 숫자 필요"))
 
         # tone — 없으면 WARNING, 잘못된 값이면 ERROR
         tone = m.get("tone")
-        if not tone:
+        if tone is None or tone == "":
             findings.append(Finding(Severity.WARNING, f"{prefix} '{m.get('name','?')}': tone 누락 (기본 flat 가정)"))
+        elif not isinstance(tone, str):
+            findings.append(Finding(Severity.ERROR, f"{prefix}: tone은 문자열 필요"))
         elif tone not in VALID_TONES:
             findings.append(Finding(Severity.ERROR,
                                     f"{prefix}: tone '{tone}' 무효 (허용: {VALID_TONES})"))
 
         # 소스 디시플린 — 숫자 metric은 note에 출처가 있어야
-        value = str(m.get("value", ""))
-        note = str(m.get("note", ""))
+        value = str(value_raw if value_raw is not None else "")
+        note_raw = m.get("note", "")
+        if note_raw is not None and not isinstance(note_raw, str):
+            findings.append(Finding(Severity.ERROR, f"{prefix}: note는 문자열 필요"))
+            note_raw = ""
+        note = note_raw or ""
         if _looks_numeric(value) and not _is_unknown(value):
             if not note.strip():
                 findings.append(Finding(Severity.WARNING,
@@ -282,6 +349,325 @@ def _check_drivers(rec: dict) -> list[Finding]:
     return findings
 
 
+def _check_v3_references(rec: dict, source_ids: set[str]) -> list[Finding]:
+    """v3 숫자·claim의 source_ids가 공개 SourceRef를 가리키는지 확인한다."""
+    findings: list[Finding] = []
+    for field in V3_LINKED_EVIDENCE_FIELDS:
+        items = rec.get(field, [])
+        if not isinstance(items, list):
+            continue
+        for index, item in enumerate(items):
+            if not isinstance(item, dict):
+                continue
+            refs = item.get("source_ids")
+            prefix = f"{field}[{index}].source_ids"
+            if not isinstance(refs, list) or not refs or any(not isinstance(ref, str) or not ref for ref in refs):
+                findings.append(Finding(Severity.ERROR, f"{prefix}: 비어 있지 않은 문자열 list 필요"))
+                continue
+            for ref in refs:
+                if ref not in source_ids:
+                    findings.append(Finding(Severity.ERROR, f"{prefix}: 알 수 없는 source_id '{ref}'"))
+    return findings
+
+
+def _has_v3_confirmed_linked_evidence(rec: dict, source_ids: set[str], sources: object) -> bool:
+    """confirmed SourceRef를 confirmed 공개 근거 항목이 참조하는지 확인한다."""
+    if not isinstance(sources, list):
+        return False
+    confirmed_source_ids = {
+        source.get("source_id") for source in sources
+        if isinstance(source, dict) and source.get("status") == "confirmed"
+        and isinstance(source.get("source_id"), str) and source.get("source_id") in source_ids
+    }
+    for field in V3_LINKED_EVIDENCE_FIELDS:
+        items = rec.get(field)
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            refs = item.get("source_ids") if isinstance(item, dict) else None
+            if (isinstance(item, dict) and item.get("evidence_status") == "confirmed"
+                    and isinstance(refs, list)
+                    and any(isinstance(ref, str) and ref in confirmed_source_ids for ref in refs)):
+                return True
+    return False
+
+
+def _check_v3_private_content(value: object, path: str = "$") -> list[Finding]:
+    """v3 공개 payload에서 명시적 비공개 키·경로·TCX 식별자를 차단한다."""
+    findings: list[Finding] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            key_text = str(key).casefold()
+            if key_text in V3_PRIVATE_KEY_NAMES:
+                findings.append(Finding(Severity.ERROR, f"{path}.{key}: 비공개 식별자 또는 경로 감지"))
+            findings += _check_v3_private_content(child, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            findings += _check_v3_private_content(child, f"{path}[{index}]")
+    elif isinstance(value, str):
+        if V3_PRIVATE_VALUE_PATTERN.search(value):
+            findings.append(Finding(Severity.ERROR, f"{path}: 비공개 식별자 또는 경로 감지"))
+    return findings
+
+
+def _is_utc_timestamp(value: object) -> bool:
+    """Z 접미사의 실제 UTC ISO-8601 시각인지 확인한다."""
+    if not isinstance(value, str) or not UTC_ISO_PATTERN.fullmatch(value):
+        return False
+    try:
+        datetime.fromisoformat(f"{value[:-1]}+00:00")
+    except ValueError:
+        return False
+    return True
+
+
+def _is_session_date(value: object) -> bool:
+    """YYYY-MM-DD 형식의 실제 세션 날짜인지 확인한다."""
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        return False
+    try:
+        date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
+def _check_public_out_path(rec: dict) -> list[Finding]:
+    """공개 브리프 출력 경로가 날짜와 일치하는 정규 상대 HTML 경로인지 확인한다."""
+    out_path = rec.get("out_path")
+    if not isinstance(out_path, str):
+        return [Finding(Severity.ERROR, "out_path: YYYY/MM/DD/소문자-파일명.html 문자열 필요")]
+    match = re.fullmatch(r"(\d{4})/(\d{2})/(\d{2})/[a-z0-9]+(?:-[a-z0-9]+)*\.html", out_path)
+    if not match:
+        return [Finding(Severity.ERROR, "out_path: YYYY/MM/DD/소문자-파일명.html 정규 상대 경로 필요")]
+    path_date = "-".join(match.groups())
+    if not _is_session_date(path_date):
+        return [Finding(Severity.ERROR, "out_path: 실제 YYYY/MM/DD 날짜 필요")]
+    version = rec.get("schema_version")
+    date_field = "market_session_date" if isinstance(version, int) and not isinstance(version, bool) and version == 3 else "date"
+    record_date = rec.get(date_field)
+    if not isinstance(record_date, str) or record_date != path_date:
+        return [Finding(Severity.ERROR, f"out_path: {date_field}와 경로 날짜 불일치")]
+    return []
+
+
+def _check_v3_closed_fields(item: dict, prefix: str, required: set[str], allowed: set[str]) -> list[Finding]:
+    """v3 중첩 공개 객체의 필수·허용 필드를 닫힌 계약으로 확인한다."""
+    findings: list[Finding] = []
+    for key in sorted(required):
+        if key not in item or item[key] in (None, ""):
+            findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 필수 필드 누락"))
+    for key in item:
+        if key not in allowed:
+            findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 허용되지 않은 필드"))
+    return findings
+
+
+def _check_v3_structured_list(rec: dict, field: str, required: set[str], enums: dict[str, set[str]] | None = None) -> list[Finding]:
+    """v3 공개 보조 목록을 닫힌 문자열 객체 목록으로 확인한다."""
+    items = rec.get(field)
+    if items is None:
+        return []
+    findings: list[Finding] = []
+    if not isinstance(items, list):
+        return [Finding(Severity.ERROR, f"{field}가 list가 아님")]
+    for index, item in enumerate(items):
+        prefix = f"{field}[{index}]"
+        if not isinstance(item, dict):
+            findings.append(Finding(Severity.ERROR, f"{prefix}: dict가 아님"))
+            continue
+        findings += _check_v3_closed_fields(item, prefix, required, required)
+        for key in required - {"source_ids"}:
+            if key in item and (not isinstance(item[key], str) or not item[key].strip()):
+                findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 비어 있지 않은 문자열 필요"))
+        for key, values in (enums or {}).items():
+            value = item.get(key)
+            if isinstance(value, str) and value and value not in values:
+                findings.append(Finding(Severity.ERROR, f"{prefix}.{key} '{value}' 무효 (허용: {values})"))
+    return findings
+
+
+def _check_v3_record(rec: dict) -> list[Finding]:
+    """PublicBriefV3의 닫힌 공개 스키마와 출처 참조를 검증한다."""
+    findings: list[Finding] = []
+    version = rec.get("schema_version")
+    if isinstance(version, bool) or not isinstance(version, int) or version != 3:
+        findings.append(Finding(Severity.ERROR, "schema_version: bool이 아닌 정수 3 필요"))
+    for key in sorted(V3_REQUIRED_FIELDS):
+        if key not in rec or rec[key] in (None, ""):
+            findings.append(Finding(Severity.ERROR, f"v3 필수 필드 '{key}' 누락"))
+    for key in V3_REQUIRED_STRING_FIELDS:
+        if key in rec and (not isinstance(rec[key], str) or not rec[key].strip()):
+            findings.append(Finding(Severity.ERROR, f"{key}: 비어 있지 않은 문자열 필요"))
+    for key in rec:
+        if key not in V3_ALLOWED_FIELDS:
+            findings.append(Finding(Severity.ERROR, f"v3 허용되지 않은 최상위 필드 '{key}'"))
+
+    market_code = rec.get("market_code")
+    if isinstance(market_code, str) and market_code and market_code not in VALID_MARKET_CODES:
+        findings.append(Finding(Severity.ERROR, f"market_code '{market_code}' 무효 (허용: {VALID_MARKET_CODES})"))
+    window_code = rec.get("window_code")
+    if isinstance(window_code, str) and window_code and window_code not in VALID_WINDOW_CODES:
+        findings.append(Finding(Severity.ERROR, f"window_code '{window_code}' 무효 (허용: {VALID_WINDOW_CODES})"))
+    if isinstance(rec.get("status"), str) and rec["status"] and rec["status"] not in V3_STATUSES:
+        findings.append(Finding(Severity.ERROR, f"v3 status '{rec['status']}' 무효 (허용: {V3_STATUSES})"))
+    if isinstance(rec.get("evidence_status"), str) and rec["evidence_status"] and rec["evidence_status"] not in V3_EVIDENCE_STATUSES:
+        findings.append(Finding(Severity.ERROR,
+                                f"evidence_status '{rec['evidence_status']}' 무효 (허용: {V3_EVIDENCE_STATUSES})"))
+    if not _is_session_date(rec.get("market_session_date")):
+        findings.append(Finding(Severity.ERROR, "market_session_date: YYYY-MM-DD 실제 날짜 필요"))
+    for key in ("generated_at_utc", "cutoff_at_utc"):
+        if not _is_utc_timestamp(rec.get(key)):
+            findings.append(Finding(Severity.ERROR, f"{key}: Z 접미사 UTC ISO-8601 필요"))
+    if _is_utc_timestamp(rec.get("cutoff_at_utc")) and _is_utc_timestamp(rec.get("generated_at_utc")):
+        cutoff = datetime.fromisoformat(f"{rec['cutoff_at_utc'][:-1]}+00:00")
+        generated = datetime.fromisoformat(f"{rec['generated_at_utc'][:-1]}+00:00")
+        if cutoff > generated:
+            findings.append(Finding(Severity.ERROR, "cutoff_at_utc는 generated_at_utc보다 늦을 수 없음"))
+    market_timezone = rec.get("market_timezone")
+    try:
+        ZoneInfo(market_timezone) if isinstance(market_timezone, str) else None
+        if not isinstance(market_timezone, str):
+            raise ZoneInfoNotFoundError
+    except ZoneInfoNotFoundError:
+        findings.append(Finding(Severity.ERROR, "market_timezone: 유효한 IANA 시간대 필요"))
+    receipt = rec.get("public_receipt_sha256")
+    if isinstance(receipt, str) and receipt and not re.fullmatch(r"[0-9a-f]{64}", receipt):
+        findings.append(Finding(Severity.ERROR, "public_receipt_sha256: 64자 소문자 hex 필요"))
+
+    if rec.get("status") == "corrected":
+        for key in ("correction_note", "corrected_at", "supersedes"):
+            if not isinstance(rec.get(key), str) or not rec[key].strip():
+                findings.append(Finding(Severity.ERROR, f"corrected 상태는 '{key}' 필요"))
+    if "date" in rec and not _is_session_date(rec["date"]):
+        findings.append(Finding(Severity.ERROR, "date: YYYY-MM-DD 실제 날짜 필요"))
+    for key in V3_OPTIONAL_STRING_FIELDS:
+        if key in rec and (not isinstance(rec[key], str) or not rec[key].strip()):
+            findings.append(Finding(Severity.ERROR, f"{key}: 비어 있지 않은 문자열 필요"))
+    if "corrected_at" in rec and not _is_utc_timestamp(rec["corrected_at"]):
+        findings.append(Finding(Severity.ERROR, "corrected_at: Z 접미사 UTC ISO-8601 필요"))
+
+    source_ids: set[str] = set()
+    sources = rec.get("sources")
+    if not isinstance(sources, list):
+        findings.append(Finding(Severity.ERROR, "sources가 list가 아님"))
+    else:
+        for index, source in enumerate(sources):
+            prefix = f"sources[{index}]"
+            if not isinstance(source, dict):
+                findings.append(Finding(Severity.ERROR, f"{prefix}: dict가 아님"))
+                continue
+            findings += _check_v3_closed_fields(source, prefix, V3_SOURCE_REQUIRED, V3_SOURCE_REQUIRED)
+            for key in V3_SOURCE_REQUIRED:
+                if key in source and (not isinstance(source[key], str) or not source[key].strip()):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 비어 있지 않은 문자열 필요"))
+            source_id = source.get("source_id")
+            if isinstance(source_id, str) and source_id:
+                if source_id in source_ids:
+                    findings.append(Finding(Severity.ERROR, f"{prefix}: source_id '{source_id}' 중복"))
+                source_ids.add(source_id)
+            url = source.get("url")
+            parsed = urlparse(url) if isinstance(url, str) else None
+            if not parsed or parsed.scheme != "https" or not parsed.netloc:
+                findings.append(Finding(Severity.ERROR, f"{prefix}: url은 https URL 필요"))
+            for key in ("as_of", "retrieved_at"):
+                if not _is_utc_timestamp(source.get(key)):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: Z 접미사 UTC ISO-8601 필요"))
+            status = source.get("status")
+            if isinstance(status, str) and status and status not in V3_EVIDENCE_STATUSES:
+                findings.append(Finding(Severity.ERROR,
+                                        f"{prefix}: status '{status}' 무효 (허용: {V3_EVIDENCE_STATUSES})"))
+    claims = rec.get("claims")
+    if claims is not None:
+        if not isinstance(claims, list):
+            findings.append(Finding(Severity.ERROR, "claims가 list가 아님"))
+        else:
+            for index, claim in enumerate(claims):
+                prefix = f"claims[{index}]"
+                if not isinstance(claim, dict):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}: dict가 아님"))
+                    continue
+                findings += _check_v3_closed_fields(claim, prefix, V3_CLAIM_REQUIRED, V3_CLAIM_REQUIRED)
+                for key in V3_CLAIM_REQUIRED - {"source_ids"}:
+                    if key in claim and (not isinstance(claim[key], str) or not claim[key].strip()):
+                        findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 비어 있지 않은 문자열 필요"))
+                kind = claim.get("kind")
+                if isinstance(kind, str) and kind and kind not in V3_CLAIM_KINDS:
+                    findings.append(Finding(Severity.ERROR,
+                                            f"{prefix}.kind '{kind}' 무효 (허용: {V3_CLAIM_KINDS})"))
+                evidence_status = claim.get("evidence_status")
+                if isinstance(evidence_status, str) and evidence_status and evidence_status not in V3_EVIDENCE_STATUSES:
+                    findings.append(Finding(Severity.ERROR,
+                                            f"{prefix}.evidence_status '{evidence_status}' 무효"))
+                if not _is_utc_timestamp(claim.get("as_of")):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.as_of: Z 접미사 UTC ISO-8601 필요"))
+
+    metrics = rec.get("metrics")
+    if metrics is not None:
+        if not isinstance(metrics, list):
+            findings.append(Finding(Severity.ERROR, "metrics가 list가 아님"))
+        else:
+            allowed = V3_METRIC_REQUIRED | V3_METRIC_OPTIONAL
+            for index, metric in enumerate(metrics):
+                prefix = f"metrics[{index}]"
+                if not isinstance(metric, dict):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}: dict가 아님"))
+                    continue
+                findings += _check_v3_closed_fields(metric, prefix, V3_METRIC_REQUIRED, allowed)
+                for key in (V3_METRIC_REQUIRED - {"value", "source_ids"}) | V3_METRIC_OPTIONAL:
+                    if key in metric and (not isinstance(metric[key], str) or not metric[key].strip()):
+                        findings.append(Finding(Severity.ERROR, f"{prefix}.{key}: 비어 있지 않은 문자열 필요"))
+                value = metric.get("value")
+                if value is not None and (isinstance(value, bool) or not isinstance(value, (str, int, float))):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.value: 문자열 또는 숫자 필요"))
+                evidence_status = metric.get("evidence_status")
+                if isinstance(evidence_status, str) and evidence_status and evidence_status not in V3_EVIDENCE_STATUSES:
+                    findings.append(Finding(Severity.ERROR,
+                                            f"{prefix}.evidence_status '{evidence_status}' 무효"))
+                if not _is_utc_timestamp(metric.get("as_of")):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.as_of: Z 접미사 UTC ISO-8601 필요"))
+    for field, required, enums in (
+        ("changes", V3_CHANGES_REQUIRED, {"dir": {"up", "down", "flat"}, "evidence_status": V3_EVIDENCE_STATUSES}),
+        ("drivers", V3_DRIVERS_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
+        ("counterevidence", V3_COUNTEREVIDENCE_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
+        ("hypotheses", V3_HYPOTHESES_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
+        ("reviews", V3_REVIEWS_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
+        ("missing_data", V3_MISSING_DATA_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
+        ("quality", V3_QUALITY_REQUIRED, {}),
+    ):
+        findings += _check_v3_structured_list(rec, field, required, enums)
+    risks = rec.get("risks")
+    if risks is not None:
+        if not isinstance(risks, list):
+            findings.append(Finding(Severity.ERROR, "risks가 list가 아님"))
+        else:
+            for index, risk in enumerate(risks):
+                if not isinstance(risk, str):
+                    findings.append(Finding(Severity.ERROR, f"risks[{index}]: 문자열 필요"))
+    for field in ("summary", "next_handoff"):
+        if field in rec and (not isinstance(rec[field], str) or not rec[field].strip()):
+            findings.append(Finding(Severity.ERROR, f"{field}: 비어 있지 않은 문자열 필요"))
+    learning = rec.get("today_learning")
+    if learning is not None:
+        if isinstance(learning, str):
+            if not learning.strip():
+                findings.append(Finding(Severity.ERROR, "today_learning: 비어 있지 않은 문자열 필요"))
+        elif isinstance(learning, list):
+            for index, item in enumerate(learning):
+                if not isinstance(item, str):
+                    findings.append(Finding(Severity.ERROR, f"today_learning[{index}]: 문자열 필요"))
+        else:
+            findings.append(Finding(Severity.ERROR, "today_learning: 문자열 또는 문자열 list 필요"))
+    findings += _check_v3_references(rec, source_ids)
+    if rec.get("evidence_status") == "confirmed":
+        if not isinstance(sources, list) or not sources:
+            findings.append(Finding(Severity.ERROR, "confirmed evidence_status는 비어 있지 않은 sources 필요"))
+        elif not _has_v3_confirmed_linked_evidence(rec, source_ids, sources):
+            findings.append(Finding(Severity.ERROR, "confirmed evidence_status는 confirmed source_ids 연결 공개 근거 필요"))
+    findings += _check_v3_private_content(rec)
+    return findings
+
+
 # ── 공개 API ────────────────────────────────────────────────────────────────
 
 def verify_record(rec: dict, named_holdings: tuple[str, ...] | None = None) -> list[Finding]:
@@ -292,7 +678,11 @@ def verify_record(rec: dict, named_holdings: tuple[str, ...] | None = None) -> l
     @returns Finding 리스트. 비어 있으면 위반 없음.
     """
     findings: list[Finding] = []
-    findings += _check_index_meta(rec)
+    if rec.get("schema_version") == 3:
+        findings += _check_v3_record(rec)
+    else:
+        findings += _check_index_meta(rec)
+    findings += _check_public_out_path(rec)
     findings += _check_metrics(rec)
     findings += _check_hypothesis_fields(rec)
     findings += _check_named_holdings(rec, named_holdings)

@@ -495,6 +495,46 @@ class TestNamedHoldingsExclusion(unittest.TestCase):
         self.assertTrue(any(f.severity == Severity.ERROR and "논지" in f.message
                             for f in findings))
 
+    def test_named_holding_in_v1_record_is_error(self):
+        """schema_version=1 이어도 실명은 잡아야 한다.
+
+        2026-08-16 발견: 이전 구현은 `schema_version < 2` 면 검사를 통째로
+        건너뛰었다. 실측 65 레코드 중 47건이 v1 이라 그 경로가 전량 무검사였고,
+        v1 형식으로 실명이 들어오면 `0 ERROR` 초록불이 뜨면서 통과했을 상태다.
+        """
+        rec = _valid_record()
+        rec["schema_version"] = 1
+        rec["theses"] = [{"name": "테스트보유A", "signal": "높음", "body": "본문"}]
+        findings = verify_record(rec, _TEST_HOLDINGS)
+        self.assertTrue(
+            any(f.severity == Severity.WARNING and "논지" in f.message for f in findings),
+            "v1 레코드의 실명이 검출되지 않았다 — 버전 게이트가 되살아났다",
+        )
+        self.assertFalse(
+            any(f.severity == Severity.ERROR and "논지" in f.message for f in findings),
+            "v1 은 소급 거부하지 않는다 — ERROR 가 아니라 WARNING 이어야 한다",
+        )
+
+    def test_named_holding_in_v1_risks_is_error(self):
+        """v1 의 risks 필드도 같은 계약을 받는다."""
+        rec = _valid_record()
+        rec["schema_version"] = 1
+        rec["risks"] = ["테스트보유B 익스포저 점검"]
+        findings = verify_record(rec, _TEST_HOLDINGS)
+        self.assertTrue(
+            any(f.severity == Severity.WARNING and "risks[0]" in f.message for f in findings),
+            "v1 risks 의 실명이 검출되지 않았다",
+        )
+
+    def test_clean_v1_record_still_passes(self):
+        """v1 이어도 실명이 없으면 통과한다 — 레거시 아카이브를 깨지 않는다."""
+        rec = _valid_record()
+        rec["schema_version"] = 1
+        rec["theses"] = [{"name": "위험선호", "signal": "회복", "body": "본문"}]
+        findings = verify_record(rec, _TEST_HOLDINGS)
+        holdings_errors = [f for f in findings if "논지" in f.message]
+        self.assertEqual(holdings_errors, [])
+
     def test_named_holding_in_risk_is_error_for_v2(self):
         rec = _valid_record()
         rec["risks"] = ["테스트보유A 할인율을 따로 점검"]

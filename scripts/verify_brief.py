@@ -310,9 +310,20 @@ def _check_named_holdings(rec: dict, named_holdings: tuple[str, ...] | None = No
     @param named_holdings 감시할 보유명 튜플. None이면 로컬 목록 파일에서 읽는다.
     @returns 계약 위반 Finding 리스트. 목록이 비면 항상 빈 리스트.
     """
+    # 레거시(v1)를 소급 거부하지는 않되, 침묵하지도 않는다.
+    #
+    # 이전 구현은 schema_version < 2 면 즉시 `return []` 했다. 실측 65 레코드 중
+    # 47건이 v1 이라 그 경로가 **전량 무검사**였고, v1 형식으로 실명이 들어오면
+    # `0 ERROR` 초록불이 뜨면서 통과했을 상태였다(2026-08-16 발견 — 당시 데이터는
+    # 깨끗해서 실제 피해는 없었다). 게이트가 있다는 것과 게이트가 작동한다는 것은
+    # 다르다.
+    #
+    # 그래서 검사는 항상 돌리고 심각도만 버전으로 가른다:
+    #   v2+ → ERROR (새 계약. 발행을 막는다)
+    #   v1  → WARNING (정책 도입 전 아카이브. 보이되 회귀를 막지 않는다)
     version = rec.get("schema_version", 1)
-    if not isinstance(version, int) or version < PUBLIC_OMISSION_SCHEMA_VERSION:
-        return []
+    is_legacy = not isinstance(version, int) or version < PUBLIC_OMISSION_SCHEMA_VERSION
+    severity = Severity.WARNING if is_legacy else Severity.ERROR
 
     holdings = load_named_holdings() if named_holdings is None else named_holdings
     if not holdings:
@@ -322,9 +333,10 @@ def _check_named_holdings(rec: dict, named_holdings: tuple[str, ...] | None = No
     for path, text in _public_strings(rec):
         for holding in holdings:
             if holding.casefold() in text.casefold():
+                suffix = " (schema_version=1 레거시 — 소급 거부는 하지 않으나 확인 필요)" if is_legacy else ""
                 findings.append(Finding(
-                    Severity.ERROR,
-                    f"{path}: named holding '{holding}' 감지 — 공개 브리프 논지 생략 계약 위반",
+                    severity,
+                    f"{path}: named holding '{holding}' 감지 — 공개 브리프 논지 생략 계약 위반{suffix}",
                 ))
     return findings
 

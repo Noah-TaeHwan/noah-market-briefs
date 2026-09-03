@@ -129,6 +129,26 @@ def latest_slots(records: list[dict]) -> list[tuple[str, str, dict | None]]:
     return slots
 
 
+def _latest_summary(records: list[dict]) -> tuple[dict | None, str | None, int, int, int]:
+    """최신 슬롯 집합의 현재 읽기용 대표 레코드와 상태 카운트를 계산한다.
+
+    @param records 검증을 통과한 브리프 레코드 목록
+    @returns (최신 레코드, 최신 기준일, 채워진 슬롯 수, 레거시 슬롯 수, 부분 공개 슬롯 수)
+    """
+    slots = latest_slots(records)
+    filled = [rec for _, _, rec in slots if rec is not None]
+    if not filled:
+        return None, None, 0, 0, 0
+    latest_date = max(_record_date(rec) for rec in filled)
+    latest_rec = max(
+        (rec for rec in filled if _record_date(rec) == latest_date),
+        key=lambda rec: (recency_rank(rec), str(rec.get("out_path", ""))),
+    )
+    legacy = sum(1 for rec in filled if _is_legacy(rec))
+    partial = sum(1 for rec in filled if rec.get("status") == "partial")
+    return latest_rec, latest_date, len(filled), legacy, partial
+
+
 def _load_records(data_dir: Path) -> tuple[list[dict], int]:
     """레코드를 읽고 v3 검증 ERROR 건수와 함께 반환한다."""
     records: list[dict] = []
@@ -273,19 +293,29 @@ def _archive_card(rec: dict) -> str:
     )
 
 
-def _latest_card(market: str, window: str, rec: dict | None) -> str:
-    """첫 화면의 최신 고정 슬롯 카드 하나를 만든다."""
+def _latest_card(market: str, window: str, rec: dict | None, latest_date: str | None) -> str:
+    """첫 화면의 최신 고정 슬롯 카드 하나와 상대 최신성 라벨을 만든다.
+
+    @param market 시장 코드(KR 또는 US)
+    @param window 세션 코드(preopen 또는 close)
+    @param rec 해당 슬롯에서 선택된 최신 레코드
+    @param latest_date 전체 슬롯 중 가장 최근 기준일
+    @returns 최신성 상태와 기존 카드 정보를 포함한 HTML 문자열
+    """
     market_label = MARKET_LABEL[market]
     window_label = WINDOW_LABEL[window]
     slot = f"{market}-{window}"
     if rec is None:
         return (
-            f'<article class="latest-card empty" data-slot="{slot}">'
+            f'<article class="latest-card empty" data-slot="{slot}" data-freshness="missing">'
             f'<p class="latest-market">{market_label} · {window_label}</p>'
+            '<span class="stale-text missing">기록 없음</span>'
             '<p class="empty-title">아직 기록 없음</p><p class="latest-empty">검증된 세션이 생성되면 표시됩니다.</p>'
             '</article>'
         )
     date = _record_date(rec)
+    freshness = "latest" if date == latest_date else "older"
+    freshness_label = "가장 최근 기준일" if freshness == "latest" else "이전 기준일"
     metrics = rec.get("metrics", [])[:3]
     metric_html = "".join(
         f'<li><span>{esc(m.get("label", m.get("name", "지표")))}</span>'
@@ -293,10 +323,10 @@ def _latest_card(market: str, window: str, rec: dict | None) -> str:
         for m in metrics if isinstance(m, dict)
     )
     return (
-        f'<article class="latest-card" data-slot="{slot}">'
+        f'<article class="latest-card {freshness}" data-slot="{slot}" data-freshness="{freshness}">'
         f'<p class="latest-market">{market_label} · {window_label}</p>'
         f'<time class="latest-date" datetime="{esc(date)}">{esc(date)}</time>'
-        f'<span class="stale-text" data-stale-date="{esc(date)}">기준일 {esc(date)}</span>'
+        f'<span class="stale-text {freshness}" data-stale-date="{esc(date)}" data-freshness="{freshness}">{freshness_label} · {esc(date)}</span>'
         f'<h3><a href="{esc(_public_href(rec.get("out_path", "")))}">{esc(rec.get("title", "시장 브리프"))}</a></h3>'
         f'<ul class="latest-metrics">{metric_html}</ul>'
         f'<div class="latest-status">{status_badge(rec)}</div>'
@@ -322,11 +352,41 @@ def build_index_html(records: list) -> str:
 
     - 히어로 Status = 'N live · M sample' (live/sample 개수를 데이터에서 계산)
     - 시장(US/KR)·윈도(장전/마감) 필터 (no-JS 환경에선 전부 표시)
+    @param records 검증을 통과한 브리프 레코드 목록
+    @returns 현재 읽기 패널과 아카이브를 포함한 index HTML
     """
     live = sum(1 for r in records if is_published(r))
     sample = sum(1 for r in records if r.get("status") == "sample")
     status_value = f"공개 {live}개 · 샘플 {sample}개"
-    latest = "".join(_latest_card(*slot) for slot in latest_slots(records))
+    latest_rec, latest_date, filled, legacy, partial = _latest_summary(records)
+    latest = "".join(
+        _latest_card(market, window, rec, latest_date)
+        for market, window, rec in latest_slots(records)
+    )
+    if latest_rec is None:
+        latest_focus = (
+            '<section class="latest-focus empty" id="latest-focus" aria-labelledby="latest-focus-title">'
+            '<p class="focus-kicker">가장 최근 기록</p>'
+            '<h2 id="latest-focus-title">아직 읽을 검증 기록 없음</h2>'
+            '<p class="focus-note">검증된 세션이 생성되면 이곳에서 먼저 확인할 수 있습니다.</p>'
+            '</section>'
+        )
+    else:
+        focus_href = _public_href(latest_rec.get("out_path", ""))
+        coverage = [f"기준일 {latest_date}", f"4개 창구 중 {filled}개 기록"]
+        if legacy:
+            coverage.append(f"{legacy}개 레거시 미검증")
+        if partial:
+            coverage.append(f"{partial}개 부분 공개")
+        latest_focus = (
+            '<section class="latest-focus" id="latest-focus" aria-labelledby="latest-focus-title">'
+            '<p class="focus-kicker">가장 최근 기록</p>'
+            f'<h2 id="latest-focus-title"><a href="{esc(focus_href)}">{esc(latest_rec.get("title", "시장 브리프"))}</a></h2>'
+            f'<div class="focus-meta"><time datetime="{esc(latest_date or "")}">기준일 {esc(latest_date or "")}</time>{status_badge(latest_rec)}</div>'
+            f'<p class="coverage-summary">{esc(" · ".join(coverage))}</p>'
+            f'<a class="focus-action" href="{esc(focus_href)}">가장 최근 브리프 읽기 →</a>'
+            '</section>'
+        )
     groups = _archive_groups(records)
 
     return f'''<!doctype html>
@@ -351,12 +411,13 @@ def build_index_html(records: list) -> str:
 <link rel="stylesheet" href="{_public_href("assets/brief.css")}"/>
 </head>
 <body>
-<a class="skip-link" href="#latest">최신 브리프로 건너뛰기</a>
+<a class="skip-link" href="#latest-focus">최신 브리프로 건너뛰기</a>
 <main class="shell home-shell">
-<header class="masthead compact-masthead"><a class="wordmark" href="{_public_href("index.html")}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="주요 탐색"><a href="#latest">최신</a><a href="#archive">아카이브</a><a href="{VERIFY_URL}">방법론·검증 코드</a></nav></header>
+<header class="masthead compact-masthead"><a class="wordmark" href="{_public_href("index.html")}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="주요 탐색"><a href="#latest-focus">최신</a><a href="#archive">아카이브</a><a href="{VERIFY_URL}">방법론·검증 코드</a></nav></header>
 <section class="compact-hero" aria-labelledby="home-title"><div><p class="eyebrow">Evidence-first market journal</p><h1 id="home-title">확인된 기록부터 읽는 시장 브리프</h1></div><p class="status-strip">{esc(status_value)} · 정적 생성 · 투자 권유 아님</p></section>
 <p class="home-note">가설 기반 시장 읽기 · 경로 YYYY / MM / DD / 시점</p>
-<section class="latest-section" id="latest" aria-labelledby="latest-title"><div class="section-head"><h2 id="latest-title">최신 4개 세션</h2><p>한국 장전·마감, 미국 장전·마감 고정 순서</p></div><div class="latest-grid">{latest}</div></section>
+{latest_focus}
+<section class="latest-section" id="latest" aria-labelledby="latest-title"><div class="section-head"><h2 id="latest-title">창구별 최신 기록</h2><p>한국 장전 → 한국 마감 → 미국 장전 → 미국 마감 고정 순서</p></div><div class="latest-grid">{latest}</div></section>
 <section class="section archive-section" id="archive">
 <div class="section-head"><h2>날짜별 아카이브</h2><p id="archive-result-count" role="status" aria-live="polite">{len(records)}개 기록</p></div>
 <div class="filterbar"><select id="f-market" aria-label="시장 필터"><option value="">전체 시장</option><option value="KR">한국</option><option value="US">미국</option></select><select id="f-window" aria-label="윈도 필터"><option value="">전체 시점</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select></div>
@@ -380,10 +441,9 @@ def build_index_html(records: list) -> str:
     count.textContent=shown+'개 기록';
   }}
   m.addEventListener('change',apply); w.addEventListener('change',apply);
-  var now=new Date(), today=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
   document.querySelectorAll('[data-stale-date]').forEach(function(node){{
-    var p=node.dataset.staleDate.split('-').map(Number), then=Date.UTC(p[0],p[1]-1,p[2]);
-    var days=Math.floor((today-then)/86400000);node.textContent=(days>=3?'오래된 기록':'최신 기록')+' · '+node.dataset.staleDate;
+    var label=node.dataset.freshness==='latest'?'가장 최근 기준일':'이전 기준일';
+    node.textContent=label+' · '+node.dataset.staleDate;
   }});
 }})();
 </script>

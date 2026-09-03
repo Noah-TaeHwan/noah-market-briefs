@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-07-us-close",
+  "date": "2026-07-07",
+  "market_code": "US",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/07/07/us-close.html",
+  "title": "미국 시장 마감 — 2026-07-07",
+  "market": "United States",
+  "window": "U.S. Close",
+  "generated": "2026-07-08 08:32 KST / 2026-07-07 19:32 ET",
+  "source": "CNBC Quote API / exchange quote cache, 2026-07-07 19:32 ET; CNBC live updates 2026-07-07/08",
+  "data_quality": "정규 거래일(TRADING_DAY) 현물 close 확정. 중국 데이터는 미확인.",
+  "use": "시장 마감 브리프 · 투자 권유 아님",
+  "takeaway": "중동 리스크 급등(호르무즈 해협 공격·이란 타격·이란 원유 license 철회)이 유가를 끌어올리고 인플레이션 우려를 재점화했으며, AI·반도체 회전 매도로 Nasdaq이 -1.16% 하락했다. 내일 FOMC 의사록 공개가 단기 변곡점이다.",
+  "changes": [
+    {
+      "dir": "down",
+      "text": "S&P 500은 7,503.85(-0.45%), Dow는 52,925.15(-0.25%)로 장중 사상 최고치 경신 뒤 낙폭 확대. Nasdaq은 25,818.69(-1.16%)로 반도체 주도 하락."
+    },
+    {
+      "dir": "up",
+      "text": "미 10년물 4.555%(+2.6bp) 상승. WTI는 $72 부근에서 +2% 이상 급등."
+    },
+    {
+      "dir": "up",
+      "text": "VIX는 16.13(+3.6%)로 15~16 구간에서 상승. 시스템 리스크 가격화까지는 아니지만 헤지 수요 증가."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "S&P 500",
+      "value": "7,503.85 / -0.45%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-07-07 16:53 ET; trading_day_type=TRADING_DAY"
+    },
+    {
+      "name": "Dow Jones",
+      "value": "52,925.15 / -0.25%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-07-07 16:53 ET; 장중 사상 최고치 경신 뒤 낙폭 확대"
+    },
+    {
+      "name": "Nasdaq Composite",
+      "value": "25,818.69 / -1.16%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-07-07 17:15 ET; 반도체 주도 하락"
+    },
+    {
+      "name": "VIX",
+      "value": "16.13 / +3.6%",
+      "tone": "warn",
+      "note": "CBOE via CNBC Quote API, 2026-07-07 16:15 ET"
+    },
+    {
+      "name": "U.S. 10Y",
+      "value": "4.555% / +2.6bp",
+      "tone": "up",
+      "note": "Tradeweb via CNBC Quote API, 2026-07-07 19:30 ET"
+    },
+    {
+      "name": "WTI Crude",
+      "value": "$72 부근 / +2% 이상",
+      "tone": "up",
+      "note": "CNBC live updates, 2026-07-07; 호르무즈 해협 공격·이란 원유 license 철회"
+    },
+    {
+      "name": "Gold (COMEX Aug)",
+      "value": "$4,112.20 / -1.09%",
+      "tone": "down",
+      "note": "CNBC live updates, 2026-07-07; 4거래일 만에 하락"
+    },
+    {
+      "name": "S&P 500 Future",
+      "value": "7,550.75 / -0.01%",
+      "tone": "flat",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-07-07 19:22 ET; 사후장 횡보"
+    },
+    {
+      "name": "Nasdaq 100 Future",
+      "value": "29,393.00 / +0.01%",
+      "tone": "flat",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-07-07 19:22 ET; 사후장 횡보"
+    },
+    {
+      "name": "VIX Future",
+      "value": "17.58 / +0.16%",
+      "tone": "warn",
+      "note": "CBOE Futures Exchange Jul'26, CNBC Quote API, 2026-07-07 19:18 ET"
+    },
+    {
+      "name": "10Y Treasury Future",
+      "value": "109.1719 / -0.14%",
+      "tone": "down",
+      "note": "CBOT Sep'26 future, CNBC Quote API, 2026-07-07 19:22 ET"
+    },
+    {
+      "name": "DXY / USD/KRW",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "스냅샷에 유효 quote 없음; 추정하지 않음"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "중동 리스크 급등",
+      "text": "미국이 호르무즈 해협 상선 3척 공격에 대한 보복으로 이란을 타격했고, 재무부는 이란 원유 판매 license를 철회했다. WTI가 +2% 넘게 급등하며 인플레이션 재점화 우려가 시장 심리를 눌렀다."
+    },
+    {
+      "label": "AI·반도체 회전 매도",
+      "text": "Nasdaq -1.16%로 3대 지수 중 가장 큰 낙폭. 반도체가 하락을 이끌었고, AI 관련주에서 자금이 빠져나가는 회전 매도가 두드러졌다. Trivariate의 Parker는 '미국 주식에 강세면 기술주에도 강세일 수밖에 없다'고 지적."
+    },
+    {
+      "label": "FOMC 의사록 대기",
+      "text": "워시 의장 체제 첫 회의(6월) 의사록이 수(7/8) 2pm ET에 공개된다. 기준금리 동결했지만 인플레이션 압력 지속 시 추가 인상 가능성을 시사. 시장은 hawkish 톤을 예상하고 있다."
+    }
+  ],
+  "hypothesis_review": [
+    {
+      "previous_hypothesis": "다음 정상 U.S. close에서 Nasdaq 100 future 반등이 현물 Nasdaq 상대강세로 이어지면, 7월 2일 성장주 약세는 지속적 risk-off보다 휴장 전 포지셔닝 성격이 강했다는 해석을 높인다.",
+      "verdict": "무효화",
+      "evidence": "Nasdaq Composite 25,818.69(-1.16%), Nasdaq 100 future 29,393.00(+0.01%) at 2026-07-07.",
+      "reason": "현물 Nasdaq이 반도체 주도로 -1.16% 하락하며 반등이 이어지지 않았다. 휴장 전 포지셔닝이 아니라 중동 + 금리 상승 + AI 회전 매도가 결합된 지속적 성장주 약세로 재분류.",
+      "lesson": "futures 반등이 현물로 이어지는지는 다음 정규장 현물 close로만 확증할 수 있다."
+    },
+    {
+      "previous_hypothesis": "10년물 4.48% 안팎이 유지되고 Treasury futures가 안정되면, 다음 성장주 방향은 금리보다 breadth·포지셔닝 신호에 더 민감하게 반응할 가능성이 높다.",
+      "verdict": "부분 무효화",
+      "evidence": "U.S. 10Y 4.555%(+2.6bp), 10Y Treasury future 109.1719(-0.14%) at 2026-07-07.",
+      "reason": "10년물이 4.48%를 이탈해 4.555%로 상승했다. 금리 부담이 다시 활성화되면서 성장주 약세의 discount-rate 채널이 재활성화되었다.",
+      "lesson": "금리가 전일 구간을 이탈하면 성장주 약세의 원인을 포지셔닝만으로 설명할 수 없다."
+    },
+    {
+      "previous_hypothesis": "VIX 16 이하와 VIX future 하락이 다음 정상장에서도 유지되면, 옵션시장은 시스템성 위험회피를 낮게 가격하는 상태로 본다.",
+      "verdict": "부분 적중",
+      "evidence": "VIX 16.13(+3.6%), VIX future 17.58(+0.16%) at 2026-07-07.",
+      "reason": "VIX가 16대를 유지하긴 했지만 +3.6% 상승했고 VIX future도 소폭 상승. 시스템 리스크 가격화까지는 아니지만 헤지 수요가 증가하는 방향.",
+      "lesson": "VIX 수준뿐 아니라 변화율을 함께 봐야 한다. 16대라도 +3.6% 상승은 헤지 수요 증가 신호다."
+    }
+  ],
+  "today_learning": "중동 지정학적 쇼크와 금리 상승이 동시에 오면 AI·반도체 회전 매도가 가속된다. 유가 급등 → 인플레이션 우려 → 금리 상승 → 성장주 약세라는 전달 채널을 실시간으로 확인했다.",
+  "next_hypotheses": [
+    {
+      "hypothesis": "FOMC 의사록이 예상보다 hawkish하면 10년물이 4.60% 이상으로 상승하고 Nasdaq이 추가 하락할 가능성이 높다.",
+      "observable": "FOMC 의사록 공개(7/8 2pm ET) 직후 10년물, Nasdaq, VIX 반응",
+      "invalidation": "의사록이 dovish하면 금리 하락과 성장주 반등으로 discount-rate 부담 완화로 재분류",
+      "horizon": "next US session (2026-07-08)"
+    },
+    {
+      "hypothesis": "중동 사태가 확전되지 않고 유가가 $70 아래로 복귀하면 인플레이션 우려 채널이 약화되고, AI 회전 매도도 완화된다.",
+      "observable": "WTI 가격, 호르무즈 해협 운항 정상화 여부, 다음 session Nasdaq vs Dow 상대 성과",
+      "invalidation": "유가가 $75 이상으로 추가 상승하면 인플레이션 우려가 구조화되어 금리·성장주 모두에 부담",
+      "horizon": "next 1-2 US sessions"
+    },
+    {
+      "hypothesis": "VIX가 18 이상으로 상승하면 중동 리스크가 시스템성 위험으로 전환되는 신호로 본다.",
+      "observable": "VIX 수준, VIX future 기간 구조, S&P 500 cross-asset correlation",
+      "invalidation": "VIX가 15 이하로 복귀하면 지정학적 쇼크가 일시적 포지셔닝으로 흡수된 것으로 본다",
+      "horizon": "next 1-2 US sessions"
+    }
+  ],
+  "risks": [
+    "중동 사태는 빠르게 확전되거나 진정될 수 있어 유가·리스크 자산 방향이 급변할 수 있습니다.",
+    "DXY·USD/KRW는 이번 스냅샷에 유효 값이 없어 환율 채널은 미확인입니다.",
+    "FOMC 의사록(7/8)이 단기 변곡점이므로 이 브리프의 판단은 내일 close에서 재검증되어야 합니다.",
+    "하루 가격 신호를 투자 논지 변화나 매매 판단으로 과대해석하지 않습니다."
+  ],
+  "quality": [
+    {
+      "label": "Session",
+      "value": "TRADING_DAY — 정규 현물 close 확정"
+    },
+    {
+      "label": "Generated",
+      "value": "2026-07-08 08:32 KST / 2026-07-07 19:32 ET (수동 복구 — cron rate limit 실패)"
+    },
+    {
+      "label": "Index timestamps",
+      "value": "cash indices last_time 2026-07-07 16:53~17:15 ET; trading_day_type=TRADING_DAY"
+    },
+    {
+      "label": "Futures/options timestamps",
+      "value": "2026-07-07 19:18~19:30 ET; cached Tue Jul 07 19:32 EDT 2026"
+    },
+    {
+      "label": "Unavailable",
+      "value": "DXY, USD/KRW quote fields absent"
+    }
+  ]
+}

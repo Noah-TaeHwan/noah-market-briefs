@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-29-kr-preopen",
+  "date": "2026-06-29",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "status": "live",
+  "out_path": "2026/06/29/korea-preopen.html",
+
+  "title": "한국 시장 전 — 2026-06-29",
+  "market": "Korea",
+  "window": "KRX pre-open, 30m before open",
+  "note": "Source: CNBC quote-cache · Naver Finance/Hana Bank · 연합뉴스 RSS",
+  "generated": "Generated KST 2026-06-29 08:30",
+  "source": "CNBC quote-cache 2026-06-26 close / 2026-06-29 08:30 KST · Naver Finance/Hana Bank 2026-06-26 22:08 KST · 연합뉴스 economy RSS 2026-06-29",
+  "data_quality": "부분 정상 — prior U.S. close, U.S. index futures, U.S. 10Y/Treasury futures, VIX/VIX futures, USD/KRW posted rate, same-date Korea-sensitive headlines 확인; DXY·oil·gold quote와 same-date Korea cash bond yield 및 KOSPI200 futures/options 장전 수치는 미확인. USD/KRW timestamp는 2026-06-26 22:08 KST로 주말 이후 장전 최신 tick은 아님",
+  "use": "한국 장전 매크로 민감도 일지",
+  "takeaway": "미국 전일 종가는 약보합이었지만 주말 이후 지수선물은 기술주 중심으로 플러스이고, 원/달러는 직전 게시 기준 1,537.50원으로 전일 브리프보다 낮아져 한국 개장 전 위험선호는 개선 쪽이나 국내 변동성·파생 센서는 장초반 확인이 필요합니다.",
+
+  "changes": [
+    { "dir": "up", "text": "미국 장전 선물 모멘텀이 전일 브리프보다 강해졌습니다: S&P 500 선물 +0.64%, Nasdaq 100 선물 +0.99%(직전 +0.32%/+0.38%; CNBC quote-cache 2026-06-28 19:20 EDT)." },
+    { "dir": "up", "text": "USD/KRW는 1,545.00원에서 1,537.50원으로 낮아졌습니다. 다만 timestamp가 2026-06-26 22:08 KST라 월요일 개장 직전 실시간 환율로 해석하지 않습니다(Naver/Hana)." },
+    { "dir": "up", "text": "VIX 현물은 18.89에서 18.41로 낮아졌고 VIX 선물도 -0.89%로 표시돼, 직전 브리프보다 헤지 부담은 다소 완화된 쪽입니다(CNBC/CBOE)." }
+  ],
+
+  "metrics": [
+    { "name": "미국 전일 종가", "value": "Dow -0.09% / S&P 500 -0.047% / Nasdaq -0.24%", "tone": "flat", "note": "CNBC quote-cache, 2026-06-26 close; prior-session closes" },
+    { "name": "미국 지수선물", "value": "Dow fut +0.38% / S&P 500 fut +0.64% / Nasdaq 100 fut +0.99%", "tone": "up", "note": "CNBC quote-cache, 2026-06-28 19:20 EDT / 2026-06-29 08:20 KST; futures, not close" },
+    { "name": "미국 10년물", "value": "4.372%", "tone": "flat", "note": "CNBC/Tradeweb, 2026-06-28 19:30 EDT; unchanged vs previous close in injected quote" },
+    { "name": "Treasury futures", "value": "10Y fut -0.01% / 30Y fut 0.00% / 5Y fut -0.03%", "tone": "flat", "note": "CNBC CBOT, 2026-06-28 19:16~19:20 EDT; futures, not cash close" },
+    { "name": "VIX / 변동성", "value": "VIX 18.41 (-2.54%) / VIX Jul fut 18.89 (-0.89%)", "tone": "up", "note": "CNBC/CBOE, VIX close 2026-06-26 16:15 EDT; VIX futures 2026-06-28 19:19 EDT" },
+    { "name": "USD/KRW", "value": "1,537.50원", "tone": "up", "note": "Naver Finance/Hana Bank posted rate, 2026-06-26 22:08 KST; 전일 대비 7.50원 하락 표시, 월요일 장전 최신 tick은 미확인" },
+    { "name": "유가·DXY·금", "value": "미확인", "tone": "flat", "note": "injected CNBC quote-cache에서 DXY/CL.1/GC.1 상세 quote 누락" },
+    { "name": "한국 장전 헤드라인", "value": "코스피 변동성 주목", "tone": "warn", "note": "연합뉴스 [마켓뷰], 2026-06-29 07:56 KST; 이번 주 변동성 주목" },
+    { "name": "한국 채권 헤드라인", "value": "은행권 KOFR 변동금리채 발행 유도", "tone": "flat", "note": "연합뉴스, 2026-06-29 06:00 KST; 정책/발행시장 headline, same-date 시장금리 수치는 아님" },
+    { "name": "한국 선물·옵션", "value": "미확인", "tone": "flat", "note": "source context에 same-date KOSPI200 futures/options 장전 수치 없음" }
+  ],
+
+  "drivers": [
+    { "label": "글로벌 위험선호는 선물 중심 개선", "text": "미국 전일 현물 지수는 소폭 약했지만, 08:20 KST 전후 S&P 500·Nasdaq 100 선물은 각각 +0.64%, +0.99%입니다. 기술주/성장주 민감도에는 우호적이나 아직 futures 값이라 한국 개장 후 외국인 현물 수급 확인이 필요합니다." },
+    { "label": "환율 부담은 완화 쪽이나 timestamp 리스크", "text": "Naver/Hana posted USD/KRW는 1,537.50원으로 직전 브리프 1,545원보다 낮습니다. 다만 기준시각이 6월 26일 22:08 KST라 월요일 장전의 완전한 최신 환율로 과해석하면 안 됩니다." },
+    { "label": "금리·변동성은 중립~완화", "text": "미국 10년물은 4.372%로 변동이 없고 Treasury futures도 대체로 보합권입니다. VIX 현물·선물은 낮아져 헤지 부담은 줄었지만, 연합뉴스가 코스피 변동성 재주목을 언급해 국내 파생 센서는 장중 확인 대상입니다." }
+  ],
+
+  "theses": [
+    { "name": "위험선호", "signal": "개선 우위·장중 확인", "level": 2, "delta": { "dir": "up", "text": "미국 지수선물 플러스 폭이 직전 브리프보다 커졌습니다." }, "body": "S&P 500·Nasdaq 100 선물의 강한 플러스는 한국 개장 전 심리에 우호적입니다. 다만 미국 현물 종가 자체는 약보합이었고, 한국 장전 headline은 코스피 변동성을 경고하므로 장초반 breadth와 외국인 현물 순매수가 개선을 확인해야 합니다." },
+    { "name": "금리·duration", "signal": "중립", "level": 1, "delta": { "dir": "flat", "text": "미국 10년물은 4.372%로 전일 브리프의 4.390%보다 낮지만 최신 tick 기준 변동은 0으로 표시됩니다." }, "body": "금리 레벨은 성장주 duration에 큰 추가 부담을 주는 신호는 아닙니다. Treasury futures가 소폭 약한 정도라 금리보다 위험선호·환율·파생 수급이 오늘 한국 장전의 더 큰 센서입니다." },
+    { "name": "환율·달러(원화)", "signal": "완화 가능성·최신성 확인 필요", "level": 2, "delta": { "dir": "up", "text": "USD/KRW posted rate가 1,545.00원에서 1,537.50원으로 내려왔습니다." }, "body": "원화 부담 완화는 한국 consumer·pre-IPO 멀티플과 외국인 수급 심리에 우호적입니다. 다만 USD/KRW 기준시각이 6월 26일 밤이라, 월요일 서울 환시 초반 1,530원대 유지 여부가 실제 민감도 판단의 핵심입니다." },
+    { "name": "변동성·헤지", "signal": "완화됐지만 국내 센서 필요", "level": 2, "delta": { "dir": "up", "text": "VIX 현물은 18.89에서 18.41로 낮아졌습니다." }, "body": "VIX와 VIX futures는 헤지 부담 완화 쪽입니다. 하지만 국내 headline이 코스피 변동성을 강조하고 KOSPI200 선물·옵션 장전 수치가 없어, basis·프로그램 매매·V-KOSPI 확인 전까지 위험선호 개선을 확정하기 어렵습니다." },
+    { "name": "섹터·브레드스", "signal": "기술주 우호·확산 미확인", "level": 2, "delta": { "dir": "up", "text": "Nasdaq 100 선물 +0.99%가 직전보다 강해 기술주 민감도는 개선됐습니다." }, "body": "미국 기술주 선물 강세는 한국 반도체·AI 인프라 sentiment에 우호적입니다. 다만 오늘의 승부는 대형주만 오르는지, 코스닥·중소형·내수로까지 breadth가 넓어지는지입니다." }
+  ],
+
+  "watch": [
+    "KOSPI/KOSDAQ 개장 30~60분: Nasdaq 100 선물 +0.99%가 반도체·AI 인프라뿐 아니라 시장 breadth로 확산되는지.",
+    "USD/KRW: 1,537.50원 posted rate 이후 서울 환시 초반 1,530원대 유지 여부와 외국인 현물 순매수 동반 여부.",
+    "파생/변동성 센서: KOSPI200 선물 basis, 프로그램 매매, V-KOSPI 또는 옵션 프리미엄이 연합뉴스의 변동성 경고를 확인/반박하는지.",
+    "채권 센서: KOFR 변동금리채 발행 유도 headline이 단기금리·은행채/국고채 스프레드 심리에 영향을 주는지, 실제 장중 금리 방향은 별도 확인."
+  ],
+
+  "risks": [
+    "이 브리프는 2026-06-29 08:30 KST injected snapshot 기준입니다. 미국 지수선물은 futures/pre-market 값이며 종가가 아닙니다.",
+    "USD/KRW는 2026-06-26 22:08 KST posted rate라 주말 이후 월요일 장전 최신 환율로 단정하지 않습니다.",
+    "DXY·유가·금 세부 quote와 same-date 한국 국고채 cash yield, KOSPI200 futures/options 장전 수치는 source context에 없어 미확인으로 남깁니다.",
+    "무효화 기준은 한국 개장 후 외국인 순매도·원화 약세·KOSPI200 선물 basis 악화가 동시에 나타나는 경우입니다. 반대로 원화 안정과 외국인 현물 순매수, breadth 확산이 확인되면 장전 위험선호 개선 신호가 강화됩니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "부분 정상" },
+    { "label": "Confirmed", "value": "prior U.S. close, U.S. futures, U.S. 10Y/Treasury futures, VIX/VIX futures, USD/KRW posted rate, same-date Yonhap headlines" },
+    { "label": "Unconfirmed", "value": "DXY/oil/gold quote details, same-date Korea cash bond yield, KOSPI200 futures/options market data, Monday live USD/KRW tick" },
+    { "label": "Source/date", "value": "CNBC quote-cache 2026-06-26/29 · Naver/Hana 2026-06-26 22:08 KST · Yonhap RSS 2026-06-29" }
+  ]
+}

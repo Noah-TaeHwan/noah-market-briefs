@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-26-kr-close",
+  "date": "2026-06-26",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/06/26/korea-close.html",
+  "title": "한국 시장 마감 — 2026-06-26",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · Naver/Hana Bank market index",
+  "generated": "Generated KST 2026-06-26 16:30",
+  "source": "Naver Finance daily index table · Naver/Hana Bank market index; Yonhap RSS unavailable due connection reset",
+  "data_quality": "제한 브리프 — KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가 확인; USD/KRW는 Naver/Hana 16:28 posted rate만 확인되어 Seoul FX 15:30 공식 종가는 미확인; 채권·수급·업종 headline 미확인",
+  "use": "시장 민감도 일지",
+  "takeaway": "전일 대형주 반등이 하루 만에 되돌려지며 KOSPI·KOSDAQ·KOSPI200 선물이 동반 급락했고, 환율은 16:28 Naver/Hana 기준 1,540.20원으로 원화 스트레스가 완전히 풀렸다고 보기 어렵습니다.",
+  "changes": [
+    {
+      "dir": "down",
+      "text": "KOSPI는 전일 +5.42%에서 오늘 -5.81%로 급반전했고, KOSPI200도 +6.17%에서 -6.03%로 되돌림이 컸습니다."
+    },
+    {
+      "dir": "down",
+      "text": "KOSDAQ은 전일 -2.36%에 이어 오늘 -4.10%로 하락 폭이 확대돼 중소형 성장주 breadth 약세가 이어졌습니다."
+    },
+    {
+      "dir": "down",
+      "text": "KOSPI200 선물은 전일 +5.77%에서 오늘 -5.18%로 꺾여 파생시장 베타가 다시 위험회피 쪽으로 기울었습니다."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "KOSPI",
+      "value": "8,411.21",
+      "tone": "down",
+      "note": "-519.09 / -5.81% · Naver Finance daily index table, 2026.06.26"
+    },
+    {
+      "name": "KOSDAQ",
+      "value": "851.37",
+      "tone": "down",
+      "note": "-36.44 / -4.10% · Naver Finance daily index table, 2026.06.26"
+    },
+    {
+      "name": "KOSPI200",
+      "value": "1,366.49",
+      "tone": "down",
+      "note": "-87.66 / -6.03% · Naver Finance daily index table, 2026.06.26"
+    },
+    {
+      "name": "KOSPI200 선물",
+      "value": "1,385.90",
+      "tone": "down",
+      "note": "-75.70 / -5.18% · Naver Finance daily index table, 2026.06.26"
+    },
+    {
+      "name": "USD/KRW 15:30 종가",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected data에 Seoul FX 15:30 공식 종가 없음; Naver/Hana 16:28 posted rate는 별도 참고값"
+    },
+    {
+      "name": "USD/KRW 16:28 참고",
+      "value": "1,540.20원",
+      "tone": "warn",
+      "note": "전일 대비 4.80원 하락 · Naver/Hana Bank posted rate, 2026.06.26 16:28 KST; 15:30 공식 종가 대체 아님"
+    },
+    {
+      "name": "채권시장",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "Yonhap economy RSS connection reset; injected snapshot에 2026.06.26 국고채 금리 headline 또는 종가 수익률 없음"
+    },
+    {
+      "name": "변동성/옵션",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected data에 V-KOSPI/옵션 변동성 headline 없음; 파생 신호는 KOSPI200 선물 -5.18%만 확인"
+    },
+    {
+      "name": "외국인/국내 수급",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected data에 외국인·기관·개인 순매수 금액 없음"
+    },
+    {
+      "name": "업종/섹터",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected data에 업종별 등락 또는 key sector headline 없음"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "전일 반등의 빠른 되돌림",
+      "text": "KOSPI -5.81%, KOSPI200 -6.03%, KOSPI200 선물 -5.18%로 전일 대형주 중심 반등이 하루 만에 상당 부분 되돌려졌습니다."
+    },
+    {
+      "label": "중소형 성장주 약세 지속",
+      "text": "KOSDAQ은 전일에도 -2.36%였고 오늘 -4.10%로 더 밀려, 위험선호가 시장 전반으로 회복됐다는 해석은 약합니다."
+    },
+    {
+      "label": "환율 확인은 제한적",
+      "text": "Naver/Hana 16:28 posted rate는 1,540.20원으로 전일 대비 하락했지만, Seoul FX 15:30 공식 종가가 미확인이라 환율 안정으로 단정하지 않습니다."
+    }
+  ],
+  "theses": [
+    {
+      "name": "위험선호",
+      "signal": "대형주·중소형 동반 리스크오프",
+      "level": 3,
+      "delta": {
+        "dir": "down",
+        "text": "전일 대형주 반등이 유지되지 못하고 KOSPI/KOSDAQ이 함께 하락했습니다."
+      },
+      "body": "마감 결과는 위험선호 회복보다 변동성 높은 되돌림 장세에 가깝습니다. 비상장 커머스 같은 비상장 소비/IPO 논지는 상장 환경·secondary mark·소비심리 할인율에 더 보수적인 프리미엄을 요구할 수 있습니다."
+    },
+    {
+      "name": "금리·duration",
+      "signal": "미확인",
+      "level": 1,
+      "delta": {
+        "dir": "flat",
+        "text": "오늘 injected source에는 국고채 금리 확인값이 없어 duration 부담을 새로 업데이트하지 않습니다."
+      },
+      "body": "채권 데이터가 없으므로 주식 급락을 금리 상승 또는 안전자산 랠리로 설명하지 않습니다. 내일은 국고채 3년·10년 종가와 KOSDAQ 하락의 할인율 민감도를 같이 확인해야 합니다."
+    },
+    {
+      "name": "환율·달러(원화)",
+      "signal": "1,540원대 참고값 지속, 공식 종가 미확인",
+      "level": 2,
+      "delta": {
+        "dir": "flat",
+        "text": "Naver/Hana 16시대 posted rate는 전일 1,542.20원에서 1,540.20원으로 낮아졌지만, 15:30 공식 종가 비교는 불가합니다."
+      },
+      "body": "원화가 1,540원대 부근에 머문다는 점은 한국 위험자산의 외국인 환산수익률과 IPO 할인율에 부담입니다. 다만 공식 15:30 종가가 없어 오늘의 환율 방향성은 제한적으로만 읽습니다."
+    },
+    {
+      "name": "변동성·헤지",
+      "signal": "선물 베타 재하락, 옵션 신호 미확인",
+      "level": 2,
+      "delta": {
+        "dir": "down",
+        "text": "KOSPI200 선물이 전일 +5.77%에서 오늘 -5.18%로 반전했습니다."
+      },
+      "body": "KOSPI200 선물 하락은 헤지 수요 또는 베타 축소가 다시 커졌다는 신호입니다. V-KOSPI/옵션 자료는 미확인이어서 변동성 프리미엄 수준은 단정하지 않습니다."
+    },
+    {
+      "name": "섹터·브레드스",
+      "signal": "미확인, 지수 레벨만 약세 확인",
+      "level": 1,
+      "delta": {
+        "dir": "down",
+        "text": "전일에는 SK하이닉스 headline만 있었고 오늘은 업종 headline이 없어 breadth 세부 판단은 제한적입니다."
+      },
+      "body": "KOSDAQ 동반 하락은 breadth 약화를 시사하지만, 업종별 등락과 수급이 없어 반도체·소비·금융 중 어느 축이 주도했는지는 말하지 않습니다."
+    }
+  ],
+  "watch": [
+    "USD/KRW 15:30 공식 종가 확인: Naver/Hana posted rate와 달리 서울외환시장 종가가 1,540원대에 고착되는지 봐야 합니다.",
+    "국고채 3년·10년 종가 수익률: 주식 급락이 duration 완화로 흡수되는지, 아니면 신용/환율 스트레스와 동행하는지 확인합니다.",
+    "KOSPI200 선물과 KOSDAQ 동시 회복 여부: 선물이 반등해도 KOSDAQ이 따라오지 못하면 위험선호 회복은 제한적입니다."
+  ],
+  "risks": [
+    "오늘 브리프는 injected script의 Naver Finance/Naver-Hana same-date 데이터에 한정합니다. Yonhap RSS는 connection reset으로 headline을 확인하지 못했습니다.",
+    "USD/KRW는 16:28 posted rate만 확인됐고 Seoul FX 15:30 공식 종가는 미확인입니다. 정상 FX close로 제시하지 않습니다.",
+    "채권시장, V-KOSPI/옵션 변동성, 외국인·기관·개인 수급, 업종별 breadth는 미확인입니다.",
+    "이 브리프는 투자 권유나 매매 지시가 아니라 금리·환율·파생·브레드스 민감도 점검입니다."
+  ],
+  "quality": [
+    {
+      "label": "Status",
+      "value": "제한 브리프"
+    },
+    {
+      "label": "Confirmed",
+      "value": "KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가; USD/KRW Naver/Hana 16:28 posted rate"
+    },
+    {
+      "label": "미확인",
+      "value": "Seoul FX 15:30 공식 종가, 국고채 금리 headline/종가, V-KOSPI/옵션 변동성, 외국인·기관·개인 수급, 업종별 breadth"
+    },
+    {
+      "label": "Source/date",
+      "value": "Naver Finance · Naver/Hana Bank market index · 2026-06-26"
+    }
+  ]
+}

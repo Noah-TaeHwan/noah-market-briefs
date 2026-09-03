@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12', '3.13']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 런타임 의존성이 없으므로 설치 단계가 없다.
+      - name: 회귀 테스트
+        run: python -m unittest discover -s tests -v
+
+      - name: 브리프 레코드 검증
+        run: python scripts/verify_brief.py
+
+      # 같은 입력으로 다시 빌드했을 때 산출물이 달라지면 결정적 빌드가 깨진 것이다.
+      - name: 결정적 빌드 확인
+        run: |
+          python scripts/build.py
+          git diff --exit-code

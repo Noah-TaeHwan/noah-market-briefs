@@ -1,0 +1,6 @@
+.DS_Store
+.vercel
+node_modules
+__pycache__/
+*.pyc
+data/.named-holdings.local

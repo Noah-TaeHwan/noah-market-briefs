@@ -1,0 +1,10 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/market-briefs/:path*",
+      "destination": "/:path*"
+    }
+  ]
+}

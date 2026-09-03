@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "market": "KR",
+      "window": "preopen",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    },
+    {
+      "market": "KR",
+      "window": "close",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    },
+    {
+      "market": "US",
+      "window": "preopen",
+      "date": "2026-09-03",
+      "title": "미국 시장 장전 — 노동수요 맥락 · 2026-09-03",
+      "path": "2026/09/03/us-preopen.html",
+      "status": "partial",
+      "evidence_status": "confirmed"
+    },
+    {
+      "market": "US",
+      "window": "close",
+      "status": "legacy_unverified",
+      "evidence_status": "legacy_unverified"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-07-us-preopen",
+  "date": "2026-07-07",
+  "market_code": "US",
+  "window_code": "preopen",
+  "status": "live",
+  "out_path": "2026/07/07/us-preopen.html",
+  "title": "미국 시장 전 — 2026-07-07",
+  "market": "United States",
+  "window": "U.S. Pre-open",
+  "note": "미국 시장은 정규시장 개장 약 30분 전, KST 22:00 기준 사전 확인 창입니다.",
+  "generated": "Generated KST 2026-07-07 22:00 · ET 2026-07-07 09:00",
+  "source": "CNBC Quote API / exchange quote cache, generated 2026-07-07 09:00 EDT",
+  "data_quality": "정상 pre-open snapshot · DXY/USD-KRW/WTI/Gold 미확인",
+  "use": "시장 민감도 일지 · 투자 권유 아님",
+  "takeaway": "7/6 강한 반등(나스닥 +1.12%) 다음날 장전 나스닥 100 선물 -1.00%로 일부 환원 중이고, 다우 선물은 +0.43%로 회전 양상. 10년물은 +1.4bp 소폭 상승해 추가 하락 가설이 반증됐습니다.",
+  "metrics": [
+    { "name": "S&P 500 전일 종가", "value": "7,537.43", "tone": "up", "note": "+54.19 / +0.724% · CNBC quote cache · last_time 2026-07-06" },
+    { "name": "Nasdaq 전일 종가", "value": "26,121.16", "tone": "up", "note": "+288.49 / +1.117% · CNBC quote cache · last_time 2026-07-06" },
+    { "name": "Dow 전일 종가", "value": "53,055.91", "tone": "up", "note": "+155.84 / +0.295% · CNBC quote cache · last_time 2026-07-06" },
+    { "name": "S&P 500 선물", "value": "7,582.50", "tone": "down", "note": "-9.00 / -0.12% · CME quote cache · 2026-07-07 08:50 EDT; close 아님" },
+    { "name": "Nasdaq 100 선물", "value": "29,642.50", "tone": "down", "note": "-298.50 / -1.00% · CME quote cache · 2026-07-07 08:50 EDT; close 아님" },
+    { "name": "Dow 선물", "value": "53,601.00", "tone": "up", "note": "+229.00 / +0.43% · CBOT quote cache · 2026-07-07 08:50 EDT; close 아님" },
+    { "name": "U.S. 10Y", "value": "4.493%", "tone": "up", "note": "+0.014%p · Tradeweb/CNBC quote cache · 2026-07-07 09:00 EDT" },
+    { "name": "10Y Treasury future", "value": "109.5313", "tone": "down", "note": "-0.1094 / -0.10% · CBOT quote cache · 2026-07-07 08:50 EDT" },
+    { "name": "30Y Treasury future", "value": "112.1563", "tone": "down", "note": "-0.2188 / -0.19% · CBOT quote cache · 2026-07-07 08:50 EDT" },
+    { "name": "VIX", "value": "15.90", "tone": "up", "note": "+0.33 / +2.119% · CBOE quote cache · 2026-07-07 09:00 EDT" },
+    { "name": "VIX future Jul'26", "value": "17.35", "tone": "up", "note": "+0.098 / +0.57% · CFE quote cache · 2026-07-07 08:49 EDT" },
+    { "name": "DXY / USD-KRW", "value": "미확인", "tone": "flat", "note": "injected snapshot에 유효 quote 없음" },
+    { "name": "Oil / Gold", "value": "미확인", "tone": "flat", "note": "CL.1 / GC.1 quote fields 미제공; 추정하지 않음" }
+  ],
+  "drivers": [
+    { "label": "나스닥 선물 환원·회전 분화", "text": "7/6 나스닥 종가 +1.12% 강반등 이후 장전 나스닥 100 선물 -1.00%로 일부 환원되는 반면 다우 선물은 +0.43% 상승해 기술주→사이클러컬 회전 또는 이익실현 양상이 나타납니다." },
+    { "label": "금리 소폭 상승", "text": "10년물이 4.493%로 +1.4bp, 10·30년물 선물이 각각 -0.10%/-0.19% 하락해 금리가 추가 하락 대신 소폭 반등하며 앞선 '추가 하락' 가설을 반증합니다." },
+    { "label": "변동성은 낮은 수준 유지", "text": "VIX 15.90(+2.12%)로 절대 수준은 여전히 낮고, VIX 선물 17.35(+0.57%)도 완만한 상승에 그쳐 패닉 헤지보다는 선별적 프리미엄 확대로 읽힙니다." }
+  ],
+  "hypothesis_review": [
+    {
+      "previous_hypothesis": "기술주 실적 발표가 하락 추세를 유지시킬지",
+      "verdict": "부분 적중",
+      "evidence": "7/6 나스닥 종합지수 +1.117% 회복 마감, 7/7 장전 나스닥 100 선물 -1.00% (CNBC quote cache · 2026-07-07 08:50 EDT)",
+      "reason": "7/6에는 회복세로 전환돼 반증 방향이었으나, 7/7 장전 다시 환원. 단 실적 발표 개별 촉매는 injected snapshot에 없어 수익 반응 자체는 미검증으로 둡니다.",
+      "lesson": "선물 장전 변동을 실적 촉매와 분리해 읽어야 하며, 캐시된 quote만으로 earnings read-through를 단정하지 않습니다."
+    },
+    {
+      "previous_hypothesis": "10년물 수익률 추가 하락이 채권·주식 상관관계를 재점화시킬지",
+      "verdict": "반증",
+      "evidence": "U.S. 10Y 4.493% (+0.014%p) · Tradeweb/CNBC quote cache · 2026-07-07 09:00 EDT; 10Y 선물 -0.10%, 30Y 선물 -0.19%",
+      "reason": "수익률이 4.4% 이하로 추가 하락하지 않고 오히려 +1.4bp 소폭 상승해 추가 하락 조건이 충족되지 않았습니다.",
+      "lesson": "전일 금리 방향이 다음 날까지 연장된다고 가정하지 않습니다. 하락 다음날 소폭 반등이 자주 나옵니다."
+    }
+  ],
+  "today_learning": "강반등 다음 날 장전 선물이 분화(나스닥 약세·다우 강세)로 나타나면 단일 방향이 아니라 회전/실현 이익 프레임으로 먼저 읽어야 합니다.",
+  "next_hypotheses": [
+    {
+      "hypothesis": "나스닥 vs 다우 분화가 정규장에서 사이클러컬 회전으로 확인될지",
+      "observable": "정규장 개장 후 나스닥 100 현물이 선물 약세(-1.00%)를 따라가는지, 반면 다우/가치가 상대 초과수익을 기록하는지",
+      "invalidation": "나스닥이 장중 빠르게 반등해 다우와의 괴리가 사라질 경우 회전 가설은 약화",
+      "horizon": "2026-07-07 US close"
+    },
+    {
+      "hypothesis": "10년물 4.49% 부근에서 추가 상승이 주식 duration에 압박을 가할지",
+      "observable": "10년물이 4.50% 이상으로 올라가는지, 그리고 고듀레이션 성장주 선물이 추가로 약화되는지",
+      "invalidation": "금리가 4.45% 이하로 되돌아오면 금리 압박 가설은 보류",
+      "horizon": "2026-07-08 US preopen"
+    }
+  ],
+  "risks": [
+    "현재 수치는 2026-07-07 09:00 EDT 장전 quote cache입니다. 선물·VIX pre-open 값은 정규장 종가가 아닙니다.",
+    "DXY, USD-KRW, WTI, Gold는 injected snapshot에 유효 값이 없어 미확인으로 처리했습니다.",
+    "나스닥 선물 -1.00%가 개장 후 빠르게 되돌려지면 회전/환원 신호가 단기 잡음으로 해석될 수 있습니다."
+  ],
+  "quality": [
+    { "label": "Status", "value": "정상 pre-open snapshot" },
+    { "label": "Session", "value": "trading_day_type=TRADING_DAY · generated_at 2026-07-07 09:00 EDT" },
+    { "label": "Prior close", "value": "indices last_time 2026-07-06 (월)" },
+    { "label": "Current pre-open", "value": "futures/rates/VIX 2026-07-07 08:49~09:00 EDT" },
+    { "label": "미확인", "value": "DXY/USD-KRW/WTI/Gold" },
+    { "label": "Source/date", "value": "CNBC Quote API / exchange quote cache · 2026-07-07" }
+  ]
+}

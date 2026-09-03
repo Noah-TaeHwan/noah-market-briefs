@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-10-kr-close",
+  "date": "2026-07-10",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/07/10/korea-close.html",
+
+  "title": "한국 시장 마감 — 2026-07-10",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · Naver/Hana Bank market index · Yonhap economy RSS · snapshot generated KST 2026-07-10 19:28",
+  "generated": "Generated KST 2026-07-10 19:28 (script snapshot; actual run time)",
+  "source": "Naver Finance daily index tables · Naver Finance market index / Hana Bank posted rate · Yonhap economy RSS (2026-07-10)",
+  "data_quality": "부분 확인 — KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가와 국고채 headline은 확인했으나, 서울 외환시장 15:30 USD/KRW 공식 종가는 미확인; 19:24 posted rate는 대체값으로 쓰지 않음. 외국인·국내 주체별 수급과 옵션/내재변동성도 미확인.",
+  "use": "시장 민감도 일지",
+  "takeaway": "최근 급락 뒤 KOSPI·KOSDAQ이 동반 반등했고 KOSDAQ과 선물이 더 강했지만, 공식 15:30 USD/KRW 종가와 외국인·옵션 데이터가 없어 반등의 질은 아직 확정할 수 없습니다.",
+
+  "changes": [
+    {
+      "dir": "up",
+      "text": "직전 같은 윈도 레코드(2026-07-07)의 KOSPI -4.91%, KOSDAQ -1.87%에서 오늘 각각 +2.52%, +5.47%로 방향이 전환됐습니다. Naver Finance daily index tables, 2026-07-07·2026-07-10."
+    },
+    {
+      "dir": "up",
+      "text": "KOSPI200 선물도 직전 -4.33%에서 오늘 +2.62%로 반전됐습니다. 다만 옵션·내재변동성 수치가 없어 파생 스트레스 완화까지 확정하지 않습니다. Naver Finance, 2026-07-07·2026-07-10."
+    }
+  ],
+
+  "metrics": [
+    { "name": "KOSPI", "value": "7,475.94", "tone": "up", "note": "+184.03 / +2.52% · Naver Finance daily index table same-date row, 2026.07.10; fetched 19:28 KST" },
+    { "name": "KOSDAQ", "value": "837.43", "tone": "up", "note": "+43.43 / +5.47% · Naver Finance daily index table same-date row, 2026.07.10; fetched 19:28 KST" },
+    { "name": "KOSPI200", "value": "1,196.69", "tone": "up", "note": "+26.96 / +2.30% · Naver Finance daily index table same-date row, 2026.07.10; fetched 19:28 KST" },
+    { "name": "KOSPI200 선물", "value": "1,210.50", "tone": "up", "note": "+30.95 / +2.62% · Naver Finance daily index table same-date row, 2026.07.10; fetched 19:28 KST" },
+    { "name": "USD/KRW 15:30 종가", "value": "미확인", "tone": "warn", "note": "서울 외환시장 15:30 공식 종가를 injected snapshot에서 확인하지 못함 · korea_close_snapshot.py, 2026.07.10" },
+    { "name": "USD/KRW 19:24 참고", "value": "1,505.00원", "tone": "down", "note": "-2.00원 · Naver Finance market index / Hana Bank posted rate, 2026.07.10 19:24 KST; 15:30 공식 종가 대체값 아님" },
+    { "name": "국고채 3년", "value": "연 3.768%", "tone": "down", "note": "국고채 금리 일제히 하락 headline · Yonhap economy RSS, 2026.07.10 16:42·17:03 KST" },
+    { "name": "옵션/내재변동성", "value": "미확인", "tone": "flat", "note": "injected Yonhap/Naver context에 KOSPI 옵션·V-KOSPI 등 수치 없음 · 2026.07.10" },
+    { "name": "외국인/국내 주체별 수급", "value": "미확인", "tone": "flat", "note": "injected snapshot에 주체별 순매수 금액 없음 · 2026.07.10" },
+    { "name": "대형주/섹터 headline", "value": "삼성전자 2%대↑ · SK하이닉스 0.27%↓", "tone": "flat", "note": "Yonhap economy RSS headlines, 2026.07.10 16:14·16:52 KST" }
+  ],
+
+  "drivers": [
+    { "label": "급락 뒤 동반 반등, KOSDAQ 상대강도", "text": "오늘 KOSPI는 +2.52%, KOSDAQ은 +5.47%로 반등했고 KOSDAQ의 회복 폭이 더 컸습니다. 이는 상대강도 신호이지만 외국인 수급이 없어 반등의 주체까지 확정하지 않습니다." },
+    { "label": "달러 약세·ADR 기대 headline", "text": "연합뉴스는 달러 약세와 SK하이닉스 ADR 상장 기대를 같은 날 환율·시장 배경으로 보도했습니다. 19:24 하나은행 posted rate는 1,505.00원으로 하락했지만 15:30 공식 종가는 미확인입니다." },
+    { "label": "국고채 금리 하락 동반", "text": "연합뉴스는 국고채 금리가 일제히 하락했고 3년물이 연 3.768%라고 보도했습니다. 주식 반등과 금리 하락이 함께 나타났으므로 이를 단일한 위험선호 신호로 단정하지 않습니다." }
+  ],
+
+  "hypothesis_review": [
+    {
+      "previous_hypothesis": "서킷브레이커 일상화가 변동성 고공 체제로 고정되는지 확인한다 — 단발 쇼크가 아니라 반복 패턴인지.",
+      "verdict": "미검증",
+      "evidence": "현재 snapshot은 2026.07.10 종가와 일부 same-date headlines를 제공하지만 장중 최대 낙폭·사이드카/서킷 발동 여부·V-KOSPI 수치를 제공하지 않습니다.",
+      "reason": "KOSPI와 KOSPI200 선물이 상승 마감했다는 사실만으로 장중 변동성 체제의 지속 여부를 판정할 수 없습니다.",
+      "lesson": "변동성 가설은 종가 방향이 아니라 장중 최대 낙폭·시장중단 이벤트·내재변동성 센서를 함께 확보해야 검증할 수 있습니다."
+    },
+    {
+      "previous_hypothesis": "KOSPI가 KOSDAQ보다 더 깊이 하락하는 대형주·외국인 주도 매도 패턴이 지속되는지 확인한다.",
+      "verdict": "반증",
+      "evidence": "KOSPI +2.52% 대비 KOSDAQ +5.47%, KOSPI200 +2.30% · Naver Finance same-date rows, 2026.07.10; 외국인 수급 금액은 미확인.",
+      "reason": "KOSDAQ이 KOSPI보다 강해 상대성과 패턴은 이어지지 않았습니다. 다만 외국인 주도라는 원인 부분은 수급 데이터 부재로 확인하지 못했습니다.",
+      "lesson": "대형주·중소형주 상대성과와 외국인 주체 attribution을 분리해야 합니다. 상대등락만으로 매도 주체를 역산하지 않습니다."
+    },
+    {
+      "previous_hypothesis": "환율-주가 디커플링이 일시적이라면 다음 세션에서 환율 방향과 주가 방향이 다시 같은 위험선호 조합으로 움직이는지 확인한다.",
+      "verdict": "미검증",
+      "evidence": "Naver/Hana Bank posted rate는 2026.07.10 19:24에 1,505.00원(-2.00원)이었지만 서울 외환시장 15:30 공식 종가는 미확인; 주식 종가는 KOSPI +2.52%, KOSDAQ +5.47%.",
+      "reason": "19:24 posted rate는 15:30 종가 대체값이 아니므로, 이번 회차의 공식 환율-주가 조합을 검증하지 않습니다.",
+      "lesson": "환율-주가 가설은 시각과 시장 정의가 맞는 두 종가가 모두 있어야 닫힙니다."
+    }
+  ],
+
+  "today_learning": [
+    "이번 반등에서 KOSDAQ 상대강도는 확인했지만, 15:30 환율·외국인 수급·옵션변동성 부재로 반등의 질과 주체를 분리해 말해야 했습니다."
+  ],
+
+  "next_hypotheses": [
+    {
+      "hypothesis": "KOSDAQ의 상대강도와 위험선호 폭이 다음 KRX 마감에도 이어지는지 확인한다.",
+      "observable": "KOSPI vs KOSDAQ 등락률, KOSPI200 및 KOSPI200 선물 등락률, 외국인·국내 주체별 수급 headline",
+      "invalidation": "KOSDAQ이 KOSPI보다 약해지거나 현물·선물이 함께 하락하면 상대강도 가설을 낮춘다.",
+      "horizon": "next KR close"
+    },
+    {
+      "hypothesis": "공식 15:30 USD/KRW 하락(원화 강세)과 국내 주식 상승 조합이 재현되는지 확인한다.",
+      "observable": "서울 외환시장 15:30 USD/KRW 공식 종가와 KOSPI·KOSDAQ same-date 종가; later posted rate는 보조값으로만 기록",
+      "invalidation": "공식 USD/KRW가 상승하거나 주식이 하락하면 조합을 무효화하고, 공식 종가가 없으면 미검증 처리한다.",
+      "horizon": "next KR close"
+    },
+    {
+      "hypothesis": "국고채 3년 금리 하락이 KOSPI200 선물 안정 및 변동성 완화와 함께 지속되는지 확인한다.",
+      "observable": "국고채 3년 수익률, KOSPI200 선물, KOSPI 옵션·V-KOSPI 등 내재변동성 proxy",
+      "invalidation": "국고채 3년 금리가 상승하면서 선물이 하락하거나 변동성 proxy가 상승하면 동행 가설을 낮춘다.",
+      "horizon": "next KR close"
+    }
+  ],
+
+  "theses": [],
+
+  "risks": [
+    "서울 외환시장 15:30 USD/KRW 공식 종가가 없어 19:24 Naver/Hana posted rate를 종가로 표시하지 않았습니다.",
+    "외국인·국내 주체별 수급, 옵션·내재변동성, 선물 basis가 미확인이라 반등의 주체·헤지 수요·변동성 체제를 확정할 수 없습니다.",
+    "국고채 금리 하락과 주식 반등을 하나의 매크로 원인으로 환원하지 않습니다. 같은 날 동시 발생만 확인됐습니다.",
+    "이 브리프는 투자 권유나 매매 지시가 아니라 금리·환율·유동성·파생·브레드스 민감도 점검입니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "부분 확인 — same-date KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 종가 확인" },
+    { "label": "Confirmed", "value": "Naver Finance same-date indices; 국고채 3년 3.768% 하락 headline; 19:24 Naver/Hana posted rate; Yonhap same-date market headlines" },
+    { "label": "미확인", "value": "서울 FX 15:30 공식 종가, 외국인·국내 주체별 수급, 옵션·내재변동성, 선물 basis" },
+    { "label": "Source/date", "value": "Naver Finance · Naver/Hana Bank · Yonhap economy RSS · 2026-07-10" },
+    { "label": "Run timestamp", "value": "Injected snapshot generated KST 2026-07-10 19:28; scheduled-window timestamp로 소급하지 않음" }
+  ]
+}

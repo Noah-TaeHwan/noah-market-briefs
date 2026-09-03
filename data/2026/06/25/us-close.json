@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-25-us-close",
+  "date": "2026-06-25",
+  "market_code": "US",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/06/25/us-close.html",
+  "title": "미국 시장 마감 — 2026-06-25",
+  "market": "United States",
+  "window": "U.S. Close",
+  "note": "정규장 마감 확인",
+  "generated": "2026-06-26 06:00 KST / 2026-06-25 17:00 ET",
+  "source": "CNBC Quote API / exchange quote cache, 2026-06-25 17:00 ET",
+  "data_quality": "정규 거래일(TRADING_DAY)·주요 지수 CLOSE 확인. DXY·WTI·금은 주입 데이터에서 유효 quote 없음.",
+  "use": "시장 마감 브리프 · 투자 권유 아님",
+  "takeaway": "미국장은 S&P 500이 보합, Dow가 소폭 상승, Nasdaq이 약세로 엇갈렸고, 10년물은 4.394%로 전일과 같았지만 VIX가 다시 올라 growth/AI beta 쪽 민감도가 더 커졌습니다.",
+  "changes": [
+    {
+      "dir": "flat",
+      "text": "S&P 500은 전일 -0.098%에서 -0.01%로 거의 보합권을 유지했지만, 지수 레벨은 전일 대비 0.01% 낮았습니다."
+    },
+    {
+      "dir": "down",
+      "text": "Nasdaq Composite는 전일 -0.431%에 이어 -0.463%로 약세가 이어졌고, Nasdaq 100 선물도 전일 브리프 대비 약 1.14% 낮았습니다."
+    },
+    {
+      "dir": "up",
+      "text": "VIX는 18.63에서 18.89로 1.40% 올라 전일의 변동성 진정이 완전히 이어지지는 않았습니다."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "S&P 500",
+      "value": "7,357.49 / -0.01%",
+      "tone": "flat",
+      "note": "CNBC Quote API, 2026-06-25 16:46 ET 정규장 close; trading_day_type=TRADING_DAY"
+    },
+    {
+      "name": "Nasdaq Composite",
+      "value": "25,358.603 / -0.463%",
+      "tone": "down",
+      "note": "CNBC Quote API, 2026-06-25 17:00 ET; reg_last_time=17:00 ET"
+    },
+    {
+      "name": "Dow Jones",
+      "value": "51,920.62 / +0.14%",
+      "tone": "up",
+      "note": "CNBC Quote API, 2026-06-25 16:46 ET 정규장 close"
+    },
+    {
+      "name": "U.S. 10Y",
+      "value": "4.394% / -0.006%p",
+      "tone": "flat",
+      "note": "Tradeweb via CNBC Quote API, 2026-06-25 17:00 ET; previous_day_closing 4.40%"
+    },
+    {
+      "name": "10Y Treasury Future",
+      "value": "110.0781 / +0.07%",
+      "tone": "up",
+      "note": "CBOT Sep'26 future, CNBC Quote API, 2026-06-25 16:50 ET; settlePrice 110.0938"
+    },
+    {
+      "name": "S&P 500 Future",
+      "value": "7,438.00 / +0.13%",
+      "tone": "up",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-06-25 16:50 ET; settleDate 2026-06-25"
+    },
+    {
+      "name": "Nasdaq 100 Future",
+      "value": "29,768.50 / +0.86%",
+      "tone": "up",
+      "note": "CME Sep'26 future, CNBC Quote API, 2026-06-25 16:50 ET; settleDate 2026-06-25"
+    },
+    {
+      "name": "VIX",
+      "value": "18.89 / +1.396%",
+      "tone": "warn",
+      "note": "CBOE via CNBC Quote API, 2026-06-25 16:15 ET"
+    },
+    {
+      "name": "VIX Future",
+      "value": "19.05 / -1.9512%",
+      "tone": "down",
+      "note": "CBOE Futures Exchange Jul'26, CNBC Quote API, 2026-06-25 16:49 ET; settlePrice 19.1066"
+    },
+    {
+      "name": "DXY / WTI / Gold",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "주입된 CNBC Quote API snapshot에 유효 quote 없음; 추정하지 않음"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "지수 내부 온도차",
+      "text": "Dow는 +0.14%였지만 S&P 500은 -0.01%로 보합, Nasdaq은 -0.463%였습니다. headline risk-on보다는 growth/duration 쪽 부담이 남은 장으로 봅니다."
+    },
+    {
+      "label": "금리 충격 부재",
+      "text": "10년물은 4.394%로 전일 브리프와 같은 수준이고, 10년 Treasury future는 소폭 상승했습니다. 오늘 Nasdaq 약세를 금리 급등 하나로 설명하기는 어렵습니다."
+    },
+    {
+      "label": "현물 VIX와 선물의 엇갈림",
+      "text": "VIX는 18.89로 올랐지만 VIX future는 19.05로 하락했습니다. 단기 헤지 수요는 남아 있으나 futures curve 전체가 급격한 위험회피로 재가격됐다고 단정하기엔 부족합니다."
+    }
+  ],
+  "theses": [
+    {
+      "name": "위험선호",
+      "signal": "지수별 혼조·성장주 약세",
+      "level": 2,
+      "delta": {
+        "dir": "flat",
+        "text": "S&P 500은 보합권이지만 Nasdaq 약세와 VIX 상승 때문에 전일의 위험회피 완화가 완전한 risk-on으로 확장되지는 않았습니다."
+      },
+      "body": "글로벌 증권사에는 거래활동 변동성, 미국 온라인 게이밍에는 discretionary/growth beta, 비상장 커머스에는 IPO risk appetite의 간접 경로로 연결됩니다. 오늘은 위험선호가 꺾였다기보다 지수 내부에서 성장 beta가 계속 약한지 확인해야 하는 신호입니다."
+    },
+    {
+      "name": "금리·duration",
+      "signal": "금리 부담은 중립",
+      "level": 1,
+      "delta": {
+        "dir": "flat",
+        "text": "10년물은 전일 브리프와 같은 4.394%로 duration 압력 변화가 거의 없었습니다."
+      },
+      "body": "금리가 급등하지 않았는데 Nasdaq이 밀렸다는 점은 AI capex·컴퓨트 인프라 기대가 단순 할인율보다 sentiment와 earnings/capex narrative에 민감해졌을 가능성을 봐야 한다는 뜻입니다. 글로벌 증권사의 NII 민감도도 오늘 하루 금리 변화만으로 방향을 바꾸기 어렵습니다."
+    },
+    {
+      "name": "환율·달러(원화)",
+      "signal": "미확인",
+      "level": 1,
+      "delta": {
+        "dir": "flat",
+        "text": "DXY·USD/KRW는 이번 주입 스냅샷에 유효 값이 없어 어제 대비 판단하지 않습니다."
+      },
+      "body": "달러와 원화 경로는 비상장 커머스 IPO 심리·한국 성장주 할인율에 중요하지만, 오늘 브리프에서는 출처 있는 수치가 없어 결론을 보류합니다."
+    },
+    {
+      "name": "변동성·헤지",
+      "signal": "단기 헤지 수요 재상승",
+      "level": 2,
+      "delta": {
+        "dir": "up",
+        "text": "VIX가 18.63에서 18.89로 올랐지만 VIX future는 하락해 신호가 혼재됐습니다."
+      },
+      "body": "현물 VIX 상승은 미국 온라인 게이밍·비상장 커머스 같은 risk appetite 민감 논지에 약한 부담입니다. 다만 VIX future가 하락한 만큼 구조적 위험회피라기보다 단기 옵션 수요로 먼저 해석하고, 19~20선 고착 여부를 봅니다."
+    },
+    {
+      "name": "섹터·브레드스",
+      "signal": "미확인",
+      "level": 1,
+      "delta": {
+        "dir": "flat",
+        "text": "섹터·breadth 데이터는 이번 스냅샷에 없어 지수 간 차이 이상으로 확장하지 않습니다."
+      },
+      "body": "Dow와 Nasdaq의 차이가 금융·방어주 강세인지, mega-cap/AI 약세인지, 폭넓은 breadth 악화인지는 별도 섹터·breadth 출처가 필요합니다."
+    }
+  ],
+  "watch": [
+    "10년물 4.40% 부근과 Treasury futures가 다음 장에서도 안정적인지",
+    "Nasdaq 100 선물이 반등을 유지하는지, 아니면 정규장 약세와 이어져 AI·compute proxy를 다시 압박하는지",
+    "VIX 18~19선과 VIX future 19선이 동반 상승으로 바뀌는지, 아니면 단기 헤지 수요로 끝나는지"
+  ],
+  "risks": [
+    "CNBC quote-cache 기반 브리프라 뉴스 원인·섹터별 등락은 별도 출처로 확인하지 않았습니다.",
+    "DXY·WTI·금은 주입 데이터에 유효 값이 없어 미확인 처리했습니다.",
+    "장마감 이후 futures 값은 정규장 지수 close와 다른 시장 시간대의 신호이므로 close 숫자로 대체하지 않습니다.",
+    "하루 지수 움직임을 투자 논지 변화로 과대해석하지 않습니다."
+  ],
+  "quality": [
+    {
+      "label": "Session",
+      "value": "TRADING_DAY / CLOSE"
+    },
+    {
+      "label": "Index timestamps",
+      "value": "last_time/reg_last_time 2026-06-25 16:46~17:00 ET"
+    },
+    {
+      "label": "Cache timestamp",
+      "value": "Thu Jun 25 17:00:37 EDT 2026"
+    },
+    {
+      "label": "Unavailable",
+      "value": "DXY, WTI, Gold quote fields absent"
+    }
+  ]
+}

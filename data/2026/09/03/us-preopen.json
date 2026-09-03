@@ -1,0 +1,135 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-03-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-03",
+  "generated_at_utc": "2026-09-03T06:44:51Z",
+  "cutoff_at_utc": "2026-09-01T14:00:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "7c84845508825386aec6485adf1aba610ff5513766ef14ee826485579a4c0237",
+  "out_path": "2026/09/03/us-preopen.html",
+  "title": "미국 시장 장전 — 노동수요 맥락 · 2026-09-03",
+  "summary": "미국 노동수요는 2026년 7월 기준 구인·채용·이직 지표가 대체로 큰 변화 없이 유지됐습니다. 이번 최소 slice에는 같은 세션의 주가지수·환율·변동성 데이터가 포함되지 않아 방향성 판단은 유보합니다.",
+  "next_handoff": "다음 장전 발행에서는 동일 세션의 공식 시장 지수·환율·변동성 출처를 별도 source review 후 추가합니다.",
+  "sources": [
+    {
+      "source_id": "source-bls-jolts-2026-07",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Job Openings and Labor Turnover Summary — 2026 M07 Results",
+      "url": "https://www.bls.gov/news.release/jolts.nr0.htm",
+      "as_of": "2026-09-01T14:00:00Z",
+      "retrieved_at": "2026-09-03T06:44:51Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-job-openings",
+      "label": "구인건수",
+      "name": "Job openings",
+      "value": "7.3 million",
+      "unit": "jobs",
+      "delta": "little changed",
+      "as_of": "2026-09-01T14:00:00Z",
+      "note": "BLS 2026년 7월 발표값; 표의 (p) preliminary 표기",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-hires",
+      "label": "채용",
+      "name": "Hires",
+      "value": "5.1 million",
+      "unit": "jobs",
+      "delta": "little changed",
+      "as_of": "2026-09-01T14:00:00Z",
+      "note": "BLS 2026년 7월 발표값; 표의 (p) preliminary 표기",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-quits",
+      "label": "자발적 이직",
+      "name": "Quits",
+      "value": "3.1 million",
+      "unit": "jobs",
+      "delta": "little changed",
+      "as_of": "2026-09-01T14:00:00Z",
+      "note": "BLS 2026년 7월 발표값; 표의 (p) preliminary 표기",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-layoffs",
+      "label": "해고·면직",
+      "name": "Layoffs and discharges",
+      "value": "1.7 million",
+      "unit": "jobs",
+      "delta": "little changed",
+      "as_of": "2026-09-01T14:00:00Z",
+      "note": "BLS 2026년 7월 발표값; 표의 (p) preliminary 표기",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-jolts-demand",
+      "kind": "fact",
+      "text": "BLS는 2026년 7월 미국 구인건수를 730만 건으로 발표했습니다.",
+      "as_of": "2026-09-01T14:00:00Z",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-jolts-direction",
+      "kind": "analysis",
+      "text": "구인·채용·총이직·자발적 이직·해고·면직이 모두 BLS 원문에서 little changed로 기술되어, 이 단일 발표만으로 주식시장 방향을 단정하지 않습니다.",
+      "as_of": "2026-09-01T14:00:00Z",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "flat",
+      "text": "노동수요와 이직 흐름은 전월 대비 큰 변화가 없다고 BLS가 발표했습니다.",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "노동수요",
+      "text": "구인건수는 730만 건으로, 채용·총이직은 각각 510만 건으로 발표됐습니다.",
+      "source_ids": ["source-bls-jolts-2026-07"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "같은 세션의 주가지수·환율·변동성",
+      "reason": "이번 최소 V3 slice는 BLS 공식 발표만 사용했으며, 동일 세션 시장가격 출처를 아직 연결하지 않았습니다.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "BLS 데이터 상태",
+      "value": "2026년 7월 preliminary (p)"
+    },
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after retrieval."
+    }
+  ],
+  "risks": [
+    "BLS 수치는 preliminary로 이후 수정될 수 있습니다.",
+    "이 레코드는 단일 경제지표를 다루며 주식시장 방향성이나 투자 판단을 제공하지 않습니다."
+  ]
+}

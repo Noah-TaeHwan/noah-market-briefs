@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "slug": "2026-06-24-kr-close",
+  "date": "2026-06-24",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/06/24/korea-close.html",
+
+  "title": "한국 시장 마감 — 2026-06-24",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · 연합뉴스 RSS",
+  "generated": "Generated KST 2026-06-24 16:30",
+  "source": "Naver Finance daily index table · Naver/Hana Bank market index · 연합뉴스 economy RSS",
+  "data_quality": "정상 브리프 가능 — KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 확인, USD/KRW 15:30 종가 연합뉴스 확인",
+  "use": "시장 민감도 일지",
+  "takeaway": "전일 급락 뒤 한국 주식은 기술적 반등했지만, 원/달러 환율이 1,540원대 15:30 종가를 찍고 국고채 금리 상승·변동성 고공권 headline이 남아 위험선호 회복은 아직 불완전합니다.",
+
+  "changes": [
+    { "dir": "up", "text": "KOSPI는 전일 -9.99% 급락 뒤 +3.26% 반등했고, KOSDAQ도 -7.94% 뒤 +2.00% 반등했습니다." },
+    { "dir": "down", "text": "USD/KRW 15:30 종가는 전일 1,539.1원에서 1,541.8원으로 더 올라 원화 압력은 완화되지 않았습니다." },
+    { "dir": "flat", "text": "KOSPI200 선물은 +3.09% 반등했지만, 연합뉴스의 변동성지수 금융위기 이후 최고치 headline으로 파생/변동성 스트레스는 잔존합니다." }
+  ],
+
+  "metrics": [
+    { "name": "KOSPI", "value": "8,471.02", "tone": "up", "note": "+267.18 / +3.26% · Naver Finance 2026.06.24" },
+    { "name": "KOSDAQ", "value": "909.31", "tone": "up", "note": "+17.79 / +2.00% · Naver Finance 2026.06.24" },
+    { "name": "KOSPI200", "value": "1,369.62", "tone": "up", "note": "+47.92 / +3.63% · Naver Finance 2026.06.24" },
+    { "name": "KOSPI200 선물", "value": "1,381.85", "tone": "up", "note": "+41.45 / +3.09% · Naver Finance 2026.06.24" },
+    { "name": "USD/KRW 15:30 종가", "value": "1,541.8원", "tone": "warn", "note": "+2.7원 · 연합뉴스 15:30:49 KST, 2026.06.24" },
+    { "name": "USD/KRW 16:26 참고", "value": "1,544.40원", "tone": "warn", "note": "+10.90원 · Naver/Hana Bank posted rate 16:26 KST, 2026.06.24" },
+    { "name": "채권시장", "value": "국고채 금리 상승", "tone": "warn", "note": "연합뉴스 11:41:21 KST: 국고채 금리 일제히 상승, 3년물 장중 연 3.795%" },
+    { "name": "변동성/옵션", "value": "코스피 변동성지수 고공권", "tone": "warn", "note": "연합뉴스 16:04:53 KST: 금융위기 이후 최고치 headline" },
+    { "name": "외국인 수급", "value": "순매도 방향 확인", "tone": "warn", "note": "연합뉴스 16:07:21 KST: 강달러·외국인 순매도 언급, 금액은 injected data 미제공" },
+    { "name": "국내 주체별 수급", "value": "미확인", "tone": "flat", "note": "injected data에 기관/개인 세부 수급 없음" },
+    { "name": "업종/섹터", "value": "미확인", "tone": "flat", "note": "injected data에 업종별 등락 없음" }
+  ],
+
+  "drivers": [
+    { "label": "전일 쇼크 이후 반발 매수", "text": "KOSPI·KOSDAQ·KOSPI200 선물이 모두 같은 날짜 종가 기준 2~3%대 반등해 전일 급락의 일부를 되돌렸습니다." },
+    { "label": "원화 약세 지속", "text": "연합뉴스 15:30 종가 기준 USD/KRW가 1,541.8원으로 전일보다 더 올라, 지수 반등과 별개로 외국인 환헤지·할인율 압력은 남았습니다." },
+    { "label": "금리·변동성 스트레스 잔존", "text": "국고채 금리 상승 headline과 코스피 변동성지수 금융위기 이후 최고치 headline이 같이 나와, 오늘 반등을 곧바로 정상화로 보기엔 이릅니다." }
+  ],
+
+  "theses": [
+    { "name": "위험선호", "signal": "반등했지만 취약", "level": 2, "delta": { "dir": "up", "text": "전일 패닉성 급락에서는 벗어났지만 낙폭 회복은 일부에 그쳤습니다." }, "body": "주식 지수와 선물은 반등했으나 원화 약세와 변동성 headline이 남아 위험선호 회복의 질은 낮습니다. 한국 비상장·IPO 할인율은 아직 방어적으로 읽습니다." },
+    { "name": "금리·duration", "signal": "부담 확대", "level": 2, "delta": { "dir": "down", "text": "전일 혼조에서 오늘은 국고채 금리 일제 상승 headline으로 duration 부담이 커졌습니다." }, "body": "국고채 3년물 장중 3.795% 보도는 성장주·장기 현금흐름 자산의 할인율 민감도를 올립니다. 종가 수익률 세부는 미확인이므로 방향성 headline까지만 반영합니다." },
+    { "name": "환율·달러(원화)", "signal": "원화 약세 지속", "level": 3, "delta": { "dir": "down", "text": "USD/KRW 15:30 종가가 1,539.1원에서 1,541.8원으로 추가 상승했습니다." }, "body": "1,540원대 환율은 외국인 수급·수입원가·해외투자 환산손익을 동시에 흔드는 변수입니다. 지수 반등보다 원화 안정 여부가 내일 더 중요한 확인점입니다." },
+    { "name": "변동성·헤지", "signal": "스트레스 잔존", "level": 3, "delta": { "dir": "flat", "text": "선물은 반등했지만 변동성지수 고공권 headline은 유지됐습니다." }, "body": "KOSPI200 선물 +3.09%는 단기 안도 신호지만, 변동성지수 금융위기 이후 최고치 보도는 헤지 수요와 마진/리스크 관리 압력이 아직 남았다는 뜻입니다." },
+    { "name": "섹터·브레드스", "signal": "미확인", "level": 1, "delta": { "dir": "flat", "text": "업종별·주체별 세부 데이터가 없어 확산 강도는 판단 보류입니다." }, "body": "오늘 injected data에는 업종별 등락과 기관/개인 세부 수급이 없습니다. 지수 반등이 넓은 breadth인지, 대형주 중심 반등인지는 추가 확인이 필요합니다." }
+  ],
+
+  "watch": [
+    "USD/KRW 15:30 종가가 1,540원대 위에 머무는지, 또는 1,530원대로 되돌리는지.",
+    "국고채 3년물 금리가 장중 3.795% 부근에서 더 오르는지, 주식 반등을 누르는 할인율 변수로 커지는지.",
+    "KOSPI200 선물과 코스피 변동성지수가 함께 안정되는지 — 선물 반등만 있고 변동성이 고공권이면 반등 신뢰도는 낮게 봅니다.",
+    "외국인 순매도가 금액 기준으로 계속되는지, 그리고 지수 반등이 업종 breadth로 확산되는지."
+  ],
+
+  "risks": [
+    "오늘 브리프는 injected script의 Naver Finance/Yonhap same-date 데이터에 한정합니다. 업종별·기관/개인 세부 수급과 최종 국고채 종가는 미확인입니다.",
+    "Naver/Hana 16:26 USD/KRW는 posted rate 참고값이며, 정상 브리프의 FX 기준은 연합뉴스 15:30 종가 1,541.8원입니다.",
+    "전일 급락 뒤 반등을 구조적 위험선호 회복으로 확정하지 않습니다. 환율 안정, 외국인 수급, 변동성지수 하락이 같이 확인돼야 합니다.",
+    "이 브리프는 투자 권유나 매매 지시가 아니라 금리·환율·변동성 민감도 점검입니다."
+  ],
+
+  "quality": [
+    { "label": "Status", "value": "정상 브리프 가능" },
+    { "label": "Confirmed", "value": "KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가, USD/KRW 15:30 종가" },
+    { "label": "미확인", "value": "업종별 등락, 기관/개인 세부 수급, 최종 국고채 종가" },
+    { "label": "Source/date", "value": "Naver Finance · Naver/Hana Bank · 연합뉴스 RSS · 2026-06-24" }
+  ]
+}

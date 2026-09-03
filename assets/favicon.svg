@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Noah Market Briefs">
+  <!-- 브랜드 마크(assets/brand/mark.svg)의 16px 대응 축약본.
+       탭에서 뭉개지지 않도록 괘선을 1줄로 줄이고 획을 굵혔다. -->
+  <rect width="32" height="32" rx="7" fill="#0b0f17"/>
+
+  <!-- 마켓 와이어 -->
+  <path d="M7 18.5L11 14.5L14.5 17L18.5 11L22 13.5L25.5 7.5"
+        fill="none" stroke="#ecc67e" stroke-width="3.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 종가 등불 -->
+  <circle cx="25.5" cy="7.5" r="3.1" fill="#ecc67e"/>
+
+  <!-- 원장 괘선 -->
+  <path d="M7 25H25" stroke="#c79a4e" stroke-width="2.6" stroke-linecap="round" opacity=".6"/>
+</svg>

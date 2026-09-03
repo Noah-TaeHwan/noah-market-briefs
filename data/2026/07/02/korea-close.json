@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "slug": "2026-07-02-kr-close",
+  "date": "2026-07-02",
+  "market_code": "KR",
+  "window_code": "close",
+  "status": "live",
+  "out_path": "2026/07/02/korea-close.html",
+  "title": "한국 시장 마감 — 2026-07-02",
+  "market": "Korea",
+  "window": "KRX close + 1h",
+  "note": "Source: Naver Finance · Naver/Hana Bank market index · 연합뉴스 economy RSS",
+  "generated": "Generated KST 2026-07-02 16:58",
+  "source": "Naver Finance daily index table · Naver Finance market index / Hana Bank posted rate · Yonhap economy RSS",
+  "data_quality": "부분 — KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가 확인; USD/KRW는 2026.07.02 16:57 Naver/Hana posted rate만 확인되고 서울외환시장 15:30 공식 종가는 injected context에 없음; 국고채 3년물 headline 확인",
+  "use": "시장 민감도 일지",
+  "takeaway": "반도체 대형주 급락이 KOSPI200과 선물까지 밀어내며 한국 위험선호가 크게 훼손됐고, 환율은 16:57 Naver/Hana posted rate 기준 1,548.90원으로 높은 레벨에 머물렀지만 15:30 공식 종가는 이번 데이터에서 미확인입니다.",
+  "changes": [
+    {
+      "dir": "down",
+      "text": "KOSPI는 전일 -2.04%에서 오늘 -7.89%로 낙폭이 커졌고, KOSPI200도 -2.58%에서 -8.67%로 대형주 충격이 확대됐습니다."
+    },
+    {
+      "dir": "down",
+      "text": "KOSDAQ은 전일 +1.44% 반등에서 오늘 -6.74% 급락으로 돌아서, 전일의 중소형 예외 반등도 유지되지 못했습니다."
+    },
+    {
+      "dir": "flat",
+      "text": "환율은 전일 15:30 공식 종가와 같은 기준 비교가 불가합니다. 오늘 injected context에는 16:57 Naver/Hana posted rate 1,548.90원만 있어 장후 참고값으로만 둡니다."
+    }
+  ],
+  "metrics": [
+    {
+      "name": "KOSPI",
+      "value": "7,648.09",
+      "tone": "down",
+      "note": "-655.32 / -7.89% · Naver Finance daily index table, 2026.07.02"
+    },
+    {
+      "name": "KOSDAQ",
+      "value": "866.72",
+      "tone": "down",
+      "note": "-62.63 / -6.74% · Naver Finance daily index table, 2026.07.02"
+    },
+    {
+      "name": "KOSPI200",
+      "value": "1,219.62",
+      "tone": "down",
+      "note": "-115.74 / -8.67% · Naver Finance daily index table, 2026.07.02"
+    },
+    {
+      "name": "KOSPI200 선물",
+      "value": "1,240.90",
+      "tone": "down",
+      "note": "-102.35 / -7.62% · Naver Finance daily index table, 2026.07.02"
+    },
+    {
+      "name": "USD/KRW 15:30 종가",
+      "value": "미확인",
+      "tone": "flat",
+      "note": "injected context에 서울외환시장 15:30 공식 종가 없음; Naver/Hana posted rate는 공식 종가 대체 불가"
+    },
+    {
+      "name": "USD/KRW 16:57 참고",
+      "value": "1,548.90원",
+      "tone": "warn",
+      "note": "-3.60원 · Naver Finance market index / Hana Bank posted rate, 2026.07.02 16:57 KST; 15:30 공식 종가 아님"
+    },
+    {
+      "name": "채권시장",
+      "value": "국고채 3년 3.747%",
+      "tone": "up",
+      "note": "연합뉴스 2026.07.02 16:41 KST: 국고채 금리 일제히 하락, 3년물 연 3.747%"
+    },
+    {
+      "name": "선물/옵션",
+      "value": "KOSPI200 선물 -7.62%",
+      "tone": "warn",
+      "note": "Naver Finance daily index table, 2026.07.02; 연합뉴스 16:47 KST 변동성지수 하락 headline, 수치 미확인"
+    },
+    {
+      "name": "외국인 수급",
+      "value": "외국인 순매도 headline",
+      "tone": "warn",
+      "note": "연합뉴스 2026.07.02 16:09 KST: 외국인 순매도 속 환율 이틀째 1,550원대; 순매도 금액은 injected context에 없음"
+    },
+    {
+      "name": "섹터/대형주",
+      "value": "삼성전자 -9%, SK하이닉스 -14.5% headline",
+      "tone": "down",
+      "note": "연합뉴스 2026.07.02 15:39 KST 속보 및 16:23 KST 종합: 반도체 추락에 지수 급락"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "반도체 대형주 충격",
+      "text": "연합뉴스는 삼성전자 9% 급락, SK하이닉스 14.5% 폭락 마감을 보도했습니다. KOSPI200 -8.67%, KOSPI200 선물 -7.62%와 맞물려 오늘 하락의 중심은 대형 반도체였습니다."
+    },
+    {
+      "label": "환율·외국인 수급 스트레스",
+      "text": "연합뉴스는 외국인 순매도 속 환율이 이틀째 1,550원대라고 보도했습니다. 다만 이번 injected context에는 15:30 공식 환율 종가가 없어 환율 숫자는 16:57 Naver/Hana posted rate로만 제한합니다."
+    },
+    {
+      "label": "금리 하락과 주가 급락의 동시 발생",
+      "text": "국고채 3년물이 3.747%로 하락했다는 headline이 있어, 오늘은 금리 상승보다 주식·환율·파생 스트레스가 더 직접적인 할인율 압력으로 보입니다."
+    }
+  ],
+  "theses": [],
+  "watch": [
+    "USD/KRW 15:30 공식 종가 확보: 1,550원대 안착인지, 장후 posted rate처럼 되돌림이 이어지는지.",
+    "KOSPI200 선물과 basis·옵션/변동성 headline: 선물 -7.62%가 추가 헤지 수요로 이어지는지.",
+    "국고채 3년·10년 수익률: 주식 급락을 안전자산 금리 하락이 계속 흡수하는지, 환율 스트레스와 충돌하는지.",
+    "반도체 대형주 급락이 하루 shock인지, 외국인 순매도와 함께 대형주 리더십 훼손으로 이어지는지."
+  ],
+  "risks": [
+    "오늘 브리프는 injected script의 Naver Finance/Naver-Hana/Yonhap same-date 데이터에 한정합니다.",
+    "서울외환시장 15:30 USD/KRW 공식 종가는 injected context에 없으므로 정상 환율 종가 브리프 요건은 부분 미충족입니다.",
+    "옵션/내재변동성 수치, 주체별 상세 순매수 금액은 미확인입니다.",
+    "이 브리프는 투자 권유나 매매 지시가 아니라 금리·환율·파생·브레드스 민감도 점검입니다."
+  ],
+  "quality": [
+    {
+      "label": "Status",
+      "value": "부분 브리프 — 공식 15:30 FX 종가 미확인"
+    },
+    {
+      "label": "Confirmed",
+      "value": "KOSPI/KOSDAQ/KOSPI200/KOSPI200 선물 same-date 종가; Naver/Hana USD/KRW 16:57 posted rate; 국고채 3년물 headline"
+    },
+    {
+      "label": "미확인",
+      "value": "서울외환시장 USD/KRW 15:30 공식 종가, 옵션/내재변동성 수치, 주체별 상세 순매수 금액"
+    },
+    {
+      "label": "Source/date",
+      "value": "Naver Finance · Naver/Hana Bank market index · Yonhap economy RSS · 2026-07-02"
+    }
+  ],
+  "next_hypotheses": [
+    {
+      "hypothesis": "공식 USD/KRW 15:30 종가가 1,550원대 위에 남으면 외국인 수급 스트레스 headline이 다음 한국장에도 이어지는지 확인한다.",
+      "observable": "USD/KRW 15:30 공식 종가, 외국인 현물/선물 순매도 방향과 가능하면 금액, 장후 posted rate 되돌림 여부",
+      "invalidation": "USD/KRW 공식 종가가 1,550원 아래로 내려가거나 외국인 순매수/선물 basis 안정이 동반되면 환율발 수급 스트레스 가설은 약해진다.",
+      "horizon": "next KR close"
+    },
+    {
+      "hypothesis": "KOSPI200 선물 -7%대 급락이 하루짜리 현물 충격이 아니라 헤지 압력 지속으로 이어지는지 확인한다.",
+      "observable": "KOSPI200 선물 등락률, basis, 옵션/내재변동성 또는 변동성 headline, 프로그램/외국인 선물 수급",
+      "invalidation": "현물 반등과 함께 선물 basis가 안정되고 변동성 headline이 진정되면 헤지 압력 지속 가설은 약해진다.",
+      "horizon": "next KR session / next KR close"
+    },
+    {
+      "hypothesis": "반도체 대형주 급락이 대형주 리더십 훼손으로 확산되는지, 아니면 단일 섹터 shock으로 흡수되는지 확인한다.",
+      "observable": "삼성전자·SK하이닉스 후속 등락, KOSPI200 vs KOSDAQ 상대 움직임, 업종 breadth, 외국인 대형주 수급 headline",
+      "invalidation": "반도체 반등과 KOSDAQ/KOSPI breadth 동반 회복이 확인되면 전시장 확산 가설은 약해진다.",
+      "horizon": "next KR close"
+    }
+  ],
+  "today_learning": [
+    "같은 날짜 수동 재실행은 `next KR close` 가설을 실제 검증한 것으로 보지 않는다. 다음 영업일 같은 윈도에서 공식 환율 종가·수급 금액·선물 basis를 대조해야 한다.",
+    "환율·수급 스트레스 가설은 환율 레벨만으로는 약하다. 공식 15:30 종가와 외국인 현물/선물 수급 금액이 함께 있어야 강도 판단이 가능하다."
+  ]
+}

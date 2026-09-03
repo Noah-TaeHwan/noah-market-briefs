@@ -431,6 +431,13 @@ class TestCssHasNewStyles(unittest.TestCase):
         self.assertGreater(css.rfind(override), css.find(".idx.feature .iname{font-size:11.5px"))
         self.assertGreater(css.rfind(single_override), css.rfind(override))
 
+    def test_latest_focus_and_freshness_styles_exist(self):
+        css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
+        for selector in (".latest-focus", ".focus-kicker", ".focus-meta", ".coverage-summary", ".focus-action"):
+            self.assertIn(selector, css)
+        self.assertIn('[data-freshness="latest"]', css)
+        self.assertIn('[data-freshness="older"]', css)
+
 
 class TestTemplateV2Robustness(unittest.TestCase):
     """v2 새 필드의 잘못된 모양이 빌드를 죽이지 않고 관대/안전하게 처리되는지(adversarial)."""
@@ -717,7 +724,7 @@ class TestEvidenceFirstIndex(unittest.TestCase):
         self.assertLess(page.index('data-slot="KR-preopen"'), page.index('data-slot="KR-close"'))
         self.assertIn("아직 기록 없음", page)
         self.assertIn('data-stale-date="2026-07-17"', page)
-        self.assertIn("오래된 기록", page)
+        self.assertIn("이전 기준일", page)
         self.assertNotIn("live-dot", page)
 
     def test_archive_groups_and_filter_accessibility_markup(self):
@@ -727,11 +734,53 @@ class TestEvidenceFirstIndex(unittest.TestCase):
         ]
         page = B.build_index_html(records)
         self.assertIn('<nav class="site-nav" aria-label="주요 탐색">', page)
-        self.assertIn('class="skip-link" href="#latest"', page)
+        self.assertIn('class="skip-link" href="#latest-focus"', page)
         self.assertIn('id="archive-result-count" role="status" aria-live="polite"', page)
         self.assertIn('class="archive-group" data-date="2026-07-17"', page)
         self.assertIn("group.hidden=visible===0", page)
         self.assertIn("방법론·검증 코드", page)
+
+    def test_current_focus_foregrounds_latest_record_across_fixed_slots(self):
+        records = [
+            self._rec("KR", "preopen", "2026-07-17"),
+            self._rec("KR", "close", "2026-07-16"),
+            self._rec("US", "preopen", "2026-09-03", status="partial"),
+            self._rec("US", "close", "2026-07-17"),
+        ]
+        page = B.build_index_html(records)
+        focus = page[page.index('class="latest-focus'):page.index('class="latest-section"')]
+        self.assertIn("US preopen 2026-09-03", focus)
+        self.assertIn('href="/market-briefs/2026/09/03/US-preopen.html"', focus)
+        self.assertIn("부분 공개", focus)
+        self.assertIn("기준일 2026-09-03", focus)
+
+    def test_latest_context_and_card_freshness_are_textual(self):
+        legacy_preopen = self._rec("KR", "preopen", "2026-07-17")
+        legacy_preopen["schema_version"] = 2
+        legacy_close = self._rec("KR", "close", "2026-07-16")
+        legacy_close["schema_version"] = 2
+        records = [
+            legacy_preopen,
+            legacy_close,
+            self._rec("US", "preopen", "2026-09-03", status="partial"),
+        ]
+        page = B.build_index_html(records)
+        self.assertIn("4개 창구 중 3개 기록", page)
+        self.assertIn("2개 레거시 미검증", page)
+        self.assertIn("1개 부분 공개", page)
+        self.assertIn('data-freshness="latest"', page)
+        self.assertIn('data-freshness="older"', page)
+        self.assertIn('data-freshness="missing"', page)
+        self.assertIn("가장 최근 기준일", page)
+        self.assertIn("이전 기준일", page)
+        self.assertIn("기록 없음", page)
+
+    def test_current_focus_handles_empty_latest_slots(self):
+        page = B.build_index_html([])
+        focus = page[page.index('class="latest-focus'):page.index('class="latest-section"')]
+        self.assertIn("아직 읽을 검증 기록 없음", focus)
+        self.assertIn("기록 없음", page)
+        self.assertIn('data-freshness="missing"', page)
 
     def test_latest_card_accessible_name_contains_visible_label(self):
         """최신 카드 링크의 accessible name이 화면 라벨을 포함한다."""

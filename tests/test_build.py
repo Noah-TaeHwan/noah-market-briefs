@@ -551,6 +551,11 @@ class TestPublicBriefV3BuildGate(unittest.TestCase):
                          "metric_id": "metric-kospi", "label": "KOSPI", "unit": "points",
                          "delta": "-4.91%", "as_of": "2026-07-07T07:00:00Z",
                          "source_ids": ["source-public"], "evidence_status": "confirmed"}],
+            "missing_data": [
+                {"label": "코스피", "reason": "빌드 픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+                {"label": "USD/KRW", "reason": "빌드 픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+                {"label": "VKOSPI", "reason": "빌드 픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+            ],
         }
 
     def test_invalid_v3_is_rejected_and_valid_v3_uses_session_date(self):

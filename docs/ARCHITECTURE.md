@@ -155,6 +155,18 @@ receipt preimage를 함께 대조한 경우에만 가능합니다.
 개인 보유명, 계좌, 포지션, Strategy/Investor Context, 내부 workflow/artifact/snapshot/dataset/calculation ID,
 로컬 경로와 `.tradingcodex` 경로는 공개 필드에 허용하지 않습니다.
 
+### 3.5 세션 최소 슬롯
+
+`schema_version == 3`인 레코드는 아래 세 슬롯을 침묵하지 않습니다. 값은 없어도 됩니다. 슬롯마다 정규 `metric_id` 또는 표의 **완전 일치** `missing_data.label`이 있어야 합니다. 묶음 라벨은 커버가 아닙니다.
+
+| 슬롯 | `metric_id` | US missing label | KR missing label |
+|---|---|---|---|
+| equity | `metric-session-equity` | `S&P 500` | `코스피` |
+| fx | `metric-session-fx` | `USD/KRW` | `USD/KRW` |
+| vol | `metric-session-vol` | `VIX` | `VKOSPI` |
+
+환율은 USD/KRW만 씁니다. parse된 `metrics[].as_of`는 `cutoff_at_utc`보다 늦을 수 없습니다. verifier는 `status`를 슬롯 채움에 따라 바꾸지 않습니다.
+
 ## 4. 검증과 실패 폐쇄
 
 `scripts/verify_brief.py`는 다음을 검사합니다.
@@ -165,6 +177,7 @@ receipt preimage를 함께 대조한 경우에만 가능합니다.
 4. 모든 claim/metric/분석 항목의 source 참조
 5. 공개 payload의 내부 식별자·경로·개인정보 패턴
 6. 정정 상태의 필수 정정 필드
+7. V3 세션 세 슬롯 침묵 금지, 메트릭 `as_of` ≤ `cutoff_at_utc`
 
 `scripts/build.py`는 JSON 파싱 실패 또는 verifier ERROR가 있는 레코드를 **출력에서 제외**하고 stderr에 거부 수를
 기록합니다. 한 레코드가 전체 아카이브 생성을 중단시키지는 않지만, 그 레코드가 조용히 공개되는 일도 없습니다.

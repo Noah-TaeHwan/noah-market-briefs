@@ -291,7 +291,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     def item_evidence(item: dict) -> str:
         """항목별 근거 상태를 색상 외 한국어 텍스트로 표시한다."""
         status = str(item.get("evidence_status", "not_proven"))
-        label = {"confirmed": "확인", "partial": "일부", "not_proven": "미검증"}.get(status, "미검증")
+        label = {"confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증"}.get(status, "미검증")
         return f'<span class="item-evidence {esc(status)}">{label}</span>'
 
     def kicker():
@@ -601,8 +601,9 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             rows.append(
                 f'<li>{item_evidence(item)}<span>{pesc(item["text"])} {source_refs(item)}</span></li>'
             )
-        return (f'<section class="section"><h2>반대 근거</h2><ul class="counterevidence-list">{"".join(rows)}</ul></section>'
-                if rows else "")
+        if rows:
+            return (f'<section class="section"><h2>반대 근거</h2><ul class="counterevidence-list">{"".join(rows)}</ul></section>')
+        return '<section class="section"><h2>반대 근거</h2><p class="empty-state">반대 근거 없음</p></section>'
 
     def reviews_section() -> str:
         """v3 reviews를 근거·판단·학습 순서로 렌더한다."""
@@ -671,10 +672,14 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                 if not isinstance(source, dict):
                     continue
                 anchor = _source_anchor(source.get("source_id"))
+                as_of = str(source.get("as_of", "") or "").strip() or "미기록"
+                retrieved = str(source.get("retrieved_at", "") or "").strip() or "미기록"
+                raw_status = str(source.get("status", "") or "").strip()
+                status_label = {"confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증"}.get(raw_status, raw_status or "미기록")
                 rows.append(
                     f'<li id="{esc(anchor)}"><a href="{esc(source.get("url", ""))}">'
                     f'{pesc(source.get("publisher", "출처"))} · {pesc(source.get("title", ""))}</a>'
-                    f'<span>{pesc(source.get("as_of", ""))} · {pesc(source.get("status", ""))}</span></li>'
+                    f'<span>기준 {pesc(as_of)} · 수집 {pesc(retrieved)} · {pesc(status_label)}</span></li>'
                 )
             source_html = f'<ul class="source-list">{"".join(rows)}</ul>' if rows else '<p>공개 출처 없음</p>'
         quality = quality_section()
@@ -700,7 +705,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return f'<nav class="adjacent-nav" aria-label="인접 브리프">{"".join(links)}</nav>' if links else ""
 
     takeaway = payload.get("summary", payload.get("takeaway", ""))
-    meta_takeaway = (f"레거시 미검증 · {takeaway}" if takeaway else "레거시 미검증") if is_legacy else takeaway
+    meta_takeaway = (f"과거 기록 · 원문 링크 없음 · {takeaway}" if takeaway else "과거 기록 · 원문 링크 없음") if is_legacy else takeaway
     favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"
     rss_rel = index_rel.rsplit("/", 1)[0] + "/rss.xml" if "/" in index_rel else "rss.xml"
     canonical_url = page_context.get("canonical_url") or (
@@ -713,10 +718,14 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     evidence_labels = {"confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증"}
     status = str(payload.get("status", "기록"))
     evidence = "archive_unverified" if is_legacy else str(payload.get("evidence_status", "not_proven"))
-    evidence_label = "레거시 · 원문 출처 링크 미제공" if is_legacy else evidence_labels.get(evidence, evidence)
+    evidence_label = "과거 기록 · 원문 링크 없음" if is_legacy else evidence_labels.get(evidence, evidence)
     date = payload.get("market_session_date", payload.get("date", "날짜 미기록"))
     correction = payload.get("correction_note", "")
     correction_html = f'<p class="correction-note"><b>정정</b> {pesc(correction)}</p>' if correction else ""
+    cutoff_at = str(payload.get("cutoff_at_utc", "") or "").strip() or "미기록"
+    market_tz = str(payload.get("market_timezone", "") or "").strip()
+    tz_suffix = f' · {pesc(market_tz)}' if market_tz else ''
+    cutoff_html = f'<p class="cutoff-line">기준일 {pesc(date)} · 데이터 마감 {pesc(cutoff_at)}{tz_suffix}</p>'
 
     body_blocks = "\n".join(b for b in [
         market_board(),
@@ -769,6 +778,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <div class="kicker">{kicker()}</div>
 <h1>{_h1_html(_public_text(payload.get("title","시장 브리프")))}</h1>
 <div class="brief-status" aria-label="브리프 상태"><span>{pesc(date)}</span><span class="status-text {esc(status)}">{pesc(status_labels.get(status, status))}</span><span class="evidence-text {esc(evidence)}">{pesc(evidence_label)}</span></div>
+{cutoff_html}
 {correction_html}
 <p class="takeaway" data-label="한 줄 결론">{pesc(takeaway)}</p>
 </section>

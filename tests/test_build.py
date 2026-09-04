@@ -771,7 +771,7 @@ class TestEvidenceFirstIndex(unittest.TestCase):
         ]
         page = B.build_index_html(records)
         self.assertIn("4개 창구 중 3개 기록", page)
-        self.assertIn("2개 레거시 미검증", page)
+        self.assertIn("2개 과거 기록 · 원문 링크 없음", page)
         self.assertIn("1개 부분 공개", page)
         self.assertIn('data-freshness="latest"', page)
         self.assertIn('data-freshness="older"', page)
@@ -821,7 +821,7 @@ class TestEvidenceFirstDetail(unittest.TestCase):
         legacy = render({"schema_version": 2, "title": "레거시", "takeaway": "과거 요약"})
         v3 = render({"schema_version": 3, "title": "V3", "summary": "검증 요약"})
         for attribute in ('name="description"', 'property="og:description"'):
-            self.assertIn(f'<meta {attribute} content="레거시 미검증 · 과거 요약"', legacy)
+            self.assertIn(f'<meta {attribute} content="과거 기록 · 원문 링크 없음 · 과거 요약"', legacy)
             self.assertIn(f'<meta {attribute} content="검증 요약"', v3)
         self.assertNotIn("레거시 미검증 · 검증 요약", v3)
 
@@ -879,8 +879,8 @@ class TestEvidenceFirstDetail(unittest.TestCase):
                          "status": "confirmed"}],
         })
         self.assertLess(page.index("주장과 해석"), page.index("반대 근거"))
-        self.assertIn('<span class="item-evidence confirmed">확인</span>', page)
-        self.assertIn('<span class="item-evidence partial">일부</span>', page)
+        self.assertIn('<span class="item-evidence confirmed">근거 확인</span>', page)
+        self.assertIn('<span class="item-evidence partial">근거 일부</span>', page)
         self.assertIn('<span class="item-evidence not_proven">미검증</span>', page)
         self.assertIn("반대 데이터", page)
         anchor = _source_anchor("s1")
@@ -965,7 +965,7 @@ class TestEvidenceFeedsAndStatuses(unittest.TestCase):
             self.assertIn(label, badge)
             if status in {"failed", "skipped_market_closed"}:
                 self.assertNotIn('status-badge live', badge)
-        self.assertIn("레거시 미검증", B.status_badge({"schema_version": 2, "status": "live"}))
+        self.assertIn("과거 기록 · 원문 링크 없음", B.status_badge({"schema_version": 2, "status": "live"}))
 
     def test_latest_json_and_rss_are_deterministic_and_legacy_safe(self):
         legacy_v1 = self._rec("KR", "preopen", "live", version=1,

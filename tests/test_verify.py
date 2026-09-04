@@ -79,6 +79,20 @@ def _valid_v3_record():
             "as_of": "2026-07-07T07:00:00Z", "source_ids": ["source-market-close"],
             "evidence_status": "confirmed",
         }],
+        "missing_data": [
+            {"label": "코스피", "reason": "픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+            {"label": "USD/KRW", "reason": "픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+            {"label": "VKOSPI", "reason": "픽스처 세션 슬롯 커버", "evidence_status": "not_proven"},
+        ],
+    }
+
+
+def _session_metric(metric_id: str, as_of: str = "2026-07-07T07:00:00Z") -> dict:
+    """세션 슬롯 커버용 최소 메트릭."""
+    return {
+        "metric_id": metric_id, "label": metric_id, "value": "1", "unit": "x",
+        "delta": "0", "as_of": as_of, "source_ids": ["source-market-close"],
+        "evidence_status": "confirmed",
     }
 
 
@@ -167,6 +181,43 @@ class TestPublicBriefV3(unittest.TestCase):
 
     def test_valid_v3_record_has_no_errors(self):
         self.assertEqual(self._errors(_valid_v3_record()), [])
+
+    def test_v3_silent_session_slots_are_error(self):
+        rec = _valid_v3_record()
+        rec.pop("missing_data", None)
+        errors = self._errors(rec)
+        for metric_id in ("metric-session-equity", "metric-session-fx", "metric-session-vol"):
+            self.assertTrue(any(metric_id in message for message in errors), metric_id)
+
+    def test_v3_session_slots_covered_by_missing_data_pass(self):
+        self.assertEqual(self._errors(_valid_v3_record()), [])
+
+    def test_v3_session_slots_covered_by_three_metrics_pass(self):
+        rec = _valid_v3_record()
+        rec["metrics"] = [
+            _session_metric("metric-session-equity"),
+            _session_metric("metric-session-fx"),
+            _session_metric("metric-session-vol"),
+        ]
+        rec.pop("missing_data", None)
+        self.assertEqual(self._errors(rec), [])
+
+    def test_v3_two_metrics_and_one_missing_pass(self):
+        rec = _valid_v3_record()
+        rec["metrics"] = [
+            rec["metrics"][0],
+            _session_metric("metric-session-equity"),
+            _session_metric("metric-session-fx"),
+        ]
+        rec["missing_data"] = [
+            {"label": "VKOSPI", "reason": "테스트", "evidence_status": "not_proven"},
+        ]
+        self.assertEqual(self._errors(rec), [])
+
+    def test_v3_metric_as_of_after_cutoff_is_error(self):
+        rec = _valid_v3_record()
+        rec["metrics"][0]["as_of"] = "2026-07-07T07:30:00Z"
+        self.assertTrue(any("as_of" in message and "cutoff" in message for message in self._errors(rec)))
 
     def test_v3_rejects_unknown_top_level_field(self):
         rec = _valid_v3_record()
@@ -259,7 +310,12 @@ class TestPublicBriefV3(unittest.TestCase):
             "reviews": [{"review_id": "review-1", "hypothesis_id": "hyp-1", "verdict": "부분 적중",
                          "evidence": "근거", "reason": "이유", "lesson": "교훈",
                          "source_ids": ["source-market-close"], "evidence_status": "confirmed"}],
-            "missing_data": [{"label": "수급", "reason": "공개 시차", "evidence_status": "not_proven"}],
+            "missing_data": [
+                {"label": "코스피", "reason": "공개 시차", "evidence_status": "not_proven"},
+                {"label": "USD/KRW", "reason": "공개 시차", "evidence_status": "not_proven"},
+                {"label": "VKOSPI", "reason": "공개 시차", "evidence_status": "not_proven"},
+                {"label": "수급", "reason": "공개 시차", "evidence_status": "not_proven"},
+            ],
             "quality": [{"label": "source/date", "value": "same-date"}],
             "risks": ["변동성 확대"], "today_learning": ["공개 근거를 재확인"],
         })

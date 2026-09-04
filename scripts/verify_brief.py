@@ -70,6 +70,18 @@ V3_HYPOTHESES_REQUIRED = {"hypothesis_id", "text", "observable", "invalidation",
 V3_REVIEWS_REQUIRED = {"review_id", "hypothesis_id", "verdict", "evidence", "reason", "lesson", "source_ids", "evidence_status"}
 V3_MISSING_DATA_REQUIRED = {"label", "reason", "evidence_status"}
 V3_QUALITY_REQUIRED = {"label", "value"}
+V3_SESSION_MISSING_LABELS = {
+    "US": {
+        "metric-session-equity": "S&P 500",
+        "metric-session-fx": "USD/KRW",
+        "metric-session-vol": "VIX",
+    },
+    "KR": {
+        "metric-session-equity": "코스피",
+        "metric-session-fx": "USD/KRW",
+        "metric-session-vol": "VKOSPI",
+    },
+}
 V3_PRIVATE_KEY_NAMES = {
     "private", "internal", "private_id", "internal_id", "private_path", "internal_path", "workflow_id", "artifact_id",
     "snapshot_id", "dataset_id", "calculation_id", "account", "account_id", "portfolio", "portfolio_id",
@@ -422,6 +434,47 @@ def _check_v3_private_content(value: object, path: str = "$") -> list[Finding]:
     return findings
 
 
+def _utc_datetime(value: str) -> datetime:
+    """검증된 Z UTC 문자열을 aware datetime으로 바꾼다.
+
+    @param value `_is_utc_timestamp`을 통과한 Z 접미사 ISO-8601 문자열
+    @returns UTC aware datetime
+    """
+    return datetime.fromisoformat(f"{value[:-1]}+00:00")
+
+
+def _check_v3_session_slots(rec: dict) -> list[Finding]:
+    """V3 세션 세 슬롯이 메트릭 또는 정규 missing label로 커버되는지 검사한다.
+
+    @param rec PublicBriefV3 레코드
+    @returns 침묵 슬롯 Finding 목록
+    """
+    market = rec.get("market_code")
+    labels = V3_SESSION_MISSING_LABELS.get(market) if isinstance(market, str) else None
+    if not labels:
+        return []
+    metrics = rec.get("metrics") if isinstance(rec.get("metrics"), list) else []
+    missing = rec.get("missing_data") if isinstance(rec.get("missing_data"), list) else []
+    metric_ids = {
+        metric.get("metric_id")
+        for metric in metrics
+        if isinstance(metric, dict)
+    }
+    missing_labels = {
+        item.get("label")
+        for item in missing
+        if isinstance(item, dict)
+    }
+    findings = []
+    for metric_id, label in labels.items():
+        if metric_id not in metric_ids and label not in missing_labels:
+            findings.append(Finding(
+                Severity.ERROR,
+                f"v3 세션 슬롯 '{metric_id}' 침묵 (메트릭 또는 missing_data '{label}' 필요)",
+            ))
+    return findings
+
+
 def _is_utc_timestamp(value: object) -> bool:
     """Z 접미사의 실제 UTC ISO-8601 시각인지 확인한다."""
     if not isinstance(value, str) or not UTC_ISO_PATTERN.fullmatch(value):
@@ -532,8 +585,8 @@ def _check_v3_record(rec: dict) -> list[Finding]:
         if not _is_utc_timestamp(rec.get(key)):
             findings.append(Finding(Severity.ERROR, f"{key}: Z 접미사 UTC ISO-8601 필요"))
     if _is_utc_timestamp(rec.get("cutoff_at_utc")) and _is_utc_timestamp(rec.get("generated_at_utc")):
-        cutoff = datetime.fromisoformat(f"{rec['cutoff_at_utc'][:-1]}+00:00")
-        generated = datetime.fromisoformat(f"{rec['generated_at_utc'][:-1]}+00:00")
+        cutoff = _utc_datetime(rec["cutoff_at_utc"])
+        generated = _utc_datetime(rec["generated_at_utc"])
         if cutoff > generated:
             findings.append(Finding(Severity.ERROR, "cutoff_at_utc는 generated_at_utc보다 늦을 수 없음"))
     market_timezone = rec.get("market_timezone")
@@ -638,6 +691,9 @@ def _check_v3_record(rec: dict) -> list[Finding]:
                                             f"{prefix}.evidence_status '{evidence_status}' 무효"))
                 if not _is_utc_timestamp(metric.get("as_of")):
                     findings.append(Finding(Severity.ERROR, f"{prefix}.as_of: Z 접미사 UTC ISO-8601 필요"))
+                elif (_is_utc_timestamp(rec.get("cutoff_at_utc"))
+                      and _utc_datetime(metric["as_of"]) > _utc_datetime(rec["cutoff_at_utc"])):
+                    findings.append(Finding(Severity.ERROR, f"{prefix}.as_of는 cutoff_at_utc보다 늦을 수 없음"))
     for field, required, enums in (
         ("changes", V3_CHANGES_REQUIRED, {"dir": {"up", "down", "flat"}, "evidence_status": V3_EVIDENCE_STATUSES}),
         ("drivers", V3_DRIVERS_REQUIRED, {"evidence_status": V3_EVIDENCE_STATUSES}),
@@ -677,6 +733,7 @@ def _check_v3_record(rec: dict) -> list[Finding]:
         elif not _has_v3_confirmed_linked_evidence(rec, source_ids, sources):
             findings.append(Finding(Severity.ERROR, "confirmed evidence_status는 confirmed source_ids 연결 공개 근거 필요"))
     findings += _check_v3_private_content(rec)
+    findings += _check_v3_session_slots(rec)
     return findings
 
 

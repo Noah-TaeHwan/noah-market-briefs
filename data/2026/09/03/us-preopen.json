@@ -7,14 +7,14 @@
   "generated_at_utc": "2026-09-03T06:44:51Z",
   "cutoff_at_utc": "2026-09-01T14:00:00Z",
   "market_timezone": "America/New_York",
-  "status": "partial",
+  "status": "published",
   "evidence_status": "confirmed",
   "methodology_version": "public-brief-v3",
   "public_receipt_sha256": "7c84845508825386aec6485adf1aba610ff5513766ef14ee826485579a4c0237",
   "out_path": "2026/09/03/us-preopen.html",
   "title": "미국 시장 장전 — 노동수요 맥락 · 2026-09-03",
-  "summary": "미국 노동수요는 2026년 7월 기준 구인·채용·이직 지표가 대체로 큰 변화 없이 유지됐습니다. 이번 최소 slice에는 같은 세션의 주가지수·환율·변동성 데이터가 포함되지 않아 방향성 판단은 유보합니다.",
-  "next_handoff": "다음 장전 발행에서는 동일 세션의 공식 시장 지수·환율·변동성 출처를 별도 source review 후 추가합니다.",
+  "summary": "미국 노동수요는 2026년 7월 기준 구인·채용·이직 지표가 대체로 큰 변화 없이 유지됐습니다. 같은 레코드에 cutoff(2026-09-01T14:00Z) 이하 마지막 공식 일별 값인 S&P 500·USD/KRW·VIX를 넣었습니다. 이 값들은 2026-09-03 세션의 전일 종가(9/2)가 아닙니다.",
+  "next_handoff": "다음 장전에서는 cutoff를 당일 정규장 마감 이후로 둘 수 있을 때 세션 전일 종가로 갱신합니다.",
   "sources": [
     {
       "source_id": "source-bls-jolts-2026-07",
@@ -24,6 +24,36 @@
       "as_of": "2026-09-01T14:00:00Z",
       "retrieved_at": "2026-09-03T06:44:51Z",
       "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fred-sp500",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "title": "S&P 500 (SP500)",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "as_of": "2026-08-31T20:00:00Z",
+      "retrieved_at": "2026-09-04T07:50:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fred-dexkous",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "title": "South Korea / U.S. Foreign Exchange Rate (DEXKOUS)",
+      "url": "https://fred.stlouisfed.org/series/DEXKOUS",
+      "as_of": "2026-08-28T00:00:00Z",
+      "retrieved_at": "2026-09-04T07:50:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fred-vixcls",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "title": "CBOE Volatility Index: VIX (VIXCLS)",
+      "url": "https://fred.stlouisfed.org/series/VIXCLS",
+      "as_of": "2026-08-31T20:00:00Z",
+      "retrieved_at": "2026-09-04T07:50:00Z",
+      "source_type": "market_data",
       "status": "confirmed"
     }
   ],
@@ -75,6 +105,45 @@
       "note": "BLS 2026년 7월 발표값; 표의 (p) preliminary 표기",
       "source_ids": ["source-bls-jolts-2026-07"],
       "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-session-equity",
+      "label": "S&P 500",
+      "name": "S&P 500",
+      "value": "7,686.14",
+      "unit": "points",
+      "delta": "-0.33%",
+      "as_of": "2026-08-31T20:00:00Z",
+      "tone": "down",
+      "note": "FRED SP500 2026-08-31 종가. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님.",
+      "source_ids": ["source-fred-sp500"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW",
+      "name": "USD/KRW",
+      "value": "1,379.41",
+      "unit": "KRW per USD",
+      "delta": "-0.13%",
+      "as_of": "2026-08-28T00:00:00Z",
+      "tone": "down",
+      "note": "FRED DEXKOUS 2026-08-28. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가가 아님.",
+      "source_ids": ["source-fred-dexkous"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "metric_id": "metric-session-vol",
+      "label": "VIX",
+      "name": "VIX",
+      "value": "14.92",
+      "unit": "index",
+      "delta": "+3.40%",
+      "as_of": "2026-08-31T20:00:00Z",
+      "tone": "up",
+      "note": "FRED VIXCLS 2026-08-31. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님.",
+      "source_ids": ["source-fred-vixcls"],
+      "evidence_status": "confirmed"
     }
   ],
   "claims": [
@@ -111,13 +180,6 @@
       "evidence_status": "confirmed"
     }
   ],
-  "missing_data": [
-    {
-      "label": "같은 세션의 주가지수·환율·변동성",
-      "reason": "이번 최소 V3 slice는 BLS 공식 발표만 사용했으며, 동일 세션 시장가격 출처를 아직 연결하지 않았습니다.",
-      "evidence_status": "not_proven"
-    }
-  ],
   "quality": [
     {
       "label": "BLS 데이터 상태",
@@ -130,6 +192,7 @@
   ],
   "risks": [
     "BLS 수치는 preliminary로 이후 수정될 수 있습니다.",
-    "이 레코드는 단일 경제지표를 다루며 주식시장 방향성이나 투자 판단을 제공하지 않습니다."
+    "S&P 500·USD/KRW·VIX는 cutoff 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가가 아닙니다.",
+    "이 레코드는 투자 판단을 제공하지 않습니다."
   ]
 }

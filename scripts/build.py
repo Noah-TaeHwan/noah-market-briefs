@@ -53,7 +53,7 @@ STATUS_LABELS = {
 }
 EVIDENCE_LABELS = {
     "confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증",
-    "legacy_unverified": "레거시 미검증",
+    "legacy_unverified": "과거 기록 · 원문 링크 없음",
 }
 LINKED_EVIDENCE_FIELDS = ("claims", "metrics", "changes", "drivers", "counterevidence", "hypotheses", "reviews")
 
@@ -375,7 +375,7 @@ def build_index_html(records: list) -> str:
         focus_href = _public_href(latest_rec.get("out_path", ""))
         coverage = [f"기준일 {latest_date}", f"4개 창구 중 {filled}개 기록"]
         if legacy:
-            coverage.append(f"{legacy}개 레거시 미검증")
+            coverage.append(f"{legacy}개 과거 기록 · 원문 링크 없음")
         if partial:
             coverage.append(f"{partial}개 부분 공개")
         latest_focus = (
@@ -395,10 +395,10 @@ def build_index_html(records: list) -> str:
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Noah Market Briefs</title>
-<meta name="description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 반드시 출처와 날짜를 붙인다."/>
+<meta name="description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 원칙으로 출처와 시각을 붙인다."/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Noah Market Briefs"/>
-<meta property="og:description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 반드시 출처와 날짜를 붙인다."/>
+<meta property="og:description" content="미국·한국 시장 전·마감 브리핑을 날짜별로 누적하는 정적 아카이브. 숫자에는 원칙으로 출처와 시각을 붙인다."/>
 <meta property="og:url" content="{SITE_URL}"/>
 <meta property="og:image" content="{OG_IMAGE_URL}"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -423,7 +423,7 @@ def build_index_html(records: list) -> str:
 <div class="filterbar"><select id="f-market" aria-label="시장 필터"><option value="">전체 시장</option><option value="KR">한국</option><option value="US">미국</option></select><select id="f-window" aria-label="윈도 필터"><option value="">전체 시점</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select></div>
 <div class="archive-groups">{groups}</div>
 </section>
-<footer class="footer"><span>data/ JSON에서 자동 생성.</span><a href="{VERIFY_URL}">방법론·검증 코드</a></footer>
+<footer class="footer"><span>data/ JSON에서 자동 생성.</span><span>투자 권유 아님.</span><a href="{VERIFY_URL}">방법론·검증 코드</a></footer>
 </main>
 <script>
 (function(){{

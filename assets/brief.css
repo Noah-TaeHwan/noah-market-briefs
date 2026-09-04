@@ -646,7 +646,14 @@ button,select,.site-nav a,.card-permalink{min-height:44px}
 .status-badge.failed{color:var(--bad);border-color:rgba(216,99,74,.38)}
 .status-badge.skipped_market_closed{color:var(--flat)}
 .evidence-badge{color:var(--ink-soft)}
-.evidence-badge.legacy_unverified,.evidence-badge.not_proven{color:var(--warn)}
+.evidence-badge.legacy_unverified{color:var(--warn)}
+.evidence-badge.not_proven{color:var(--flat);border-style:dashed}
+.evidence-badge.confirmed,.item-evidence.confirmed{color:var(--good)}
+.evidence-text.confirmed{color:var(--good)}
+.evidence-text.partial{color:var(--warn)}
+.evidence-text.not_proven{color:var(--flat)}
+.evidence-badge.archive_unverified,.item-evidence.archive_unverified{color:var(--warn)}
+.empty-state{margin:0;color:var(--muted);font-size:14px}
 
 .archive-section{scroll-margin-top:12px}
 .archive-group{margin-top:20px}
@@ -661,7 +668,8 @@ button,select,.site-nav a,.card-permalink{min-height:44px}
 .brief-status>span{padding:5px 9px;border:1px solid var(--line);border-radius:999px}
 .status-text.failed{color:var(--bad)}
 .status-text.skipped_market_closed{color:var(--flat)}
-.status-text.corrected,.evidence-text.archive_unverified{color:var(--warn)}
+.status-text.corrected{color:var(--brass-bright)}
+.evidence-text.archive_unverified{color:var(--warn)}
 .correction-note,.archive-warning{padding:10px 12px;border-left:2px solid var(--warn);background:rgba(224,169,72,.07);font-size:14px}
 .source-refs{display:block;margin-top:6px;color:var(--muted);font:500 12px/1.5 var(--mono)}
 .source-refs a{color:var(--brass-bright);text-decoration:underline;text-underline-offset:3px}
@@ -670,7 +678,8 @@ button,select,.site-nav a,.card-permalink{min-height:44px}
 .claim-list li:first-child,.counterevidence-list li:first-child,.missing-list li:first-child,.source-list li:first-child{border-top:0}
 .claim-kind{flex:none;min-width:44px;padding:3px 7px;border:1px solid var(--line);border-radius:5px;color:var(--brass-bright);font:700 12px/1.3 var(--mono);text-align:center}
 .item-evidence{flex:none;padding:3px 7px;border:1px solid var(--line);border-radius:5px;color:var(--ink-soft);font:700 12px/1.3 var(--mono)}
-.item-evidence.partial,.item-evidence.not_proven{color:var(--warn)}
+.item-evidence.partial{color:var(--warn)}
+.item-evidence.not_proven{color:var(--flat);border-style:dashed}
 .handoff>p{color:var(--ink-soft)}
 .provenance{margin-top:24px;padding:0 18px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2)}
 .provenance summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--brass-bright);font:700 14px/1.4 var(--mono)}

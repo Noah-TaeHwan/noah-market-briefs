@@ -1,17 +1,26 @@
 # 공개 재출시 체크리스트
 
-## 현재 판정: BLOCKED
+## 현재 판정: 저장소·production은 나갔고, 자동화·카카오 unfurl은 남음
 
-과거 공개 Git 히스토리에서 공개하지 않아야 할 민감정보가 발견되었습니다. 현재 작업 트리의 값이 제거됐더라도
-이전 commit·tree·blob과 commit message는 clone, ref, cache를 통해 계속 도달할 수 있습니다.
+2026-09-03~09-04에 clean-room 공개 저장소 [`Noah-TaeHwan/noah-market-briefs`](https://github.com/Noah-TaeHwan/noah-market-briefs)
+(구 이름 `noah-market-briefs-public`, 같은 repo id)에 PR #1·#2·#3이 머지됐고,
+[공개 아카이브](https://noah-market-briefs.vercel.app/market-briefs)에 배포됐다. `main` push가 Vercel 배포를 트리거한다.
 
-이 문서에는 실제 이름, 값, 경로를 기록하지 않습니다. 정리가 끝나기 전에는 **push, production deploy,
-링크 재홍보, 자동 발행을 하지 않습니다.**
+아래 본문의 **옛 공개 원격 history hit → BLOCKED** 는 그 전환을 막던 당시 기록이다.
+그 원격은 지금 [`noah-market-briefs-archived`](https://github.com/Noah-TaeHwan/noah-market-briefs-archived)로 옮겨 아카이브했다.
+제품 코드 작업은 archived 레포에서 이어가지 않는다.
+
+아직 READY가 아닌 이유(남은 게이트):
+
+- 카카오톡 production unfurl 실측
+- 자동화 스케줄러 활성 증거 — [자동화 운영 계약](AUTOMATION.md)
+
+코드 변경·PR·사람 승인 후 `main` 머지는 이 저장소에서 진행한다.
+자동화 재개와 공개 링크 재홍보만 위 게이트에 묶인다. 이 문서에는 실제 이름, 값, 민감 경로를 기록하지 않는다.
 
 ## 권장 전략: clean-room 새 public repo
 
-공개 이력이 짧고 현재 트리가 작으므로, 기존 공개 원격의 history rewrite보다 **검증된 현재 트리만으로 새 공개
-저장소를 만드는 방식**을 우선합니다. 기존 공개 원격은 private 전환·archive·삭제 등 선택한 차단 조치를 완료합니다.
+이 전략은 2026-09-03에 실행됐다. 결과물이 현재 저장소다. 같은 절차로 **또 다른** 공개 레포를 만들지 않는다.
 
 history rewrite는 기존 clone, fork, pull request, tag, release, Actions artifact, deployment cache까지 함께 통제할 수
 있고 사용자가 그 비용을 명시적으로 승인한 경우에만 대안으로 사용합니다. force push는 기본 선택이 아닙니다.
@@ -32,7 +41,8 @@ history rewrite는 기존 clone, fork, pull request, tag, release, Actions artif
 - [ ] GitHub fork, PR ref, release asset, Actions artifact, Pages/Vercel cache의 잔존 가능성을 확인했다.
 - [ ] 스캔 결과에는 민감한 원문을 복사하지 않고 **범위, 도구 버전, 시각, hit count**만 receipt로 남겼다.
 
-현재 이 단계의 기존 공개 history hit가 0이 아니므로 재출시는 계속 BLOCKED입니다.
+당시 이 단계의 기존 공개 history hit가 0이 아니어서 **그 원격에 이어서 재출시하는 경로**는 BLOCKED였다.
+그 원격은 archived로 옮겼고, 공개 작업면은 이 clean-room 저장소다.
 
 ## 3. clean-room 후보 만들기
 
@@ -92,7 +102,8 @@ history rewrite는 기존 clone, fork, pull request, tag, release, Actions artif
 
 ## 재출시 완료 기준
 
-다음이 모두 있어야 상태를 `READY`로 바꿀 수 있습니다.
+공개 저장소와 production 아카이브는 2026-09-03에 나갔다. 아래 7항이 모두 있어야
+이 문서의 판정을 `READY`(자동화·재홍보 포함)로 바꾼다.
 
 1. clean-room 원격 all-ref 민감정보 스캔 0건
 2. 테스트·verifier·결정적 build receipt
@@ -102,4 +113,5 @@ history rewrite는 기존 clone, fork, pull request, tag, release, Actions artif
 6. production 브라우저와 카카오톡 unfurl 실측
 7. 중복 없는 단일 스케줄러 활성화 receipt
 
-그 전까지 판정은 **BLOCKED**입니다.
+2026-09-04 기준 1–5는 closeout receipt로 채워졌고, **6의 카카오 unfurl과 7의 자동화는 아직 없다.**
+그 두 항목이 비어 있다고 코드 PR을 막지 않는다. 자동화 재개와 링크 재홍보만 막는다.

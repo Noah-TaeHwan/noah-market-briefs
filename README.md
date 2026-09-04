@@ -5,7 +5,7 @@
 <p align="center"><em>숫자에는 반드시 출처와 시각을.</em></p>
 
 <p align="center">
-  <a href="https://github.com/Noah-TaeHwan/noah-market-briefs-public/actions/workflows/ci.yml"><img src="https://github.com/Noah-TaeHwan/noah-market-briefs-public/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/Noah-TaeHwan/noah-market-briefs/actions/workflows/ci.yml"><img src="https://github.com/Noah-TaeHwan/noah-market-briefs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://noah-market-briefs.vercel.app/market-briefs"><img src="https://img.shields.io/badge/공개%20아카이브-열기-c79a4e" alt="공개 아카이브"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/코드-MIT-blue" alt="코드 라이선스 MIT"></a>
   <img src="https://img.shields.io/badge/python-3.11%20%E2%80%93%203.13-blue" alt="Python 3.11 through 3.13">
@@ -15,12 +15,11 @@
 한국·미국 시장의 **장전과 마감**을 같은 형식으로 남기는 근거 우선(evidence-first) 정적 아카이브입니다.
 독자는 결론만 보는 대신 **기준 시각, 공개 출처, 근거 상태, 반대 근거, 미확인 항목**을 함께 확인할 수 있습니다.
 
-> **현재 상태 (2026-09-03):** 이 clean-room 후보에는 2026-06-23부터 **2026-09-03**까지 66건이 있습니다.
-> 65건은 v1/v2 레거시이고, 2026-09-03 미국 장전 1건은 BLS 공식 출처를 연결한 부분 V3입니다.
-> 정기 자동 발행은 아직 활성으로 인정하지 않으며, 새 원격·production 공개는 zero-hit/privacy와 별도 QA 뒤에 진행합니다.
-
-기존 공개 주소는 **[noah-market-briefs.vercel.app/market-briefs](https://noah-market-briefs.vercel.app/market-briefs)**입니다.
-다만 현재 커밋의 production deployment receipt와 카카오톡 링크 미리보기(unfurl)는 아직 **미검증(NOT_PROVEN)**입니다.
+> **현재 상태 (2026-09-04):** 코드 정본은 이 저장소 [`Noah-TaeHwan/noah-market-briefs`](https://github.com/Noah-TaeHwan/noah-market-briefs)입니다.
+> 옛 이름 `noah-market-briefs-public`은 같은 레포로 리다이렉트됩니다. 제품 작업은 [`noah-market-briefs-archived`](https://github.com/Noah-TaeHwan/noah-market-briefs-archived)에서 이어가지 않습니다.
+> 브리프는 2026-06-23부터 **2026-09-03**까지 66건입니다. 65건은 v1/v2 레거시, 2026-09-03 미국 장전 1건은 V3입니다.
+> production은 **[공개 아카이브](https://noah-market-briefs.vercel.app/market-briefs)**에 나와 있습니다. `main` push가 Vercel 배포를 트리거합니다.
+> 정기 자동 발행과 카카오톡 production unfurl은 아직 **미검증(NOT_PROVEN)**이며 켜지 않습니다.
 
 <p align="center">
   <img src="docs/images/index.png" width="49%" alt="한국·미국 최신 4개 세션과 날짜별 아카이브 화면">
@@ -114,7 +113,7 @@ git diff --check
 - 최신 V3 4개: `https://noah-market-briefs.vercel.app/market-briefs/latest.json`
 - V3 RSS: `https://noah-market-briefs.vercel.app/market-briefs/rss.xml`
 
-production 배포 확인 전에는 두 URL의 가용성도 미검증으로 취급합니다.
+두 URL은 production에 배포되어 있습니다. 머신 피드는 V3만 내보내므로, V3가 한 건뿐인 지금은 슬롯 placeholder·빈 RSS가 정상입니다.
 
 ## 자동화와 공개
 
@@ -132,8 +131,7 @@ TradingCodex Stop hook 선행 blocker는 [자동화 운영 계약](docs/AUTOMATI
 3. 카카오톡 대화에 URL을 붙여 넣습니다.
 4. 링크 제목·설명·이미지와 대상 날짜가 맞는지 확인한 뒤 전송합니다.
 
-현재는 production deploy와 카카오톡 production unfurl 실측이 남아 있습니다. 재출시 전에는
-링크가 열린다는 가정, 미리보기가 맞다는 가정, 최신 데이터라는 가정을 하지 않습니다.
+카카오톡 production unfurl은 아직 미검증입니다. 미리보기 이미지·제목이 맞다는 가정으로 재홍보하지 않습니다.
 
 ## 출처와 권리
 
@@ -159,8 +157,8 @@ TradingCodex Stop hook 선행 blocker는 [자동화 운영 계약](docs/AUTOMATI
 - verifier는 스키마·참조·시각·공개 경계를 확인하지만 원출처의 진위, 데이터 라이선스, 해석의 타당성을 자동 판정하지 않습니다.
 - 공개 머신 피드는 레거시를 제외하고 허용된 V3 메타데이터와 V3 요약만 제공합니다.
 - 휴장, 시차, 미국 조기 종료, 출처 지연은 별도 운영 판단이 필요합니다.
-- 현재 자동화 활성 상태, production 배포 receipt, 카카오톡 unfurl은 미검증입니다.
-- clean-room zero-hit receipt와 production QA가 끝날 때까지 push·deploy·재홍보하지 않습니다.
+- 현재 자동화 활성 상태와 카카오톡 unfurl은 미검증입니다. 스케줄러는 켜지 않습니다.
+- 공개 코드 변경은 이 저장소의 feature 브랜치 + PR로 진행하고, `main` 머지 뒤에만 production에 반영합니다.
 
 ## 면책
 

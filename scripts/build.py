@@ -28,7 +28,7 @@ from verify_brief import Severity, verify_record  # noqa: E402
 REPO = Path(__file__).resolve().parent.parent
 SITE_URL = "https://noah-market-briefs.vercel.app/market-briefs"
 OG_IMAGE_URL = f"{SITE_URL}/docs/images/index.png"
-VERIFY_URL = "https://github.com/Noah-TaeHwan/noah-market-briefs-public/blob/main/scripts/verify_brief.py"
+VERIFY_URL = "https://github.com/Noah-TaeHwan/noah-market-briefs/blob/main/scripts/verify_brief.py"
 PUBLIC_PATH_PREFIX = "/market-briefs"
 
 # 머신 코드 → 사람이 읽는 라벨 (index 카드/필터용)

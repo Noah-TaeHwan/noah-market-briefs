@@ -22,10 +22,10 @@
     {
       "market": "US",
       "window": "preopen",
-      "date": "2026-09-03",
-      "title": "미국 시장 장전 — 노동수요 맥락 · 2026-09-03",
-      "path": "2026/09/03/us-preopen.html",
-      "status": "corrected",
+      "date": "2026-09-06",
+      "title": "미국 시장 장전 — 2026-09-06",
+      "path": "2026/09/06/us-preopen.html",
+      "status": "partial",
       "evidence_status": "partial"
     },
     {

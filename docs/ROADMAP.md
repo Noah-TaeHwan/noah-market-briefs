@@ -18,7 +18,7 @@
 |---|---|---|---|
 | 1 | V3 수동 발행 E2E 1건 | 다음 시장 세션 | verifier 통과 + 결정적 빌드 + 사람 승인 |
 | 2 | 공개 검증 (카카오 unfurl 실측) | Phase 1 | production URL·unfurl 실측 |
-| 3 | 자동화 활성화 (Orca 택1) | Phase 1·2 | 4작업 enabled + 반대편 disabled 증거 |
+| 3 | 자동화 활성화 (Orca 택1, S0→S3) | Phase 1·2 | 게이트 S0 구현 + S1 섀도 20 + S2 draft 20 + S3 조건부 자동 |
 | 4 | 렌더러·UI 개선 | Phase 1·2 | V3 본문 기준 시각 검증 |
 
 Phase 1의 수동 발행 결과물을 Phase 3 dry run으로 그대로 쓴다 (중복 작업 없음).

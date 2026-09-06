@@ -97,6 +97,16 @@ market=US, window=close, timezone=America/New_York, scheduled_local_time=16:15
 
 사람은 source rights, 공개 금지 정보, 상태, diff, receipt를 검토하고 별도로 발행을 승인합니다.
 
+## 5-2. 자동 발행 예외 (S3 단계에서만)
+
+`scripts/gate_check.py` G1~G9가 전부 PASS인 후보에 한해 main 머지와 배포를 자동화할 수 있다.
+정정(`corrected`), `partial` 이하, 첫등장 출처, FRED·유료·키 필요 출처는 항상 인간 gate이며,
+Slack·카카오톡·이메일 전송은 자동화하지 않는다(회수 불가).
+
+단계: S0 게이트 구현 → S1 섀도 20세션(판정만 기록) → S2 draft-PR 20세션 →
+S3 KR 장전 1슬롯 자동 → 20회 무사고 후 확대. 연속 2 FAIL 또는 incident 1건이면
+자동 발행을 중단하고 수동 재활성화가 필요하며, kill-switch는 4작업 일괄 disable 1회로 동작한다.
+
 ## 6. 활성화 증거
 
 네 작업을 켠 뒤 다음 receipt가 모두 있어야 “활성”이라고 말할 수 있습니다.

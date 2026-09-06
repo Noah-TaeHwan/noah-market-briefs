@@ -222,3 +222,12 @@ CI는 별도 verifier 명령을 먼저 실행하므로 저장소 안의 ERROR �
 
 구 공개 원격(현 archived)의 과거 Git 히스토리 민감정보로 인한 원격 전환 경로는 **BLOCKED**로 종결됐습니다.
 현 clean-room 저장소는 RELAUNCH-CHECKLIST §5–§6 receipt 완료 상태이며, 이후 push·deploy도 같은 §7 게이트를 거칩니다.
+
+## 8. 롤백
+
+문제 있는 배포는 덮어쓰지 않고 되돌립니다. force push는 사용하지 않습니다.
+
+1. `git revert <SHA>`로 되돌리는 커밋을 `<type>/<short>` 피처 브랜치에 만들고 PR로 머지합니다.
+2. `main` 머지가 Vercel production 재배포를 트리거합니다. 브리프 데이터 오류는 revert 대신
+   `status: corrected` 정정 레코드(§6)로 바로잡습니다.
+3. PR 머지 전 §7-5항(사용자 승인)은 그대로 거칩니다. 머지 후 §7의 1·2·6·7항(테스트·verifier·deployment receipt·URL 실측)을 다시 확인합니다.

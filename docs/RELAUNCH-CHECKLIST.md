@@ -58,7 +58,7 @@ history rewrite는 기존 clone, fork, pull request, tag, release, Actions artif
 - [ ] [출처 및 권리 매트릭스](SOURCES.md)의 source review를 각 공개 브리프에 적용했다.
 - [ ] 코드 MIT와 브리프 콘텐츠·인용 데이터 권리를 구분했다.
 - [ ] 권리 미확정 콘텐츠는 All rights reserved로 표시하거나 공개 후보에서 제외했다.
-- [ ] 브리프에 개인 Investor Context, 보유·계좌·포지션, 내부 TCX ID·경로가 없다.
+- [ ] 브리프에 개인 Investor Context, 보유·계좌·포지션, 내부 ID·경로가 없다.
 - [ ] 투자 권유·매매 지시·목표가·자동 실거래 기능으로 오해될 표현이 없다.
 
 ## 5. 새 원격과 사용자 승인
@@ -93,8 +93,7 @@ history rewrite는 기존 clone, fork, pull request, tag, release, Actions artif
 
 ## 8. 자동화 재개
 
-- [ ] [자동화 운영 계약](AUTOMATION.md)의 TradingCodex Stop hook blocker가 공식 core 수정으로 해결됐다.
-- [ ] Codex 재시작 후 새 task에서 유효한 Stop JSON과 오류 부재를 실측했다.
+- [ ] [자동화 운영 계약](AUTOMATION.md) §6의 활성화 receipt가 모두 있다.
 - [ ] Orca와 Codex Scheduled Tasks 중 하나만 선택했고 반대편 disabled 증거가 있다.
 - [ ] 네 작업의 시간·timezone·프롬프트를 확인했다.
 - [ ] 첫 수동 run은 JSON 후보까지만 만들고 자동 commit/push/deploy/send가 없었다.

@@ -30,3 +30,36 @@ commit/push/deploy/메신저 전송은 사람 승인. 스케줄러는 켜지 않
 PublicBriefV3 계약은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 개인 보유·계좌·내부 경로·Investor Context를 JSON/HTML/커밋에 넣지 않는다.
 `data/.named-holdings.local`은 gitignore. 없어도 verifier는 돌아가고, 가드만 꺼진다.
+
+## 에이전트 라우팅 (2026-09-06)
+
+`.opencode/agents/` 273개 전체를 상시 쓰지 않는다. DAILY 8개만 쓰고 나머지는 LIBRARY로 둔다.
+파일 삭제 없음. 새 에이전트 파일 없음. 이 섹션이 라우터다.
+
+### DAILY (매 세션 로드 후보)
+
+| 작업 | 에이전트 파일 | 근거 |
+|---|---|---|
+| 최소 diff 수정 | `engineering-minimal-change-engineer.md` | CI `git diff --exit-code`, 생성물 손수정 금지 |
+| PR 리뷰 | `engineering-code-reviewer.md` | 피처 브랜치 + PR 강제 |
+| 파이프라인 구조 변경 | `engineering-backend-architect.md` | `verify→build→HTML/JSON/RSS`, stdlib only |
+| verifier·시크릿 스캔 | `security-appsec-engineer.md` | fail-closed, 배포 전 민감정보 스캔 0건 |
+| 공개 경계 가드 | `engineering-privacy-engineer.md` | 보유·계좌·내부 경로·Investor Context 금지 |
+| 브리프 내용 근거 합성 | `research-synthesist.md` | claims·반대근거·가설·`not_proven` 규율 |
+| 출처 권리 게이트 | `support-legal-compliance-checker.md` | `docs/SOURCES.md` 체크리스트 |
+| 회귀 테스트 | `testing-test-automation-engineer.md` | `unittest discover`, py3.11–3.13 CI |
+
+### LIBRARY (필요할 때만, 검색·수동 지정)
+
+- `finance-investment-researcher.md` — 기본 출력(Buy/Hold/Sell·목표가)은 이 저장소 면책 위반이라 **사용 금지**.
+  수치 해석이 필요하면 `research-synthesist.md` 경유로 근거 합성만 한다.
+- `engineering-devops-automator.md` — commit/push/deploy/전송은 사람 승인, 스케줄러 OFF(`docs/AUTOMATION.md`)라 평시 미사용.
+- `engineering-technical-writer.md` — `docs/` 변경시에만.
+- `testing-accessibility-auditor.md`, `marketing-seo-specialist.md` — 렌더러·CSS·OG/unfurl 변경시에만.
+- 나머지 260+ (k8s·solidity·게임·위챗·라라벨 등) — off-stack. 삭제하지 않고 두되 로드하지 않는다.
+
+### 금지선 (에이전트 공통)
+
+- 투자 권유·매매 지시·목표가·종목 추천 출력 금지. 근거 부족은 `partial`/`not_proven` + `missing_data[]`.
+- `data/.named-holdings.local`·credential·내부 ID를 JSON/HTML/커밋/로그에 넣지 않는다.
+- 생성 HTML 직접 수정 금지. 입력 JSON 또는 렌더러 수정 후 전체 재빌드.

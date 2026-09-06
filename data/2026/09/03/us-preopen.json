@@ -1,14 +1,17 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-us-2026-09-03-preopen",
+  "brief_id": "brief-us-2026-09-03-preopen-c1",
   "market_code": "US",
   "window_code": "preopen",
   "market_session_date": "2026-09-03",
   "generated_at_utc": "2026-09-03T06:44:51Z",
   "cutoff_at_utc": "2026-09-01T14:00:00Z",
   "market_timezone": "America/New_York",
-  "status": "published",
-  "evidence_status": "confirmed",
+  "status": "corrected",
+  "evidence_status": "partial",
+  "correction_note": "FRED 3종(SP500·DEXKOUS·VIXCLS)의 재배포 권리 미확인으로 관련 SourceRef·metrics를 confirmed에서 partial로 하향. 수치 자체는 FRED 조회값 그대로 유지. 원소유자 허가 확인 후 복원.",
+  "corrected_at": "2026-09-06T02:15:05Z",
+  "supersedes": "brief-us-2026-09-03-preopen",
   "methodology_version": "public-brief-v3",
   "public_receipt_sha256": "7c84845508825386aec6485adf1aba610ff5513766ef14ee826485579a4c0237",
   "out_path": "2026/09/03/us-preopen.html",
@@ -34,7 +37,7 @@
       "as_of": "2026-08-31T20:00:00Z",
       "retrieved_at": "2026-09-04T07:50:00Z",
       "source_type": "market_data",
-      "status": "confirmed"
+      "status": "partial"
     },
     {
       "source_id": "source-fred-dexkous",
@@ -44,7 +47,7 @@
       "as_of": "2026-08-28T00:00:00Z",
       "retrieved_at": "2026-09-04T07:50:00Z",
       "source_type": "market_data",
-      "status": "confirmed"
+      "status": "partial"
     },
     {
       "source_id": "source-fred-vixcls",
@@ -54,7 +57,7 @@
       "as_of": "2026-08-31T20:00:00Z",
       "retrieved_at": "2026-09-04T07:50:00Z",
       "source_type": "market_data",
-      "status": "confirmed"
+      "status": "partial"
     }
   ],
   "metrics": [
@@ -115,9 +118,9 @@
       "delta": "-0.33%",
       "as_of": "2026-08-31T20:00:00Z",
       "tone": "down",
-      "note": "FRED SP500 2026-08-31 종가. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님.",
+      "note": "FRED SP500 2026-08-31 종가. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님. 재배포 권리 미확인으로 partial(2026-09-06).",
       "source_ids": ["source-fred-sp500"],
-      "evidence_status": "confirmed"
+      "evidence_status": "partial"
     },
     {
       "metric_id": "metric-session-fx",
@@ -128,9 +131,9 @@
       "delta": "-0.13%",
       "as_of": "2026-08-28T00:00:00Z",
       "tone": "down",
-      "note": "FRED DEXKOUS 2026-08-28. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가가 아님.",
+      "note": "FRED DEXKOUS 2026-08-28. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가가 아님. 재배포 권리 미확인으로 partial(2026-09-06).",
       "source_ids": ["source-fred-dexkous"],
-      "evidence_status": "confirmed"
+      "evidence_status": "partial"
     },
     {
       "metric_id": "metric-session-vol",
@@ -141,9 +144,9 @@
       "delta": "+3.40%",
       "as_of": "2026-08-31T20:00:00Z",
       "tone": "up",
-      "note": "FRED VIXCLS 2026-08-31. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님.",
+      "note": "FRED VIXCLS 2026-08-31. cutoff 2026-09-01T14:00Z 이하 마지막 공식 일별 값이며 2026-09-03 세션 전일 종가(9/2)가 아님. 재배포 권리 미확인으로 partial(2026-09-06).",
       "source_ids": ["source-fred-vixcls"],
-      "evidence_status": "confirmed"
+      "evidence_status": "partial"
     }
   ],
   "claims": [

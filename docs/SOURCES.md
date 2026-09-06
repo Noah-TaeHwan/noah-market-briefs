@@ -42,6 +42,8 @@ FRED는 여러 원출처의 시계열을 모읍니다. FRED에서 조회할 수 
 FRED API를 공개 제품에 사용한다면 공식 Terms가 요구하는 다음 고지도 표시합니다.
 “This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis.”
 
+시리즈별 확인 기록(2026-09-06): SP500·VIXCLS는 원소유자 사전 허가가 필요한 계열. DEXKOUS 포함 모든 FRED 시리즈는 확인 전 `confirmed` 금지.
+
 ## 애그리게이터와 라이브러리
 
 | 도구 | 허용 기본값 | 공개 전 필요한 것 |

@@ -31,8 +31,11 @@
     {
       "market": "US",
       "window": "close",
-      "status": "legacy_unverified",
-      "evidence_status": "legacy_unverified"
+      "date": "2026-09-06",
+      "title": "미국 시장 마감 — 2026-09-06",
+      "path": "2026/09/06/us-close.html",
+      "status": "partial",
+      "evidence_status": "partial"
     }
   ]
 }

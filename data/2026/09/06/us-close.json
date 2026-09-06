@@ -1,0 +1,80 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-06-close-shadow-1",
+  "market_code": "US",
+  "window_code": "close",
+  "market_session_date": "2026-09-06",
+  "generated_at_utc": "2026-09-06T20:17:13Z",
+  "cutoff_at_utc": "2026-09-06T20:17:13Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "4ac1c346b680f494273d3ac1e08c8859e44019541d1f52c407bfe133727638a6",
+  "out_path": "2026/09/06/us-close.html",
+  "title": "미국 시장 마감 — 2026-09-06",
+  "summary": "2026-09-06 16:15 ET 미국 장마감 섀도 후보. NYSE 공식 페이지 2곳을 직접 조회했으나 일요일 휴장이라 세션 수치 3종은 확보하지 못해 missing_data로 둔다.",
+  "next_handoff": "다음 정규 거래일 장마감 윈도에 공식 1차 출처의 세션 수치가 직접 조회되면 3슬롯을 실metric으로 갱신한다.",
+  "sources": [
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-06T20:17:13Z",
+      "retrieved_at": "2026-09-06T20:17:13Z",
+      "source_type": "market_data",
+      "status": "partial"
+    },
+    {
+      "source_id": "source-nyse-data-products",
+      "publisher": "New York Stock Exchange",
+      "title": "NYSE Data Products",
+      "url": "https://www.nyse.com/data-products/",
+      "as_of": "2026-09-06T20:17:13Z",
+      "retrieved_at": "2026-09-06T20:17:13Z",
+      "source_type": "market_data",
+      "status": "partial"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-direct-lookup-outcome",
+      "kind": "fact",
+      "text": "2026-09-06 16:15 ET 미국 장마감 윈도에 NYSE 공식 페이지 2곳을 직접 조회했다. 2026-09-06(일)은 정규 거래 요일이 아니고 2026-09-07(월)은 NYSE 공식 휴장일(Labor Day)이다. 세션 수치 3종은 확보하지 못했다.",
+      "as_of": "2026-09-06T20:17:13Z",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-nyse-data-products"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "changes": [],
+  "drivers": [],
+  "counterevidence": [],
+  "hypotheses": [],
+  "reviews": [],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용 불가. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "공식 1차 출처의 직접 조회로 세션 값을 확보하지 못함. FRED DEXKOUS는 재배포 권리 미확인으로 사용 불가.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용 불가. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [],
+  "risks": [
+    "이 기록의 수치는 미확보다. 투자 판단에 사용하지 않는다."
+  ],
+  "today_learning": []
+}

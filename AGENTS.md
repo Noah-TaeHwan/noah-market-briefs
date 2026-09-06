@@ -21,9 +21,11 @@
 
 ## 파이프라인
 
-`data/YYYY/MM/DD/<window>.json` → `scripts/verify_brief.py` → `scripts/build.py` → HTML/`latest.json`/`rss.xml`.
+정본 파일명: `korea-preopen.json` / `korea-close.json` / `us-preopen.json` / `us-close.json`.
+`data/YYYY/MM/DD/<정본이름>.json` → `scripts/verify_brief.py --strict` → `scripts/gate_check.py`(기록만) → `scripts/publish_brief.sh` → HTML/`latest.json`/`rss.xml`.
 런타임 의존성 0. `build.py`를 바꾸면 생성물을 다시 돌리고 CI의 `git diff --exit-code`가 통과해야 한다.
-commit/push/deploy/메신저 전송은 사람 승인. 스케줄러는 켜지 않는다 — [docs/AUTOMATION.md](docs/AUTOMATION.md).
+브리프 JSON과 생성 사이트 파일은 publish 스크립트가 올린다. 코드·문서 변경은 계속 피처 브랜치+PR.
+메신저 전송은 하지 않는다. 일일 스케줄은 [docs/AUTOMATION.md](docs/AUTOMATION.md).
 
 ## 공개 경계
 
@@ -53,7 +55,7 @@ PublicBriefV3 계약은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 - `finance-investment-researcher.md` — 기본 출력(Buy/Hold/Sell·목표가)은 이 저장소 면책 위반이라 **사용 금지**.
   수치 해석이 필요하면 `research-synthesist.md` 경유로 근거 합성만 한다.
-- `engineering-devops-automator.md` — commit/push/deploy/전송은 사람 승인, 스케줄러 OFF(`docs/AUTOMATION.md`)라 평시 미사용.
+- `engineering-devops-automator.md` — 스케줄러·publish 스크립트 장애 시에만. 전송 자동화와 `main` 직접 push는 금지.
 - `engineering-technical-writer.md` — `docs/` 변경시에만.
 - `testing-accessibility-auditor.md`, `marketing-seo-specialist.md` — 렌더러·CSS·OG/unfurl 변경시에만.
 - 나머지 260+ (k8s·solidity·게임·위챗·라라벨 등) — off-stack. 삭제하지 않고 두되 로드하지 않는다.

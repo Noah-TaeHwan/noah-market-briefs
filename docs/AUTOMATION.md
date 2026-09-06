@@ -1,39 +1,44 @@
 # 정기 시장 브리프 자동화 운영 계약
 
-현재 자동화는 **활성으로 인정하지 않습니다.** 실제 disabled receipt도 아직 없어 상태는 `NOT_PROVEN`이며,
-운영상 중지로 취급합니다. 공개 재출시 blocker가 해결될 때까지 새 정기 실행을
-만들거나 켜지 않습니다.
+하루 4회 Orca 작업이 후보 JSON을 쓰고 `scripts/publish_brief.sh`가 사이트에 올린다.
+G1–G9는 **기록만** 한다. 게이트가 HUMAN-GATE여도 `verify --strict`가 통과하면 그날 글은 발행한다.
+Slack·카카오톡·이메일은 자동 보내지 않는다. 보유 종목·Investor Context는 JSON/HTML/커밋에 넣지 않는다.
+
+끄려면 Orca 4작업을 한꺼번에 disable한다. Codex Scheduled Tasks와 동시에 켜지 않는다.
 
 ## 1. 스케줄러는 하나만
 
-기본 선택은 **Orca Automation**입니다. 대안은 **Codex Scheduled Tasks**입니다.
+기본은 **Orca Automation**이다. 대안은 **Codex Scheduled Tasks**다.
 
-- 두 시스템을 동시에 사용하지 않습니다.
-- 활성화 전, 선택하지 않은 스케줄러의 네 작업이 모두 `disabled` 또는 부재라는 현재 증거를 남깁니다.
-- 증거는 작업 ID, 스케줄, timezone, enabled/disabled 상태, 확인 시각을 포함한 export 또는 screenshot입니다.
-- 기존 실행 상태를 읽지 못하면 `NOT_PROVEN`으로 멈춥니다. 중복 가능성을 추정으로 넘기지 않습니다.
-- 스케줄러를 바꿀 때는 기존 네 작업 disable → disable 증거 확인 → 새 네 작업 생성 순서입니다.
+- 두 시스템을 동시에 사용하지 않는다.
+- 스케줄러를 바꿀 때는 기존 네 작업 disable → disable 증거 확인 → 새 네 작업 생성 순서다.
+- 기존 실행 상태를 읽지 못하면 `NOT_PROVEN`으로 멈춘다. 중복을 추정으로 넘기지 않는다.
 
 ## 2. 정확한 네 일정
 
-| 작업 | 현지 시각 | timezone | 출력 윈도 |
-|---|---:|---|---|
-| KR pre | 08:00 | `Asia/Seoul` | `KR / preopen` |
-| KR close | 15:45 | `Asia/Seoul` | `KR / close` |
-| US pre | 08:30 | `America/New_York` | `US / preopen` |
-| US close | 16:15 | `America/New_York` | `US / close` |
+| 작업 | 현지 시각 | timezone | 출력 윈도 | 호스트 cron (KST) |
+|---|---:|---|---|---|
+| KR pre | 08:00 | `Asia/Seoul` | `KR / preopen` | `0 8 * * *` |
+| KR close | 15:45 | `Asia/Seoul` | `KR / close` | `45 15 * * *` |
+| US pre | 08:30 | `America/New_York` | `US / preopen` | `30 21 * * *` |
+| US close | 16:15 | `America/New_York` | `US / close` | `15 5 * * *` |
 
-미국 작업은 고정 UTC가 아니라 `America/New_York`를 사용해 DST를 따릅니다. 서버 기본 timezone에 의존하지 않습니다.
+Orca CLI는 작업별 timezone이 없다. cron은 호스트 wall-clock(KST)이다. US 두 작업은 ET→KST로 환산한다.
+DST 의무: EST 전환일(2026-11-01) 전에 US cron을 +1시간(21:30→22:30, 05:15→06:15 KST)으로 옮긴다.
+
+정본 파일명:
+
+- `korea-preopen.json` / `korea-close.json` / `us-preopen.json` / `us-close.json`
+
+`close.json` 같은 오명은 발행 스크립트가 위 네 이름 중 하나로 고친다.
 
 ## 3. 저장 프롬프트 계약
 
-모든 작업의 저장 프롬프트 **첫 줄**은 정확히 다음과 같습니다.
+모든 작업의 저장 프롬프트 **첫 줄**은 정확히 다음과 같다.
 
 ```text
 시장 브리프 V3 후보 준비
 ```
-
-그 다음 줄부터 시장·윈도·cutoff·출력 계약을 적습니다.
 
 최소 공통 본문:
 
@@ -43,10 +48,16 @@
 개인 Investor Context, 개인 보유·계좌·포지션, 실거래 요청, 종목 추천·목표가를 사용하거나 출력하지 않는다.
 모든 숫자와 주장은 공개 SourceRef, as_of, retrieved_at, evidence_status를 가진다.
 근거가 부족하면 추정하지 말고 partial 또는 not_proven으로 표시한다.
-JSON 후보와 검증 결과까지만 준비한다. commit, push, deploy, Slack·카카오톡 전송은 하지 않는다.
+후보 JSON은 작업트리 내 data/YYYY/MM/DD/<정본이름>.json 경로에 작성한다.
+python3 scripts/verify_brief.py --strict와
+python3 scripts/gate_check.py <후보> --now <UTC-Z> --calendar <open|closed|unknown>를 실행한다.
+calendar는 해당 거래소 공식 캘린더로 확인하고, 미확인이면 unknown으로 둔다.
+verify --strict가 통과하면 bash scripts/publish_brief.sh --calendar <동일값> [--now <UTC-Z>] <후보> 를 호출한다.
+Slack·카카오톡·이메일 전송은 하지 않는다.
+최종 메시지로 PR URL과 G1..G9 기록을 보고한다.
 ```
 
-작업별로 다음 네 줄 중 하나를 공통 본문 뒤에 추가합니다.
+작업별로 다음 네 줄 중 하나를 공통 본문 뒤에 추가한다.
 
 ```text
 market=KR, window=preopen, timezone=Asia/Seoul, scheduled_local_time=08:00
@@ -55,68 +66,64 @@ market=US, window=preopen, timezone=America/New_York, scheduled_local_time=08:30
 market=US, window=close, timezone=America/New_York, scheduled_local_time=16:15
 ```
 
-저장 프롬프트와 자연어는 실행·실거래·발행 권한을 만들지 않습니다.
+자연어는 실거래 권한을 만들지 않는다. 사이트 발행은 위 스크립트만 한다.
 
 ## 4. 휴장·조기 종료·불완전 근거
 
 ### 휴장
 
-- 해당 거래소의 공식 캘린더로 휴장을 확인합니다.
-- 휴장이 확인되면 `status: "skipped_market_closed"`로 기록하고 거래가 있었던 것처럼 지표를 만들지 않습니다.
-- 캘린더를 확인하지 못하면 휴장으로 추정하지 않고 `NOT_PROVEN`으로 멈춥니다.
+- 해당 거래소의 공식 캘린더로 휴장을 확인하고 `--calendar closed|open|unknown`에 넣는다.
+- 휴장이어도 `verify --strict`가 통과하면 그날 후보는 발행한다. 게이트는 기록만.
+- 캘린더를 확인하지 못하면 휴장으로 추정하지 않고 `unknown`으로 둔다.
 
 ### 미국 조기 종료
 
-- 정규 스케줄을 영구 변경하지 않습니다.
-- 공식 NYSE 일정으로 확인한 날짜에만 **한 번짜리 override**를 사람 승인을 받아 만듭니다.
-- override와 기존 US close가 중복 실행되지 않는 disable/skip 증거를 남깁니다.
-- 다음 정상 거래일 전에 16:15 `America/New_York` 일정으로 복귀했는지 확인합니다.
+- 정규 스케줄을 영구 변경하지 않는다.
+- 공식 NYSE 일정으로 확인한 날짜에만 **한 번짜리 override**를 사람 승인을 받아 만든다.
+- override와 기존 US close가 중복 실행되지 않는 disable/skip 증거를 남긴다.
+- 다음 정상 거래일 전에 16:15 `America/New_York` 일정으로 복귀했는지 확인한다.
 
 ### partial / NOT_PROVEN
 
-- 일부 핵심 출처가 지연되면 확인된 범위만 `partial`로 기록하고 누락 이유를 `missing_data[]`에 남깁니다.
-- 핵심 사실을 뒷받침할 현재-run evidence가 없으면 `not_proven`으로 낮춥니다.
-- 실패를 이전 세션 값, 메모리, 개인 보유 정보로 메우지 않습니다.
-- retry는 같은 source의 일시 오류에만 bounded하게 사용하고, 증거 없이 성공 상태로 바꾸지 않습니다.
+- 일부 핵심 출처가 지연되면 확인된 범위만 `partial`로 기록하고 누락 이유를 `missing_data[]`에 남긴다.
+- 핵심 사실을 뒷받침할 현재-run evidence가 없으면 `not_proven`으로 낮춘다.
+- 실패를 이전 세션 값, 메모리, 개인 보유 정보로 메우지 않는다.
+- retry는 같은 source의 일시 오류에만 bounded하게 사용하고, 증거 없이 성공 상태로 바꾸지 않는다.
 
-## 5. 공개는 사람 gate
+## 5. 사이트 발행은 스크립트, 전송은 금지
 
-자동 작업이 허용되는 마지막 단계는 다음입니다.
+허용되는 마지막 자동 단계는 `scripts/publish_brief.sh`다.
 
 1. 공식 1차 출처 직접 조회 기반 PublicBriefV3 후보 작성
-2. `python3 scripts/verify_brief.py <candidate>` 결과 기록
-3. 로컬 정적 빌드 후보와 reviewable diff 준비
+2. `python3 scripts/verify_brief.py --strict` — 실패하면 발행 중단 (아카이브 보호)
+3. `python3 scripts/gate_check.py` — 결과만 로그. exit 1은 계속, exit 2(사용법)는 중단
+4. `data/<date>-<slug>` 브랜치에 오늘 JSON + 생성 HTML + 이웃 adjacent-nav HTML + `index.html`/`latest.json`/`rss.xml`을 올린다
+5. required CI(`verify` 3.11/3.12/3.13)가 초록이면 `gh pr merge --squash` (사람 PR 클릭 없음, `--admin` 금지)
 
-다음은 자동화하지 않습니다.
+자동화하지 않는다.
 
-- commit 또는 push
-- production deploy
 - Slack·카카오톡·이메일 전송
 - 공개 링크 재홍보
 - 실거래 ticket 작성·승인·제출 또는 실거래 API 호출
+- `main` 직접 push, 브랜치 보호 해제, required check 없이 머지
 
-사람은 source rights, 공개 금지 정보, 상태, diff, receipt를 검토하고 별도로 발행을 승인합니다.
+코드·문서 변경은 계속 `<type>/<short>` 피처 브랜치 + PR이다. 브리프 JSON과 생성 사이트 파일만 이 스크립트가 올린다.
 
-## 5-2. 자동 발행 예외 (S3 단계에서만)
+Vercel 빌드 명령은 없다. JSON만 올리면 화면이 안 바뀐다.
 
-`scripts/gate_check.py` G1~G9가 전부 PASS인 후보에 한해 main 머지와 배포를 자동화할 수 있다.
-정정(`corrected`), `partial` 이하, 첫등장 출처, FRED·유료·키 필요 출처는 항상 인간 gate이며,
-Slack·카카오톡·이메일 전송은 자동화하지 않는다(회수 불가).
+## 5-2. 폐기 — S3-only 자동 머지
 
-단계: S0 게이트 구현 → S1 섀도 20세션(판정만 기록) → S2 draft-PR 20세션 →
-S3 KR 장전 1슬롯 자동 → 20회 무사고 후 확대. 연속 2 FAIL 또는 incident 1건이면
-자동 발행을 중단하고 수동 재활성화가 필요하며, kill-switch는 4작업 일괄 disable 1회로 동작한다.
+예전 계약(G1–G9 전부 PASS일 때만 자동 머지, S0→S3 단계 상승)은 폐기했다.
+현재 계약은 §5 `always_publish`다. 게이트는 기록만.
 
-## 6. 활성화 증거
+## 6. 활성 증거와 kill-switch
 
-네 작업을 켠 뒤 다음 receipt가 모두 있어야 “활성”이라고 말할 수 있습니다.
+네 작업이 enabled이고 아래가 있으면 자동화를 활성으로 말한다.
 
-- 선택한 스케줄러 이름과 네 작업 ID
-- 각 cron/local time/timezone과 enabled 상태
-- 반대 스케줄러 네 작업의 disabled/absent 증거
-- 각 시장·윈도의 1회 수동 실행 결과와 조회 출처 기록(as_of/retrieved_at)
-- 생성된 V3 candidate의 verifier 결과
-- 자동 commit/push/deploy/send가 0회였다는 확인
-- 다음 실행 예정 시각
+- 스케줄러 이름 Orca, 작업 ID 네 개 — [docs/SHADOW-S1.md](SHADOW-S1.md)
+- 각 cron/local time과 enabled 상태
+- 반대 스케줄러(Codex Scheduled Tasks) 작업 정의 부재
+- leftover 착지: 2026-09-06 KR close → [PR #19](https://github.com/Noah-TaeHwan/noah-market-briefs/pull/19) · production `2026/09/06/korea-close.html`
+- 전송 자동화 0회
 
-이 중 하나라도 없으면 자동화 상태는 `NOT_PROVEN`입니다.
+kill-switch: Orca 4작업을 한꺼번에 disable. 새 스케줄러나 Codex cron을 만들지 않는다.

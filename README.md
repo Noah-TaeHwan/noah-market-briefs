@@ -17,9 +17,9 @@
 
 > **현재 상태 (2026-09-06):** 코드 정본은 이 저장소 [`Noah-TaeHwan/noah-market-briefs`](https://github.com/Noah-TaeHwan/noah-market-briefs)입니다.
 > 옛 이름 `noah-market-briefs-public`은 같은 레포로 리다이렉트됩니다. 제품 작업은 [`noah-market-briefs-archived`](https://github.com/Noah-TaeHwan/noah-market-briefs-archived)에서 이어가지 않습니다.
-> 브리프는 2026-06-23부터 **2026-09-03**까지 66건입니다. 65건은 v1/v2 레거시, 2026-09-03 미국 장전 1건은 `status: corrected` + `evidence_status: partial` V3입니다.
-> production은 **[공개 아카이브](https://noah-market-briefs.vercel.app/market-briefs)**에 나와 있습니다. `main` push가 Vercel 배포를 트리거합니다.
-> 정기 자동 발행과 카카오톡 production unfurl은 아직 **미검증(NOT_PROVEN)**이며 켜지 않습니다.
+> 레거시 v1/v2와 V3가 함께 있습니다. 라이브 V3는 2026-09-03 미국 장전, 2026-09-06 한국 마감, 2026-09-07 한국 장전입니다. 미국 마감 슬롯은 아직 `legacy_unverified` placeholder입니다.
+> production은 **[공개 아카이브](https://noah-market-briefs.vercel.app/market-briefs)**에 나와 있습니다. `main` 머지가 Vercel 배포를 트리거합니다.
+> 하루 4회 Orca가 후보를 쓰고 `scripts/publish_brief.sh`가 사이트로 올립니다. Slack·카카오톡·이메일은 자동 보내지 않습니다. 카카오톡 unfurl은 여전히 **미검증**입니다.
 
 <p align="center">
   <img src="docs/images/index.png" width="49%" alt="한국·미국 최신 4개 세션과 날짜별 아카이브 화면">
@@ -47,36 +47,35 @@
        │  공개 가능한 주장·출처만 선별하고 개인정보/내부 식별자를 제거
        ▼
 PublicBriefV3 JSON
-       │  scripts/verify_brief.py: 닫힌 스키마·시각·참조·비공개 패턴 검증
+       │  scripts/verify_brief.py --strict: 닫힌 스키마·시각·참조·비공개 패턴
+       │  scripts/gate_check.py: G1–G9 기록만 (실패해도 발행 계속)
        ▼
-scripts/build.py: ERROR 레코드 제외 + Python stdlib 정적 빌드
+scripts/publish_brief.sh: build.py + 피처 브랜치 + required CI + squash merge
        ▼
-HTML + index.html + latest.json + rss.xml
-       │  diff·receipt 검토와 사람 승인
-       ▼
-공개 배포
+HTML + index.html + latest.json + rss.xml → production
 ```
 
 - **직접 조회 세션**은 공식 1차 출처의 조회 결과와 as_of/retrieved_at 기록을 소유합니다. 자연어, 스케줄, 이 저장소는 실거래 권한을 만들지 않습니다.
 - **PublicBriefV3**는 공개 handoff 계약입니다. 내부 경로·ID·개인 보유·Investor Context를 공개 payload에 넣지 않습니다.
-- **verifier는 사실 판정기가 아닙니다.** 선언된 출처가 실제 주장을 뒷받침하는지까지 인증하지 않고, 형식과 참조 무결성 및 공개 금지 패턴을 검사합니다.
+- **verifier는 사실 판정기가 아닙니다.** 선언된 출처가 실제 주장을 뒷받침하는지까지 인증하지 않고, 형식과 참조 무결성 및 공개 금지 패턴을 검사합니다. `verify --strict` 실패만 발행을 막습니다.
 - `public_receipt_sha256`는 공개 handoff preimage를 식별하기 위한 필드입니다. 현재 verifier는 64자리 소문자 hex 형식만 확인하며 값을 재계산하거나 직접 조회 결과를 인증하지 않습니다.
-- **발행은 사람 승인 단계**입니다. 검증 통과가 곧 공개 승인 또는 투자 판단을 뜻하지 않습니다.
+- **당일 브리프 발행은 스크립트**입니다. G1–G9 HUMAN-GATE가 공개를 막지 않습니다. 투자 판단을 뜻하지도 않습니다. Slack·카카오·이메일 전송은 하지 않습니다.
 
-현재 65건은 PublicBriefV3 이전의 v1/v2 레거시입니다. 호환 렌더링은 유지하지만 UI에서 **레거시 미검증**으로 구분합니다.
-2026-09-03 미국 장전 1건은 BLS 공식 출처를 연결한 `partial` V3이며, 같은 세션의 시장가격은 미검증으로 남깁니다.
-머신 피드는 V3만 내보내므로, V3 레코드가 없는 현재 `latest.json`은 슬롯별 미검증 placeholder이고 RSS는 빈 channel일 수 있습니다.
-새 브리프는 V3 계약을 따라야 합니다. 필드와 책임 경계는 [아키텍처](docs/ARCHITECTURE.md)에 있습니다.
+레거시 v1/v2는 호환 렌더링을 유지하지만 UI에서 **레거시 미검증**으로 구분합니다.
+라이브 V3는 2026-09-03 미국 장전, 2026-09-06 한국 마감, 2026-09-07 한국 장전입니다. 미국 마감은 아직 placeholder입니다.
+머신 피드는 V3만 내보냅니다. 새 브리프는 V3 계약을 따릅니다. 필드와 책임 경계는 [아키텍처](docs/ARCHITECTURE.md)에 있습니다.
 
 ## 저장소 구조
 
 ```text
-data/YYYY/MM/DD/<window>.json  # 입력: 브리프 1건
-scripts/verify_brief.py        # 레코드·공개 경계 검증
-scripts/build.py               # 사이트, latest.json, RSS 생성
-scripts/render_market_brief.py # 상세 HTML 렌더러
+data/YYYY/MM/DD/<정본이름>.json  # korea-|us- + preopen|close.json
+scripts/verify_brief.py          # 레코드·공개 경계 검증
+scripts/gate_check.py            # G1–G9 기록만
+scripts/publish_brief.sh         # 검증·빌드·PR·squash merge
+scripts/build.py                 # 사이트, latest.json, RSS 생성
+scripts/render_market_brief.py   # 상세 HTML 렌더러
 assets/brief.css               # 반응형 디자인 시스템
-YYYY/MM/DD/<window>.html       # 생성된 상세 페이지
+YYYY/MM/DD/<정본이름>.html      # 생성된 상세 페이지
 index.html                     # 생성된 아카이브
 latest.json                    # 최신 V3 4개 세션의 공개 메타데이터
 rss.xml                        # 검증을 통과한 V3 공개 메타데이터 피드
@@ -113,16 +112,17 @@ git diff --check
 - 최신 V3 4개: `https://noah-market-briefs.vercel.app/market-briefs/latest.json`
 - V3 RSS: `https://noah-market-briefs.vercel.app/market-briefs/rss.xml`
 
-두 URL은 production에 배포되어 있습니다. 머신 피드는 V3만 내보내므로, V3가 한 건뿐인 지금은 슬롯 placeholder·빈 RSS가 정상입니다.
+두 URL은 production에 배포되어 있습니다. 머신 피드는 V3만 내보냅니다. 미국 마감 슬롯은 아직 placeholder입니다.
 
 ## 자동화와 공개
 
-정기 리서치는 **Orca 한 곳만 스케줄러로 사용**하는 것이 기본안입니다. 대안은 Codex Scheduled Tasks이지만
-두 스케줄러를 동시에 켜지 않습니다. 한국/미국 장전·마감 4회 일정, 휴장·조기 종료 처리는
-[자동화 운영 계약](docs/AUTOMATION.md)에 기록했습니다.
+정기 발행은 **Orca 한 곳만** 스케줄러로 씁니다. 대안은 Codex Scheduled Tasks이지만
+두 스케줄러를 동시에 켜지 않습니다. 한국/미국 장전·마감 4회, 휴장 캘린더, kill-switch는
+[자동화 운영 계약](docs/AUTOMATION.md)에 있습니다.
 
-자동 실행은 JSON 후보와 검증 결과까지만 준비합니다. commit, push, production deploy, Slack·카카오톡 공유는
-사람이 diff와 근거를 확인한 뒤 별도로 승인합니다.
+Orca가 후보 JSON을 쓰면 `scripts/publish_brief.sh`가 verify --strict → 빌드 → 피처 브랜치 → required CI → squash merge까지 합니다.
+사람 PR 클릭은 없습니다. Slack·카카오톡·이메일은 자동 보내지 않습니다.
+코드·문서 변경은 계속 피처 브랜치 + PR입니다. `main` 직접 push와 `--admin` 머지는 금지합니다.
 
 ## 카카오톡으로 공유하기
 
@@ -148,17 +148,17 @@ git diff --check
 1. 오류를 발견하면 원본 레코드를 조용히 덮어쓰지 않습니다.
 2. V3 정정 레코드는 `status: "corrected"`와 `correction_note`, `corrected_at`, `supersedes`를 포함합니다.
 3. 근거가 부족하면 `evidence_status: "not_proven"` 또는 `partial`로 낮춥니다.
-4. 재검증·재빌드 후 사람의 diff 승인을 거쳐 공개합니다.
+4. 재검증·재빌드 후 `publish_brief.sh`(브리프) 또는 피처 브랜치+PR(코드)로 공개합니다.
 5. 과거 판단이 단순히 빗나간 경우는 오류처럼 소급 수정하지 않고 가설 검토 기록으로 남깁니다.
 
 ## 알려진 한계
 
-- 현재 데이터 중 65건은 v1/v2 레거시이며 PublicBriefV3 provenance를 갖지 않습니다. 1건의 V3는 부분 공개입니다.
+- 대다수 레코드는 v1/v2 레거시이며 PublicBriefV3 provenance를 갖지 않습니다. 라이브 V3는 부분 공개(`partial`)입니다.
 - verifier는 스키마·참조·시각·공개 경계를 확인하지만 원출처의 진위, 데이터 라이선스, 해석의 타당성을 자동 판정하지 않습니다.
 - 공개 머신 피드는 레거시를 제외하고 허용된 V3 메타데이터와 V3 요약만 제공합니다.
-- 휴장, 시차, 미국 조기 종료, 출처 지연은 별도 운영 판단이 필요합니다.
-- 현재 자동화 활성 상태와 카카오톡 unfurl은 미검증입니다. 스케줄러는 켜지 않습니다.
-- 공개 코드 변경은 이 저장소의 feature 브랜치 + PR로 진행하고, `main` 머지 뒤에만 production에 반영합니다.
+- 휴장·출처 지연은 `--calendar`와 `partial`/`not_proven`으로 기록하고, verify --strict만 통과하면 그날 글은 발행합니다.
+- 카카오톡 unfurl은 미검증입니다. 전송 자동화는 켜지 않습니다.
+- 브리프 JSON·생성물은 publish 스크립트가 올립니다. 코드 변경은 feature 브랜치 + PR이고, `main` 머지 뒤에만 production에 반영합니다.
 
 ## 면책
 

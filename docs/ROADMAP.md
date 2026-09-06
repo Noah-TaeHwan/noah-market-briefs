@@ -2,6 +2,7 @@
 
 확정일: **2026-09-06**. 전체 순서를 고정한다. 페이즈를 건너뛰지 않는다.
 2026-09-06 개정: TradingCodex 의존 제거 (Phase 0 삭제, 구 §6 Stop hook blocker 소멸).
+2026-09-06 개정2: Phase 2 정정 — clean-room 이전은 9/3~4 완료済み. 남은 공개 검증은 카카오 unfurl 실측. 현재 트리 시크릿 스캔 0건.
 에이전트 라우팅은 [AGENTS.md](../AGENTS.md), 공개 계약은 [ARCHITECTURE.md](ARCHITECTURE.md),
 스케줄러 계약은 [AUTOMATION.md](AUTOMATION.md), 출처 게이트는 [SOURCES.md](SOURCES.md).
 
@@ -16,7 +17,7 @@
 | 순서 | 작업 | 선행 조건 | 성공 기준 |
 |---|---|---|---|
 | 1 | V3 수동 발행 E2E 1건 | 다음 시장 세션 | verifier 통과 + 결정적 빌드 + 사람 승인 |
-| 2 | 푸시 블로커 해소 + 공개 검증 | Phase 1 | zero-hit receipt + production URL·unfurl 실측 |
+| 2 | 공개 검증 (카카오 unfurl 실측) | Phase 1 | production URL·unfurl 실측 |
 | 3 | 자동화 활성화 (Orca 택1) | Phase 1·2 | 4작업 enabled + 반대편 disabled 증거 |
 | 4 | 렌더러·UI 개선 | Phase 1·2 | V3 본문 기준 시각 검증 |
 

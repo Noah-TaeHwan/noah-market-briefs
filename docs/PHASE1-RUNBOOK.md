@@ -41,6 +41,7 @@ git diff --check
 
 ## 3. 승인 전 게이트
 
+- [ ] KRX 공식 캘린더로 휴장 확인 (미확인 시 `NOT_PROVEN` 중단, 휴장 추정 금지)
 - [ ] verifier `--strict` 통과
 - [ ] 테스트 전부 통과
 - [ ] 민감정보 스캔 0건 (verifier + diff 육안 확인)

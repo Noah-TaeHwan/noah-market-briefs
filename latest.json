@@ -13,8 +13,11 @@
     {
       "market": "KR",
       "window": "close",
-      "status": "legacy_unverified",
-      "evidence_status": "legacy_unverified"
+      "date": "2026-09-06",
+      "title": "한국 시장 마감 — 2026-09-06",
+      "path": "2026/09/06/korea-close.html",
+      "status": "partial",
+      "evidence_status": "partial"
     },
     {
       "market": "US",

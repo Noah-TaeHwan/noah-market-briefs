@@ -8,9 +8,9 @@
 
 ## 현재 상태
 
-- 브리프 66건 중 65건은 v1/v2 레거시, 1건(2026-09-03 미국 장전)은 `partial` V3.
+- 브리프 66건 중 65건은 v1/v2 레거시, 1건(2026-09-03 미국 장전)은 `status: corrected` + `evidence_status: partial` V3.
 - `latest.json`은 슬롯 placeholder, RSS는 빈 channel이 정상.
-- 자동화 `NOT_PROVEN`, 스케줄러 OFF. 카카오 unfurl 미검증. 원격 히스토리 민감정보로 push 경로 BLOCKED.
+- 자동화 `NOT_PROVEN`, 스케줄러 OFF. 카카오 unfurl 미검증. 구 원격(현 archived) 이어쓰기 경로만 BLOCKED(종결). 현 clean-room 원격은 스캔 0건.
 
 ## 페이즈
 

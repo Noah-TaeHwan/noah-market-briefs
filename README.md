@@ -15,9 +15,9 @@
 한국·미국 시장의 **장전과 마감**을 같은 형식으로 남기는 근거 우선(evidence-first) 정적 아카이브입니다.
 독자는 결론만 보는 대신 **기준 시각, 공개 출처, 근거 상태, 반대 근거, 미확인 항목**을 함께 확인할 수 있습니다.
 
-> **현재 상태 (2026-09-04):** 코드 정본은 이 저장소 [`Noah-TaeHwan/noah-market-briefs`](https://github.com/Noah-TaeHwan/noah-market-briefs)입니다.
+> **현재 상태 (2026-09-06):** 코드 정본은 이 저장소 [`Noah-TaeHwan/noah-market-briefs`](https://github.com/Noah-TaeHwan/noah-market-briefs)입니다.
 > 옛 이름 `noah-market-briefs-public`은 같은 레포로 리다이렉트됩니다. 제품 작업은 [`noah-market-briefs-archived`](https://github.com/Noah-TaeHwan/noah-market-briefs-archived)에서 이어가지 않습니다.
-> 브리프는 2026-06-23부터 **2026-09-03**까지 66건입니다. 65건은 v1/v2 레거시, 2026-09-03 미국 장전 1건은 V3입니다.
+> 브리프는 2026-06-23부터 **2026-09-03**까지 66건입니다. 65건은 v1/v2 레거시, 2026-09-03 미국 장전 1건은 `status: corrected` + `evidence_status: partial` V3입니다.
 > production은 **[공개 아카이브](https://noah-market-briefs.vercel.app/market-briefs)**에 나와 있습니다. `main` push가 Vercel 배포를 트리거합니다.
 > 정기 자동 발행과 카카오톡 production unfurl은 아직 **미검증(NOT_PROVEN)**이며 켜지 않습니다.
 

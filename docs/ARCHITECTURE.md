@@ -1,7 +1,7 @@
 # Noah Market Briefs 아키텍처
 
-이 문서는 **내부 리서치와 공개 아카이브 사이의 경계**를 정의합니다. 현재 저장된 65건은 v1/v2 레거시이며,
-아래 PublicBriefV3 계약은 다음 브리프부터 적용할 공개 형식입니다.
+이 문서는 **내부 리서치와 공개 아카이브 사이의 경계**를 정의합니다. 현재 66건 중 65건은 v1/v2 레거시이며,
+1건(2026-09-03 미국 장전)은 V3입니다. 아래 PublicBriefV3 계약은 다음 브리프부터 적용할 공개 형식입니다.
 
 ## 1. 책임 경계
 
@@ -220,5 +220,5 @@ CI는 별도 verifier 명령을 먼저 실행하므로 저장소 안의 ERROR �
 6. commit SHA와 연결된 production deployment receipt
 7. production URL 및 카카오톡 unfurl 실측
 
-기존 공개 원격의 과거 Git 히스토리에 민감정보가 남아 있어 원격 전환 경로는 3번에서 **BLOCKED**입니다.
-이 clean-room 후보도 zero-hit receipt와 별도 production 검증을 완료하기 전에는 push·deploy하지 않습니다.
+구 공개 원격(현 archived)의 과거 Git 히스토리 민감정보로 인한 원격 전환 경로는 **BLOCKED**로 종결됐습니다.
+현 clean-room 저장소는 RELAUNCH-CHECKLIST §5–§6 receipt 완료 상태이며, 이후 push·deploy도 같은 §7 게이트를 거칩니다.

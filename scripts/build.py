@@ -284,13 +284,24 @@ def _archive_card(rec: dict) -> str:
     return (
         f'<li data-market="{esc(rec.get("market_code",""))}" '
         f'data-window="{esc(rec.get("window_code",""))}" '
-        f'data-status="{esc(rec.get("status",""))}">'
+        f'data-status="{esc(rec.get("status",""))}" '
+        f'data-evidence="{esc(_evidence_status(rec))}">'
         f'<a href="{esc(_public_href(rec.get("out_path","")))}">'
         f'<span class="ar-date">{esc(_record_date(rec))}</span>'
         f'<span class="ar-title">{esc(rec.get("title",""))}</span>'
         f'<span class="ar-meta">{esc(market)} · {esc(window)} {status_badge(rec)}</span>'
         f'</a></li>'
     )
+
+
+def _representative_metric(rec: dict) -> dict | None:
+    """슬롯 카드용 대표 지표 1개: 세션 3슬롯(equity→fx→vol) 우선, 없으면 첫 지표."""
+    metrics = [m for m in rec.get("metrics", []) if isinstance(m, dict)]
+    for want in ("metric-session-equity", "metric-session-fx", "metric-session-vol"):
+        for metric in metrics:
+            if metric.get("metric_id") == want:
+                return metric
+    return metrics[0] if metrics else None
 
 
 def _latest_card(market: str, window: str, rec: dict | None, latest_date: str | None) -> str:
@@ -316,12 +327,15 @@ def _latest_card(market: str, window: str, rec: dict | None, latest_date: str | 
     date = _record_date(rec)
     freshness = "latest" if date == latest_date else "older"
     freshness_label = "가장 최근 기준일" if freshness == "latest" else "이전 기준일"
-    metrics = rec.get("metrics", [])[:3]
-    metric_html = "".join(
-        f'<li><span>{esc(m.get("label", m.get("name", "지표")))}</span>'
-        f'<strong>{esc(m.get("value", "미확인"))}</strong></li>'
-        for m in metrics if isinstance(m, dict)
-    )
+    rep = _representative_metric(rec)
+    if rep is None:
+        metric_html = '<li><span>대표 수치 없음</span><strong>—</strong></li>'
+    else:
+        as_of = esc(rep.get("as_of", "시각 미상"))
+        metric_html = (
+            f'<li><span>{esc(rep.get("label", rep.get("name", "지표")))} · 기준 {as_of}</span>'
+            f'<strong>{esc(rep.get("value", "미확인"))}</strong></li>'
+        )
     return (
         f'<article class="latest-card {freshness}" data-slot="{slot}" data-freshness="{freshness}">'
         f'<p class="latest-market">{market_label} · {window_label}</p>'
@@ -388,6 +402,9 @@ def build_index_html(records: list) -> str:
             '</section>'
         )
     groups = _archive_groups(records)
+    kr = sum(1 for r in records if r.get("market_code", "") == "KR")
+    us = sum(1 for r in records if r.get("market_code", "") == "US")
+    result_count = f"{len(records)}개 기록 · 한국 {kr} · 미국 {us}"
 
     return f'''<!doctype html>
 <html lang="ko">
@@ -405,42 +422,45 @@ def build_index_html(records: list) -> str:
 <link rel="canonical" href="{SITE_URL}"/>
 <link rel="alternate" type="application/rss+xml" title="Noah Market Briefs RSS" href="{_public_href("rss.xml")}"/>
 <link rel="icon" type="image/svg+xml" href="{_public_href("assets/favicon.svg")}"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="{_public_href("assets/brief.css")}"/>
 </head>
 <body>
 <a class="skip-link" href="#latest-focus">최신 브리프로 건너뛰기</a>
 <main class="shell home-shell">
 <header class="masthead compact-masthead"><a class="wordmark" href="{_public_href("index.html")}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="주요 탐색"><a href="#latest-focus">최신</a><a href="#archive">아카이브</a><a href="{VERIFY_URL}">방법론·검증 코드</a></nav></header>
-<section class="compact-hero" aria-labelledby="home-title"><div><p class="eyebrow">Evidence-first market journal</p><h1 id="home-title">확인된 기록부터 읽는 시장 브리프</h1></div><p class="status-strip">{esc(status_value)} · 정적 생성 · 투자 권유 아님</p></section>
-<p class="home-note">가설 기반 시장 읽기 · 경로 YYYY / MM / DD / 시점</p>
+<section class="compact-hero" aria-labelledby="home-title"><div><p class="eyebrow">Evidence-first market journal</p><h1 id="home-title">근거 상태와 함께 읽는 시장 브리프</h1></div><p class="status-strip">{esc(status_value)} · 정적 생성</p></section>
+<p class="home-note">출처·시각을 붙인 시장 기록 · 경로 YYYY / MM / DD / 시점</p>
 {latest_focus}
 <section class="latest-section" id="latest" aria-labelledby="latest-title"><div class="section-head"><h2 id="latest-title">창구별 최신 기록</h2><p>한국 장전 → 한국 마감 → 미국 장전 → 미국 마감 고정 순서</p></div><div class="latest-grid">{latest}</div></section>
 <section class="section archive-section" id="archive">
-<div class="section-head"><h2>날짜별 아카이브</h2><p id="archive-result-count" role="status" aria-live="polite">{len(records)}개 기록</p></div>
-<div class="filterbar"><select id="f-market" aria-label="시장 필터"><option value="">전체 시장</option><option value="KR">한국</option><option value="US">미국</option></select><select id="f-window" aria-label="윈도 필터"><option value="">전체 시점</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select></div>
+<div class="section-head"><h2>날짜별 아카이브</h2><p id="archive-result-count" class="result-count" role="status" aria-live="polite">{result_count}</p></div>
+<div class="filterbar"><select id="f-market" aria-label="시장 필터"><option value="">전체 시장</option><option value="KR">한국</option><option value="US">미국</option></select><select id="f-window" aria-label="윈도 필터"><option value="">전체 시점</option><option value="preopen">장 시작 전</option><option value="close">장 마감</option></select><select id="f-evidence" aria-label="근거 필터"><option value="">전체 근거</option><option value="confirmed">근거 확인</option><option value="partial">근거 일부</option><option value="not_proven">미검증</option><option value="legacy_unverified">과거 기록</option></select><button id="f-reset" type="button" hidden>초기화</button></div>
+<p id="archive-empty" class="empty-state" hidden>조건에 맞는 기록 없음</p>
 <div class="archive-groups">{groups}</div>
 </section>
 <footer class="footer"><span>data/ JSON에서 자동 생성.</span><span>투자 권유 아님.</span><a href="{VERIFY_URL}">방법론·검증 코드</a></footer>
 </main>
 <script>
 (function(){{
-  var m=document.getElementById('f-market'), w=document.getElementById('f-window');
+  var m=document.getElementById('f-market'), w=document.getElementById('f-window'), e=document.getElementById('f-evidence');
   var items=[].slice.call(document.querySelectorAll('.archive-list li'));
   var groups=[].slice.call(document.querySelectorAll('.archive-group'));
   var count=document.getElementById('archive-result-count');
+  var reset=document.getElementById('f-reset'), empty=document.getElementById('archive-empty');
   function apply(){{
-    var shown=0;
+    var shown=0, kr=0, us=0;
     items.forEach(function(li){{
-      var ok=(!m.value||li.dataset.market===m.value)&&(!w.value||li.dataset.window===w.value);
-      li.hidden=!ok;if(ok) shown+=1;
+      var ok=(!m.value||li.dataset.market===m.value)&&(!w.value||li.dataset.window===w.value)&&(!e.value||li.dataset.evidence===e.value);
+      li.hidden=!ok;
+      if(ok){{shown+=1;if(li.dataset.market==='KR'){{kr+=1;}}else if(li.dataset.market==='US'){{us+=1;}}}}
     }});
     groups.forEach(function(group){{var visible=group.querySelectorAll('li:not([hidden])').length;group.hidden=visible===0;}});
-    count.textContent=shown+'개 기록';
+    count.textContent=shown+'개 기록 · 한국 '+kr+' · 미국 '+us;
+    var none=shown===0; empty.hidden=!none; reset.hidden=!none;
   }}
-  m.addEventListener('change',apply); w.addEventListener('change',apply);
+  function clearAll(){{m.value='';w.value='';e.value='';apply();}}
+  m.addEventListener('change',apply); w.addEventListener('change',apply); e.addEventListener('change',apply);
+  reset.addEventListener('click',clearAll);
   document.querySelectorAll('[data-stale-date]').forEach(function(node){{
     var label=node.dataset.freshness==='latest'?'가장 최근 기준일':'이전 기준일';
     node.textContent=label+' · '+node.dataset.staleDate;

@@ -311,14 +311,14 @@ class TestLoadRecordsRobustness(unittest.TestCase):
 # ─────────────────────────────────────────────────────────────────────────────
 
 class TestChangesSection(unittest.TestCase):
-    """'어제 대비 변화'(changes[]) 섹션 + 방향 칩 렌더 / 없으면 미표시."""
+    """'이전 발표 대비 변화'(changes[]) 섹션 + 방향 칩 렌더 / 없으면 미표시."""
 
     def test_changes_render_with_dir_chips(self):
         html = render({"changes": [
             {"dir": "up", "text": "위험선호 회복"},
             {"dir": "down", "text": "변동성 진정"},
         ]})
-        self.assertIn("어제 대비 변화", html)
+        self.assertIn("이전 발표 대비 변화", html)
         self.assertIn("change-list", html)
         self.assertIn('class="dir up"', html)
         self.assertIn('class="dir down"', html)
@@ -372,13 +372,14 @@ class TestWatchHeadingWindowAware(unittest.TestCase):
 
     def test_hypothesis_loop_suppresses_legacy_watch_heading(self):
         html = render({"window_code": "close", "watch": ["legacy"], "next_hypotheses": [{"hypothesis": "next"}]})
-        self.assertIn("다음 체크 가설", html)
+        self.assertIn("다음 체크", html)
+        self.assertNotIn("다음 체크 가설", html)
         self.assertNotIn("내일 볼 센서", html)
         self.assertNotIn("legacy", html)
 
 
 class TestHypothesisLoopSections(unittest.TestCase):
-    """이전 가설 검증 + 다음 체크 가설 루프 렌더링."""
+    """이번 검증 + 다음 체크 루프 렌더링 (레거시 키는 신 2존으로 매핑)."""
 
     def test_hypothesis_review_and_next_hypotheses_render(self):
         html = render({
@@ -397,17 +398,17 @@ class TestHypothesisLoopSections(unittest.TestCase):
                 "horizon": "next KR session",
             }],
         })
-        self.assertIn("이전 가설 검증", html)
+        self.assertIn("이번 검증", html)
         self.assertIn("부분 적중", html)
         self.assertIn("오늘 배운 점", html)
         self.assertIn("공식 종가", html)
-        self.assertIn("다음 체크 가설", html)
+        self.assertIn("다음 체크", html)
         self.assertIn("반증 조건", html)
 
     def test_invalid_hypothesis_items_omit_sections(self):
         html = render({"hypothesis_review": [{"verdict": "부분"}], "next_hypotheses": [{"foo": "bar"}]})
-        self.assertNotIn("이전 가설 검증", html)
-        self.assertNotIn("다음 체크 가설", html)
+        self.assertNotIn("이번 검증", html)
+        self.assertNotIn("다음 체크", html)
 
 
 class TestCssHasNewStyles(unittest.TestCase):
@@ -476,7 +477,7 @@ class TestTemplateV2Robustness(unittest.TestCase):
         html = B.build_index_html([])
         self.assertNotIn("보유논지", html)              # 랜딩 카피도 리네임 반영
         self.assertNotIn("투자 관점 읽기", html)
-        self.assertIn("가설 기반 시장 읽기", html)
+        self.assertIn("출처·시각을 붙인 시장 기록", html)
         self.assertIn("YYYY / MM / DD / 시점", html)
         self.assertNotIn("YYYY / MM / DD / window", html)
 
@@ -494,7 +495,7 @@ class TestKoreanPublicLabels(unittest.TestCase):
             "drivers": [{"label": "headline", "text": "same-date headline"}],
             "next_hypotheses": [{"hypothesis": "가설", "horizon": "next KR close"}],
         })
-        for translated in ("생성 시각", "출처", "데이터 품질", "용도", "핵심 동인", "브리프 목록", "투자 권유 아님", "다음 한국장 마감", "헤드라인", "동일 날짜", "수집 시각 KST", "네이버 금융/하나은행 고시 환율"):
+        for translated in ("생성 시각", "출처", "데이터 품질", "용도", "주요 수치", "브리프 목록", "투자 권유 아님", "다음 한국장 마감", "헤드라인", "동일 날짜", "수집 시각 KST", "네이버 금융/하나은행 고시 환율"):
             self.assertIn(translated, html)
         for legacy in (">Generated<", ">Source<", "SOURCE:", "SNAPSHOT GENERATED", "Data quality", "오늘의 핵심 driver", "Archive index", "Not investment advice", "next KR close"):
             self.assertNotIn(legacy, html)
@@ -740,7 +741,7 @@ class TestEvidenceFirstIndex(unittest.TestCase):
         page = B.build_index_html(records)
         self.assertIn('<nav class="site-nav" aria-label="주요 탐색">', page)
         self.assertIn('class="skip-link" href="#latest-focus"', page)
-        self.assertIn('id="archive-result-count" role="status" aria-live="polite"', page)
+        self.assertIn('id="archive-result-count" class="result-count" role="status" aria-live="polite"', page)
         self.assertIn('class="archive-group" data-date="2026-07-17"', page)
         self.assertIn("group.hidden=visible===0", page)
         self.assertIn("방법론·검증 코드", page)
@@ -834,7 +835,7 @@ class TestEvidenceFirstDetail(unittest.TestCase):
         })
         self.assertIn("레거시 · 원문 출처 링크 미제공", page)
         self.assertNotIn("출처 확인 데이터만 사용", page)
-        order = ["한 줄 결론", "숫자로 보는 시장", "어제 대비 변화", "오늘의 핵심 동인",
+        order = ["한 줄 결론", "숫자로 보는 시장", "이전 발표 대비 변화", "기록된 주요 수치",
                  "리스크 / 무효화 기준", "내일 볼 센서", "근거와 생성 정보"]
         self.assertEqual(sorted(page.index(text) for text in order), [page.index(text) for text in order])
 

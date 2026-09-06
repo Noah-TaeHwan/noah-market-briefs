@@ -277,6 +277,54 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
     """
     page_context = page_context or {}
     is_legacy = payload.get("schema_version", 1) < 3
+    if is_legacy:
+        # 레거시 가설 필드를 신 2존(이번 검증·다음 체크)으로 매핑 렌더한다.
+        # 원본 키는 유지하고(검증·슬랙 렌더가 그대로 읽음) 표시용 복사본에만 v3 키를 채운다.
+        payload = dict(payload)
+        if payload.get("hypothesis_review") and not payload.get("reviews"):
+            mapped = []
+            for item in payload["hypothesis_review"]:
+                if not isinstance(item, dict):
+                    text = str(item or "").strip()
+                    if text:
+                        mapped.append({"hypothesis_id": "이전 가설", "verdict": "검증",
+                                       "evidence": text})
+                    continue
+                hyp = str(item.get("previous_hypothesis") or item.get("hypothesis") or "").strip()
+                if not any([hyp, str(item.get("evidence") or "").strip(),
+                            str(item.get("reason") or "").strip(),
+                            str(item.get("lesson") or "").strip()]):
+                    continue
+                mapped.append({
+                    "hypothesis_id": hyp or "이전 가설",
+                    "verdict": str(item.get("verdict") or "검증"),
+                    "evidence": str(item.get("evidence") or ""),
+                    "reason": str(item.get("reason") or ""),
+                    "lesson": str(item.get("lesson") or ""),
+                })
+            if mapped:
+                payload["reviews"] = mapped
+        if payload.get("next_hypotheses") and not payload.get("hypotheses"):
+            mapped = []
+            for item in payload["next_hypotheses"]:
+                if not isinstance(item, dict):
+                    text = str(item or "").strip()
+                    if text:
+                        mapped.append({"text": text})
+                    continue
+                hyp = str(item.get("hypothesis") or "").strip()
+                if not any([hyp, str(item.get("observable") or "").strip(),
+                            str(item.get("invalidation") or "").strip(),
+                            str(item.get("horizon") or "").strip()]):
+                    continue
+                mapped.append({
+                    "text": hyp,
+                    "observable": str(item.get("observable") or ""),
+                    "invalidation": str(item.get("invalidation") or ""),
+                    "horizon": str(item.get("horizon") or ""),
+                })
+            if mapped:
+                payload["hypotheses"] = mapped
 
     def source_refs(item: dict) -> str:
         """claim/metric에서 페이지 하단 공개 출처 앵커로 연결한다."""
@@ -294,23 +342,13 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         label = {"confirmed": "근거 확인", "partial": "근거 일부", "not_proven": "미검증"}.get(status, "미검증")
         return f'<span class="item-evidence {esc(status)}">{label}</span>'
 
-    def kicker():
-        """히어로 상단 배지(시장·윈도우·선택적 note)를 만든다."""
-        parts = [
-            f'<span class="badge">{pesc(payload.get("market","시장"))}</span>',
-            f'<span class="badge">{pesc(payload.get("window","브리프"))}</span>',
-        ]
-        note = payload.get("note", "")
-        if note:
-            parts.append(f'<span class="badge">{pesc(note)}</span>')
-        return "".join(parts)
-
     def idx_card(m: dict, feature: bool = False) -> str:
         """헤드라인 보드의 인덱스 카드 하나. feature=True 면 라이브 와이어를 단다."""
         tone = _tone(m)
         nosig = _is_nosignal(m)
         delta, src = _split_note(m.get("note", ""))
-        cls = "idx feature" if feature else "idx"
+        cls = ("idx feature" if feature else "idx") + (" partial" if str(m.get("evidence_status", "")) == "partial" else "")
+        mini = ' <span class="mini-badge">근거 일부</span>' if str(m.get("evidence_status", "")) == "partial" else ""
         ival_tone = "" if nosig else tone
         if nosig:
             val_html = f'{pesc(m.get("value","미확인") or "미확인")} <span class="nosig-chip">신호 없음</span>'
@@ -323,7 +361,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         val_cls = f'ival {ival_tone} tnum' + (' has-segs' if has_segs else '')
         return (
             f'<article class="{cls}">'
-            f'<div class="iname">{pesc(m.get("label", m.get("name","")))}</div>'
+            f'<div class="iname">{pesc(m.get("label", m.get("name","")))}{mini}</div>'
             f'<div class="{val_cls}">{val_html}</div>'
             f'{delta_html}{wire}{src_html}{source_refs(m)}</article>'
         )
@@ -341,10 +379,13 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             )
         has_segs, val_html = _metric_value_html(m.get("value", ""), tone)
         val_cls = f'mval {tone} tnum' + (' has-segs' if has_segs else '')
+        is_partial = str(m.get("evidence_status", "")) == "partial"
+        card_cls = "mcard partial" if is_partial else "mcard"
+        mini = ' <span class="mini-badge">근거 일부</span>' if is_partial else ""
         return (
-            f'<div class="mcard">'
+            f'<div class="{card_cls}">'
             f'<div class="mname">{pesc(m.get("label", m.get("name","")))}</div>'
-            f'<div class="{val_cls}">{val_html}</div>'
+            f'<div class="{val_cls}">{val_html}{mini}</div>'
             f'<div class="mnote">{pesc(m.get("note",""))}</div>{source_refs(m)}</div>'
         )
 
@@ -375,7 +416,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             f'{pesc(d.get("text", d.get("takeaway","")))} {source_refs(d)}</li>'
             for d in items
         )
-        return f'<section class="section"><h2>오늘의 핵심 동인</h2><ul class="driver-list">{lis}</ul></section>'
+        return f'<section class="section"><h2>기록된 주요 수치</h2><ul class="driver-list">{lis}</ul></section>'
 
     def theses_section() -> str:
         """투자 관점 읽기(렌즈) 섹션. signal 태그 + 선택적 level 미터(●●●) +
@@ -423,82 +464,6 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         heading = "오늘 볼 센서" if payload.get("window_code") == "preopen" else "내일 볼 센서"
         lis = "".join(f'<li>{pesc(w)}</li>' for w in items)
         return f'<section class="section"><h2>{esc(heading)}</h2><ul class="watch-list">{lis}</ul></section>'
-
-    def hypothesis_review_section() -> str:
-        """직전 브리프의 체크 가설을 이번 데이터로 검증한 결과.
-
-        item 은 ``{previous_hypothesis|hypothesis, verdict, evidence, reason, lesson}`` 권장.
-        문자열만 들어와도 크래시 없이 단순 카드로 렌더한다.
-        """
-        items = payload.get("hypothesis_review", [])
-        if not items:
-            return ""
-        rows = []
-        for item in items:
-            if isinstance(item, dict):
-                hyp = str(item.get("previous_hypothesis") or item.get("hypothesis") or "").strip()
-                verdict = str(item.get("verdict") or "검증").strip()
-                evidence = str(item.get("evidence") or "").strip()
-                reason = str(item.get("reason") or "").strip()
-                lesson = str(item.get("lesson") or "").strip()
-                if not any([hyp, evidence, reason, lesson]):
-                    continue
-                body_parts = []
-                if evidence:
-                    body_parts.append(f'<p><b>근거</b> — {pesc(evidence)}</p>')
-                if reason:
-                    body_parts.append(f'<p><b>판단</b> — {pesc(reason)}</p>')
-                if lesson:
-                    body_parts.append(f'<p><b>학습</b> — {pesc(lesson)}</p>')
-                rows.append(
-                    f'<article class="hcard"><div class="hhead"><span class="hname">{pesc(hyp)}</span>'
-                    f'<span class="verdict">{pesc(verdict)}</span></div>'
-                    f'<div class="hbody">{"".join(body_parts)}</div></article>'
-                )
-            else:
-                text = str(item or "").strip()
-                if text:
-                    rows.append(f'<article class="hcard"><div class="hbody">{pesc(text)}</div></article>')
-        if not rows:
-            return ""
-        return f'<section class="section"><h2>이전 가설 검증</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
-
-    def next_hypotheses_section() -> str:
-        """다음 회차에서 검증할 관찰 가능한 가설.
-
-        item 은 ``{hypothesis, observable, invalidation, horizon}`` 권장. 예측 확정이 아니라
-        다음 cron이 판정할 체크포인트로 렌더한다.
-        """
-        items = payload.get("next_hypotheses", [])
-        if not items:
-            return ""
-        rows = []
-        for item in items:
-            if isinstance(item, dict):
-                hyp = str(item.get("hypothesis") or "").strip()
-                obs = str(item.get("observable") or "").strip()
-                inv = str(item.get("invalidation") or "").strip()
-                horizon = str(item.get("horizon") or "").strip()
-                if not any([hyp, obs, inv, horizon]):
-                    continue
-                meta = []
-                if obs:
-                    meta.append(f'<p><b>관찰값</b> — {pesc(obs)}</p>')
-                if inv:
-                    meta.append(f'<p><b>반증 조건</b> — {pesc(inv)}</p>')
-                if horizon:
-                    meta.append(f'<p><b>검증 시점</b> — {pesc(horizon)}</p>')
-                rows.append(
-                    f'<article class="hcard next"><div class="hhead"><span class="hname">{pesc(hyp)}</span></div>'
-                    f'<div class="hbody">{"".join(meta)}</div></article>'
-                )
-            else:
-                text = str(item or "").strip()
-                if text:
-                    rows.append(f'<article class="hcard next"><div class="hbody">{pesc(text)}</div></article>')
-        if not rows:
-            return ""
-        return f'<section class="section"><h2>다음 체크 가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
 
     def today_learning_section() -> str:
         """오늘의 학습 / 오늘 배운 점.
@@ -552,7 +517,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return f'<div class="grid {grid_cls}">{"".join(present)}</div>'
 
     def changes_section():
-        """'어제 대비 변화' 섹션 — 직전 같은 윈도 브리프 대비 시장 변화. 없으면 빈 문자열.
+        """'이전 발표 대비 변화' 섹션 — 직전 같은 윈도 브리프 대비 시장 변화. 없으면 빈 문자열.
 
         item 은 ``{dir,text}`` 권장이나, 문자열(줄 리스트)도 칩 없이 관대하게 렌더한다.
         텍스트 없는 항목·잘못된 모양은 건너뛴다(한 회차 결함이 빌드를 죽이지 않게).
@@ -574,7 +539,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                     rows.append(f'<li><span class="chg-text">{esc(text)}</span></li>')
         if not rows:
             return ""
-        return (f'<section class="section changes"><h2>어제 대비 변화</h2>'
+        return (f'<section class="section changes"><h2>이전 발표 대비 변화</h2>'
                 f'<ul class="change-list">{"".join(rows)}</ul></section>')
 
     def claims_section() -> str:
@@ -603,7 +568,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             )
         if rows:
             return (f'<section class="section"><h2>반대 근거</h2><ul class="counterevidence-list">{"".join(rows)}</ul></section>')
-        return '<section class="section"><h2>반대 근거</h2><p class="empty-state">반대 근거 없음</p></section>'
+        return '<section class="section"><h2>반대 근거</h2><p class="empty-state">이 기록에 수집된 반대 근거 없음</p></section>'
 
     def reviews_section() -> str:
         """v3 reviews를 근거·판단·학습 순서로 렌더한다."""
@@ -622,7 +587,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                 f'<span class="verdict">{pesc(item.get("verdict", "검증"))}</span></div>'
                 f'<div class="hbody">{parts}{source_refs(item)}</div></article>'
             )
-        return (f'<section class="section"><h2>가설 검토</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+        return (f'<section class="section"><h2>이번 검증</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
                 if rows else "")
 
     def hypotheses_section() -> str:
@@ -640,7 +605,7 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
                 f'<article class="hcard next"><div class="hhead"><span class="hname">{pesc(item["text"])}</span></div>'
                 f'<div class="hbody">{meta}{source_refs(item)}</div></article>'
             )
-        return (f'<section class="section"><h2>가설</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
+        return (f'<section class="section"><h2>다음 체크</h2><div class="hypothesis-stack">{"".join(rows)}</div></section>'
                 if rows else "")
 
     def handoff_section() -> str:
@@ -689,8 +654,27 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
             f'<dt>데이터 품질</dt><dd>{pesc(payload.get("data_quality", "미기록"))}</dd>'
             f'<dt>용도</dt><dd>{pesc(payload.get("use", "시장 민감도 일지"))}</dd></dl>'
         )
+        if is_legacy:
+            preview = ('<div class="sources-preview"><strong>근거 0건</strong>'
+                       '<span>과거 기록 · 원문 링크 없음</span></div>')
+        else:
+            items = [s for s in payload.get("sources", []) if isinstance(s, dict)]
+            conf = sum(1 for s in items if s.get("status") == "confirmed")
+            part = sum(1 for s in items if s.get("status") == "partial")
+            pubs = []
+            for s in items:
+                name = str(s.get("publisher", "")).strip()
+                if name and name not in pubs:
+                    pubs.append(name)
+            preview = (
+                f'<div class="sources-preview"><strong>근거 {len(items)}건</strong>'
+                f'<span>확인 {conf} · 일부 {part} · 미확인 {len(items) - conf - part}</span>'
+                f'<span>{" · ".join(pubs[:2])}</span>'
+                f'<a href="#sources">전체 출처 보기 →</a></div>'
+            )
         return (
-            '<details class="provenance"><summary>근거와 생성 정보</summary>'
+            f'{preview}'
+            '<details class="provenance" id="sources"><summary>근거와 생성 정보</summary>'
             f'<p class="provenance-meta">생성 {pesc(payload.get("generated_at_utc", payload.get("generated", "미기록")))}</p>'
             f'{source_html}{legacy_meta}{quality}</details>'
         )
@@ -705,6 +689,8 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         return f'<nav class="adjacent-nav" aria-label="인접 브리프">{"".join(links)}</nav>' if links else ""
 
     takeaway = payload.get("summary", payload.get("takeaway", ""))
+    hero_note = str(payload.get("note", "") or "").strip()
+    hero_note_html = f'<p class="hero-note">{pesc(hero_note)}</p>' if hero_note else ""
     meta_takeaway = (f"과거 기록 · 원문 링크 없음 · {takeaway}" if takeaway else "과거 기록 · 원문 링크 없음") if is_legacy else takeaway
     favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"
     rss_rel = index_rel.rsplit("/", 1)[0] + "/rss.xml" if "/" in index_rel else "rss.xml"
@@ -735,10 +721,8 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
         counterevidence_section(),
         theses_section(),
         reviews_section(),
-        hypothesis_review_section(),
         today_learning_section(),
         hypotheses_section(),
-        next_hypotheses_section(),
         risks_section(),
         handoff_section(),
         provenance_section(),
@@ -765,9 +749,6 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <link rel="canonical" href="{esc(canonical_url)}"/>
 <link rel="alternate" type="application/rss+xml" title="Noah Market Briefs RSS" href="{esc(rss_rel)}"/>
 <link rel="icon" type="image/svg+xml" href="{esc(favicon_rel)}"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="{esc(css_rel)}"/>
 </head>
 <body>
@@ -775,11 +756,11 @@ def render(payload: dict, css_rel: str = CSS_REL_DEFAULT, index_rel: str = INDEX
 <main class="shell">
 <header class="masthead compact-masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="브리프 탐색"><a href="{esc(index_rel)}">브리프 목록</a><button id="share-button" type="button">공유</button><span id="share-status" role="status" aria-live="polite"></span></nav></header>
 <section class="hero brief-hero" id="brief-summary">
-<div class="kicker">{kicker()}</div>
 <h1>{_h1_html(_public_text(payload.get("title","시장 브리프")))}</h1>
-<div class="brief-status" aria-label="브리프 상태"><span>{pesc(date)}</span><span class="status-text {esc(status)}">{pesc(status_labels.get(status, status))}</span><span class="evidence-text {esc(evidence)}">{pesc(evidence_label)}</span></div>
+<div class="brief-status" aria-label="브리프 상태"><span>{pesc(date)}</span><span class="status-badge {esc(status)}">{pesc(status_labels.get(status, status))}</span><span class="evidence-badge {esc(evidence)}">{pesc(evidence_label)}</span></div>
 {cutoff_html}
 {correction_html}
+{hero_note_html}
 <p class="takeaway" data-label="한 줄 결론">{pesc(takeaway)}</p>
 </section>
 {body_blocks}

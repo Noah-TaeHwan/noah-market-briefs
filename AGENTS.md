@@ -63,3 +63,21 @@ PublicBriefV3 계약은 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - 투자 권유·매매 지시·목표가·종목 추천 출력 금지. 근거 부족은 `partial`/`not_proven` + `missing_data[]`.
 - `data/.named-holdings.local`·credential·내부 ID를 JSON/HTML/커밋/로그에 넣지 않는다.
 - 생성 HTML 직접 수정 금지. 입력 JSON 또는 렌더러 수정 후 전체 재빌드.
+
+### 디자인 크루 (시각 작업시에만 로드, 순서대로)
+
+| 순서 | 작업 | 에이전트 파일 |
+|---|---|---|
+| 1 | IA·정보구조 | `design-ux-architect.md` |
+| 2 | 사용자 리서치 | `design-ux-researcher.md` |
+| 3 | 비주얼 시스템 | `design-ui-designer.md` |
+| 4 | 브랜드 일관성 | `design-brand-guardian.md` |
+| 5 | 구현 (바닐라) | `engineering-frontend-developer.md` |
+| 6 | 사용성 워크스루 | `design-persona-walkthrough.md` |
+| 7 | 마감 게이트 | `design-ui-finish-gate-reviewer.md` |
+
+- `product-manager.md` — 방향 정의시에만. `product-feedback-synthesizer.md` — 독자 피드백 있을 때만.
+- `testing-accessibility-auditor.md`·`marketing-seo-specialist.md`(LIBRARY)는 디자인 검수에 합류.
+- 디자인 하드 제약: 런타임 의존성 0 유지. CDN·웹폰트·외부 JS 프레임워크 금지.
+  인터랙션은 빌드 시점에 데이터 박아넣은 바닐라 JS+CSS만. 상태·근거 배지(`정정됨`·`근거 일부` 등)는
+  리디자인에서도 반드시 생존. 생성 HTML 손수정 금지(렌더러 수정 후 전체 재빌드).

@@ -25,7 +25,7 @@ jobs:
         run: python -m unittest discover -s tests -v
 
       - name: 브리프 레코드 검증
-        run: python scripts/verify_brief.py
+        run: python scripts/verify_brief.py --strict
 
       # 같은 입력으로 다시 빌드했을 때 산출물이 달라지면 결정적 빌드가 깨진 것이다.
       - name: 결정적 빌드 확인

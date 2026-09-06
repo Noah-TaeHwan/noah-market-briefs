@@ -4,8 +4,11 @@
     {
       "market": "KR",
       "window": "preopen",
-      "status": "legacy_unverified",
-      "evidence_status": "legacy_unverified"
+      "date": "2026-09-07",
+      "title": "한국 장전 브리프 — 2026-09-07",
+      "path": "2026/09/07/korea-preopen.html",
+      "status": "partial",
+      "evidence_status": "partial"
     },
     {
       "market": "KR",

@@ -62,7 +62,7 @@ OpenBB나 yfinance가 반환한 값을 단독으로 `confirmed` 공개 근거로
 - 실시간 또는 non-display 권리 구분이 있음
 - 호출이 private/local network 또는 실거래 connector에 닿음
 
-승인 후에도 raw secret은 환경·공식 connector의 secret store에만 두고 TradingCodex children, 저장소,
+승인 후에도 raw secret은 환경·공식 connector의 secret store에만 두고 저장소,
 PublicBriefV3, 빌드 산출물, 로그에 전달하지 않습니다. 실거래 API는 이 리서치 파이프라인에서 직접 호출하지 않습니다.
 
 ## 브리프별 source review

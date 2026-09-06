@@ -6,8 +6,8 @@
 ## 1. 책임 경계
 
 ```text
-TradingCodex operate plane
-  현재-run의 인증된 Source/Snapshot/Dataset/Artifact/Calculation
+직접 조회 세션 (공식 1차 출처)
+  as_of·retrieved_at을 기록한 조회 결과
                 │
                 │ 공개 가능한 근거만 선별·요약
                 ▼
@@ -33,13 +33,13 @@ build.py + render_market_brief.py (Python stdlib)
 
 | 주체 | 소유하는 것 | 소유하지 않는 것 |
 |---|---|---|
-| TradingCodex | 내부 current-run provenance, evidence acceptance, research artifacts | 이 저장소만으로 생기는 공개·실거래 권한 |
+| 직접 조회 세션 | 공식 1차 출처의 직접 조회와 as_of/retrieved_at 기록 | 이 저장소만으로 생기는 공개·실거래 권한 |
 | Public projection | 공개 가능한 최소 필드와 출처 참조 | 내부 Artifact/Snapshot/Dataset/Calculation ID, 개인 문맥, credential |
 | verifier | 스키마, 타입, 시각, source 참조, 공개 금지 패턴 | 원출처 진위, 해석 타당성, 라이선스 승인, receipt 재계산 |
 | static builder | 검증을 통과한 레코드의 결정적 HTML/JSON/RSS 생성 | 자동 commit, push, deploy, 외부 전송 |
 | 사람 승인자 | diff, 출처 권리, 배포 receipt, 링크 미리보기 확인 | 자연어만으로 우회되는 정책·실거래 권한 |
 
-TradingCodex의 인증된 내부 근거와 공개 payload는 같은 것이 아닙니다. 내부 증거를 통째로 복사하지 않고,
+직접 조회한 공식 출처와 공개 payload는 같은 것이 아닙니다. 원문을 통째로 복사하지 않고,
 최소 공개 claim과 SourceRef만 projection합니다. 선택된 Strategy/Brain/Investor Context는 공개 권한이나
 실거래 권한을 만들지 않으며, 개인 Investor Context는 이 공개 프로젝트에 사용하지 않습니다.
 
@@ -84,8 +84,8 @@ V3는 **닫힌(closed) 공개 스키마**입니다. 정의되지 않은 최상�
 | `title` | 공개 제목 |
 | `sources` | 공개 SourceRef 목록 |
 
-`public_receipt_sha256`는 TCX 내부 evidence 인증과 별개입니다. 현재 verifier는 **형식만 검사**하며 payload에서
-해시를 재계산하거나 값의 진위를 인증하지 않습니다. 특정 run의 무결성 주장은 해당 current-run 서비스 증거와
+`public_receipt_sha256`는 공개 handoff preimage를 식별하기 위한 필드입니다. 현재 verifier는 **형식만 검사**하며 payload에서
+해시를 재계산하거나 값의 진위를 인증하지 않습니다. 무결성 주장은 조회 세션의 원문 기록과
 receipt preimage를 함께 대조한 경우에만 가능합니다.
 
 ### 3.2 상태
@@ -100,7 +100,7 @@ receipt preimage를 함께 대조한 경우에만 가능합니다.
 
 `evidence_status`와 SourceRef/claim별 근거 상태:
 
-- `confirmed`: 허용된 현재-run 근거에 연결됨
+- `confirmed`: 직접 조회한 공식 1차 출처에 연결됨
 - `partial`: 필요한 근거의 일부만 확인됨
 - `not_proven`: 현재 증거로 확인하지 못함
 

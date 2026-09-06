@@ -43,7 +43,7 @@
 목표 공개 경로는 다음과 같습니다.
 
 ```text
-TradingCodex 현재-run의 인증된 내부 근거
+공식 1차 출처 직접 조회 (as_of·retrieved_at 기록)
        │  공개 가능한 주장·출처만 선별하고 개인정보/내부 식별자를 제거
        ▼
 PublicBriefV3 JSON
@@ -57,10 +57,10 @@ HTML + index.html + latest.json + rss.xml
 공개 배포
 ```
 
-- **TradingCodex**는 내부 리서치의 현재-run 근거와 provenance를 소유합니다. 자연어, 스케줄, 이 저장소는 실거래 권한을 만들지 않습니다.
+- **직접 조회 세션**은 공식 1차 출처의 조회 결과와 as_of/retrieved_at 기록을 소유합니다. 자연어, 스케줄, 이 저장소는 실거래 권한을 만들지 않습니다.
 - **PublicBriefV3**는 공개 handoff 계약입니다. 내부 경로·ID·개인 보유·Investor Context를 공개 payload에 넣지 않습니다.
 - **verifier는 사실 판정기가 아닙니다.** 선언된 출처가 실제 주장을 뒷받침하는지까지 인증하지 않고, 형식과 참조 무결성 및 공개 금지 패턴을 검사합니다.
-- `public_receipt_sha256`는 공개 handoff preimage를 식별하기 위한 필드입니다. 현재 verifier는 64자리 소문자 hex 형식만 확인하며 값을 재계산하거나 TCX 근거를 인증하지 않습니다.
+- `public_receipt_sha256`는 공개 handoff preimage를 식별하기 위한 필드입니다. 현재 verifier는 64자리 소문자 hex 형식만 확인하며 값을 재계산하거나 직접 조회 결과를 인증하지 않습니다.
 - **발행은 사람 승인 단계**입니다. 검증 통과가 곧 공개 승인 또는 투자 판단을 뜻하지 않습니다.
 
 현재 65건은 PublicBriefV3 이전의 v1/v2 레거시입니다. 호환 렌더링은 유지하지만 UI에서 **레거시 미검증**으로 구분합니다.
@@ -118,8 +118,8 @@ git diff --check
 ## 자동화와 공개
 
 정기 리서치는 **Orca 한 곳만 스케줄러로 사용**하는 것이 기본안입니다. 대안은 Codex Scheduled Tasks이지만
-두 스케줄러를 동시에 켜지 않습니다. 한국/미국 장전·마감 4회 일정, 휴장·조기 종료 처리,
-TradingCodex Stop hook 선행 blocker는 [자동화 운영 계약](docs/AUTOMATION.md)에 기록했습니다.
+두 스케줄러를 동시에 켜지 않습니다. 한국/미국 장전·마감 4회 일정, 휴장·조기 종료 처리는
+[자동화 운영 계약](docs/AUTOMATION.md)에 기록했습니다.
 
 자동 실행은 JSON 후보와 검증 결과까지만 준비합니다. commit, push, production deploy, Slack·카카오톡 공유는
 사람이 diff와 근거를 확인한 뒤 별도로 승인합니다.

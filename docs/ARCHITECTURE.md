@@ -222,6 +222,8 @@ CI는 별도 verifier 명령을 먼저 실행하므로 저장소 안의 ERROR �
 
 구 공개 원격(현 archived)의 과거 Git 히스토리 민감정보로 인한 원격 전환 경로는 **BLOCKED**로 종결됐습니다.
 현 clean-room 저장소는 RELAUNCH-CHECKLIST §5–§6 receipt 완료 상태이며, 이후 push·deploy도 같은 §7 게이트를 거칩니다.
+무인 발행은 `scripts/gate_check.py` G1~G9 전부 PASS + AUTOMATION §5-2의 S3 단계에서만 허용되며,
+그 외에는 draft 브랜치 + 인간 승인 경로를 유지합니다.
 
 ## 8. 롤백
 

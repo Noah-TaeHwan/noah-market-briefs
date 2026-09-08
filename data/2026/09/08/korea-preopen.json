@@ -1,23 +1,23 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-kr-2026-09-08-preopen-c2",
+  "brief_id": "brief-kr-2026-09-08-preopen-c3",
   "market_code": "KR",
   "window_code": "preopen",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T01:37:31Z",
-  "cutoff_at_utc": "2026-09-08T00:54:30Z",
+  "generated_at_utc": "2026-09-08T02:21:00Z",
+  "cutoff_at_utc": "2026-09-08T02:09:45Z",
   "market_timezone": "Asia/Seoul",
   "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "987c766a720a2d895b63ef4d40ec7bbb1a461bd1b00075dd42642e1281b74a74",
+  "public_receipt_sha256": "16e7bac8ba892ee20f787fc5b01736f1c97f5d2d2423b062b06b70ce8304abc0",
   "out_path": "2026/09/08/korea-preopen.html",
   "title": "한국 장전 — 2분기 GDP 잠정 전기비 0.6% · 2026-09-08",
-  "summary": "한국은행 2분기 국민소득(잠정)에서 실질 GDP는 전기 대비 0.6%, 전년 동기 대비 3.7% 늘었다. 명목 GDP는 전년 동기 대비 26.4%, 실질 GNI는 전기 대비 3.1% 늘었다. 유가증권 335종목·코스닥 271종목은 당일 NXT 경쟁매매 지정으로 KRX 시간외단일가 대상에서 빠진다.",
-  "next_handoff": "장마감 슬롯에서는 코스피·VKOSPI 공식 종가를 Data Marketplace 로그인 없이 잡을 수 있는지 다시 확인한다. GDP는 잠정 헤드라인이고, 구성 기여는 첨부 PDF 대조가 남는다.",
-  "corrected_at": "2026-09-08T01:37:31Z",
-  "supersedes": "brief-kr-2026-09-08-preopen-c1",
-  "correction_note": "일정표만 있던 2분기 국민소득(잠정)을 보도자료 본문 수치로 바꿨다. NXT는 첨부를 열어 유가증권 335개·코스닥 271개와 표본 종목을 넣었다. 원래 데이터 마감시각은 유지했다. 코스피·VKOSPI는 Marketplace 로그인과 홈페이지 지연시세 때문에 종가로 쓰지 않았다. 서울 원/달러는 서울외국환중개 매매기준율을 넣었다. 한국어 문장만 Mac humanize-korean(/imnotai)로 다시 다듬었다.",
+  "summary": "한국은행 2분기 국민소득(잠정)에서 실질 GDP는 전기 대비 0.6%, 전년 동기 대비 3.7% 늘었다. 명목 GDP는 전년 동기 대비 26.4%, 실질 GNI는 전기 대비 3.1% 늘었다. 유가증권 335종목·코스닥 271종목은 당일 NXT 경쟁매매 지정으로 KRX 시간외단일가 대상에서 빠진다. 서울 원/달러 매매기준율은 1,342.60원으로 전일보다 12.6원 낮다. 같은 날 OpenDART 접수는 130건이고, 발행사 효력발생은 지분증권 3건과 투자계약증권 1건이다.",
+  "next_handoff": "장마감 슬롯에서는 코스피·VKOSPI 공식 종가를 Data Marketplace 로그인 없이 잡을 수 있는지 다시 확인한다. GDP 구성 기여는 첨부 PDF 대조가 남는다.",
+  "corrected_at": "2026-09-08T02:21:00Z",
+  "supersedes": "brief-kr-2026-09-08-preopen-c2",
+  "correction_note": "c2가 효력발생안내 4건을 발행사 이름으로만 적던 것을 지분증권 3건(네오사피엔스·덕산넵코어스·한국제17호기업인수목적)과 투자계약증권 1건(스탁키퍼)으로 고쳤다. OpenDART 같은 날 접수 130건을 넣었다. 이 130의 기준시각 02:09:45Z가 원래 cutoff 00:54:30Z보다 늦어, 센서스를 넣으려면 cutoff를 02:09:45Z로 올려야 했다. GDP·NXT 335/271·서울 매매기준율은 다시 확인했고 숫자는 같다. 코스피·VKOSPI는 그대로 비워 두었다. FRED와 KOSIS 물가는 넣지 않았다.",
   "sources": [
     {
       "source_id": "source-bok-gdp-prelim-2026q2",
@@ -25,7 +25,7 @@
       "title": "2026년 2/4분기 국민소득(잠정) — 통계 보도자료",
       "url": "https://www.bok.or.kr/portal/bbs/B0000501/view.do?nttId=11064532&menuNo=201264&programType=newsData",
       "as_of": "2026-09-07T23:00:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "retrieved_at": "2026-09-08T02:17:30Z",
       "source_type": "economic_release",
       "status": "confirmed"
     },
@@ -44,8 +44,18 @@
       "publisher": "금융감독원",
       "title": "2026년 9월 8일 공시 접수목록",
       "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.08&sort=&series=&mdayCnt=0",
-      "as_of": "2026-09-07T22:30:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "as_of": "2026-09-08T02:09:45Z",
+      "retrieved_at": "2026-09-08T02:17:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-opendart-list-20260908",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 API (list.json) — 2026-09-08 total_count 130",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-08T02:09:45Z",
+      "retrieved_at": "2026-09-08T02:09:45Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -55,7 +65,7 @@
       "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(유가증권시장)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908800014",
       "as_of": "2026-09-07T23:01:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "retrieved_at": "2026-09-08T02:18:30Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -75,7 +85,7 @@
       "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(코스닥시장)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908900015",
       "as_of": "2026-09-07T23:02:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "retrieved_at": "2026-09-08T02:18:30Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -90,12 +100,42 @@
       "status": "confirmed"
     },
     {
+      "source_id": "source-dart-hyoryeok-neosapiens-20260908",
+      "publisher": "금융감독원",
+      "title": "네오사피엔스 — 효력발생안내 (지분증권 신고서, 2026.9.8. 효력)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814100025",
+      "as_of": "2026-09-07T22:30:00Z",
+      "retrieved_at": "2026-09-08T02:18:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
       "source_id": "source-dart-hyoryeok-ducsan-20260908",
       "publisher": "금융감독원",
       "title": "덕산넵코어스 — 효력발생안내 (2026.8.14. 제출 지분증권 신고서, 2026.9.8. 효력)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814100044",
       "as_of": "2026-09-07T22:30:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "retrieved_at": "2026-09-08T02:18:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-spac17-20260908",
+      "publisher": "금융감독원",
+      "title": "한국제17호기업인수목적 — 효력발생안내 (지분증권 신고서, 2026.9.8. 효력)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814100038",
+      "as_of": "2026-09-07T22:30:00Z",
+      "retrieved_at": "2026-09-08T02:18:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-stockeeper-20260908",
+      "publisher": "금융감독원",
+      "title": "스탁키퍼 — 효력발생안내 (투자계약증권 신고서, 2026.9.8. 효력)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260818100001",
+      "as_of": "2026-09-07T22:30:00Z",
+      "retrieved_at": "2026-09-08T02:18:00Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -115,7 +155,7 @@
       "title": "오늘의 환율 — 매매기준율 (조회일 2026-09-08, USD 1,342.60원)",
       "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
       "as_of": "2026-09-07T07:00:00Z",
-      "retrieved_at": "2026-09-08T01:17:40Z",
+      "retrieved_at": "2026-09-08T02:17:30Z",
       "source_type": "market_data",
       "status": "confirmed"
     }
@@ -218,6 +258,20 @@
       "evidence_status": "confirmed",
       "tone": "flat",
       "note": "코스닥 기타공개첨부서류 표."
+    },
+    {
+      "metric_id": "metric-dart-same-day-count",
+      "label": "당일 OpenDART 접수",
+      "value": "130",
+      "unit": "건",
+      "delta": "list.json total_count · 2026-09-08",
+      "as_of": "2026-09-08T02:09:45Z",
+      "source_ids": [
+        "source-opendart-list-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "OpenDART 공시검색 list.json 같은 날 접수 건수. DART HTML 최근공시 화면의 표시 건수와 같지 않을 수 있다."
     }
   ],
   "claims": [
@@ -275,19 +329,34 @@
       "evidence_status": "confirmed"
     },
     {
-      "claim_id": "claim-fss-effectiveness-list",
+      "claim_id": "claim-opendart-same-day-census",
       "kind": "fact",
-      "text": "9월 8일 07:30 DART 전체 목록에 금융감독원이 제출한 효력발생안내 4건이 있다. 대상 법인은 네오사피엔스, 덕산넵코어스, 스탁키퍼, 한국제17호기업인수목적이다.",
-      "as_of": "2026-09-07T22:30:00Z",
+      "text": "OpenDART 공시검색 list.json에서 2026-09-08 접수 total_count는 130이다. 조회 시각은 2026-09-08T02:09:45Z다. 같은 날짜의 공개 창구는 DART 최근공시 HTML이다. HTML 화면의 표시 건수와 API total_count는 같지 않을 수 있다.",
+      "as_of": "2026-09-08T02:09:45Z",
       "source_ids": [
+        "source-opendart-list-20260908",
         "source-dart-20260908-list"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-fss-effectiveness-types",
+      "kind": "fact",
+      "text": "당일 효력발생안내로 확인한 발행사 증권신고서는 지분증권 3건과 투자계약증권 1건이다. 지분은 네오사피엔스(20260814100025), 덕산넵코어스(20260814100044), 한국제17호기업인수목적(20260814100038)이고, 투자계약은 스탁키퍼(20260818100001)다. 네 발행사 원문 뷰어 제목은 모두 2026.09.08 효력발생안내에 증권신고서 종류가 붙어 있다. 당일 효력발생안내 전체 43건의 나머지는 주로 집합투자증권 일괄신고다. 네 이름을 지분증권 4건으로 묶지 않는다.",
+      "as_of": "2026-09-08T02:09:45Z",
+      "source_ids": [
+        "source-dart-hyoryeok-neosapiens-20260908",
+        "source-dart-hyoryeok-ducsan-20260908",
+        "source-dart-hyoryeok-spac17-20260908",
+        "source-dart-hyoryeok-stockeeper-20260908",
+        "source-opendart-list-20260908"
       ],
       "evidence_status": "confirmed"
     },
     {
       "claim_id": "claim-ducsan-effectiveness-date",
       "kind": "fact",
-      "text": "덕산넵코어스 효력발생안내 원문은 2026-08-14 제출 지분증권 신고서가 2026-09-08자로 효력이 발생했다고 적는다. 나머지 3건의 효력일은 원문과 대조하지 않았다.",
+      "text": "덕산넵코어스 효력발생안내 원문은 2026-08-14 제출 지분증권 신고서가 2026-09-08자로 효력이 발생했다고 적는다.",
       "as_of": "2026-09-07T22:30:00Z",
       "source_ids": [
         "source-dart-hyoryeok-ducsan-20260908"
@@ -357,9 +426,10 @@
       "evidence_status": "confirmed"
     },
     {
-      "text": "효력발생 안내는 신고서 효력일 안내이지 공모 조건이나 상장 일정의 확정이 아니다.",
+      "text": "효력발생 안내는 신고서 효력일 안내이지 공모 조건이나 상장 일정의 확정이 아니다. 당일 효력발생안내 43건의 대부분도 집합투자 일괄신고라서 발행사 4곳을 공모 이벤트로 확대하지 않는다.",
       "source_ids": [
-        "source-dart-hyoryeok-ducsan-20260908"
+        "source-dart-hyoryeok-ducsan-20260908",
+        "source-opendart-list-20260908"
       ],
       "evidence_status": "confirmed"
     }
@@ -382,6 +452,16 @@
         "source-krx-kosdaq-nxt-att-20260908"
       ],
       "evidence_status": "confirmed"
+    },
+    {
+      "label": "효력발생 유형",
+      "text": "같은 날 눈에 띄는 발행사 효력발생 4곳은 지분 3건·투자계약 1건이다. 접수 130건·효력발생안내 43건을 네 이름으로 축소하거나, 네 이름을 지분증권 4건으로 읽지 않는다.",
+      "source_ids": [
+        "source-opendart-list-20260908",
+        "source-dart-hyoryeok-neosapiens-20260908",
+        "source-dart-hyoryeok-stockeeper-20260908"
+      ],
+      "evidence_status": "confirmed"
     }
   ],
   "missing_data": [
@@ -399,32 +479,37 @@
   "quality": [
     {
       "label": "정정 범위",
-      "value": "같은 슬롯·날짜 정정. 원래 cutoff 2026-09-08T00:54:30Z를 유지했다. 개장 이후 접수분(코오롱 공급계약 등)은 넣지 않았다."
+      "value": "같은 슬롯·날짜 정정. c3가 c2를 대체한다. 130건 센서스의 as_of가 원래 cutoff를 넘어 cutoff를 02:09:45Z로 올렸다. 개장 이후 개별 공급계약 공시는 넣지 않았다."
     },
     {
       "label": "GDP 출처",
-      "value": "한국은행 통계 보도자료 HTML 본문(등록일 2026.09.08, nttId=11064532). 첨부 PDF 44쪽은 내려받았으나 이 환경에서 본문 텍스트 추출이 안 돼 구성 기여는 인용하지 않았다."
+      "value": "한국은행 통계 보도자료 HTML 본문(등록일 2026.09.08, nttId=11064532). 이 회차에서 본문 헤드라인 0.6%/3.7%/9.2%/26.4%/3.1%를 다시 확인했다. 첨부 PDF 구성 기여는 인용하지 않았다."
     },
     {
       "label": "NXT 첨부",
-      "value": "유가증권 dcmNo=11569735 HTML 표 335행, 코스닥 dcmNo=11569713 HTML 표 271행. 표본 5종목만 인용하고 전체 명단은 재배포하지 않았다."
+      "value": "유가증권 dcmNo=11569735 HTML 표 335행, 코스닥 dcmNo=11569713 HTML 표 271행. 부모 공시 rcept_no 20260908800014 / 20260908900015를 다시 열었다. 표본 5종목만 인용하고 전체 명단은 재배포하지 않았다."
+    },
+    {
+      "label": "공시 센서스",
+      "value": "130과 효력발생안내 43은 OpenDART list.json(bgn_de=end_de=20260908) total_count·분류. 지분 3·투자계약 1은 네 원문 뷰어 목차에서 증권신고서 종류를 확인했다. DART HTML 최근공시 표시 건수는 API 130과 같지 않아 화면 건수를 종가로 쓰지 않았다."
     },
     {
       "label": "세션 슬롯",
-      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI는 미확보. 연준 H.10·FRED는 당일 값으로 쓰지 않았다."
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI는 미확보. FRED SP500·VIXCLS·DEXKOUS와 KOSIS 물가는 이 회차에 넣지 않았다."
     },
     {
       "label": "윤문",
-      "value": "imnotai=A (Mac Noahs-MacBook-Pro humanize-korean light pass). 한국어 문장만 다듬었고 수치·URL·as_of·source_id는 바꾸지 않았다."
+      "value": "imnotai=fallback-korean-humanizer (Linux cloud agent, Mac /imnotai 없음). 한국어 문장만 다듬었고 수치·URL·as_of·source_id는 바꾸지 않았다."
     }
   ],
   "today_learning": [
-    "공표 일정 한 줄과 보도자료 본문은 다르다. NXT도 안내 본문만으로는 첨부 명단이 없고, 첨부 HTML을 열어야 건수가 나온다."
+    "같은 날 효력발생안내를 발행사 숫자로만 세면 지분증권 4건으로 읽힌다. 실제로는 지분 3건과 투자계약 1건이고, 나머지 효력발생안내는 주로 집합투자 일괄신고다."
   ],
   "risks": [
     "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다. 홈페이지 코스피 숫자는 장중 지연값일 수 있어 종가로 쓰지 않았다.",
     "GDP 구성 기여와 속보 대비 수정폭은 보도자료 HTML 본문에 없고 첨부 PDF를 이 기록에서 인용하지 못했다.",
     "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
-    "NXT 제외는 시간외단일가에 한정된다. 개별 종목의 가능 여부는 첨부 원문으로 확인해야 한다."
+    "NXT 제외는 시간외단일가에 한정된다. 개별 종목의 가능 여부는 첨부 원문으로 확인해야 한다.",
+    "OpenDART 130건은 API 센서스이며 DART HTML 최근공시 화면 건수와 다를 수 있다."
   ]
 }

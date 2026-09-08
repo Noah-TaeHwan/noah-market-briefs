@@ -1,0 +1,244 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-08-preopen-1",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-08",
+  "generated_at_utc": "2026-09-08T00:54:30Z",
+  "cutoff_at_utc": "2026-09-08T00:54:30Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "c9379ab99194245d5417938a6057b96b2f7d07dfb16f470ec09e960e5c99c764",
+  "out_path": "2026/09/08/korea-preopen.html",
+  "title": "한국 장전 — NXT 지정 종목 시간외단일가 제외 · 2026-09-08",
+  "summary": "유가증권시장본부는 8일 08:01에, 당일 NXT 경쟁매매 대상 종목을 KRX 시간외단일가매매에서 뺀다고 공시했다. 코스닥시장본부는 08:02에 같은 제목의 안내를 접수했다. 07:30에는 금융감독원 효력발생안내 4건이 당일 목록에 올랐고, 전일 코스피·VKOSPI·서울 원/달러는 공식 종가로 확인하지 못했다.",
+  "next_handoff": "장마감에는 코스피·VKOSPI·서울 원/달러의 공식 종가와, 한국은행 2/4분기 국민소득(잠정) 보도자료 원문을 확인한다. NXT 제외 종목 첨부 목록은 이 기록에서 인용하지 않았다.",
+  "sources": [
+    {
+      "source_id": "source-dart-20260908-list",
+      "publisher": "금융감독원",
+      "title": "2026년 9월 8일 공시 접수목록 — 전체 25건",
+      "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.08&sort=&series=&mdayCnt=0",
+      "as_of": "2026-09-07T22:30:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kospi-nxt-20260908",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(유가증권시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908800014",
+      "as_of": "2026-09-07T23:01:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-20260908",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(코스닥시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908900015",
+      "as_of": "2026-09-07T23:02:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-ducsan-20260908",
+      "publisher": "금융감독원",
+      "title": "덕산넵코어스 — 효력발생안내 (2026.8.14. 제출 지분증권 신고서, 2026.9.8. 효력)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814100044",
+      "as_of": "2026-09-07T22:30:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-holiday-2026",
+      "publisher": "한국거래소",
+      "title": "2026년 휴장일 — 한국거래소 조회",
+      "url": "https://open.krx.co.kr/contents/MKD/01/0110/01100305/MKD01100305.jsp",
+      "as_of": "2026-09-08T00:47:04Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyse-hours-calendars-2026",
+      "publisher": "NYSE",
+      "title": "Holidays & Trading Hours — 2026",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-08T00:46:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bok-stats-calendar-202609",
+      "publisher": "한국은행",
+      "title": "월간통계 공표일정 — 2026년 9월 (2/4분기 국민소득 잠정 9월 8일 08:00)",
+      "url": "https://www.bok.or.kr/portal/stats/statsPublictSchdul/listCldr.do?date=2026-09&menuNo=200775",
+      "as_of": "2026-09-07T23:00:00Z",
+      "retrieved_at": "2026-09-08T00:54:30Z",
+      "source_type": "economic_release",
+      "status": "partial"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-nxt-afterhours-exclusion",
+      "kind": "fact",
+      "text": "유가증권시장본부 기타시장안내에 따르면, 2026-09-08(화) NXT에서 경쟁매매 대상으로 지정된 종목은 당일 KRX 시간외단일가매매 대상에서 제외된다. 시간외종가와 시간외대량·바스켓은 NXT 거래 여부와 관계없이 가능하다. 정규장에서 체결이 없거나 거래정지된 종목도 시간외단일가 대상에서 빠진다. 근거 규정은 유가증권시장업무규정 제34조의2와 같은 규정 시행세칙 제51조의2다.",
+      "as_of": "2026-09-07T23:01:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-kosdaq-nxt-notice",
+      "kind": "fact",
+      "text": "코스닥시장본부는 같은 날 08:02에 같은 제목의 기타시장안내를 접수했다. 코스닥 원문 본문의 예외 조항은 이 기록에서 열지 않았다.",
+      "as_of": "2026-09-07T23:02:00Z",
+      "source_ids": [
+        "source-dart-20260908-list",
+        "source-krx-kosdaq-nxt-20260908"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "claim_id": "claim-fss-effectiveness-list",
+      "kind": "fact",
+      "text": "9월 8일 07:30 DART 전체 목록에 금융감독원이 제출한 효력발생안내 4건이 있다. 대상 법인은 네오사피엔스, 덕산넵코어스, 스탁키퍼, 한국제17호기업인수목적이다.",
+      "as_of": "2026-09-07T22:30:00Z",
+      "source_ids": [
+        "source-dart-20260908-list"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-ducsan-effectiveness-date",
+      "kind": "fact",
+      "text": "덕산넵코어스 효력발생안내 원문은 2026-08-14 제출 지분증권 신고서가 2026-09-08자로 효력이 발생했다고 적는다. 나머지 3건의 효력일은 원문과 대조하지 않았다.",
+      "as_of": "2026-09-07T22:30:00Z",
+      "source_ids": [
+        "source-dart-hyoryeok-ducsan-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-effectiveness-not-guarantee",
+      "kind": "fact",
+      "text": "같은 원문은 효력발생이 기재사항의 진실·정확을 인정하거나 증권 가치를 보증·승인한 것이 아니라고 못 박는다(자본시장법 제120조 제3항). 상장일·공모가·청약 일정은 이 안내만으로 확정하지 않는다.",
+      "as_of": "2026-09-07T22:30:00Z",
+      "source_ids": [
+        "source-dart-hyoryeok-ducsan-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-krx-calendar-open",
+      "kind": "fact",
+      "text": "한국거래소 2026년 휴장일 조회에서 9월 8일은 없다. 표에 나온 9월 휴장은 9월 24일·25일 추석이다. 당일은 화요일이라 정규 거래일로 본다.",
+      "as_of": "2026-09-08T00:47:04Z",
+      "source_ids": [
+        "source-krx-holiday-2026"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-nyse-not-holiday",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표에서 9월 7일은 Labor Day다. 9월 8일은 그 표에 없다.",
+      "as_of": "2026-09-08T00:46:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars-2026"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-gdp-release-scheduled",
+      "kind": "fact",
+      "text": "한국은행 9월 공표일정은 2026년 2/4분기 국민소득(잠정)을 9월 8일 08:00에 둔다. 이 조회에서는 보도자료 원문과 잠정 수치를 열지 못했다.",
+      "as_of": "2026-09-07T23:00:00Z",
+      "source_ids": [
+        "source-bok-stats-calendar-202609"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "NXT 지정에 따른 제외는 시간외단일가매매에 한정된다. 같은 공시는 시간외종가와 시간외대량·바스켓은 NXT 거래 여부와 무관하게 가능하다고 적는다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "효력발생 안내는 신고서 효력일 안내이지, 공모 조건이나 상장 일정의 확정이 아니다.",
+      "source_ids": [
+        "source-dart-hyoryeok-ducsan-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "당일 시장운영",
+      "text": "NXT 경쟁매매 지정 종목은 당일 KRX 시간외단일가 대상에서 빠진다. 제외 종목 이름 목록은 첨부에 있고 여기 인용하지 않았다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "장전 공시",
+      "text": "07:30 효력발생안내 4건이 당일 목록에 올랐다. 덕산넵코어스 원문만 효력일 9월 8일을 확인했다.",
+      "source_ids": [
+        "source-dart-20260908-list",
+        "source-dart-hyoryeok-ducsan-20260908"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "9월 7일 코스피 종가를 한국거래소 공식 화면에서 확보하지 못했다. Data Marketplace 지수 화면은 로그인 창으로 넘어가 수치를 읽지 못했다. 거래소 메인에 보이던 수치는 장중 지연값일 수 있어 장전 종가로 쓰지 않았다.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "서울외국환시장 당일·전일 원/달러는 공식 1차 화면에서 확인하지 못했다. 연준 H.10 최신은 8월 31일 발표·8월 28일 관측이라 당일 값으로 대체하지 않았다.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "전일 V-KOSPI 200 종가를 공식 출처에서 확보하지 못했다.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "조회 범위",
+      "value": "KRX 2026 휴장일 표, DART 9월 8일 전체 목록, 유가증권 NXT 안내 본문, 덕산넵코어스 효력발생 원문, NYSE 휴장 표, 한국은행 9월 공표일정."
+    },
+    {
+      "label": "수치 공백",
+      "value": "세션 3슬롯은 미확보다. 2/4분기 국민소득(잠정)은 08:00 공표 일정만 확인했고 원문 수치는 없다."
+    },
+    {
+      "label": "장전 컷",
+      "value": "정규장 개장(09:00 KST) 이후 접수분(코오롱 공급계약 등)은 장전 기록에 넣지 않았다."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI·서울 원/달러를 확보하지 못해 지수·환율 방향은 적지 않았다.",
+    "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
+    "NXT 제외 종목의 첨부 명단을 재배포하지 않았다. 해당 종목의 시간외단일가 가능 여부는 첨부 원문으로 확인해야 한다."
+  ]
+}

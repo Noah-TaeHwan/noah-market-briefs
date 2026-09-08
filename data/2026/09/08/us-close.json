@@ -1,16 +1,16 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-us-2026-09-08-close",
+  "brief_id": "brief-us-2026-09-08-close-c1",
   "market_code": "US",
   "window_code": "close",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T20:36:00Z",
-  "cutoff_at_utc": "2026-09-08T20:35:00Z",
+  "generated_at_utc": "2026-09-08T20:41:00Z",
+  "cutoff_at_utc": "2026-09-08T20:40:00Z",
   "market_timezone": "America/New_York",
-  "status": "partial",
+  "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "23dd6b50bb90cd29f052fc480b6790c6abf6a51c4de238ef6841ba5699d68abf",
+  "public_receipt_sha256": "772f8d9f776b048ca3087288011d81b6d5d471581d30202269dfce4e6068c881",
   "out_path": "2026/09/08/us-close.html",
   "title": "미국 마감 — 노동절 다음날 첫 정규장 · 국채 커브 09/08 행 · 2026-09-08",
   "summary": "노동절 다음날 첫 정규장이 끝났다. Treasury 일별 액면 수익률 표에 09/08 행이 생겼고, 금요일(09/04) 대비 2년 +2bp · 5년 +3bp · 10년 +2bp · 30년 +1bp다. S&P 500과 VIX, 원/달러 세션 값은 없다.",
@@ -258,7 +258,7 @@
     },
     {
       "label": "USD/KRW",
-      "reason": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp HTTPS 조회가 TLS 인증서 불일치로 실패함. curl 60: no alternative certificate subject name matches target host name 'www.smbs.co.kr' (인증서 CN=m.smbs.biz). 같은 URL WebFetch는 HTTP 500. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음. 수치를 추정하지 않음.",
+      "reason": "SMBS browser lookup failed — both https://www.smbs.co.kr/ExRate/TodayExRate.jsp and smbs.biz timed out; no rate. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음. 수치를 추정하지 않음.",
       "evidence_status": "not_proven"
     },
     {
@@ -274,7 +274,7 @@
     },
     {
       "label": "세션 슬롯",
-      "value": "세션 종가는 Treasury 09/08 행. S&P 500·VIX는 미확보. USD/KRW는 SMBS HTTPS TLS 인증서 불일치로 미확보. FRED SP500·VIXCLS·DEXKOUS는 쓰지 않았다."
+      "value": "세션 종가는 Treasury 09/08 행. S&P 500·VIX는 미확보. USD/KRW는 SMBS 브라우저 조회가 TodayExRate.jsp와 smbs.biz 모두 시간 초과라 미확보. FRED SP500·VIXCLS·DEXKOUS는 쓰지 않았다."
     },
     {
       "label": "금리 기준일",
@@ -287,9 +287,12 @@
   ],
   "risks": [
     "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
-    "원/달러는 SMBS HTTPS 조회가 막혀 세션 값을 적지 않았다.",
+    "원/달러는 SMBS 브라우저 조회가 TodayExRate.jsp와 smbs.biz 모두 시간 초과라 세션 값을 적지 않았다.",
     "H.15 같은 날 발표를 09/08 CMT로 읽지 않는다.",
     "1~3bp 변동을 추세 전환으로 확대하지 않는다.",
     "금요일 EmpSit 숫자를 화요일 마감의 원인으로 읽지 않는다."
-  ]
+  ],
+  "corrected_at": "2026-09-08T20:41:00Z",
+  "supersedes": "brief-us-2026-09-08-close",
+  "correction_note": "USD/KRW 미확보 사유를 SMBS 브라우저 조회 타임아웃으로 고쳤다. https://www.smbs.co.kr/ExRate/TodayExRate.jsp 와 smbs.biz 모두 시간 초과였고 환율은 없다. 수치를 추정하지 않았고 FRED DEXKOUS는 쓰지 않았다. 국채 09/08 행은 그대로다."
 }

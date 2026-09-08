@@ -1,20 +1,20 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-kr-2026-09-08-close",
+  "brief_id": "brief-kr-2026-09-08-close-c1",
   "market_code": "KR",
   "window_code": "close",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T07:17:30Z",
-  "cutoff_at_utc": "2026-09-08T07:16:00Z",
+  "generated_at_utc": "2026-09-08T07:40:00Z",
+  "cutoff_at_utc": "2026-09-08T07:39:00Z",
   "market_timezone": "Asia/Seoul",
-  "status": "partial",
+  "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "7d653eb3b551550a2e25469128b79a34b74128fec58e773060bdbbf6de9be408",
+  "public_receipt_sha256": "1284aa582868fc4b3f4f854a2efbdf2f351f317531a417a2a6d97aa4f631ceac",
   "out_path": "2026/09/08/korea-close.html",
   "title": "한국 마감 점검 — OpenDART 338건(+208)·HMM 공급계약, 종가 미확보 · 2026-09-08",
-  "summary": "코스피·VKOSPI·코스닥 공식 종가는 확보하지 못했다. 장전 OpenDART 접수는 130건이었는데, 오후 조회에서는 338건으로 208건 늘었다. 같은 날 수시공시에서 단일판매ㆍ공급계약체결은 11건이다. HMM은 Vale International SA와 장기화물운송계약을 계약금액 4,697,159,508,000원(매출액 대비 43.13%)으로 공시했다. 서울 원/달러 매매기준율은 1,342.60원으로 장전 조회와 같다.",
-  "next_handoff": "코스피·VKOSPI·코스닥 공식 종가는 아직 없다.",
+  "summary": "코스피·VKOSPI 공식 종가는 확보하지 못했다. 장전 OpenDART 접수는 130건이었고, 오후 목록 조회에서는 338건으로 208건 늘었다. 같은 날 수시공시에서 단일판매ㆍ공급계약체결은 12건이다. HMM은 Vale International SA와 장기화물운송계약을 4,697,159,508,000원(매출액 대비 43.13%)으로 공시했다. 서울 원/달러 1,342.60원은 전 영업일 16:00 시간가중평균이며 당일 종가나 장중 시세가 아니다.",
+  "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
   "sources": [
     {
       "source_id": "source-opendart-list-20260908-preopen",
@@ -39,10 +39,10 @@
     {
       "source_id": "source-dart-i001-20260908",
       "publisher": "금융감독원",
-      "title": "공시서류검색 — 2026년 9월 8일 수시공시 67건",
+      "title": "공시서류검색 — 2026년 9월 8일 수시공시 75건",
       "url": "https://dart.fss.or.kr/dsab001/main.do",
-      "as_of": "2026-09-08T07:13:23Z",
-      "retrieved_at": "2026-09-08T07:13:23Z",
+      "as_of": "2026-09-08T07:38:00Z",
+      "retrieved_at": "2026-09-08T07:38:00Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -89,10 +89,10 @@
     {
       "source_id": "source-smbs-fx-20260908",
       "publisher": "서울외국환중개",
-      "title": "오늘의 환율 — 매매기준율 (조회일 2026-09-08, USD 1,342.60원)",
+      "title": "오늘의 환율 — USD 매매기준율 1,342.60원 (전 영업일 16:00 TWAP, 조회일 2026-09-08)",
       "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
       "as_of": "2026-09-07T07:00:00Z",
-      "retrieved_at": "2026-09-08T07:09:10Z",
+      "retrieved_at": "2026-09-08T07:34:49Z",
       "source_type": "market_data",
       "status": "confirmed"
     },
@@ -101,8 +101,8 @@
       "publisher": "한국거래소",
       "title": "KRX Data Marketplace — 지수 종가 화면 (MDC0201010101)",
       "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010101",
-      "as_of": "2026-09-08T07:08:50Z",
-      "retrieved_at": "2026-09-08T07:08:50Z",
+      "as_of": "2026-09-08T07:33:10Z",
+      "retrieved_at": "2026-09-08T07:33:10Z",
       "source_type": "market_data",
       "status": "partial"
     }
@@ -110,17 +110,17 @@
   "metrics": [
     {
       "metric_id": "metric-session-fx",
-      "label": "USD/KRW 매매기준율",
+      "label": "USD/KRW 매매기준율 · 전일 16:00 TWAP",
       "value": "1,342.60원",
       "unit": "KRW per USD",
-      "delta": "전일 매매기준율 대비 -12.6원",
+      "delta": "당일 종가 아님 · 전일 대비 -12.6원",
       "as_of": "2026-09-07T07:00:00Z",
       "source_ids": [
         "source-smbs-fx-20260908"
       ],
       "evidence_status": "confirmed",
       "tone": "down",
-      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아니며 장전 조회와 같다."
+      "note": "서울외국환중개 매매기준율. 전 영업일 16:00 시간가중평균. 당일 마감·장중 시세가 아니며 장전 조회와 같다. 뉴스·포털 환율로 바꾸지 않았다."
     },
     {
       "metric_id": "metric-opendart-list-count",
@@ -135,21 +135,21 @@
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "OpenDART 공시정보 목록 API total_count. 같은 날 접수. 최근공시 화면 건수와 다를 수 있다."
+      "note": "OpenDART 공시정보 목록 API total_count. 장전 130건과 같은 목록 기준. 07:02Z 이후 같은 API 응답을 다시 받지 못했고, 최근공시 전체 화면 건수로 바꾸지 않았다."
     },
     {
       "metric_id": "metric-supply-contract-i001",
       "label": "수시공시 공급계약",
-      "value": "11",
+      "value": "12",
       "unit": "건",
-      "delta": "수시공시 검색 67건 중",
-      "as_of": "2026-09-08T07:13:23Z",
+      "delta": "수시공시 검색 75건 중",
+      "as_of": "2026-09-08T07:38:00Z",
       "source_ids": [
         "source-dart-i001-20260908"
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "DART 수시공시(I001) 검색에서 보고서명에 단일판매ㆍ공급계약체결이 있는 행. 기재정정·자회사·자율공시 포함."
+      "note": "DART 수시공시 검색에서 보고서명에 단일판매ㆍ공급계약체결이 있는 행. 기재정정·자회사·자율공시 포함."
     },
     {
       "metric_id": "metric-hmm-contract",
@@ -192,8 +192,8 @@
     {
       "claim_id": "claim-supply-cluster-samples",
       "kind": "fact",
-      "text": "같은 날 수시공시 검색에서 공급계약 행의 표본은 HMM, 코오롱글로벌, 진흥기업이다. 같은 목록에 기재정정·자회사 주요경영사항·자율공시가 섞여 있어 신규 수주 건수로 읽지 않는다.",
-      "as_of": "2026-09-08T07:13:23Z",
+      "text": "같은 날 수시공시 검색에서 공급계약 행의 표본은 HMM, 코오롱글로벌, 진흥기업이다. 기재정정·자회사 주요경영사항·자율공시가 섞여 있어 신규 수주 건수로 읽지 않는다.",
+      "as_of": "2026-09-08T07:38:00Z",
       "source_ids": [
         "source-dart-i001-20260908"
       ],
@@ -222,7 +222,7 @@
     },
     {
       "dir": "up",
-      "text": "장전 기록에는 없던 당일 공급계약 공시가 수시공시 검색에서 11건 확인됐다. HMM 장기화물운송계약이 가장 큰 금액이다.",
+      "text": "장전 기록에는 없던 당일 공급계약 공시가 수시공시 검색에서 12건 확인됐다. HMM 장기화물운송계약이 가장 큰 금액이다.",
       "source_ids": [
         "source-dart-i001-20260908",
         "source-dart-hmm-viewer-20260908800128"
@@ -231,7 +231,7 @@
     },
     {
       "dir": "flat",
-      "text": "서울 원/달러 매매기준율은 1,342.60원으로 장전 조회와 같다. 전 영업일 16:00 시간가중평균 정의에 따른 값이다.",
+      "text": "서울 원/달러 매매기준율은 1,342.60원으로 장전 조회와 같다. 전 영업일 16:00 시간가중평균이며 당일 종가가 아니다.",
       "source_ids": [
         "source-smbs-fx-20260908"
       ],
@@ -241,7 +241,7 @@
   "drivers": [
     {
       "label": "장전 이후 공시",
-      "text": "마감 점검에서 달라진 점은 지수 종가가 아니라 공시 건수다. OpenDART 접수는 장전 130건에서 338건으로 늘었고, 수시공시에서 공급계약이 11건 보인다.",
+      "text": "달라진 점은 지수 종가가 아니라 공시다. OpenDART 접수는 장전 130건에서 338건으로 늘었고, 수시공시에서 공급계약이 12건 보인다.",
       "source_ids": [
         "source-opendart-list-20260908-close",
         "source-dart-i001-20260908"
@@ -259,7 +259,7 @@
     },
     {
       "label": "종가 공백",
-      "text": "코스피·VKOSPI·코스닥 공식 종가가 없다. 하루 등락은 이 기록에서 평가하지 않는다.",
+      "text": "코스피·VKOSPI 공식 종가가 없다. 포털이나 뉴스의 마감 수치로 메우지 않았고, 하루 등락은 평가하지 않는다.",
       "source_ids": [
         "source-krx-mdc-20260908"
       ],
@@ -268,7 +268,7 @@
   ],
   "counterevidence": [
     {
-      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 오후 현물이나 뉴스 인용 환율을 대체하지 않는다.",
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 오후 현물이나 네이버·한경·연합 등 뉴스·포털 환율을 대체하지 않는다.",
       "source_ids": [
         "source-smbs-fx-20260908"
       ],
@@ -283,7 +283,7 @@
       "evidence_status": "confirmed"
     },
     {
-      "text": "공급계약 11건에는 기재정정·자회사 주요경영사항·자율공시가 섞여 있다. 신규 수주 11건으로 세지 않는다.",
+      "text": "공급계약 12건에는 기재정정·자회사 주요경영사항·자율공시가 섞여 있다. 신규 수주 12건으로 세지 않는다.",
       "source_ids": [
         "source-dart-i001-20260908"
       ],
@@ -310,22 +310,25 @@
   "quality": [
     {
       "label": "세션 슬롯",
-      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI·코스닥 공식 종가는 미확보. 지연 홈페이지·뉴스 수치는 쓰지 않았다."
+      "value": "USD/KRW는 서울외국환중개 전 영업일 16:00 TWAP. 코스피·VKOSPI 공식 종가는 미확보. 네이버·한경·연합 등 재배포 종가·장중 시세는 쓰지 않았다."
     },
     {
       "label": "공시 건수",
-      "value": "OpenDART 목록 API total_count 338건, 장전 130건 대비 +208. 수시공시(I001) 검색 67건 중 공급계약 행 11건. 최근공시 화면 건수와 API 전체 건수는 다를 수 있다."
+      "value": "OpenDART 목록 API total_count는 07:02Z 338건(장전 130 대비 +208)이 마지막 성공 조회다. 정정 시점에 같은 API 응답을 다시 받지 못했고, 최근공시 전체 화면 259건은 다른 집계라 델타에 쓰지 않았다. 수시공시 검색 75건 중 공급계약 행 12건."
     },
     {
       "label": "공급계약 인용",
-      "value": "HMM·코오롱글로벌은 공시 본문 수치만 인용했다. 계약서 원문과 11건 전체 본문은 재배포하지 않았다."
+      "value": "HMM·코오롱글로벌은 공시 본문 수치만 인용했다. 계약서 원문과 12건 전체 본문은 재배포하지 않았다."
     }
   ],
   "risks": [
-    "코스피·VKOSPI·코스닥 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
     "공급계약 공시를 종가의 원인으로 읽지 않는다.",
-    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 오후 환율이 아니다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 종가나 장중 환율이 아니다.",
     "OpenDART 접수 건수는 조회 시각 이후 더 늘 수 있다.",
-    "공급계약 11건을 신규 수주 11건으로 확대하지 않는다."
-  ]
+    "공급계약 12건을 신규 수주 12건으로 확대하지 않는다."
+  ],
+  "corrected_at": "2026-09-08T07:40:00Z",
+  "supersedes": "brief-kr-2026-09-08-close",
+  "correction_note": "수시공시 공급계약은 12건으로 유지하고 수시공시 검색은 75건으로 고쳤다. 원/달러는 전 영업일 16:00 TWAP이며 당일 종가가 아니다. 코스피·VKOSPI 공식 종가는 계속 없다. OpenDART 접수는 07:02Z 338건을 유지했고 최근공시 화면·포털 종가로 바꾸지 않았다."
 }

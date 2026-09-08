@@ -1,0 +1,331 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-08-close",
+  "market_code": "KR",
+  "window_code": "close",
+  "market_session_date": "2026-09-08",
+  "generated_at_utc": "2026-09-08T07:17:30Z",
+  "cutoff_at_utc": "2026-09-08T07:16:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "7d653eb3b551550a2e25469128b79a34b74128fec58e773060bdbbf6de9be408",
+  "out_path": "2026/09/08/korea-close.html",
+  "title": "한국 마감 점검 — OpenDART 338건(+208)·HMM 공급계약, 종가 미확보 · 2026-09-08",
+  "summary": "코스피·VKOSPI·코스닥 공식 종가는 확보하지 못했다. 장전 OpenDART 접수는 130건이었는데, 오후 조회에서는 338건으로 208건 늘었다. 같은 날 수시공시에서 단일판매ㆍ공급계약체결은 11건이다. HMM은 Vale International SA와 장기화물운송계약을 계약금액 4,697,159,508,000원(매출액 대비 43.13%)으로 공시했다. 서울 원/달러 매매기준율은 1,342.60원으로 장전 조회와 같다.",
+  "next_handoff": "코스피·VKOSPI·코스닥 공식 종가는 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-opendart-list-20260908-preopen",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 — 2026년 9월 8일 접수 130건(장전)",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-08T02:09:45Z",
+      "retrieved_at": "2026-09-08T02:09:45Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-opendart-list-20260908-close",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 — 2026년 9월 8일 접수 338건",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-08T07:02:00Z",
+      "retrieved_at": "2026-09-08T07:02:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-i001-20260908",
+      "publisher": "금융감독원",
+      "title": "공시서류검색 — 2026년 9월 8일 수시공시 67건",
+      "url": "https://dart.fss.or.kr/dsab001/main.do",
+      "as_of": "2026-09-08T07:13:23Z",
+      "retrieved_at": "2026-09-08T07:13:23Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hmm-20260908800128",
+      "publisher": "금융감독원",
+      "title": "HMM — 단일판매ㆍ공급계약체결 (장기화물운송계약)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908800128",
+      "as_of": "2026-09-08T06:45:00Z",
+      "retrieved_at": "2026-09-08T07:08:50Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hmm-viewer-20260908800128",
+      "publisher": "금융감독원",
+      "title": "HMM — 단일판매ㆍ공급계약체결 본문 (dcmNo=11569901)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260908800128&dcmNo=11569901&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-08T06:45:00Z",
+      "retrieved_at": "2026-09-08T07:08:50Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-kolon-20260908800083",
+      "publisher": "금융감독원",
+      "title": "코오롱글로벌 — 단일판매ㆍ공급계약체결 (망우5구역 가로주택정비사업)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908800083",
+      "as_of": "2026-09-08T06:45:00Z",
+      "retrieved_at": "2026-09-08T07:08:50Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-halt-20260908900343",
+      "publisher": "금융감독원",
+      "title": "중앙첨단소재 — 주권매매거래정지 (주식병합)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908900343",
+      "as_of": "2026-09-08T06:45:00Z",
+      "retrieved_at": "2026-09-08T07:08:50Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260908",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 — 매매기준율 (조회일 2026-09-08, USD 1,342.60원)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-07T07:00:00Z",
+      "retrieved_at": "2026-09-08T07:09:10Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-mdc-20260908",
+      "publisher": "한국거래소",
+      "title": "KRX Data Marketplace — 지수 종가 화면 (MDC0201010101)",
+      "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010101",
+      "as_of": "2026-09-08T07:08:50Z",
+      "retrieved_at": "2026-09-08T07:08:50Z",
+      "source_type": "market_data",
+      "status": "partial"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율",
+      "value": "1,342.60원",
+      "unit": "KRW per USD",
+      "delta": "전일 매매기준율 대비 -12.6원",
+      "as_of": "2026-09-07T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아니며 장전 조회와 같다."
+    },
+    {
+      "metric_id": "metric-opendart-list-count",
+      "label": "당일 OpenDART 접수",
+      "value": "338",
+      "unit": "건",
+      "delta": "장전 130건 대비 +208",
+      "as_of": "2026-09-08T07:02:00Z",
+      "source_ids": [
+        "source-opendart-list-20260908-close",
+        "source-opendart-list-20260908-preopen"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "OpenDART 공시정보 목록 API total_count. 같은 날 접수. 최근공시 화면 건수와 다를 수 있다."
+    },
+    {
+      "metric_id": "metric-supply-contract-i001",
+      "label": "수시공시 공급계약",
+      "value": "11",
+      "unit": "건",
+      "delta": "수시공시 검색 67건 중",
+      "as_of": "2026-09-08T07:13:23Z",
+      "source_ids": [
+        "source-dart-i001-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "DART 수시공시(I001) 검색에서 보고서명에 단일판매ㆍ공급계약체결이 있는 행. 기재정정·자회사·자율공시 포함."
+    },
+    {
+      "metric_id": "metric-hmm-contract",
+      "label": "HMM 공급계약 금액",
+      "value": "4,697,159,508,000원",
+      "unit": "KRW",
+      "delta": "매출액 대비 43.13%",
+      "as_of": "2026-09-08T06:45:00Z",
+      "source_ids": [
+        "source-dart-hmm-20260908800128",
+        "source-dart-hmm-viewer-20260908800128"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "장기화물운송계약. 계약 전일 최초고시환율 1,359.50원 적용. 당일 지수 종가가 아님."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-hmm-vale-terms",
+      "kind": "fact",
+      "text": "HMM 공시 본문은 계약 상대를 Vale International SA, 계약일을 2026-09-07로 적는다. 판매ㆍ공급지역은 브라질, 중국 등이고 계약기간은 2030-04-01부터 2056-10-31이다. 금액은 계약 전일 최초고시환율 1,359.50원(KRW/USD)을 적용했으며, 환율·유가·항로·가동일수에 따라 달라질 수 있다고 적는다.",
+      "as_of": "2026-09-08T06:45:00Z",
+      "source_ids": [
+        "source-dart-hmm-20260908800128",
+        "source-dart-hmm-viewer-20260908800128"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-kolon-mangwoo",
+      "kind": "fact",
+      "text": "코오롱글로벌 공시는 망우5구역(면목동 1-4번지 일원) 가로주택정비사업을 공사수주로 적는다. 계약금액은 104,582,771,000원, 매출액 대비 3.90%, 계약일은 2026-09-07이다. 부가세 제외 금액이며 공사기간은 실착공일부터 33개월이라고 적는다.",
+      "as_of": "2026-09-08T06:45:00Z",
+      "source_ids": [
+        "source-dart-kolon-20260908800083"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-supply-cluster-samples",
+      "kind": "fact",
+      "text": "같은 날 수시공시 검색에서 공급계약 행의 표본은 HMM, 코오롱글로벌, 진흥기업이다. 같은 목록에 기재정정·자회사 주요경영사항·자율공시가 섞여 있어 신규 수주 건수로 읽지 않는다.",
+      "as_of": "2026-09-08T07:13:23Z",
+      "source_ids": [
+        "source-dart-i001-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-jungang-halt",
+      "kind": "fact",
+      "text": "중앙첨단소재 보통주는 주식병합을 이유로 2026-09-11부터 신주권 변경상장일 전일까지 매매가 정지된다. 근거는 코스닥시장업무규정 제25조와 시행세칙 제30조다.",
+      "as_of": "2026-09-08T06:45:00Z",
+      "source_ids": [
+        "source-dart-halt-20260908900343"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "같은 날 OpenDART 접수가 장전 130건에서 338건으로 208건 늘었다.",
+      "source_ids": [
+        "source-opendart-list-20260908-preopen",
+        "source-opendart-list-20260908-close"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "up",
+      "text": "장전 기록에는 없던 당일 공급계약 공시가 수시공시 검색에서 11건 확인됐다. HMM 장기화물운송계약이 가장 큰 금액이다.",
+      "source_ids": [
+        "source-dart-i001-20260908",
+        "source-dart-hmm-viewer-20260908800128"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "서울 원/달러 매매기준율은 1,342.60원으로 장전 조회와 같다. 전 영업일 16:00 시간가중평균 정의에 따른 값이다.",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "장전 이후 공시",
+      "text": "마감 점검에서 달라진 점은 지수 종가가 아니라 공시 건수다. OpenDART 접수는 장전 130건에서 338건으로 늘었고, 수시공시에서 공급계약이 11건 보인다.",
+      "source_ids": [
+        "source-opendart-list-20260908-close",
+        "source-dart-i001-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "HMM 운송계약",
+      "text": "HMM이 Vale International SA와 장기화물운송계약을 공시했다. 계약금액 4,697,159,508,000원은 매출액 대비 43.13%다. 종가가 없어 주가 반응은 적지 않는다.",
+      "source_ids": [
+        "source-dart-hmm-20260908800128",
+        "source-dart-hmm-viewer-20260908800128"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "종가 공백",
+      "text": "코스피·VKOSPI·코스닥 공식 종가가 없다. 하루 등락은 이 기록에서 평가하지 않는다.",
+      "source_ids": [
+        "source-krx-mdc-20260908"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 오후 현물이나 뉴스 인용 환율을 대체하지 않는다.",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "HMM 계약금액은 계약 전일 최초고시환율 1,359.50원을 적용한 값이다. 서울 매매기준율 1,342.60원과 다른 환율이다.",
+      "source_ids": [
+        "source-dart-hmm-viewer-20260908800128",
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "공급계약 11건에는 기재정정·자회사 주요경영사항·자율공시가 섞여 있다. 신규 수주 11건으로 세지 않는다.",
+      "source_ids": [
+        "source-dart-i001-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "코스닥",
+      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI·코스닥 공식 종가는 미확보. 지연 홈페이지·뉴스 수치는 쓰지 않았다."
+    },
+    {
+      "label": "공시 건수",
+      "value": "OpenDART 목록 API total_count 338건, 장전 130건 대비 +208. 수시공시(I001) 검색 67건 중 공급계약 행 11건. 최근공시 화면 건수와 API 전체 건수는 다를 수 있다."
+    },
+    {
+      "label": "공급계약 인용",
+      "value": "HMM·코오롱글로벌은 공시 본문 수치만 인용했다. 계약서 원문과 11건 전체 본문은 재배포하지 않았다."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI·코스닥 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
+    "공급계약 공시를 종가의 원인으로 읽지 않는다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 오후 환율이 아니다.",
+    "OpenDART 접수 건수는 조회 시각 이후 더 늘 수 있다.",
+    "공급계약 11건을 신규 수주 11건으로 확대하지 않는다."
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-08-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-08",
+  "generated_at_utc": "2026-09-08T13:16:00Z",
+  "cutoff_at_utc": "2026-09-08T13:13:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "29f613c4af270906e4622f9a60b6a914822820089fd236e438c6992029fa21e2",
+  "out_path": "2026/09/08/us-preopen.html",
+  "title": "미국 장전 — 노동절 다음날 첫 정규장 · EmpSit 잔향 · 2026-09-08",
+  "summary": "노동절 다음 날이다. NYSE는 9월 7일(월)을 Labor Day 휴장으로 적었고, 오늘은 정규 거래일이다. 금요일 EmpSit는 비농업 +162,000·실업률 4.1%였고, 오늘 BLS 공표는 없다. 다음 숫자는 수요일 ECEC 10:00 ET다. 금리 표의 마지막 행은 금요일(2년 4.37%·10년 4.78%)이며 월·화 행은 없다. 원/달러 1,342.60원은 서울 전 영업일 16:00 TWAP이고 미국 세션 환율이 아니다. S&P 500과 VIX는 없다.",
+  "next_handoff": "S&P 500과 VIX 공식 값은 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-08T13:09:00Z",
+      "retrieved_at": "2026-09-08T13:09:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-empsit-2026-08",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Employment Situation Summary — August 2026 (USDL-26-1435)",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "as_of": "2026-09-04T12:30:00Z",
+      "retrieved_at": "2026-09-08T13:08:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-schedule-202609",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Schedule of Selected Releases for September 2026",
+      "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm",
+      "as_of": "2026-09-08T12:30:00Z",
+      "retrieved_at": "2026-09-08T13:10:00Z",
+      "source_type": "economic_release",
+      "status": "partial"
+    },
+    {
+      "source_id": "source-treasury-dyc-20260904",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — latest row 09/04/2026",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-04T19:30:00Z",
+      "retrieved_at": "2026-09-08T13:09:30Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260908",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 — USD 매매기준율 1,342.60원 (전 영업일 16:00 TWAP, 조회일 2026-09-08)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-07T07:00:00Z",
+      "retrieved_at": "2026-09-08T13:11:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-h15-20260904",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "H.15 Selected Interest Rates (Daily) — release September 4, 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "as_of": "2026-09-03T20:00:00Z",
+      "retrieved_at": "2026-09-08T13:12:30Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-nonfarm-payrolls",
+      "label": "비농업 고용 · 8월",
+      "value": "+162,000",
+      "unit": "jobs",
+      "delta": "직전 12개월 평균 +31,000",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "BLS EmpSit USDL-26-1435. 8월 계절조정 비농업. Last Modified September 04, 2026. 화요일 시세가 아님."
+    },
+    {
+      "metric_id": "metric-unemployment-rate",
+      "label": "실업률 · 8월",
+      "value": "4.1%",
+      "unit": "%",
+      "delta": "전월과 동일 · 실업자 7.0 million",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "가계조사. 원문은 unchanged at 4.1 percent, unemployed changed little at 7.0 million."
+    },
+    {
+      "metric_id": "metric-ahe",
+      "label": "민간 평균 시간당 임금",
+      "value": "$37.75",
+      "unit": "USD per hour",
+      "delta": "+10센트 · +0.3% m/m · +3.1% y/y",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "민간 비농업 전체 근로자. 생산·비관리직 $32.53(+11센트)과 구분."
+    },
+    {
+      "metric_id": "metric-food-services",
+      "label": "음식점·주점 고용 · 8월",
+      "value": "+59,000",
+      "unit": "jobs",
+      "delta": "직전 12개월 평균 +12,000",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "food services and drinking places. 비농업 합계의 구성일 뿐 지수 등락이 아님."
+    },
+    {
+      "metric_id": "metric-payroll-revisions",
+      "label": "6·7월 고용 수정 합",
+      "value": "+55,000",
+      "unit": "jobs",
+      "delta": "6월 +11,000(+20,000→+31,000) · 7월 +44,000(−23,000→+21,000)",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "원문: June and July combined is 55,000 higher than previously reported."
+    },
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.37%",
+      "unit": "%",
+      "delta": "9/3 4.34% 대비 +0.03%p",
+      "as_of": "2026-09-04T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury Daily Par Yield Curve 09/04/2026 행. 노동절 전 금요일. 9월 8일 세션 값이 아님."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.54%",
+      "unit": "%",
+      "delta": "9/3 4.52% 대비 +0.02%p",
+      "as_of": "2026-09-04T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/04/2026 행. 9월 8일 세션 값이 아님."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.78%",
+      "unit": "%",
+      "delta": "9/3 4.77% 대비 +0.01%p",
+      "as_of": "2026-09-04T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/04/2026 행. 3:30 PM ET 부근 호가에서 읽은 액면 수익률. 9월 8일 세션 값이 아님."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.24%",
+      "unit": "%",
+      "delta": "9/3 5.25% 대비 −0.01%p",
+      "as_of": "2026-09-04T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "같은 09/04/2026 행. 9월 8일 세션 값이 아님."
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율 · 전일 16:00 TWAP",
+      "value": "1,342.60원",
+      "unit": "KRW per USD",
+      "delta": "전 영업일 대비 −12.6원",
+      "as_of": "2026-09-07T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "서울외국환중개 매매기준율. 전 영업일 16:00 시간가중평균. 미국 세션 환율이 아니며 한국 당일 종가도 아니다. 한국 마감 기록과 같은 1차 출처다."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-calendar-reopen",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표는 Labor Day를 Monday, September 7로 적는다. 9월 8일은 그 표에 없고, Tape A 정규장은 9:30–16:00 ET다.",
+      "as_of": "2026-09-08T13:09:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-bls-blank-day",
+      "kind": "fact",
+      "text": "9월 8일 BLS 공표는 없다. 다음 일정은 9월 9일(수) 10:00 ET ECEC다. 직전 EmpSit는 9월 4일(금) 08:30 ET였다.",
+      "as_of": "2026-09-08T12:30:00Z",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "claim_id": "claim-empsit-next",
+      "kind": "fact",
+      "text": "EmpSit 원문은 다음 고용 발표를 2026년 10월 2일(금) 08:30 ET로 적는다. 오늘 아침 숫자가 아니다.",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-not-tuesday-tape",
+      "kind": "analysis",
+      "text": "금요일 고용과 금요일 금리만으로는 화요일 시세를 말하지 않는다. S&P 500과 VIX가 없고, 금리 표의 마지막 행도 금요일이다.",
+      "as_of": "2026-09-08T13:13:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08",
+        "source-treasury-dyc-20260904",
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "claim_id": "claim-empsit-mix",
+      "kind": "analysis",
+      "text": "같은 EmpSit에서 음식점·주점은 늘었고 정보업은 일자리를 잃었다. 비농업 합계 한 줄로 업종을 읽지 않는다.",
+      "as_of": "2026-09-04T12:30:00Z",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-yield-vintage",
+      "kind": "fact",
+      "text": "Treasury 일별 액면 수익률 표의 마지막 행은 09/04/2026이다. 노동절 전 금요일이며 9월 8일 세션 값이 아니다. 월·화 행은 없다.",
+      "as_of": "2026-09-04T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-fx-not-us-session",
+      "kind": "fact",
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 미국 장전 환율이 아니다.",
+      "as_of": "2026-09-07T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "8월 비농업은 +162,000이다. 6·7월 수정을 더하면 직전 발표보다 두 달 합이 55,000 높다.",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "금리 표는 금요일에서 멈췄다. 2년 4.37%, 10년 4.78%는 09/04 행이다.",
+      "source_ids": [
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "down",
+      "text": "서울 원/달러 매매기준율은 1,342.60원으로 전 영업일보다 12.6원 낮다. 미국 세션 값이 아니다.",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "월요일이 노동절이라 쉬었고, 오늘은 다시 정규장이다. 금요일 고용이 아직 남아 있고, 오늘 아침 BLS 숫자는 없다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-bls-schedule-202609",
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "label": "고용 구성",
+      "text": "헤드라인만 보면 강한 달처럼 보이지만, 늘어난 쪽은 음식점·주점이고 정보업은 빠졌다. 6·7월 수정도 위로 갔다.",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "S&P 500과 VIX가 없다. 금리도 금요일 행이라 화요일 시세를 그 숫자로 말하지 않는다.",
+      "source_ids": [
+        "source-treasury-dyc-20260904",
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "8월 +162,000은 직전 12개월 평균 +31,000보다 크다. 한 달 숫자로 추세를 바꾸지 않는다.",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "정보업은 8월에 23,000개 일자리를 잃었다. 음식점·주점 +59,000과 반대다.",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "7월 비농업은 처음에 −23,000이었다가 +21,000으로 바뀌었다. 한 달 속보만 보지 않는다.",
+      "source_ids": [
+        "source-bls-empsit-2026-08"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "연준 H.15(9월 4일 발표, 9월 3일까지)는 10년 4.77%·2년 4.34%다. Treasury 09/04 행(10년 4.78%·2년 4.37%)과 날짜가 다르다. 금리는 Treasury를 쓴다.",
+      "source_ids": [
+        "source-fed-h15-20260904",
+        "source-treasury-dyc-20260904"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 미국 장전 현물이나 뉴스 환율을 대체하지 않는다.",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."
+    },
+    {
+      "label": "왜 지금",
+      "value": "노동절 다음날 첫 정규장. 금요일 EmpSit 잔향. 오늘 BLS 공표 없음. 다음 ECEC는 9월 9일 10:00 ET."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 전 영업일 16:00 TWAP이며 미국 세션 환율이 아니다. S&P 500·VIX는 미확보. FRED SP500·VIXCLS는 쓰지 않았다."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury Daily Par Yield Curve 마지막 행은 09/04/2026. 2년 4.37, 5년 4.54, 10년 4.78, 30년 5.24. H.15는 교차확인만."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 8일(화) 정규 개장. 조기 종료 아님."
+    }
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 화요일 시세 방향은 적지 않았다.",
+    "금리 숫자는 금요일 행이다. 월·화 세션 값이 아니다.",
+    "원/달러는 서울 전 영업일 16:00 TWAP이며 미국 세션 환율이 아니다.",
+    "BLS 고용은 이후 수정될 수 있다. 한 달 속보로 추세를 단정하지 않는다.",
+    "금요일 고용·금리를 화요일 개장의 원인으로 읽지 않는다."
+  ]
+}

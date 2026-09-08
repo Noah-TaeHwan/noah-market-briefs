@@ -1,23 +1,23 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-kr-2026-09-08-preopen-c4",
+  "brief_id": "brief-kr-2026-09-08-preopen-c5",
   "market_code": "KR",
   "window_code": "preopen",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T02:49:39Z",
+  "generated_at_utc": "2026-09-08T03:54:14Z",
   "cutoff_at_utc": "2026-09-08T02:09:45Z",
   "market_timezone": "Asia/Seoul",
   "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "9e87126c9be75acb9e85aa944106c3801f57684a274947a9b33f111fbde4f9cf",
+  "public_receipt_sha256": "a4690baadb9c1883972210a9340abe872a03a7962d4586ac07f28ed129dfa76e",
   "out_path": "2026/09/08/korea-preopen.html",
   "title": "한국 장전 — 2분기 GDP 잠정 전기비 0.6% · 2026-09-08",
   "summary": "한국은행 2분기 국민소득(잠정)에서 실질 GDP는 전기 대비 0.6%, 전년 동기 대비 3.7% 늘었다. 명목 GDP는 전년 동기 대비 26.4%, 실질 GNI는 전기 대비 3.1% 늘었다. 유가증권 335종목·코스닥 271종목은 당일 NXT 경쟁매매 지정으로 KRX 시간외단일가 대상에서 빠진다. 서울 원/달러 매매기준율은 1,342.60원으로 전일보다 12.6원 낮다. 같은 날 OpenDART 접수는 130건이고, 발행사 효력발생은 지분증권 3건과 투자계약증권 1건이다.",
   "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
-  "corrected_at": "2026-09-08T02:49:39Z",
-  "supersedes": "brief-kr-2026-09-08-preopen-c3",
-  "correction_note": "효력발생안내는 지분증권 3건(네오사피엔스·덕산넵코어스·한국제17호기업인수목적)과 투자계약증권 1건(스탁키퍼)으로 적는다. 같은 날 공시 접수는 130건이다. GDP·NXT 335/271·서울 매매기준율은 같다. 코스피·VKOSPI 공식 종가는 없다. 환율·접수 건수는 수치 칸에 두고 겹치던 문장은 뺐다.",
+  "corrected_at": "2026-09-08T03:54:14Z",
+  "supersedes": "brief-kr-2026-09-08-preopen-c4",
+  "correction_note": "코스피·VKOSPI 미확인 이유를 한 줄로 줄였다. GDP·NXT 335/271·서울 매매기준율·당일 접수 130건·발행사 효력 지분 3건·투자계약 1건은 같다.",
   "sources": [
     {
       "source_id": "source-bok-gdp-prelim-2026q2",
@@ -446,19 +446,19 @@
   "missing_data": [
     {
       "label": "코스피",
-      "reason": "9월 7일 코스피 종가를 한국거래소 공식 종가 화면에서 확보하지 못했다. 데이터 마켓플레이스는 로그인 화면으로 넘어가 수치를 읽지 못했다. 거래소 메인에 보인 코스피 7,077.56은 기준시각이 없고 조회가 정규장 중이라 지연 시세로 보고 종가에 쓰지 않았다.",
+      "reason": "공식 종가 화면에서 확보하지 못함",
       "evidence_status": "not_proven"
     },
     {
       "label": "VKOSPI",
-      "reason": "전일 V-KOSPI 200 종가를 공식 출처에서 확보하지 못했다. 데이터 마켓플레이스 파생·변동성 화면도 로그인 화면이었다. 거래소 메인 지수 띠에 VKOSPI는 없었다.",
+      "reason": "공식 종가 미확보",
       "evidence_status": "not_proven"
     }
   ],
   "quality": [
     {
       "label": "정정 범위",
-      "value": "같은 슬롯·날짜 문장 정정. 수치와 출처는 유지했다. 개장 이후 개별 공급계약 공시는 넣지 않았다."
+      "value": "같은 슬롯·날짜 정정. 코스피·VKOSPI 미확인 이유를 한 줄로 줄였다. 수치와 출처는 유지했다. 개장 이후 개별 공급계약 공시는 넣지 않았다."
     },
     {
       "label": "GDP 출처",
@@ -481,7 +481,7 @@
     "당일 발행사 효력발생을 이름 네 곳으로만 세면 지분증권 4건으로 읽힌다. 원문은 지분 3건과 투자계약 1건이다."
   ],
   "risks": [
-    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다. 홈페이지 코스피 숫자는 장중 지연값일 수 있어 종가로 쓰지 않았다.",
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다.",
     "GDP 구성 기여와 속보 대비 수정폭은 보도자료 HTML 본문에 없고 첨부 PDF를 이 기록에서 인용하지 못했다.",
     "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
     "NXT 제외는 시간외단일가에 한정된다. 개별 종목의 가능 여부는 첨부 원문으로 확인해야 한다.",

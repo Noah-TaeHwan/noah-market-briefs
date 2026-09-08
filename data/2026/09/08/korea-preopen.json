@@ -1,28 +1,51 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-kr-2026-09-08-preopen-1",
+  "brief_id": "brief-kr-2026-09-08-preopen-c1",
   "market_code": "KR",
   "window_code": "preopen",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T00:54:30Z",
+  "generated_at_utc": "2026-09-08T01:18:30Z",
   "cutoff_at_utc": "2026-09-08T00:54:30Z",
   "market_timezone": "Asia/Seoul",
-  "status": "partial",
+  "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "c9379ab99194245d5417938a6057b96b2f7d07dfb16f470ec09e960e5c99c764",
+  "public_receipt_sha256": "987c766a720a2d895b63ef4d40ec7bbb1a461bd1b00075dd42642e1281b74a74",
   "out_path": "2026/09/08/korea-preopen.html",
-  "title": "한국 장전 — NXT 지정 종목 시간외단일가 제외 · 2026-09-08",
-  "summary": "유가증권시장본부는 8일 08:01에, 당일 NXT 경쟁매매 대상 종목을 KRX 시간외단일가매매에서 뺀다고 공시했다. 코스닥시장본부는 08:02에 같은 제목의 안내를 접수했다. 07:30에는 금융감독원 효력발생안내 4건이 당일 목록에 올랐고, 전일 코스피·VKOSPI·서울 원/달러는 공식 종가로 확인하지 못했다.",
-  "next_handoff": "장마감에는 코스피·VKOSPI·서울 원/달러의 공식 종가와, 한국은행 2/4분기 국민소득(잠정) 보도자료 원문을 확인한다. NXT 제외 종목 첨부 목록은 이 기록에서 인용하지 않았다.",
+  "title": "한국 장전 — 2분기 GDP 잠정 전기비 0.6% · 2026-09-08",
+  "summary": "한국은행 2분기 국민소득(잠정)에서 실질 GDP는 전기보다 0.6%, 1년 전보다 3.7% 늘었다. 명목 GDP는 전년 동기 대비 26.4% 늘었고 실질 GNI는 전기보다 3.1% 늘었다. 유가증권 335종목·코스닥 271종목은 당일 NXT 경쟁매매 지정으로 KRX 시간외단일가에서 빠진다.",
+  "next_handoff": "장마감에는 코스피와 VKOSPI 공식 종가를 Data Marketplace 로그인 없이 확보할 수 있는지 다시 본다. GDP는 잠정 헤드라인이고 구성 기여는 첨부 PDF 대조가 남는다.",
+  "corrected_at": "2026-09-08T01:18:30Z",
+  "supersedes": "brief-kr-2026-09-08-preopen-1",
+  "correction_note": "일정표만 있던 2분기 국민소득(잠정)을 보도자료 본문 수치로 바꿨다. NXT는 첨부를 열어 유가증권 335개·코스닥 271개와 표본 종목을 넣었다. 원래 데이터 마감시각은 유지했다. 코스피·VKOSPI는 Marketplace 로그인과 홈페이지 지연시세 때문에 종가로 쓰지 않았다. 서울 원/달러는 서울외국환중개 매매기준율을 넣었다.",
   "sources": [
+    {
+      "source_id": "source-bok-gdp-prelim-2026q2",
+      "publisher": "한국은행",
+      "title": "2026년 2/4분기 국민소득(잠정) — 통계 보도자료",
+      "url": "https://www.bok.or.kr/portal/bbs/B0000501/view.do?nttId=11064532&menuNo=201264&programType=newsData",
+      "as_of": "2026-09-07T23:00:00Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bok-stats-calendar-202609",
+      "publisher": "한국은행",
+      "title": "월간통계 공표일정 — 2026년 9월 (2/4분기 국민소득 잠정 9월 8일 08:00)",
+      "url": "https://www.bok.or.kr/portal/stats/statsPublictSchdul/listCldr.do?date=2026-09&menuNo=200775",
+      "as_of": "2026-09-07T23:00:00Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
     {
       "source_id": "source-dart-20260908-list",
       "publisher": "금융감독원",
-      "title": "2026년 9월 8일 공시 접수목록 — 전체 25건",
+      "title": "2026년 9월 8일 공시 접수목록",
       "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.08&sort=&series=&mdayCnt=0",
       "as_of": "2026-09-07T22:30:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -32,7 +55,17 @@
       "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(유가증권시장)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908800014",
       "as_of": "2026-09-07T23:01:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kospi-nxt-att-20260908",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타공개첨부서류 — 금일 NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(유가증권시장, 335개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260908800014&dcmNo=11569735&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-07T23:01:00Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -42,7 +75,17 @@
       "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(코스닥시장)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908900015",
       "as_of": "2026-09-07T23:02:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-att-20260908",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타공개첨부서류 — 금일 NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(코스닥시장, 271개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260908900015&dcmNo=11569713&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-07T23:02:00Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -52,7 +95,7 @@
       "title": "덕산넵코어스 — 효력발생안내 (2026.8.14. 제출 지분증권 신고서, 2026.9.8. 효력)",
       "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814100044",
       "as_of": "2026-09-07T22:30:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -67,31 +110,132 @@
       "status": "confirmed"
     },
     {
-      "source_id": "source-nyse-hours-calendars-2026",
-      "publisher": "NYSE",
-      "title": "Holidays & Trading Hours — 2026",
-      "url": "https://www.nyse.com/markets/hours-calendars",
-      "as_of": "2026-09-08T00:46:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
-      "source_type": "market_calendar",
+      "source_id": "source-smbs-fx-20260908",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 — 매매기준율 (조회일 2026-09-08, USD 1,342.60원)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-07T07:00:00Z",
+      "retrieved_at": "2026-09-08T01:17:40Z",
+      "source_type": "market_data",
       "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-gdp-qoq",
+      "label": "2분기 실질 GDP · 전기비",
+      "value": "0.6%",
+      "unit": "%",
+      "delta": "전년동기 대비 3.7%",
+      "as_of": "2026-09-07T23:00:00Z",
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "2026년 2/4분기 국민소득(잠정) 보도자료 본문. 잠정 헤드라인이며 당일 주가 등락이 아님."
     },
     {
-      "source_id": "source-bok-stats-calendar-202609",
-      "publisher": "한국은행",
-      "title": "월간통계 공표일정 — 2026년 9월 (2/4분기 국민소득 잠정 9월 8일 08:00)",
-      "url": "https://www.bok.or.kr/portal/stats/statsPublictSchdul/listCldr.do?date=2026-09&menuNo=200775",
+      "metric_id": "metric-gdp-yoy",
+      "label": "2분기 실질 GDP · 전년비",
+      "value": "3.7%",
+      "unit": "%",
+      "delta": "전기 대비 0.6%",
       "as_of": "2026-09-07T23:00:00Z",
-      "retrieved_at": "2026-09-08T00:54:30Z",
-      "source_type": "economic_release",
-      "status": "partial"
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 보도자료 본문. 전년동기 대비 성장률."
+    },
+    {
+      "metric_id": "metric-gni-qoq",
+      "label": "2분기 실질 GNI · 전기비",
+      "value": "3.1%",
+      "unit": "%",
+      "delta": "전년동기 대비 15.6%",
+      "as_of": "2026-09-07T23:00:00Z",
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "실질 국민총소득. 본문은 전년동기 대비 15.6% 증가도 함께 적는다."
+    },
+    {
+      "metric_id": "metric-nominal-gdp-yoy",
+      "label": "2분기 명목 GDP · 전년비",
+      "value": "26.4%",
+      "unit": "%",
+      "delta": "전기 대비 9.2%",
+      "as_of": "2026-09-07T23:00:00Z",
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "명목 GDP 전기 대비 9.2%, 전년동기 대비 26.4%. 실질 성장률과 구분."
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율",
+      "value": "1,342.60원",
+      "unit": "KRW per USD",
+      "delta": "전일 매매기준율 대비 -12.6원",
+      "as_of": "2026-09-07T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아님."
+    },
+    {
+      "metric_id": "metric-nxt-kospi-count",
+      "label": "NXT 시간외단일가 제외 · 유가증권",
+      "value": "335",
+      "unit": "종목",
+      "delta": "첨부 순번 1–335",
+      "as_of": "2026-09-07T23:01:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-att-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "기타공개첨부서류 표. 전체 명단은 재배포하지 않고 건수와 표본만 인용."
+    },
+    {
+      "metric_id": "metric-nxt-kosdaq-count",
+      "label": "NXT 시간외단일가 제외 · 코스닥",
+      "value": "271",
+      "unit": "종목",
+      "delta": "첨부 순번 1–271",
+      "as_of": "2026-09-07T23:02:00Z",
+      "source_ids": [
+        "source-krx-kosdaq-nxt-att-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "코스닥 기타공개첨부서류 표."
     }
   ],
   "claims": [
     {
+      "claim_id": "claim-gdp-prelim-headlines",
+      "kind": "fact",
+      "text": "한국은행이 2026-09-08 등록한 2/4분기 국민소득(잠정) 보도자료 본문은 실질 GDP를 전기 대비 0.6% 성장, 전년동기 대비 3.7% 성장으로 적는다. 명목 GDP는 전기 대비 9.2%, 전년동기 대비 26.4% 성장이다. 실질 GNI는 전기 대비 3.1% 증가, 전년동기 대비 15.6% 증가이고 명목 GNI는 전기 대비 8.8%, 전년동기 대비 26.4% 증가다. 공표일정은 같은 날 08:00였다.",
+      "as_of": "2026-09-07T23:00:00Z",
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2",
+        "source-bok-stats-calendar-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
       "claim_id": "claim-nxt-afterhours-exclusion",
       "kind": "fact",
-      "text": "유가증권시장본부 기타시장안내에 따르면, 2026-09-08(화) NXT에서 경쟁매매 대상으로 지정된 종목은 당일 KRX 시간외단일가매매 대상에서 제외된다. 시간외종가와 시간외대량·바스켓은 NXT 거래 여부와 관계없이 가능하다. 정규장에서 체결이 없거나 거래정지된 종목도 시간외단일가 대상에서 빠진다. 근거 규정은 유가증권시장업무규정 제34조의2와 같은 규정 시행세칙 제51조의2다.",
+      "text": "유가증권시장본부 기타시장안내에 따르면 2026-09-08(화) NXT 경쟁매매 지정 종목은 당일 KRX 시간외단일가매매 대상에서 제외된다. 시간외종가와 시간외대량·바스켓은 NXT 거래 여부와 관계없이 가능하다. 정규장에서 체결이 없거나 거래정지된 종목도 시간외단일가 대상에서 빠진다. 근거 규정은 유가증권시장업무규정 제34조의2와 같은 규정 시행세칙 제51조의2다.",
       "as_of": "2026-09-07T23:01:00Z",
       "source_ids": [
         "source-krx-kospi-nxt-20260908"
@@ -99,15 +243,36 @@
       "evidence_status": "confirmed"
     },
     {
+      "claim_id": "claim-nxt-kospi-attachment-count",
+      "kind": "fact",
+      "text": "유가증권 첨부(기타공개첨부서류) 표에는 제외 종목이 순번 1부터 335까지 있다. 표본 한글종목명은 삼성전자, SK하이닉스, 현대차, NAVER, 셀트리온이다. 전체 명단은 여기에 재배포하지 않는다.",
+      "as_of": "2026-09-07T23:01:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-att-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
       "claim_id": "claim-kosdaq-nxt-notice",
       "kind": "fact",
-      "text": "코스닥시장본부는 같은 날 08:02에 같은 제목의 기타시장안내를 접수했다. 코스닥 원문 본문의 예외 조항은 이 기록에서 열지 않았다.",
+      "text": "코스닥시장본부도 같은 날 08:02에 같은 취지의 기타시장안내를 냈다. 본문은 코스닥시장업무규정 제21조의3과 시행세칙 제25조의2를 근거로 든다. 시간외종가·시간외대량·바스켓은 NXT와 무관하게 가능하다고 적는다. 첨부 표의 제외 종목은 271개다.",
       "as_of": "2026-09-07T23:02:00Z",
       "source_ids": [
-        "source-dart-20260908-list",
-        "source-krx-kosdaq-nxt-20260908"
+        "source-krx-kosdaq-nxt-20260908",
+        "source-krx-kosdaq-nxt-att-20260908",
+        "source-dart-20260908-list"
       ],
-      "evidence_status": "partial"
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-seoul-fx-fixing",
+      "kind": "fact",
+      "text": "서울외국환중개 오늘의 환율 조회(2026-09-08)에서 USD 매매기준율은 1,342.60원이다. 전일 조회(2026-09-07) 값은 1,355.20원이고 차이는 -12.6원이다. 사이트는 미화 매매기준율을 최근 영업일 오후 4시 시간가중평균환율로 정의한다. 당일 장중 원/달러가 아니다.",
+      "as_of": "2026-09-07T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
     },
     {
       "claim_id": "claim-fss-effectiveness-list",
@@ -142,44 +307,57 @@
     {
       "claim_id": "claim-krx-calendar-open",
       "kind": "fact",
-      "text": "한국거래소 2026년 휴장일 조회에서 9월 8일은 없다. 표에 나온 9월 휴장은 9월 24일·25일 추석이다. 당일은 화요일이라 정규 거래일로 본다.",
+      "text": "한국거래소 2026년 휴장일 표에 9월 8일은 없고 9월 휴장은 추석 24·25일이다.",
       "as_of": "2026-09-08T00:47:04Z",
       "source_ids": [
         "source-krx-holiday-2026"
       ],
       "evidence_status": "confirmed"
-    },
+    }
+  ],
+  "changes": [
     {
-      "claim_id": "claim-nyse-not-holiday",
-      "kind": "fact",
-      "text": "NYSE 2026 휴장 표에서 9월 7일은 Labor Day다. 9월 8일은 그 표에 없다.",
-      "as_of": "2026-09-08T00:46:00Z",
+      "dir": "up",
+      "text": "2분기 실질 GDP 전기 대비 0.6%, 전년동기 대비 3.7%. 월간 주가 등락이 아니라 분기 잠정 성장률이다.",
       "source_ids": [
-        "source-nyse-hours-calendars-2026"
+        "source-bok-gdp-prelim-2026q2"
       ],
       "evidence_status": "confirmed"
     },
     {
-      "claim_id": "claim-gdp-release-scheduled",
-      "kind": "fact",
-      "text": "한국은행 9월 공표일정은 2026년 2/4분기 국민소득(잠정)을 9월 8일 08:00에 둔다. 이 조회에서는 보도자료 원문과 잠정 수치를 열지 못했다.",
-      "as_of": "2026-09-07T23:00:00Z",
+      "dir": "down",
+      "text": "서울외국환중개 USD 매매기준율은 9월 7일 조회 1,355.20원에서 9월 8일 조회 1,342.60원으로 12.6원 낮다. 전 영업일 16:00 TWAP 정의에 따른 값이다.",
       "source_ids": [
-        "source-bok-stats-calendar-202609"
+        "source-smbs-fx-20260908"
       ],
-      "evidence_status": "partial"
+      "evidence_status": "confirmed"
     }
   ],
   "counterevidence": [
     {
-      "text": "NXT 지정에 따른 제외는 시간외단일가매매에 한정된다. 같은 공시는 시간외종가와 시간외대량·바스켓은 NXT 거래 여부와 무관하게 가능하다고 적는다.",
+      "text": "NXT 지정에 따른 제외는 시간외단일가매매에 한정된다. 유가·코스닥 공시 모두 시간외종가와 시간외대량·바스켓은 NXT와 무관하게 가능하다고 적는다.",
       "source_ids": [
-        "source-krx-kospi-nxt-20260908"
+        "source-krx-kospi-nxt-20260908",
+        "source-krx-kosdaq-nxt-20260908"
       ],
       "evidence_status": "confirmed"
     },
     {
-      "text": "효력발생 안내는 신고서 효력일 안내이지, 공모 조건이나 상장 일정의 확정이 아니다.",
+      "text": "보도자료 HTML 본문은 헤드라인 성장률만 적고 구성 기여는 첨부파일로 넘긴다. 반도체·내수 기여 같은 해석은 이 본문만으로 확인하지 못했다.",
+      "source_ids": [
+        "source-bok-gdp-prelim-2026q2"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 서울 외환시장 장중 시세나 연준 H.10 주간 값을 대체하지 않는다.",
+      "source_ids": [
+        "source-smbs-fx-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "효력발생 안내는 신고서 효력일 안내이지 공모 조건이나 상장 일정의 확정이 아니다.",
       "source_ids": [
         "source-dart-hyoryeok-ducsan-20260908"
       ],
@@ -188,57 +366,65 @@
   ],
   "drivers": [
     {
-      "label": "당일 시장운영",
-      "text": "NXT 경쟁매매 지정 종목은 당일 KRX 시간외단일가 대상에서 빠진다. 제외 종목 이름 목록은 첨부에 있고 여기 인용하지 않았다.",
+      "label": "분기 잠정 성장",
+      "text": "장전 08:00에 나온 숫자는 실질 GDP 전기비 0.6%다. 같은 본문에서 명목 GDP 전년비 26.4%와 실질 GNI 전기비 3.1%가 더 크게 적혀 있다. 구성 기여는 본문이 첨부로 넘겼다.",
       "source_ids": [
-        "source-krx-kospi-nxt-20260908"
+        "source-bok-gdp-prelim-2026q2"
       ],
       "evidence_status": "confirmed"
     },
     {
-      "label": "장전 공시",
-      "text": "07:30 효력발생안내 4건이 당일 목록에 올랐다. 덕산넵코어스 원문만 효력일 9월 8일을 확인했다.",
+      "label": "당일 시간외 운영",
+      "text": "NXT 지정 종목은 당일 KRX 시간외단일가에서 빠진다. 유가증권 첨부 335개, 코스닥 첨부 271개다. 시간외종가와 대량·바스켓은 그대로다.",
       "source_ids": [
-        "source-dart-20260908-list",
-        "source-dart-hyoryeok-ducsan-20260908"
+        "source-krx-kospi-nxt-20260908",
+        "source-krx-kospi-nxt-att-20260908",
+        "source-krx-kosdaq-nxt-att-20260908"
       ],
-      "evidence_status": "partial"
+      "evidence_status": "confirmed"
     }
   ],
   "missing_data": [
     {
       "label": "코스피",
-      "reason": "9월 7일 코스피 종가를 한국거래소 공식 화면에서 확보하지 못했다. Data Marketplace 지수 화면은 로그인 창으로 넘어가 수치를 읽지 못했다. 거래소 메인에 보이던 수치는 장중 지연값일 수 있어 장전 종가로 쓰지 않았다.",
-      "evidence_status": "not_proven"
-    },
-    {
-      "label": "USD/KRW",
-      "reason": "서울외국환시장 당일·전일 원/달러는 공식 1차 화면에서 확인하지 못했다. 연준 H.10 최신은 8월 31일 발표·8월 28일 관측이라 당일 값으로 대체하지 않았다.",
+      "reason": "9월 7일 코스피 종가를 한국거래소 공식 종가 화면에서 확보하지 못했다. Data Marketplace 지수 화면(MDC0201010101)은 로그인 페이지(MDCCOMS001)로 넘어가 수치를 읽지 못했다. www.krx.co.kr 메인에 KOSPI 7,077.56이 보였으나 기준시각이 없고 조회가 정규장 중(약 10:15 KST)이라 지연 시세로 보고 종가에 쓰지 않았다.",
       "evidence_status": "not_proven"
     },
     {
       "label": "VKOSPI",
-      "reason": "전일 V-KOSPI 200 종가를 공식 출처에서 확보하지 못했다.",
+      "reason": "전일 V-KOSPI 200 종가를 공식 출처에서 확보하지 못했다. Data Marketplace 파생·변동성 화면도 로그인 벽이었다. 거래소 메인 지수 띠에 VKOSPI는 없었다.",
       "evidence_status": "not_proven"
     }
   ],
   "quality": [
     {
-      "label": "조회 범위",
-      "value": "KRX 2026 휴장일 표, DART 9월 8일 전체 목록, 유가증권 NXT 안내 본문, 덕산넵코어스 효력발생 원문, NYSE 휴장 표, 한국은행 9월 공표일정."
+      "label": "정정 범위",
+      "value": "같은 슬롯·날짜 정정. 원래 cutoff 2026-09-08T00:54:30Z를 유지했다. 개장 이후 접수분(코오롱 공급계약 등)은 넣지 않았다."
     },
     {
-      "label": "수치 공백",
-      "value": "세션 3슬롯은 미확보다. 2/4분기 국민소득(잠정)은 08:00 공표 일정만 확인했고 원문 수치는 없다."
+      "label": "GDP 출처",
+      "value": "한국은행 통계 보도자료 HTML 본문(등록일 2026.09.08, nttId=11064532). 첨부 PDF 44쪽은 내려받았으나 이 환경에서 본문 텍스트 추출이 안 돼 구성 기여는 인용하지 않았다."
     },
     {
-      "label": "장전 컷",
-      "value": "정규장 개장(09:00 KST) 이후 접수분(코오롱 공급계약 등)은 장전 기록에 넣지 않았다."
+      "label": "NXT 첨부",
+      "value": "유가증권 dcmNo=11569735 HTML 표 335행, 코스닥 dcmNo=11569713 HTML 표 271행. 표본 5종목만 인용하고 전체 명단은 재배포하지 않았다."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI는 미확보. 연준 H.10·FRED는 당일 값으로 쓰지 않았다."
+    },
+    {
+      "label": "윤문",
+      "value": "imnotai=fallback-korean-humanizer (cloud VM에 Mac /imnotai 경로 없음). 수치·URL·as_of·source_id는 바꾸지 않았다."
     }
   ],
+  "today_learning": [
+    "공표 일정 한 줄과 보도자료 본문은 다르다. NXT도 안내 본문만 보면 첨부 명단이 없고 첨부 HTML을 열어야 건수가 나온다."
+  ],
   "risks": [
-    "코스피·VKOSPI·서울 원/달러를 확보하지 못해 지수·환율 방향은 적지 않았다.",
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다. 홈페이지 코스피 숫자는 장중 지연값일 수 있어 종가로 쓰지 않았다.",
+    "GDP 구성 기여와 속보 대비 수정폭은 보도자료 HTML 본문에 없고 첨부 PDF를 이 기록에서 인용하지 못했다.",
     "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
-    "NXT 제외 종목의 첨부 명단을 재배포하지 않았다. 해당 종목의 시간외단일가 가능 여부는 첨부 원문으로 확인해야 한다."
+    "NXT 제외는 시간외단일가에 한정된다. 개별 종목의 가능 여부는 첨부 원문으로 확인해야 한다."
   ]
 }

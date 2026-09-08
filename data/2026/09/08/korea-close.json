@@ -4,8 +4,8 @@
   "market_code": "KR",
   "window_code": "close",
   "market_session_date": "2026-09-08",
-  "generated_at_utc": "2026-09-08T07:27:40Z",
-  "cutoff_at_utc": "2026-09-08T07:26:30Z",
+  "generated_at_utc": "2026-09-08T07:40:00Z",
+  "cutoff_at_utc": "2026-09-08T07:39:00Z",
   "market_timezone": "Asia/Seoul",
   "status": "corrected",
   "evidence_status": "partial",
@@ -39,10 +39,10 @@
     {
       "source_id": "source-dart-i001-20260908",
       "publisher": "금융감독원",
-      "title": "공시서류검색 — 2026년 9월 8일 수시공시 73건",
+      "title": "공시서류검색 — 2026년 9월 8일 수시공시 75건",
       "url": "https://dart.fss.or.kr/dsab001/main.do",
-      "as_of": "2026-09-08T07:25:50Z",
-      "retrieved_at": "2026-09-08T07:25:50Z",
+      "as_of": "2026-09-08T07:38:00Z",
+      "retrieved_at": "2026-09-08T07:38:00Z",
       "source_type": "disclosure",
       "status": "confirmed"
     },
@@ -92,7 +92,7 @@
       "title": "오늘의 환율 — USD 매매기준율 1,342.60원 (전 영업일 16:00 TWAP, 조회일 2026-09-08)",
       "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
       "as_of": "2026-09-07T07:00:00Z",
-      "retrieved_at": "2026-09-08T07:24:56Z",
+      "retrieved_at": "2026-09-08T07:34:49Z",
       "source_type": "market_data",
       "status": "confirmed"
     },
@@ -101,8 +101,8 @@
       "publisher": "한국거래소",
       "title": "KRX Data Marketplace — 지수 종가 화면 (MDC0201010101)",
       "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010101",
-      "as_of": "2026-09-08T07:08:50Z",
-      "retrieved_at": "2026-09-08T07:08:50Z",
+      "as_of": "2026-09-08T07:33:10Z",
+      "retrieved_at": "2026-09-08T07:33:10Z",
       "source_type": "market_data",
       "status": "partial"
     }
@@ -135,15 +135,15 @@
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "OpenDART 공시정보 목록 API total_count. 장전 130건과 같은 목록 기준. 최근공시 화면 건수·포털 집계와 다를 수 있다."
+      "note": "OpenDART 공시정보 목록 API total_count. 장전 130건과 같은 목록 기준. 07:02Z 이후 같은 API 응답을 다시 받지 못했고, 최근공시 전체 화면 건수로 바꾸지 않았다."
     },
     {
       "metric_id": "metric-supply-contract-i001",
       "label": "수시공시 공급계약",
       "value": "12",
       "unit": "건",
-      "delta": "수시공시 검색 73건 중",
-      "as_of": "2026-09-08T07:25:50Z",
+      "delta": "수시공시 검색 75건 중",
+      "as_of": "2026-09-08T07:38:00Z",
       "source_ids": [
         "source-dart-i001-20260908"
       ],
@@ -193,7 +193,7 @@
       "claim_id": "claim-supply-cluster-samples",
       "kind": "fact",
       "text": "같은 날 수시공시 검색에서 공급계약 행의 표본은 HMM, 코오롱글로벌, 진흥기업이다. 기재정정·자회사 주요경영사항·자율공시가 섞여 있어 신규 수주 건수로 읽지 않는다.",
-      "as_of": "2026-09-08T07:25:50Z",
+      "as_of": "2026-09-08T07:38:00Z",
       "source_ids": [
         "source-dart-i001-20260908"
       ],
@@ -314,7 +314,7 @@
     },
     {
       "label": "공시 건수",
-      "value": "OpenDART 목록 API total_count 338건(07:02Z), 장전 130건 대비 +208. 수시공시 검색 73건 중 공급계약 행 12건. 최근공시 화면 건수와 API 전체 건수는 다를 수 있다."
+      "value": "OpenDART 목록 API total_count는 07:02Z 338건(장전 130 대비 +208)이 마지막 성공 조회다. 정정 시점에 같은 API 응답을 다시 받지 못했고, 최근공시 전체 화면 259건은 다른 집계라 델타에 쓰지 않았다. 수시공시 검색 75건 중 공급계약 행 12건."
     },
     {
       "label": "공급계약 인용",
@@ -328,7 +328,7 @@
     "OpenDART 접수 건수는 조회 시각 이후 더 늘 수 있다.",
     "공급계약 12건을 신규 수주 12건으로 확대하지 않는다."
   ],
-  "corrected_at": "2026-09-08T07:27:40Z",
+  "corrected_at": "2026-09-08T07:40:00Z",
   "supersedes": "brief-kr-2026-09-08-close",
-  "correction_note": "수시공시 공급계약을 12건으로 고쳤다. 원/달러는 전 영업일 16:00 TWAP이며 당일 종가가 아님을 수치 라벨과 요약에 분명히 했다. 코스피·VKOSPI 공식 종가는 계속 없다. 네이버·한경·연합 등 재배포 종가는 쓰지 않았다."
+  "correction_note": "수시공시 공급계약은 12건으로 유지하고 수시공시 검색은 75건으로 고쳤다. 원/달러는 전 영업일 16:00 TWAP이며 당일 종가가 아니다. 코스피·VKOSPI 공식 종가는 계속 없다. OpenDART 접수는 07:02Z 338건을 유지했고 최근공시 화면·포털 종가로 바꾸지 않았다."
 }

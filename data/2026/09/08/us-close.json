@@ -1,0 +1,295 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-08-close",
+  "market_code": "US",
+  "window_code": "close",
+  "market_session_date": "2026-09-08",
+  "generated_at_utc": "2026-09-08T20:36:00Z",
+  "cutoff_at_utc": "2026-09-08T20:35:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "23dd6b50bb90cd29f052fc480b6790c6abf6a51c4de238ef6841ba5699d68abf",
+  "out_path": "2026/09/08/us-close.html",
+  "title": "미국 마감 — 노동절 다음날 첫 정규장 · 국채 커브 09/08 행 · 2026-09-08",
+  "summary": "노동절 다음날 첫 정규장이 끝났다. Treasury 일별 액면 수익률 표에 09/08 행이 생겼고, 금요일(09/04) 대비 2년 +2bp · 5년 +3bp · 10년 +2bp · 30년 +1bp다. S&P 500과 VIX, 원/달러 세션 값은 없다.",
+  "next_handoff": "S&P 500·VIX·원/달러 세션 값은 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-08T20:33:00Z",
+      "retrieved_at": "2026-09-08T20:33:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-treasury-dyc-20260908",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — 09/08/2026 row",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-08T19:30:00Z",
+      "retrieved_at": "2026-09-08T20:32:08Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-h15-20260908",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "H.15 Selected Interest Rates (Daily) — release September 8, 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "as_of": "2026-09-08T20:15:02Z",
+      "retrieved_at": "2026-09-08T20:32:08Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-ecec-home",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Employer Costs for Employee Compensation — Next Release June 2026 on September 9, 2026 10:00 a.m. ET",
+      "url": "https://www.bls.gov/ecec/home.htm",
+      "as_of": "2026-09-08T20:31:00Z",
+      "retrieved_at": "2026-09-08T20:31:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.39%",
+      "unit": "%",
+      "delta": "09/04 4.37% 대비 +2bp",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury Daily Par Yield Curve 09/08/2026 행. 약 15:30 ET FRBNY 호가. 노동절 다음날 첫 정규장 마감 행이다."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.57%",
+      "unit": "%",
+      "delta": "09/04 4.54% 대비 +3bp",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 금요일 대비 만기 중 가장 큰 폭(+3bp)."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.80%",
+      "unit": "%",
+      "delta": "09/04 4.78% 대비 +2bp",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 3:30 PM ET 부근 호가에서 읽은 액면 수익률."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.25%",
+      "unit": "%",
+      "delta": "09/04 5.24% 대비 +1bp",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 금요일 대비 +1bp."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-calendar-first-close",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표는 Labor Day를 Monday, September 7로 적는다. 9월 8일은 그 표에 없고, Tape A 정규장은 9:30–16:00 ET다. 조기 종료 안내는 없다.",
+      "as_of": "2026-09-08T20:33:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-treasury-tuesday-row",
+      "kind": "fact",
+      "text": "Treasury 일별 액면 수익률 표에 09/08/2026 행이 있다. 09/07 행은 없고, 직전 행은 09/04/2026이다.",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-h15-no-sep8-cmt",
+      "kind": "fact",
+      "text": "H.15는 발표일 September 8, 2026이고 Last Update는 September 08, 2026이다. 열은 2026 Sep 1–4와 Sep 7*(Markets closed)이며 Sep 8 CMT 열은 없다. 화요일 종가는 Treasury 표를 쓴다.",
+      "as_of": "2026-09-08T20:15:02Z",
+      "source_ids": [
+        "source-fed-h15-20260908",
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-ecec-next",
+      "kind": "fact",
+      "text": "ECEC 홈은 June 2026 발표를 September 9, 2026 10:00 a.m. Eastern Time으로 적는다. 마감 윈도에 그 숫자는 없다. 9월 8일 EmpSit 본문도 없다.",
+      "as_of": "2026-09-08T20:31:00Z",
+      "source_ids": [
+        "source-bls-ecec-home"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-twos-tens-unchanged",
+      "kind": "analysis",
+      "text": "2년과 10년 차는 금요일 41bp, 화요일 41bp로 같다. 짧은 만기만 오른 것은 아니다.",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-tape-not-from-yields",
+      "kind": "analysis",
+      "text": "S&P 500과 VIX 공식 값이 없다. 금리 행만으로 지수 마감을 말하지 않는다.",
+      "as_of": "2026-09-08T20:35:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908",
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "국채 커브 09/08 행이 생겼다. 금요일 대비 2년 +2bp, 5년 +3bp, 10년 +2bp, 30년 +1bp다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "H.15는 같은 날 발표인데도 Sep 8 CMT 열이 없다. Sep 7*는 Markets closed다.",
+      "source_ids": [
+        "source-fed-h15-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "월요일이 노동절이라 쉬었고, 오늘은 다시 문을 연 날의 첫 정규장 마감이다. 장전에는 금리 표가 금요일에서 멈췄는데, 지금은 09/08 행이 있다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "금리 행",
+      "text": "달라진 점은 금요일 잔여 행이 아니라 화요일 마감 행이 생겼다는 것이다. 2·5·10·30년이 모두 금요일보다 높다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "S&P 500과 VIX, 원/달러 세션 값이 없다. 지수 방향과 환율은 적지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "H.15 Sep 4 CMT는 2년 4.37% · 10년 4.78%로 Treasury 09/04와 같고, 09/08과 다르다. H.15를 화요일 종가로 바꾸지 않는다.",
+      "source_ids": [
+        "source-fed-h15-20260908",
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "변동은 1~3bp다. 비교 구간은 휴장 월요일을 낀 금요–화요이며, 추세 전환으로 읽지 않는다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908",
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "S&P 500이 없어 금리 움직임과 지수 방향을 같은 문장으로 묶지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp HTTPS 조회가 TLS 인증서 불일치로 실패함. curl 60: no alternative certificate subject name matches target host name 'www.smbs.co.kr' (인증서 CN=m.smbs.biz). 같은 URL WebFetch는 HTTP 500. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음. 수치를 추정하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "세션 종가는 Treasury 09/08 행. S&P 500·VIX는 미확보. USD/KRW는 SMBS HTTPS TLS 인증서 불일치로 미확보. FRED SP500·VIXCLS·DEXKOUS는 쓰지 않았다."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury Daily Par Yield Curve 09/08/2026 행. 2년 4.39, 5년 4.57, 10년 4.80, 30년 5.25. 금요일 09/04 대비 +2/+3/+2/+1bp. H.15는 교차확인만(Sep 8 CMT 열 없음)."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 8일(화) 정규 마감. 조기 종료 아님."
+    }
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러는 SMBS HTTPS 조회가 막혀 세션 값을 적지 않았다.",
+    "H.15 같은 날 발표를 09/08 CMT로 읽지 않는다.",
+    "1~3bp 변동을 추세 전환으로 확대하지 않는다.",
+    "금요일 EmpSit 숫자를 화요일 마감의 원인으로 읽지 않는다."
+  ]
+}

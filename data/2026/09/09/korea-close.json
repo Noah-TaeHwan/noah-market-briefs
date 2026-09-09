@@ -1,0 +1,500 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-09-close",
+  "market_code": "KR",
+  "window_code": "close",
+  "market_session_date": "2026-09-09",
+  "generated_at_utc": "2026-09-09T07:03:00Z",
+  "cutoff_at_utc": "2026-09-09T07:02:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "04b55bb8ef5a3c2496eda9ba416f21312e771b02b963efd89ebbead39ce87656",
+  "out_path": "2026/09/09/korea-close.html",
+  "title": "한국 마감 점검 — 금양 물적분할·상계2구역 수주, 종가 미확보 · 2026-09-09",
+  "summary": "정규장이 끝난 뒤 공식 화면에서 확인되는 변화는 지수 종가가 아니라 당일 공시다. 금양은 물적분할을 이사회에서 정했고 분할기일은 2026-12-05다. 대우건설과 동부건설은 상계2구역 재개발을 각각 413,427,140,419원·275,618,093,612원으로 공시했다. 코스피·VKOSPI 공식 종가는 KRX Data Marketplace 로그인 벽에 막혀 적지 않는다. 서울 원/달러 매매기준율은 1,341.10원으로 장전 조회와 같고, 전 영업일 16:00 시간가중평균이다.",
+  "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-opendart-list-20260909-preopen",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 — 2026년 9월 9일 접수 29건(장전)",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-08T23:14:00Z",
+      "retrieved_at": "2026-09-08T23:14:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-opendart-api-20260909-close",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 API — 인증키 없어 마감 건수 미확보",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-09T06:52:29Z",
+      "retrieved_at": "2026-09-09T06:52:29Z",
+      "source_type": "disclosure",
+      "status": "partial"
+    },
+    {
+      "source_id": "source-dart-recent-20260909",
+      "publisher": "금융감독원",
+      "title": "최근공시 — 2026년 9월 9일 전체 204건",
+      "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.09&sort=&series=&mdayCnt=0",
+      "as_of": "2026-09-09T07:01:43Z",
+      "retrieved_at": "2026-09-09T07:01:43Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-i001-20260909",
+      "publisher": "금융감독원",
+      "title": "공시서류검색 — 2026년 9월 9일 수시공시 41건",
+      "url": "https://dart.fss.or.kr/dsab001/main.do",
+      "as_of": "2026-09-09T06:56:00Z",
+      "retrieved_at": "2026-09-09T06:56:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-kumyang-20260909000291",
+      "publisher": "금융감독원",
+      "title": "금양 — 주요사항보고서(회사분할결정)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909000291",
+      "as_of": "2026-09-09T06:39:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-kumyang-viewer-20260909000291",
+      "publisher": "금융감독원",
+      "title": "금양 — 회사분할결정 본문 (dcmNo=11572350)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909000291&dcmNo=11572350&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T06:39:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-daewoo-20260909800091",
+      "publisher": "금융감독원",
+      "title": "대우건설 — 단일판매ㆍ공급계약체결 (상계2구역)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909800091",
+      "as_of": "2026-09-09T00:52:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-daewoo-viewer-20260909800091",
+      "publisher": "금융감독원",
+      "title": "대우건설 — 상계2구역 공급계약 본문 (dcmNo=11571419)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909800091&dcmNo=11571419&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T00:52:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-dongbu-20260909800119",
+      "publisher": "금융감독원",
+      "title": "동부건설 — 단일판매ㆍ공급계약체결 (상계2구역)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909800119",
+      "as_of": "2026-09-09T01:30:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-dongbu-viewer-20260909800119",
+      "publisher": "금융감독원",
+      "title": "동부건설 — 상계2구역 공급계약 본문 (dcmNo=11571490)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909800119&dcmNo=11571490&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T01:30:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hshwasung-20260909800170",
+      "publisher": "금융감독원",
+      "title": "HS화성 — 단일판매ㆍ공급계약체결 (비취타운)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909800170",
+      "as_of": "2026-09-09T03:02:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hshwasung-viewer-20260909800170",
+      "publisher": "금융감독원",
+      "title": "HS화성 — 비취타운 공급계약 본문 (dcmNo=11571613)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909800170&dcmNo=11571613&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T03:02:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-intek-20260909900274",
+      "publisher": "금융감독원",
+      "title": "인텍플러스 — 단일판매ㆍ공급계약체결(자율공시)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909900274",
+      "as_of": "2026-09-09T06:23:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-intek-viewer-20260909900274",
+      "publisher": "금융감독원",
+      "title": "인텍플러스 — 공급계약 본문 (dcmNo=11572303)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909900274&dcmNo=11572303&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T06:23:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-cosmecca-20260909900323",
+      "publisher": "금융감독원",
+      "title": "코스메카코리아 — 신규시설투자등",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909900323",
+      "as_of": "2026-09-09T06:11:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-cosmecca-viewer-20260909900323",
+      "publisher": "금융감독원",
+      "title": "코스메카코리아 — 신규시설투자 본문 (dcmNo=11572212)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260909900323&dcmNo=11572212&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T06:11:00Z",
+      "retrieved_at": "2026-09-09T06:58:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-drtech-20260909900367",
+      "publisher": "금융감독원",
+      "title": "디알텍 — 주권매매거래정지해제 (액면병합 주권 변경상장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909900367",
+      "as_of": "2026-09-09T06:40:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-ilyang-20260909800012",
+      "publisher": "금융감독원",
+      "title": "일양약품 — 단일판매ㆍ공급계약해지",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909800012",
+      "as_of": "2026-09-08T22:49:00Z",
+      "retrieved_at": "2026-09-09T06:54:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260909",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 — USD 매매기준율 1,341.10원 (전 영업일 16:00 TWAP, 조회일 2026-09-09)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-08T07:00:00Z",
+      "retrieved_at": "2026-09-09T06:52:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-mdc-20260909",
+      "publisher": "한국거래소",
+      "title": "KRX Data Marketplace — 지수 종가 화면 (MDC0201010101)",
+      "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010101",
+      "as_of": "2026-09-09T06:51:10Z",
+      "retrieved_at": "2026-09-09T06:51:10Z",
+      "source_type": "market_data",
+      "status": "partial"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율 · 전일 16:00 TWAP",
+      "value": "1,341.10원",
+      "unit": "KRW per USD",
+      "delta": "장전 조회와 같음 · 전일 매매기준율 대비 -1.5원",
+      "as_of": "2026-09-08T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260909"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "서울외국환중개 매매기준율. 전 영업일 16:00 시간가중평균. 당일 마감·장중 시세가 아니며 장전 조회와 같다. 뉴스·포털 환율로 바꾸지 않았다."
+    },
+    {
+      "metric_id": "metric-dart-recent-count",
+      "label": "당일 DART 최근공시",
+      "value": "204",
+      "unit": "건",
+      "delta": "장전 OpenDART API 29건과 집계가 다름",
+      "as_of": "2026-09-09T07:01:43Z",
+      "source_ids": [
+        "source-dart-recent-20260909",
+        "source-opendart-list-20260909-preopen"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "DART 최근공시 전체 화면의 2026년 09월 09일 204건. 장전 OpenDART 목록 API 29건과 같은 숫자가 아니므로 증감으로 읽지 않는다."
+    },
+    {
+      "metric_id": "metric-i001-count",
+      "label": "수시공시 검색",
+      "value": "41",
+      "unit": "건",
+      "delta": "2026-09-09 수시공시(I001)",
+      "as_of": "2026-09-09T06:56:00Z",
+      "source_ids": [
+        "source-dart-i001-20260909"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "DART 공시서류검색에서 공시유형 수시공시, 기간 2026-09-09. 최근공시 전체 204건과 다른 집계다."
+    },
+    {
+      "metric_id": "metric-supply-contract-i001",
+      "label": "수시공시 공급계약 관련 행",
+      "value": "12",
+      "unit": "건",
+      "delta": "수시공시 검색 41건 중",
+      "as_of": "2026-09-09T06:56:00Z",
+      "source_ids": [
+        "source-dart-i001-20260909"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "보고서명에 단일판매ㆍ공급계약이 있는 행. 기재정정·자회사·자율공시·해지 포함. 신규 체결 12건으로 세지 않는다."
+    },
+    {
+      "metric_id": "metric-daewoo-sanggye",
+      "label": "대우건설 상계2구역 계약금액",
+      "value": "413,427,140,419원",
+      "unit": "KRW",
+      "delta": "매출액 대비 5.13% · 총액의 60%",
+      "as_of": "2026-09-09T00:52:00Z",
+      "source_ids": [
+        "source-dart-daewoo-20260909800091",
+        "source-dart-daewoo-viewer-20260909800091"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "총 계약금액 6,890억원 중 당사분 60%, 부가세 제외. 계약일은 2026-09-08. 당일 지수 종가가 아님."
+    },
+    {
+      "metric_id": "metric-cosmecca-capex",
+      "label": "코스메카코리아 신규시설투자",
+      "value": "136,000,000,000원",
+      "unit": "KRW",
+      "delta": "자기자본 대비 40.45%",
+      "as_of": "2026-09-09T06:11:00Z",
+      "source_ids": [
+        "source-dart-cosmecca-20260909900323",
+        "source-dart-cosmecca-viewer-20260909900323"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "토지 취득 640억원은 제외한 시설 구축 금액. 기간은 이사회결의일부터 2030-12-31 예정."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-kumyang-split",
+      "kind": "fact",
+      "text": "금양 공시 본문은 회사분할을 물적분할로 적는다. 존속회사 금양이 신설회사 발행주식 100%를 보유하고, 분할기일은 2026-12-05, 주주총회 예정일은 2026-10-19, 이사회 결의일은 2026-09-09다. 근거 규정은 상법 제530조의2와 제530조의12다. 신설회사는 재상장을 신청하지 않는다고 적는다.",
+      "as_of": "2026-09-09T06:39:00Z",
+      "source_ids": [
+        "source-dart-kumyang-20260909000291",
+        "source-dart-kumyang-viewer-20260909000291"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-sanggye-joint",
+      "kind": "fact",
+      "text": "대우건설과 동부건설은 같은 날 상계2구역 주택재개발정비사업을 공사수주로 공시했다. 대우건설은 총 계약금액 6,890억원 중 60%인 413,427,140,419원(매출액 대비 5.13%), 동부건설은 40%인 275,618,093,612원(매출액 대비 15.67%)이다. 계약일은 2026-09-08이고 공사기간은 착공일부터 42개월이라고 적는다.",
+      "as_of": "2026-09-09T01:30:00Z",
+      "source_ids": [
+        "source-dart-daewoo-viewer-20260909800091",
+        "source-dart-dongbu-viewer-20260909800119"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-hshwasung-intek",
+      "kind": "fact",
+      "text": "HS화성은 비취타운 가로주택정비사업을 129,583,401,200원(매출액 대비 19.6%)으로 공시했고 계약일은 2026-09-09다. 인텍플러스는 ACCUTECH와 반도체 검사장비 공급을 USD 4,530,000으로 적고, 원화 6,081,978,000원은 2026-09-08 서울 매매기준율 1,342.60원을 적용했다고 한다.",
+      "as_of": "2026-09-09T06:23:00Z",
+      "source_ids": [
+        "source-dart-hshwasung-viewer-20260909800170",
+        "source-dart-intek-viewer-20260909900274"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-drtech-halt-lift",
+      "kind": "fact",
+      "text": "디알텍 보통주는 액면병합 주권 변경상장을 이유로 2026-09-10 매매거래가 재개된다. 근거는 코스닥시장업무규정 제25조와 시행세칙 제30조다. 재개일 장개시전 시간외매매는 성립되지 않는다고 적는다.",
+      "as_of": "2026-09-09T06:40:00Z",
+      "source_ids": [
+        "source-dart-drtech-20260909900367"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "장전 OpenDART 접수는 29건이었다. 마감 조회에서 DART 최근공시 화면은 같은 날 204건이다. 두 숫자는 집계가 달라 단순 증감으로 읽지 않는다.",
+      "source_ids": [
+        "source-opendart-list-20260909-preopen",
+        "source-dart-recent-20260909"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "up",
+      "text": "장전 기록에는 없던 당일 공급계약·회사분할·신규시설 공시가 수시공시와 최근공시 화면에 올라왔다. 수시공시 검색 41건 중 공급계약 관련 행은 12건이다.",
+      "source_ids": [
+        "source-dart-i001-20260909",
+        "source-dart-kumyang-20260909000291",
+        "source-dart-cosmecca-20260909900323"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "서울 원/달러 매매기준율은 1,341.10원으로 장전 조회와 같다. 전 영업일 16:00 시간가중평균이며 당일 종가가 아니다.",
+      "source_ids": [
+        "source-smbs-fx-20260909"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "마감 후 공시",
+      "text": "지금 확인되는 변화는 지수 종가가 아니라 공시다. 금양 물적분할, 상계2구역 공사수주, 코스메카코리아 시설투자가 정규장 전후에 접수됐다. 종가가 없어 주가 반응은 적지 않는다.",
+      "source_ids": [
+        "source-dart-kumyang-20260909000291",
+        "source-dart-daewoo-20260909800091",
+        "source-dart-cosmecca-20260909900323"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "금양 물적분할",
+      "text": "금양은 신설회사 발행주식 100%를 존속회사가 보유하는 물적분할을 정했다. 분할기일 2026-12-05, 주주총회 예정 2026-10-19다. 일정을 당일 종가의 원인으로 읽지 않는다.",
+      "source_ids": [
+        "source-dart-kumyang-20260909000291",
+        "source-dart-kumyang-viewer-20260909000291"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "종가 공백",
+      "text": "코스피·VKOSPI 공식 종가가 없다. 포털이나 뉴스의 마감 수치로 메우지 않았고, 하루 등락은 평가하지 않는다.",
+      "source_ids": [
+        "source-krx-mdc-20260909"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 오후 현물이나 뉴스·포털 환율을 대체하지 않는다.",
+      "source_ids": [
+        "source-smbs-fx-20260909"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "인텍플러스 원화 금액은 2026-09-08 매매기준율 1,342.60원을 적용했다. 조회일 2026-09-09 기준율 1,341.10원과 다른 환율이다.",
+      "source_ids": [
+        "source-dart-intek-viewer-20260909900274",
+        "source-smbs-fx-20260909"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "공급계약 관련 12건에는 기재정정·자회사 주요경영사항·자율공시·해지가 섞여 있다. 신규 체결 12건으로 세지 않는다. 일양약품은 라도티닙 공급계약을 해지했다고 적는다.",
+      "source_ids": [
+        "source-dart-i001-20260909",
+        "source-dart-ilyang-20260909800012"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "대우건설과 동부건설 금액은 같은 상계2구역 총액 6,890억원을 60%·40%로 나눈 값이다. 두 공시를 별도 사업 두 건의 합으로 더하지 않는다.",
+      "source_ids": [
+        "source-dart-daewoo-viewer-20260909800091",
+        "source-dart-dongbu-viewer-20260909800119"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "코스메카코리아 1,360억원은 2026-06-05 유형자산 양수 공시의 부지 640억원을 뺀 시설 구축 금액이다. 총투자 계획 전체로 읽지 않는다.",
+      "source_ids": [
+        "source-dart-cosmecca-viewer-20260909900323"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "장전 OpenDART 목록 API 29건과 마감 시점 DART 최근공시 204건은 집계가 다르다. OpenDART API 마감 건수는 인증키 거부로 다시 받지 못했다.",
+      "source_ids": [
+        "source-opendart-list-20260909-preopen",
+        "source-opendart-api-20260909-close",
+        "source-dart-recent-20260909"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "OpenDART 접수 건수",
+      "reason": "마감 조회에서 OpenDART list.json이 미등록 인증키로 거부되어 장전 29건과 같은 목록 기준의 오후 건수를 확보하지 못함",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 전 영업일 16:00 TWAP. 코스피·VKOSPI 공식 종가는 미확보. 네이버·한경·연합 등 재배포 종가·장중 시세는 쓰지 않았다."
+    },
+    {
+      "label": "공시 건수",
+      "value": "장전 OpenDART API는 29건. 마감 DART 최근공시 화면은 07:01:43Z 204건이며 같은 델타로 쓰지 않았다. 수시공시 검색 41건 중 공급계약 관련 행 12건."
+    },
+    {
+      "label": "공시 인용",
+      "value": "금양·대우건설·동부건설·HS화성·인텍플러스·코스메카코리아·디알텍은 공시 본문 수치만 인용했다. 계약서 원문과 12건 전체 본문은 재배포하지 않았다."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
+    "공급계약·분할 공시를 종가의 원인으로 읽지 않는다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 종가나 장중 환율이 아니다.",
+    "DART 최근공시 건수는 조회 시각 이후 더 늘 수 있다.",
+    "공급계약 관련 12건을 신규 체결 12건으로 확대하지 않는다.",
+    "금양 분할기일과 주주총회 예정일은 이사회 결정으로 달라질 수 있다고 본문이 적는다."
+  ]
+}

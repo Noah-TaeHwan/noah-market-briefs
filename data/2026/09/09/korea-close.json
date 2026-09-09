@@ -1,20 +1,20 @@
 {
   "schema_version": 3,
-  "brief_id": "brief-kr-2026-09-09-close",
+  "brief_id": "brief-kr-2026-09-09-close-c1",
   "market_code": "KR",
   "window_code": "close",
   "market_session_date": "2026-09-09",
-  "generated_at_utc": "2026-09-09T07:03:00Z",
-  "cutoff_at_utc": "2026-09-09T07:02:00Z",
+  "generated_at_utc": "2026-09-09T07:12:00Z",
+  "cutoff_at_utc": "2026-09-09T07:10:00Z",
   "market_timezone": "Asia/Seoul",
-  "status": "partial",
+  "status": "corrected",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "04b55bb8ef5a3c2496eda9ba416f21312e771b02b963efd89ebbead39ce87656",
+  "public_receipt_sha256": "cdb23cf421b6df0d67a63835d2a8021543bf6db59dd6c46e7cfa189174cee761",
   "out_path": "2026/09/09/korea-close.html",
   "title": "한국 마감 점검 — 금양 물적분할·상계2구역 수주, 종가 미확보 · 2026-09-09",
-  "summary": "정규장이 끝난 뒤 공식 화면에서 확인되는 변화는 지수 종가가 아니라 당일 공시다. 금양은 물적분할을 이사회에서 정했고 분할기일은 2026-12-05다. 대우건설과 동부건설은 상계2구역 재개발을 각각 413,427,140,419원·275,618,093,612원으로 공시했다. 코스피·VKOSPI 공식 종가는 KRX Data Marketplace 로그인 벽에 막혀 적지 않는다. 서울 원/달러 매매기준율은 1,341.10원으로 장전 조회와 같고, 전 영업일 16:00 시간가중평균이다.",
-  "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
+  "summary": "공식 지수 종가는 없다. 달라진 점은 공시다. 금양은 물적분할을 이사회에서 정했고 분할기일은 2026-12-05다. 대우건설과 동부건설은 상계2구역 재개발을 각각 413,427,140,419원·275,618,093,612원으로 공시했다. 코스피·VKOSPI·코스닥 공식 종가는 KRX Data Marketplace 로그인 벽에 막혀 적지 않았다. 서울 원/달러 1,341.10원은 장전 조회와 같고 당일 종가가 아니다. 전 영업일 16:00 시간가중평균이다.",
+  "next_handoff": "코스피·VKOSPI·코스닥 공식 종가는 아직 없다.",
   "sources": [
     {
       "source_id": "source-opendart-list-20260909-preopen",
@@ -202,17 +202,17 @@
       "title": "오늘의 환율 — USD 매매기준율 1,341.10원 (전 영업일 16:00 TWAP, 조회일 2026-09-09)",
       "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
       "as_of": "2026-09-08T07:00:00Z",
-      "retrieved_at": "2026-09-09T06:52:00Z",
+      "retrieved_at": "2026-09-09T07:10:00Z",
       "source_type": "market_data",
       "status": "confirmed"
     },
     {
       "source_id": "source-krx-mdc-20260909",
       "publisher": "한국거래소",
-      "title": "KRX Data Marketplace — 지수 종가 화면 (MDC0201010101)",
+      "title": "KRX Data Marketplace — 지수→주가지수→전체지수 시세 (MDC0201010101)",
       "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010101",
-      "as_of": "2026-09-09T06:51:10Z",
-      "retrieved_at": "2026-09-09T06:51:10Z",
+      "as_of": "2026-09-09T06:58:00Z",
+      "retrieved_at": "2026-09-09T07:10:00Z",
       "source_type": "market_data",
       "status": "partial"
     }
@@ -220,17 +220,17 @@
   "metrics": [
     {
       "metric_id": "metric-session-fx",
-      "label": "USD/KRW 매매기준율 · 전일 16:00 TWAP",
+      "label": "USD/KRW 매매기준율 · 당일 종가 아님",
       "value": "1,341.10원",
       "unit": "KRW per USD",
-      "delta": "장전 조회와 같음 · 전일 매매기준율 대비 -1.5원",
+      "delta": "당일 종가 아님 · 장전 조회와 같음",
       "as_of": "2026-09-08T07:00:00Z",
       "source_ids": [
         "source-smbs-fx-20260909"
       ],
       "evidence_status": "confirmed",
       "tone": "flat",
-      "note": "서울외국환중개 매매기준율. 전 영업일 16:00 시간가중평균. 당일 마감·장중 시세가 아니며 장전 조회와 같다. 뉴스·포털 환율로 바꾸지 않았다."
+      "note": "서울외국환중개 매매기준율. 페이지 정의는 미화 기준 최근 영업일 오후 4시 시간가중평균. 당일 마감·장중 시세가 아니며 장전 조회와 같다. 뉴스·포털 환율로 바꾸지 않았다."
     },
     {
       "metric_id": "metric-dart-recent-count",
@@ -402,7 +402,7 @@
     },
     {
       "label": "종가 공백",
-      "text": "코스피·VKOSPI 공식 종가가 없다. 포털이나 뉴스의 마감 수치로 메우지 않았고, 하루 등락은 평가하지 않는다.",
+      "text": "코스피·VKOSPI·코스닥 공식 종가가 없다. 포털·뉴스·거래소 홈페이지 지연 스냅샷으로 메우지 않았고, 하루 등락은 평가하지 않는다.",
       "source_ids": [
         "source-krx-mdc-20260909"
       ],
@@ -461,12 +461,17 @@
   "missing_data": [
     {
       "label": "코스피",
-      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "reason": "KRX Data Marketplace 지수→주가지수→전체지수 시세가 15:58 KST에 「로그인 또는 회원가입이 필요합니다」로 막혀 공식 종가를 확보하지 못함",
       "evidence_status": "not_proven"
     },
     {
       "label": "VKOSPI",
-      "reason": "KRX Data Marketplace 종가 화면이 로그인 벽에 막혀 공식 종가를 확보하지 못함",
+      "reason": "KRX Data Marketplace 지수→주가지수→전체지수 시세가 15:58 KST에 「로그인 또는 회원가입이 필요합니다」로 막혀 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "코스닥",
+      "reason": "KRX Data Marketplace 지수→주가지수→전체지수 시세가 15:58 KST에 「로그인 또는 회원가입이 필요합니다」로 막혀 공식 종가를 확보하지 못함",
       "evidence_status": "not_proven"
     },
     {
@@ -478,7 +483,11 @@
   "quality": [
     {
       "label": "세션 슬롯",
-      "value": "USD/KRW는 서울외국환중개 전 영업일 16:00 TWAP. 코스피·VKOSPI 공식 종가는 미확보. 네이버·한경·연합 등 재배포 종가·장중 시세는 쓰지 않았다."
+      "value": "USD/KRW는 서울외국환중개 전 영업일 16:00 TWAP이며 당일 종가가 아니다. 코스피·VKOSPI·코스닥 공식 종가는 미확보. 거래소 홈페이지 지연 스냅샷·네이버·한경·연합 재배포 종가는 쓰지 않았다."
+    },
+    {
+      "label": "환율 조회",
+      "value": "마감 창에서 SMBS 조회일 2026-09-09 페이지 1,341.10원을 재확인. HTTPS 인증서 CN이 www.smbs.co.kr과 맞지 않아 HTTP 페이지로 확인했고, 공개 SourceRef URL은 HTTPS 원문을 유지한다."
     },
     {
       "label": "공시 건수",
@@ -490,11 +499,14 @@
     }
   ],
   "risks": [
-    "코스피·VKOSPI 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
+    "코스피·VKOSPI·코스닥 공식 종가가 없어 지수 방향과 당일 시장 반응은 적지 않았다.",
     "공급계약·분할 공시를 종가의 원인으로 읽지 않는다.",
     "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 종가나 장중 환율이 아니다.",
     "DART 최근공시 건수는 조회 시각 이후 더 늘 수 있다.",
     "공급계약 관련 12건을 신규 체결 12건으로 확대하지 않는다.",
     "금양 분할기일과 주주총회 예정일은 이사회 결정으로 달라질 수 있다고 본문이 적는다."
-  ]
+  ],
+  "corrected_at": "2026-09-09T07:12:00Z",
+  "supersedes": "brief-kr-2026-09-09-close",
+  "correction_note": "마감 창에서 서울 원/달러 매매기준율 1,341.10원을 재확인했다. 장전 조회와 같아 변화는 보합이며, 당일 종가가 아니다. KRX Data Marketplace 지수→주가지수→전체지수 시세는 15:58 KST에 로그인 벽이라 코스피·VKOSPI·코스닥 공식 종가를 넣지 않았다. 거래소 홈페이지 지연 수치로 종가를 메우지 않았다."
 }

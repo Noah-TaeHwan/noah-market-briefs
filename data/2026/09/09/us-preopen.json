@@ -1,0 +1,378 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-09-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-09",
+  "generated_at_utc": "2026-09-09T12:45:00Z",
+  "cutoff_at_utc": "2026-09-09T12:44:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "34d313c0f2d0f0022ec9aed8f51668adeb2e796de7eb63045881ff8f32e23fae",
+  "out_path": "2026/09/09/us-preopen.html",
+  "title": "미국 장전 — ECEC 10:00 ET 직전 · 6월 고용주 보상비 · 2026-09-09",
+  "summary": "오늘은 ECEC 날이다. BLS는 6월 Employer Costs for Employee Compensation을 10:00 ET에 낸다. 08:45 ET 기준 본문은 아직 없다. 직전 3월 발표는 민간 근로자 시간당 총보상 $49.32·임금 $33.72·복리후생 $15.60이었다. 국채 표는 어제(09/08) 행이 마지막이고, S&P 500·VIX·원/달러 세션 값은 없다. 내일 PPI, 금요일 CPI다.",
+  "next_handoff": "10:00 ET ECEC 본문 반영. S&P 500·VIX·USD/KRW 세션 값은 권리 확인 전 비움.",
+  "sources": [
+    {
+      "source_id": "source-bls-schedule-202609",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Schedule of Selected Releases for September 2026 — Sep 9 ECEC June 2026 10:00 AM",
+      "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm",
+      "as_of": "2026-09-09T12:30:00Z",
+      "retrieved_at": "2026-09-09T12:43:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-ecec-2026-03",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Employer Costs for Employee Compensation — March 2026 (USDL-26-0827)",
+      "url": "https://www.bls.gov/news.release/ecec.nr0.htm",
+      "as_of": "2026-06-12T14:00:00Z",
+      "retrieved_at": "2026-09-09T12:44:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-09T12:43:00Z",
+      "retrieved_at": "2026-09-09T12:43:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-treasury-dyc-20260908",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — latest row 09/08/2026",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-08T19:30:00Z",
+      "retrieved_at": "2026-09-09T12:43:30Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-h15-20260908",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "H.15 Selected Interest Rates (Daily) — release September 8, 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "as_of": "2026-09-07T20:00:00Z",
+      "retrieved_at": "2026-09-09T12:43:40Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-ecec-civilian-total",
+      "label": "민간 근로자 총보상 · 3월",
+      "value": "$49.32",
+      "unit": "USD per hour worked",
+      "delta": "임금 $33.72 · 복리후생 $15.60",
+      "as_of": "2026-06-12T14:00:00Z",
+      "source_ids": [
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "USDL-26-0827. civilian workers. 6월 ECEC 본문이 나오기 전 직전 발표. 오늘 10:00 ET 숫자가 아님."
+    },
+    {
+      "metric_id": "metric-ecec-private-total",
+      "label": "민간산업 총보상 · 3월",
+      "value": "$46.60",
+      "unit": "USD per hour worked",
+      "delta": "임금 69.9% · 복리후생 30.1%",
+      "as_of": "2026-06-12T14:00:00Z",
+      "source_ids": [
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "private industry workers. 임금 $32.60 · 복리후생 $14.01. 6월 속보가 아님."
+    },
+    {
+      "metric_id": "metric-ecec-gov-total",
+      "label": "주·지방정부 총보상 · 3월",
+      "value": "$66.41",
+      "unit": "USD per hour worked",
+      "delta": "임금 61.5% · 복리후생 38.5%",
+      "as_of": "2026-06-12T14:00:00Z",
+      "source_ids": [
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "state and local government. 임금 $40.82 · 복리후생 $25.59. 민간산업과 직접 비교하지 않음."
+    },
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.39%",
+      "unit": "%",
+      "delta": "09/04 4.37% 대비 +0.02%p",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury Daily Par Yield Curve 09/08/2026 행. 화요일 마감 행. 수요일 장전 시세가 아님."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.57%",
+      "unit": "%",
+      "delta": "09/04 4.54% 대비 +0.03%p",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 수요일 장전 시세가 아님."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.80%",
+      "unit": "%",
+      "delta": "09/04 4.78% 대비 +0.02%p",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 수요일 장전 시세가 아님."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.25%",
+      "unit": "%",
+      "delta": "09/04 5.24% 대비 +0.01%p",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/08/2026 행. 수요일 장전 시세가 아님."
+    },
+    {
+      "metric_id": "metric-fed-funds-effective",
+      "label": "연준 유효연방기금금리",
+      "value": "3.63%",
+      "unit": "%",
+      "delta": "H.15 Sep 1–4 열 동일",
+      "as_of": "2026-09-04T20:00:00Z",
+      "source_ids": [
+        "source-fed-h15-20260908"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "H.15 release September 8, 2026. 열은 2026Sep1–Sep4·Sep7*. Sep7*는 노동절. 수요일 CMT 열이 아님."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-ecec-due",
+      "kind": "fact",
+      "text": "BLS 9월 일정표는 9월 9일(수) 10:00 ET에 Employer Costs for Employee Compensation for June 2026를 적는다. 08:45 ET 컷오프 기준 본문은 아직 없다.",
+      "as_of": "2026-09-09T12:44:00Z",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "claim_id": "claim-ecec-prior",
+      "kind": "fact",
+      "text": "직전 ECEC(USDL-26-0827, 2026-06-12)는 3월 민간 근로자 총보상을 시간당 $49.32로 적는다. 임금 $33.72, 복리후생 $15.60이다. 6월 속보가 아니다.",
+      "as_of": "2026-06-12T14:00:00Z",
+      "source_ids": [
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-calendar-open",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표의 Labor Day는 Monday, September 7이다. 9월 9일은 그 표에 없고 Tape A 정규장은 9:30–16:00 ET다.",
+      "as_of": "2026-09-09T12:43:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-next-bls",
+      "kind": "fact",
+      "text": "같은 BLS 일정표에서 다음은 9월 10일(목) 08:30 ET PPI(8월), 9월 11일(금) 08:30 ET CPI·Real Earnings(8월)다.",
+      "as_of": "2026-09-09T12:30:00Z",
+      "source_ids": [
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-yield-vintage",
+      "kind": "fact",
+      "text": "Treasury 일별 액면 수익률 표의 마지막 행은 09/08/2026이다. 수요일 장전 시세가 아니다. 09/09 행은 없다.",
+      "as_of": "2026-09-08T19:30:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-h15-not-wed",
+      "kind": "analysis",
+      "text": "H.15(9월 8일 발표) 열은 Sep1–4와 Sep7*까지다. Treasury 09/08 행과 날짜가 다르다. 수요일 금리는 Treasury를 기준으로 읽되, 그것도 화요일 마감 행이다.",
+      "as_of": "2026-09-09T12:44:00Z",
+      "source_ids": [
+        "source-fed-h15-20260908",
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "flat",
+      "text": "장전 초점은 고용 잔향이 아니라 10:00 ET ECEC다. 본문은 아직 없고, 직전 3월 총보상 $49.32만 있다.",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "dir": "up",
+      "text": "국채 표는 어제 마감 행이 남았다. 09/08 2년 4.39%·10년 4.80%는 금요일보다 2bp 높다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "S&P 500·VIX·원/달러 세션 값은 없다. 지수·환율 방향은 적지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "수요일 아침의 일정은 ECEC다. 숫자는 10:00 ET에 나오고, 지금은 직전 3월 수준만 있다.",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "partial"
+    },
+    {
+      "label": "금리 기준",
+      "text": "장전에 쓸 수 있는 최신 국채 행은 어제 마감이다. 오늘 행이 생기기 전이다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "S&P 500과 VIX, 원/달러 세션 값이 없다. ECEC만으로 지수 방향을 말하지 않는다.",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "3월 ECEC는 6월 12일에 나왔다. 오늘 10:00 ET 6월 속보를 그 숫자로 미리 채우지 않는다.",
+      "source_ids": [
+        "source-bls-ecec-2026-03",
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "민간산업($46.60)과 주·지방정부($66.41)는 직업·업종 구조가 달라 한 줄로 비교하지 않는다.",
+      "source_ids": [
+        "source-bls-ecec-2026-03"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "국채 09/08 행의 1~3bp 변동은 이미 어제 마감 브리프에 있다. 오늘 장전 시세로 다시 쓰지 않는다.",
+      "source_ids": [
+        "source-treasury-dyc-20260908"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "SMBS TodayExRate.jsp와 smbs.biz 조회가 시간 초과·실패. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음. 수치를 추정하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "ECEC June 2026 body",
+      "reason": "BLS 일정은 2026-09-09 10:00 ET. 컷오프 08:45 ET 기준 본문 미공개. 3월 직전 발표만 인용.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "risks": [
+    "6월 ECEC 본문은 10:00 ET 이후에만 있다. 3월 숫자로 미리 채우지 않았다.",
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러는 SMBS 조회 실패로 세션 값을 적지 않았다.",
+    "국채 숫자는 09/08 행이다. 수요일 장전 시세가 아니다.",
+    "내일 PPI·금요일 CPI 일정을 오늘 물가 속보로 읽지 않는다."
+  ],
+  "quality": [
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."
+    },
+    {
+      "label": "왜 지금",
+      "value": "ECEC 10:00 ET 직전. 6월 본문 미공개. 직전 3월 민간 총보상 $49.32. 내일 PPI·금요일 CPI."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "S&P 500·VIX·USD/KRW 미확보. FRED SP500·VIXCLS·DEXKOUS 미사용. 국채는 09/08 행(어제 마감)."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury Daily Par Yield Curve 09/08/2026. 2년 4.39, 5년 4.57, 10년 4.80, 30년 5.25. H.15는 Sep1–4·Sep7* 교차확인만."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 9일(수) 정규 개장. 조기 종료 아님."
+    }
+  ]
+}

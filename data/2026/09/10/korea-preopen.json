@@ -1,0 +1,379 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-10-preopen",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-10",
+  "generated_at_utc": "2026-09-09T23:59:00Z",
+  "cutoff_at_utc": "2026-09-09T23:52:30Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "01a27708920307dc22c4d1c3af6397bf1271c9fe19ccfc0dd9655cfb7f4e2399",
+  "out_path": "2026/09/10/korea-preopen.html",
+  "title": "한국 장전 — 원/달러 1,337.90원(-3.2원) · NXT 시간외단일가 제외 335·271 · 2026-09-10",
+  "summary": "서울 원/달러 매매기준율은 1,337.90원이다. 전일 조회 1,341.10원보다 3.2원 낮다. 유가증권 335종목과 코스닥 271종목은 당일 NXT 지정으로 KRX 시간외단일가에서 빠진다. 같은 날 OpenDART 접수는 38건이다. 발행사 효력발생은 지분증권 1건과 채무증권 4건이다.",
+  "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-krx-kospi-nxt-20260910",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(유가증권시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260910800008",
+      "as_of": "2026-09-09T23:02:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kospi-nxt-att-20260910",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타공개첨부서류 — 금일 NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(유가증권시장, 335개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260910800008&dcmNo=11573265&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T23:02:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-20260910",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타시장안내 — 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(코스닥시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260910900010",
+      "as_of": "2026-09-09T23:03:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-att-20260910",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타공개첨부서류 — 금일 NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(코스닥시장, 271개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260910900010&dcmNo=11573267&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-09T23:03:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-20260910-list",
+      "publisher": "금융감독원",
+      "title": "2026년 9월 10일 공시 접수목록",
+      "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.10&sort=&series=&mdayCnt=0",
+      "as_of": "2026-09-09T23:52:30Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-opendart-list-20260910",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 — 2026년 9월 10일 접수 38건",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-09T23:52:30Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-globaltech-20260910",
+      "publisher": "금융감독원",
+      "title": "글로벌테크놀로지 — 효력발생안내 (2026.8.19. 제출 지분증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260819100001",
+      "as_of": "2026-09-09T22:30:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-dbsec-20260910",
+      "publisher": "금융감독원",
+      "title": "DB증권 — 효력발생안내 (2026.8.31. 제출 채무증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260831100012",
+      "as_of": "2026-09-09T22:30:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-coway-20260910",
+      "publisher": "금융감독원",
+      "title": "코웨이 — 효력발생안내 (2026.8.31. 제출 채무증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260831100014",
+      "as_of": "2026-09-09T22:30:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-hanasec-20260910",
+      "publisher": "금융감독원",
+      "title": "하나증권 — 효력발생안내 (2026.8.31. 제출 채무증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260831100015",
+      "as_of": "2026-09-09T22:30:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-daishin-20260910",
+      "publisher": "금융감독원",
+      "title": "대신증권 — 효력발생안내 (2026.8.31. 제출 채무증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260831100016",
+      "as_of": "2026-09-09T22:30:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-icecreamedu-20260910",
+      "publisher": "금융감독원",
+      "title": "아이스크림에듀 — 공개매수신고서",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260910000001",
+      "as_of": "2026-09-09T23:00:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-icecreamedu-prospectus-20260910",
+      "publisher": "금융감독원",
+      "title": "아이스크림에듀 — 공개매수설명서",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260910000002",
+      "as_of": "2026-09-09T23:03:00Z",
+      "retrieved_at": "2026-09-09T23:52:30Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260910",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 — 매매기준율 (조회일 2026-09-10, USD 1,337.90원)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-09T07:00:00Z",
+      "retrieved_at": "2026-09-09T23:49:20Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율",
+      "value": "1,337.90원",
+      "unit": "KRW per USD",
+      "delta": "전일 매매기준율 대비 -3.2원",
+      "as_of": "2026-09-09T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아님."
+    },
+    {
+      "metric_id": "metric-nxt-kospi-count",
+      "label": "NXT 시간외단일가 제외 · 유가증권",
+      "value": "335",
+      "unit": "종목",
+      "delta": "당일 첨부 순번 1–335",
+      "as_of": "2026-09-09T23:02:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-att-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "접수번호 20260910800008 첨부 표. 표본 한글종목명은 BGF리테일, BNK금융지주, BYC. 전체 명단은 재배포하지 않는다."
+    },
+    {
+      "metric_id": "metric-nxt-kosdaq-count",
+      "label": "NXT 시간외단일가 제외 · 코스닥",
+      "value": "271",
+      "unit": "종목",
+      "delta": "당일 첨부 순번 1–271",
+      "as_of": "2026-09-09T23:03:00Z",
+      "source_ids": [
+        "source-krx-kosdaq-nxt-att-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "접수번호 20260910900010 첨부 표. 표본은 (주)이노테크, AP시스템, CJ ENM. 순번 1부터 271까지."
+    },
+    {
+      "metric_id": "metric-dart-same-day-count",
+      "label": "당일 OpenDART 접수",
+      "value": "38",
+      "unit": "건",
+      "delta": "2026-09-10 같은 날 접수",
+      "as_of": "2026-09-09T23:52:30Z",
+      "source_ids": [
+        "source-opendart-list-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "같은 날 공시 접수 건수. 접수목록 화면의 표시 건수와 다를 수 있다."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-nxt-afterhours-exclusion",
+      "kind": "fact",
+      "text": "유가증권시장본부 기타시장안내는 2026-09-10(목) NXT 경쟁매매 지정 종목을 당일 KRX 시간외단일가매매 대상에서 뺀다. 시간외종가와 시간외대량·바스켓은 NXT와 무관하게 가능하다. 정규장 미체결·거래정지 종목도 시간외단일가에서 빠진다. 근거는 유가증권시장업무규정 제34조의2와 같은 규정 시행세칙 제51조의2다.",
+      "as_of": "2026-09-09T23:02:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-kosdaq-nxt-notice",
+      "kind": "fact",
+      "text": "코스닥시장본부 기타시장안내는 같은 날 08:03에 나왔다. 근거는 코스닥시장업무규정 제21조의3과 시행세칙 제25조의2다. 시간외종가·시간외대량·바스켓은 NXT와 무관하게 가능하다고 적는다.",
+      "as_of": "2026-09-09T23:03:00Z",
+      "source_ids": [
+        "source-krx-kosdaq-nxt-20260910",
+        "source-dart-20260910-list"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-fss-effectiveness-types",
+      "kind": "fact",
+      "text": "당일 효력발생안내는 27건이다. 집합투자증권 일괄신고 22건, 지분증권 1건, 채무증권 4건이다. 지분은 글로벌테크놀로지(2026.8.19. 제출), 채무는 DB증권·대신증권·코웨이·하나증권(2026.8.31. 제출)이다.",
+      "as_of": "2026-09-09T22:30:00Z",
+      "source_ids": [
+        "source-opendart-list-20260910",
+        "source-dart-hyoryeok-globaltech-20260910",
+        "source-dart-hyoryeok-dbsec-20260910",
+        "source-dart-hyoryeok-daishin-20260910",
+        "source-dart-hyoryeok-coway-20260910",
+        "source-dart-hyoryeok-hanasec-20260910",
+        "source-dart-20260910-list"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-icecreamedu-tender-filings",
+      "kind": "fact",
+      "text": "아이스크림에듀 공개매수신고서(20260910000001)와 공개매수설명서(20260910000002)가 2026-09-10 08:00·08:03에 접수됐다. 제출인은 시공테크다. 접수 사실이지 성사나 가격 확정이 아니다.",
+      "as_of": "2026-09-09T23:03:00Z",
+      "source_ids": [
+        "source-dart-icecreamedu-20260910",
+        "source-dart-icecreamedu-prospectus-20260910",
+        "source-dart-20260910-list"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "down",
+      "text": "서울외국환중개 USD 매매기준율은 9월 9일 조회 1,341.10원에서 9월 10일 조회 1,337.90원으로 3.2원 낮다. 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260910"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "NXT 지정에 따른 제외는 시간외단일가매매에 한정된다. 유가·코스닥 공시 모두 시간외종가와 시간외대량·바스켓은 NXT와 무관하게 가능하다고 적는다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260910",
+        "source-krx-kosdaq-nxt-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 서울 외환시장 장중 시세가 아니다.",
+      "source_ids": [
+        "source-smbs-fx-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "효력발생 안내는 신고서 효력일 안내이지 공모 조건이나 상장 일정의 확정이 아니다. 27건 가운데 22건은 집합투자 일괄신고다.",
+      "source_ids": [
+        "source-opendart-list-20260910",
+        "source-dart-hyoryeok-globaltech-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "첨부 제외 종목 수 335·271은 전일과 같은 개수여도 당일 접수 첨부 행이다. 전일 표를 재사용하지 않았다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-att-20260910",
+        "source-krx-kosdaq-nxt-att-20260910"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "기준율 하락",
+      "text": "서울 매매기준율은 1,337.90원이다. 전일 조회보다 3.2원 낮고, 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "당일 시간외 운영",
+      "text": "NXT 지정 종목은 당일 KRX 시간외단일가에서 빠진다. 시간외종가와 대량·바스켓은 그대로다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260910",
+        "source-krx-kosdaq-nxt-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "효력발생 유형",
+      "text": "접수 38건 안에서 발행사 효력발생은 지분 1건·채무 4건이다. 효력발생안내 27건의 나머지는 집합투자 일괄신고다.",
+      "source_ids": [
+        "source-opendart-list-20260910",
+        "source-dart-hyoryeok-globaltech-20260910",
+        "source-dart-hyoryeok-dbsec-20260910"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "NXT 첨부",
+      "value": "당일 접수 20260910800008·20260910900010. 유가증권 첨부 표 335행, 코스닥 첨부 표 271행. 표본 3종목만 인용하고 전체 명단은 재배포하지 않았다."
+    },
+    {
+      "label": "공시 건수",
+      "value": "같은 날 OpenDART 접수는 38건, 효력발생안내는 27건이다. 발행사 효력은 지분 1건·채무 4건이다. 최근공시 화면 건수와 다를 수 있다."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI는 미확보."
+    },
+    {
+      "label": "환율 정의",
+      "value": "조회일 2026-09-10 값 1,337.90원은 전 영업일 16:00 시간가중평균. 9월 9일 조회 1,341.10원과 비교했다."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다.",
+    "NXT 제외는 시간외단일가에 한정된다. 개별 종목의 가능 여부는 첨부 원문으로 확인해야 한다.",
+    "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 장중 시세가 아니다.",
+    "당일 공시 접수 38건은 OpenDART 목록 기준이며 접수목록 화면 건수와 다를 수 있다.",
+    "아이스크림에듀 관련 신고서·설명서 접수를 거래 성사로 읽지 않는다."
+  ]
+}

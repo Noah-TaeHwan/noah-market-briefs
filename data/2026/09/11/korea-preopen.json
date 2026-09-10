@@ -1,0 +1,412 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-11-preopen",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-11",
+  "generated_at_utc": "2026-09-10T23:14:00Z",
+  "cutoff_at_utc": "2026-09-10T23:13:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "9e2e3c595a1b99c3583cf773c7f290652e573c5b89153fd10463fa1cc141e256",
+  "out_path": "2026/09/11/korea-preopen.html",
+  "title": "한국 장전 · 삼성E&A 사우디 수주 2.49조(매출比 27.5%) · 한화에어로 천무 6,411억 · 원/달러 1,338.20원 · 2026-09-11",
+  "summary": "삼성E&A는 SAN 7 Complex Project 단일판매·공급계약을 공시했다. 계약금액은 2,486,579,757,834원으로 최근 매출액 대비 27.54%다. 한화에어로스페이스는 크로아티아 천무 수출 계약 641,095,389,786원(매출액 대비 2.40%)을 같은 아침 공시했다. 서울 원/달러 매매기준율은 1,338.20원으로 전일보다 0.3원 높다. NXT 지정에 따른 시간외단일가 제외는 유가증권 335종목·코스닥 269종목이다.",
+  "next_handoff": "코스피·VKOSPI 공식 종가는 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-samsung-ena-20260911",
+      "publisher": "삼성E&A",
+      "title": "단일판매ㆍ공급계약체결 · SAN 7 Complex Project",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911800002",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-samsung-ena-body-20260911",
+      "publisher": "삼성E&A",
+      "title": "단일판매ㆍ공급계약체결 본문 · 계약금액 2,486,579,757,834원",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260911800002&dcmNo=11575534&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-hanwha-aero-20260911",
+      "publisher": "한화에어로스페이스",
+      "title": "단일판매ㆍ공급계약체결(자율공시) · 크로아티아 천무",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911800004",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-hanwha-aero-body-20260911",
+      "publisher": "한화에어로스페이스",
+      "title": "단일판매ㆍ공급계약체결 본문 · 계약금액 641,095,389,786원",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260911800004&dcmNo=11575540&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kospi-nxt-20260911",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타시장안내 · 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(유가증권시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911800020",
+      "as_of": "2026-09-10T23:05:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kospi-nxt-att-20260911",
+      "publisher": "한국거래소 유가증권시장본부",
+      "title": "기타공개첨부서류 · NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(유가증권시장, 335개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260911800020&dcmNo=11575544&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-10T23:05:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-20260911",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타시장안내 · 금일 NXT 경쟁매매 대상 종목의 KRX 시간외단일가매매 제외(코스닥시장)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911900021",
+      "as_of": "2026-09-10T23:05:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-kosdaq-nxt-att-20260911",
+      "publisher": "한국거래소 코스닥시장본부",
+      "title": "기타공개첨부서류 · NXT 지정에 따른 KRX 시간외단일가매매 제외 종목(코스닥시장, 269개)",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260911900021&dcmNo=11575510&eleId=0&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-10T23:05:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-opendart-list-20260911",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 · 2026년 9월 11일 접수 62건",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-20260911-list",
+      "publisher": "금융감독원",
+      "title": "2026년 9월 11일 공시 접수목록",
+      "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.11&sort=&series=&mdayCnt=0",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-jincostec-20260911",
+      "publisher": "금융감독원",
+      "title": "진코스텍 · 효력발생안내 (2026.8.27. 제출 지분증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260827100087",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-hyoryeok-imfg-20260911",
+      "publisher": "금융감독원",
+      "title": "iM금융지주 · 효력발생안내 (2026.9.1. 제출 채무증권 신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260901100001",
+      "as_of": "2026-09-10T23:13:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260911",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 · 매매기준율 (조회일 2026-09-11, USD 1,338.20원)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-10T07:00:00Z",
+      "retrieved_at": "2026-09-10T23:13:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-samsung-ena-contract",
+      "label": "삼성E&A 사우디 수주",
+      "value": "2,486,579,757,834원",
+      "unit": "KRW",
+      "delta": "매출액대비 27.54%",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-samsung-ena-body-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "SAN 7 Complex Project. USD 1,854,134,485×매매기준환율 1,341.10(2026-09-09). 본사 계약분. 계약상대 SABIC Agri-Nutrients. 계약일 2026-09-09."
+    },
+    {
+      "metric_id": "metric-hanwha-chunmoo",
+      "label": "한화에어로 천무 수출",
+      "value": "641,095,389,786원",
+      "unit": "KRW",
+      "delta": "매출액대비 2.40%",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-hanwha-aero-body-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "크로아티아 국방부. EUR 매매기준율 1,556.98(2026-09-10) 환산. 계약일 2026-09-10."
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율",
+      "value": "1,338.20원",
+      "unit": "KRW per USD",
+      "delta": "전일 매매기준율 대비 +0.3원",
+      "as_of": "2026-09-10T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아님."
+    },
+    {
+      "metric_id": "metric-nxt-kospi-count",
+      "label": "NXT 시간외단일가 제외 · 유가증권",
+      "value": "335",
+      "unit": "종목",
+      "delta": "당일 첨부 순번 1–335",
+      "as_of": "2026-09-10T23:05:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-att-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "접수번호 20260911800020 첨부 표. 표본 한글종목명은 BGF리테일, BNK금융지주, BYC. 전체 명단은 재배포하지 않는다."
+    },
+    {
+      "metric_id": "metric-nxt-kosdaq-count",
+      "label": "NXT 시간외단일가 제외 · 코스닥",
+      "value": "269",
+      "unit": "종목",
+      "delta": "전일 첨부 271종목 대비 -2",
+      "as_of": "2026-09-10T23:05:00Z",
+      "source_ids": [
+        "source-krx-kosdaq-nxt-att-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "접수번호 20260911900021 첨부 표. 표본은 (주)이노테크, AP시스템, CJ ENM."
+    },
+    {
+      "metric_id": "metric-dart-same-day-count",
+      "label": "당일 OpenDART 접수",
+      "value": "62",
+      "unit": "건",
+      "delta": "2026-09-11 같은 날 접수",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-opendart-list-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 날 공시 접수 건수. 접수목록 화면의 표시 건수와 다를 수 있다."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-samsung-ena-details",
+      "kind": "fact",
+      "text": "삼성E&A 공시는 공사수주이며 계약 기간은 2026-10-12부터 2030-12-11까지다. 최근 매출액 9,028,769,083,650원 대비 27.54%다. 본사 계약분이며, 사우디 법인 계약분(SAR 약 60.4억리알)은 별도로 적혀 있다. 계약금액 원화는 USD 1,854,134,485에 2026-09-09 매매기준환율 1,341.10을 곱한 값이다.",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-samsung-ena-body-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-hanwha-chunmoo-details",
+      "kind": "fact",
+      "text": "한화에어로스페이스 공시는 크로아티아 천무 다연장로켓 수출사업이다. 계약 기간은 2026-09-10부터 2030-09-09까지다. 원화 금액은 2026-09-10 서울외국환중개 EUR 매매기준율 1,556.98원을 적용해 환산했다.",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-hanwha-aero-body-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-nxt-afterhours-exclusion",
+      "kind": "fact",
+      "text": "유가증권·코스닥 기타시장안내는 2026-09-11(금) NXT 경쟁매매 지정 종목을 당일 KRX 시간외단일가매매 대상에서 뺀다. 시간외종가와 시간외대량·바스켓은 NXT와 무관하게 가능하다. 정규장 미체결·거래정지 종목도 시간외단일가에서 빠진다.",
+      "as_of": "2026-09-10T23:05:00Z",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260911",
+        "source-krx-kosdaq-nxt-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-fss-effectiveness-types",
+      "kind": "fact",
+      "text": "당일 효력발생안내는 55건이다. 집합투자증권 일괄신고 52건, 지분증권 1건(진코스텍), 채무증권 1건(iM금융지주), 일괄신고서 1건(제주은행)이다.",
+      "as_of": "2026-09-10T23:13:00Z",
+      "source_ids": [
+        "source-opendart-list-20260911",
+        "source-dart-hyoryeok-jincostec-20260911",
+        "source-dart-hyoryeok-imfg-20260911",
+        "source-dart-20260911-list"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "서울외국환중개 USD 매매기준율은 9월 10일 조회 1,337.90원에서 9월 11일 조회 1,338.20원으로 0.3원 높다. 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "down",
+      "text": "NXT 지정에 따른 코스닥 시간외단일가 제외 종목은 당일 첨부 기준 269개로, 전일 첨부 271개보다 2개 적다. 유가증권은 335개로 같다.",
+      "source_ids": [
+        "source-krx-kosdaq-nxt-att-20260911",
+        "source-krx-kospi-nxt-att-20260911"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "삼성E&A 계약금액 원화는 본사분이며 사우디 법인 계약분은 별도다. 공시 수치를 그룹 전체 수주로 합산해 읽지 않는다.",
+      "source_ids": [
+        "source-samsung-ena-body-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "한화에어로스페이스 계약 기간·금액은 진행 과정에서 바뀔 수 있다고 공시가 적는다.",
+      "source_ids": [
+        "source-hanwha-aero-body-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "NXT 지정에 따른 제외는 시간외단일가매매에 한정된다. 시간외종가와 시간외대량·바스켓은 NXT와 무관하게 가능하다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260911",
+        "source-krx-kosdaq-nxt-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 서울 외환시장 장중 시세가 아니다.",
+      "source_ids": [
+        "source-smbs-fx-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "효력발생 안내는 신고서 효력일 안내이지 공모 조건이나 상장 일정의 확정이 아니다.",
+      "source_ids": [
+        "source-opendart-list-20260911",
+        "source-dart-hyoryeok-jincostec-20260911"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "대형 수주 공시",
+      "text": "삼성E&A 사우디 수주 약 2.49조원(매출比 27.54%)과 한화에어로 천무 6,411억원이 같은 아침 공시에 올라왔다.",
+      "source_ids": [
+        "source-samsung-ena-body-20260911",
+        "source-hanwha-aero-body-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "기준율 소폭 반등",
+      "text": "서울 매매기준율은 1,338.20원이다. 전일 조회보다 0.3원 높고, 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "당일 시간외 운영",
+      "text": "NXT 지정 종목은 당일 KRX 시간외단일가에서 빠진다. 코스닥 제외 종목은 전일보다 2개 적은 269개다.",
+      "source_ids": [
+        "source-krx-kospi-nxt-20260911",
+        "source-krx-kosdaq-nxt-20260911",
+        "source-krx-kosdaq-nxt-att-20260911"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "계약 공시",
+      "value": "삼성E&A 20260911800002·한화에어로스페이스 20260911800004 본문 금액·매출比·기간을 인용했다."
+    },
+    {
+      "label": "NXT 첨부",
+      "value": "당일 접수 20260911800020·20260911900021. 유가증권 첨부 335행, 코스닥 첨부 269행."
+    },
+    {
+      "label": "공시 건수",
+      "value": "같은 날 OpenDART 접수 62건, 효력발생안내 55건(집합 52·지분 1·채무 1·일괄 1)."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI는 미확보."
+    },
+    {
+      "label": "환율 정의",
+      "value": "조회일 2026-09-11 값 1,338.20원은 전 영업일 16:00 시간가중평균. 9월 10일 조회 1,337.90원과 비교했다."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다.",
+    "삼성E&A 원화 계약금액은 본사분이며 사우디 법인분은 별도다.",
+    "한화에어로스페이스 계약 기간·금액은 변경될 수 있다고 공시가 적는다.",
+    "NXT 제외는 시간외단일가에 한정된다.",
+    "효력발생 안내를 공모 일정이나 상장 확정으로 읽지 않는다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 장중 시세가 아니다.",
+    "당일 공시 접수 62건은 OpenDART 목록 기준이며 접수목록 화면 건수와 다를 수 있다."
+  ]
+}

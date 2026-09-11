@@ -1,0 +1,405 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-11-close",
+  "market_code": "US",
+  "window_code": "close",
+  "market_session_date": "2026-09-11",
+  "generated_at_utc": "2026-09-11T20:45:28Z",
+  "cutoff_at_utc": "2026-09-11T20:45:28Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "bb357566a85fee235807f1d7d7aa6a16d031f7dc123d731ff40314387a3b0c74",
+  "out_path": "2026/09/11/us-close.html",
+  "title": "미국 마감 — 실질 시간당 -0.1% · H.15 9/11 공개 · 국채 09/11 행 없음 · 2026-09-11",
+  "summary": "장전에 없던 Real Earnings 본문(USDL-26-1497)이 들어왔다. 8월 실질 시간당 평균임금은 전월 -0.1%, 전년 -0.3%다. 실질 주당은 $388.65로 전월 +0.2%다. Fed H.15는 9월 11일 공개본이고, 열은 9월 10일까지 유효연방기금금리 3.63%다. 국채 표는 장전과 같이 09/10 행이 마지막이다. NYSE는 정규 마감했다. S&P 500·VIX·원/달러 세션 값은 없다.",
+  "next_handoff": "다음 개장일 장전. 국채 09/11 행·세션 지수는 원문·권리 확인 후.",
+  "sources": [
+    {
+      "source_id": "source-bls-realer-202608",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Real Earnings Summary — August 2026 (USDL-26-1497)",
+      "url": "https://www.bls.gov/news.release/realer.nr0.htm",
+      "as_of": "2026-09-11T12:30:00Z",
+      "retrieved_at": "2026-09-11T20:45:28Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-realer-t01-202608",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Real Earnings Table 1 — August 2026 (USDL-26-1497)",
+      "url": "https://www.bls.gov/news.release/realer.t01.htm",
+      "as_of": "2026-09-11T12:30:00Z",
+      "retrieved_at": "2026-09-11T20:45:28Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-cpi-202608",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Consumer Price Index Summary — August 2026 (USDL-26-1496)",
+      "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+      "as_of": "2026-09-11T12:30:00Z",
+      "retrieved_at": "2026-09-11T12:55:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-schedule-202609",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Schedule of Selected Releases for September 2026 — Sep 11 CPI and Real Earnings",
+      "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm",
+      "as_of": "2026-09-11T12:54:00Z",
+      "retrieved_at": "2026-09-11T12:55:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-h15-20260911",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "H.15 Selected Interest Rates (Daily) — release September 11, 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "as_of": "2026-09-10T20:00:00Z",
+      "retrieved_at": "2026-09-11T20:45:28Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-treasury-dyc-20260910",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — latest row 09/10/2026 (no 09/11/2026 row)",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-10T20:00:00Z",
+      "retrieved_at": "2026-09-11T20:45:28Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-11T20:45:28Z",
+      "retrieved_at": "2026-09-11T20:45:28Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-real-hourly-mom",
+      "label": "실질 시간당 평균임금 · 전월",
+      "value": "-0.1%",
+      "unit": "% MoM",
+      "delta": "전년 -0.3%",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-realer-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "USDL-26-1497. 8월. 장전 브리프에 없던 본문. CPI-U 전월 +0.4%로 디플레이트."
+    },
+    {
+      "metric_id": "metric-real-hourly-yoy",
+      "label": "실질 시간당 평균임금 · 전년",
+      "value": "-0.3%",
+      "unit": "% YoY",
+      "delta": "전월 -0.1%",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-realer-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "같은 USDL-26-1497 본문. 8월."
+    },
+    {
+      "metric_id": "metric-real-weekly",
+      "label": "실질 주당 평균임금",
+      "value": "$388.65",
+      "unit": "USD per week",
+      "delta": "전월 +0.2% · 전년 +0.3%",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-realer-t01-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "USDL-26-1497. 시간당 전월 하락과 주당 전월 소폭 상승이 한 속보에 같이 있다."
+    },
+    {
+      "metric_id": "metric-fed-funds-effective",
+      "label": "연준 유효연방기금금리",
+      "value": "3.63%",
+      "unit": "%",
+      "delta": "H.15 9/11 공개 · Sep10 열까지 동일",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-fed-h15-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "H.15 release September 11, 2026. Last Update September 11. 열 Sep4·Sep7*·Sep8·Sep9·Sep10. 할인창구 primary credit 3.75. Sep7*는 노동절."
+    },
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.56%",
+      "unit": "%",
+      "delta": "09/11 행 없음 · 장전과 동일",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "Treasury Daily Par Yield Curve 마지막 행 09/10/2026. 금요일 마감 행이 아님. H.15 명목 2년 CMT Sep10 열도 4.56."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.75%",
+      "unit": "%",
+      "delta": "09/11 행 없음 · 장전과 동일",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "같은 09/10/2026 행. H.15 명목 5년 CMT Sep10 열도 4.75."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.95%",
+      "unit": "%",
+      "delta": "09/11 행 없음 · 장전과 동일",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "같은 09/10/2026 행. H.15 명목 10년 CMT Sep10 열도 4.95."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.37%",
+      "unit": "%",
+      "delta": "09/11 행 없음 · 장전과 동일",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "같은 09/10/2026 행. H.15 명목 30년 CMT Sep10 열도 5.37."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-realearn-out",
+      "kind": "fact",
+      "text": "장전 브리프에는 Real Earnings 본문이 없었다. 마감 창에서 USDL-26-1497 본문을 확인했다. 공표는 오늘 08:30 ET. 8월 실질 시간당 평균임금은 전월 -0.1%, 전년 -0.3%다.",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-weekly-vs-hourly",
+      "kind": "fact",
+      "text": "같은 속보에서 실질 주당 평균임금은 $388.65다. 전월 +0.2%, 전년 +0.3%다. 시간당은 전월 하락, 주당은 전월 소폭 상승으로 적혀 있다.",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-realer-t01-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-h15-new",
+      "kind": "fact",
+      "text": "장전 H.15는 9월 10일 공개본이고 열은 9월 9일까지였다. 마감 조회는 9월 11일 공개본(Last Update September 11)이며 열은 9월 10일까지다. 유효연방기금금리는 Sep4·Sep7*·Sep8·Sep9·Sep10 모두 3.63%다.",
+      "as_of": "2026-09-11T20:45:28Z",
+      "source_ids": [
+        "source-fed-h15-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-yield-no-friday",
+      "kind": "fact",
+      "text": "Treasury 일별 액면 수익률 표와 yield.xml에 09/11/2026 행은 없다. 마지막은 09/10/2026(2년 4.56%·5년 4.75%·10년 4.95%·30년 5.37%)이다. 금요일 마감 행이 아니다.",
+      "as_of": "2026-09-10T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-calendar-close",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표의 Labor Day는 Monday, September 7이다. 9월 11일은 그 표에 없고 Tape A 정규장은 9:30–16:00 ET다. 조기 종료 안내는 없다.",
+      "as_of": "2026-09-11T20:45:28Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "down",
+      "text": "장전에 없던 Real Earnings 본문이 들어왔다. 8월 실질 시간당은 전월 -0.1%다. 실질 주당은 $388.65로 전월 +0.2%다.",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-realer-t01-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "H.15 공개일이 9월 10일에서 9월 11일로 바뀌었다. 열은 9월 10일까지이고 유효연방기금금리는 3.63%로 같다.",
+      "source_ids": [
+        "source-fed-h15-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "국채 09/11 행은 장전과 같이 없다. 마지막은 09/10 행이다. 금요일 마감 시세로 읽지 않는다.",
+      "source_ids": [
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "S&P 500·VIX·원/달러 세션 값은 장전과 같이 없다. 실질임금만으로 지수 방향을 적지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "마감에서 새로 찍힌 것은 장전에 없던 Real Earnings 본문과 H.15 9월 11일 공개본이다. CPI 숫자는 장전에 이미 있었다.",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-fed-h15-20260911",
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시간당과 주당",
+      "text": "실질 시간당은 전월 -0.1%인데 실질 주당은 전월 +0.2%다. 한 줄로 같은 방향이라고 적지 않는다.",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-realer-t01-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "S&P 500과 VIX, 원/달러가 없고 국채 09/11 행도 없다. 실질임금으로 금요일 지수·금리 마감을 말하지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "실질임금은 CPI-U(전월 +0.4%)로 디플레이트한 값이다. 장전 CPI 헤드라인을 마감에서 다시 속보로 읽지 않는다.",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "실질 주당은 전월 +0.2%다. 시간당 하락만으로 주간 구매력 전체를 단정하지 않는다.",
+      "source_ids": [
+        "source-bls-realer-202608",
+        "source-bls-realer-t01-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "H.15와 국채 숫자의 최신 열·행은 9월 10일이다. 금요일 마감 호가가 아니다.",
+      "source_ids": [
+        "source-fed-h15-20260911",
+        "source-treasury-dyc-20260910"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "세션 1차 시세 미확보. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음. 수치를 추정하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "Treasury 09/11 row",
+      "reason": "Treasury Daily Par Yield Curve TextView와 yield.xml에 09/11/2026 행이 없음. 마지막은 09/10/2026. 금요일 마감 행을 추정하지 않음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."
+    },
+    {
+      "label": "왜 지금",
+      "value": "장전에 없던 Real Earnings 본문(USDL-26-1497, 시간당 전월 -0.1%). H.15 9/11 공개본. CPI는 장전 맥락."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "S&P 500·VIX·USD/KRW 미확보. FRED SP500·VIXCLS·DEXKOUS 미사용. 국채 09/11 행 없음."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury Daily Par Yield Curve 09/10/2026. 2년 4.56, 5년 4.75, 10년 4.95, 30년 5.37. H.15 release September 11, EFFR 3.63%(열 through Sep 10)."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 11일(금) 정규 마감. 조기 종료 아님."
+    },
+    {
+      "label": "장전 대비",
+      "value": "장전은 CPI 본문·H.15 9/10 공개본·국채 09/10 행. 마감은 Real Earnings 본문 + H.15 9/11 공개본. 국채 09/11 행은 없음. CPI 리드를 복제하지 않음."
+    }
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러 세션 값은 적지 않았다.",
+    "국채 숫자는 09/10 행이다. 금요일 마감 시세가 아니다.",
+    "Real Earnings는 8월 수치다. 오늘 장중 움직임의 원인으로 읽지 않는다.",
+    "FRED SP500·VIXCLS·DEXKOUS는 재배포 권리 미확인으로 사용하지 않았다."
+  ]
+}

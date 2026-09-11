@@ -1,0 +1,74 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-12-preopen",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-12",
+  "generated_at_utc": "2026-09-11T23:14:00Z",
+  "cutoff_at_utc": "2026-09-11T23:13:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "skipped_market_closed",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "19e67061b9c50d8394cb62de88881a79c3f0689331d84e13c0e19f1d09fbcf2a",
+  "out_path": "2026/09/12/korea-preopen.html",
+  "title": "한국 장전 · 토요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-12",
+  "summary": "오늘은 토요일이다. 한국거래소 정규 주식시장은 월요일부터 금요일만 열린다. 다음 정규 개장은 2026-09-14(월)이다.",
+  "sources": [
+    {
+      "source_id": "source-global-krx-guide-trading-days",
+      "publisher": "한국거래소 (Global KRX)",
+      "title": "Guide to Trading in the Korean Stock Market · Trading Days and Holidays (Mon–Fri)",
+      "url": "https://global.krx.co.kr/contents/GLB/01/0109/0109000000/guide_to_trading_in_the_korean_stock_market.pdf",
+      "as_of": "2026-09-11T23:13:40Z",
+      "retrieved_at": "2026-09-11T23:13:40Z",
+      "source_type": "official",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-regulation-kosdaq-open-close",
+      "publisher": "한국거래소 (Regulation KRX)",
+      "title": "코스닥시장 · 시장의 개폐 · 휴장일(토요일 포함)",
+      "url": "https://regulation.krx.co.kr/contents/RGL/03/03020401/RGL03020401.jsp",
+      "as_of": "2026-09-11T23:13:40Z",
+      "retrieved_at": "2026-09-11T23:13:40Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [],
+  "claims": [
+    {
+      "claim_id": "claim-krx-saturday-closed",
+      "kind": "fact",
+      "text": "한국 증권시장 정규 매매는 월요일부터 금요일까지이며, 토요일은 휴장일이다. 2026-09-12는 토요일이라 정규장이 없고, 다음 정규 개장은 2026-09-14(월)이다.",
+      "as_of": "2026-09-11T23:13:40Z",
+      "source_ids": [
+        "source-global-krx-guide-trading-days",
+        "source-krx-regulation-kosdaq-open-close"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "2026-09-12는 토요일이라 KRX 정규 매매가 없어 당일 세션 종가가 없다",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "토요일 휴장일에는 당일 세션 환율을 적지 않는다(서울외국환중개 매매기준율은 전 영업일 TWAP)",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "2026-09-12는 토요일이라 KRX 정규 매매가 없어 당일 세션 종가가 없다",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "risks": [
+    "토요일 정규장 휴장이라 코스피·VKOSPI·당일 USD/KRW 세션 수치는 없다.",
+    "다음 정규 개장은 2026-09-14(월)이다."
+  ]
+}

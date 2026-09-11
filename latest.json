@@ -4,11 +4,11 @@
     {
       "market": "KR",
       "window": "preopen",
-      "date": "2026-09-11",
-      "title": "한국 장전 · 삼성E&A 사우디 수주 2.49조(매출比 27.5%) · 한화에어로 천무 6,411억 · 원/달러 1,338.20원 · 2026-09-11",
-      "path": "2026/09/11/korea-preopen.html",
-      "status": "partial",
-      "evidence_status": "partial"
+      "date": "2026-09-12",
+      "title": "한국 장전 · 토요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-12",
+      "path": "2026/09/12/korea-preopen.html",
+      "status": "skipped_market_closed",
+      "evidence_status": "confirmed"
     },
     {
       "market": "KR",

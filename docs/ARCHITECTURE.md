@@ -52,6 +52,7 @@ scripts/build.py               # 입력 탐색, 검증, 페이지/피드 생성
 scripts/render_market_brief.py # 상세 페이지 렌더링
 assets/brief.css               # 공통 반응형 스타일
 YYYY/MM/DD/<window>.html       # 생성된 상세 페이지
+YYYY/MM/DD/index.html           # 기준일 4창구 상태 카드 (P0)
 index.html                     # 최신 4개 + 날짜별 아카이브
 latest.json                    # 최신 V3 4개 공개 메타데이터
 rss.xml                        # 검증 통과 V3 공개 메타데이터
@@ -188,13 +189,27 @@ CI는 별도 verifier 명령을 먼저 실행하므로 저장소 안의 ERROR �
 
 ## 5. 공개 UI와 피드
 
-- `index.html`: 가장 최근 기준일의 현재 읽기 패널을 먼저 보여 준 뒤, 한국 장전·한국 마감·미국 장전·미국 마감의 최신 4개를 고정 순서와 상태 라벨로 보여줍니다.
+- `index.html`: 가장 최근 기준일의 현재 읽기 패널을 먼저 보여 준 뒤, **그날 4창구 상태 카드**(한국 장전·한국 마감·미국 장전·미국 마감의 published/partial/missing + 미확인 한 줄)를 넣고, 그 다음 창구별 최신 4개를 고정 순서와 상태 라벨로 보여줍니다.
+- `YYYY/MM/DD/index.html`: 같은 4창구 카드의 날짜 페이지. 슬롯 JSON의 `status`와 `missing_data[].label`만 쓰고 수치를 만들지 않습니다. 공개 ops 메타(imnotai, G-gate, 파이프라인 일기)는 넣지 않습니다. `cutoff-line` 기준일 줄은 허용합니다.
 - 상세 페이지: 상태 → 요약 → 수치 → 변화 → 동인 → 근거가 연결된 주장 → 반대 근거 → 학습/리스크 → 가설/검토 → 출처 순으로 점진 공개합니다.
 - 레거시 v1/v2: HTML 아카이브에서는 `레거시 미검증`으로 표시하지만 머신 피드에는 내보내지 않습니다.
 - `latest.json`: 각 슬롯의 최신 V3 공개 메타데이터만 포함합니다. V3가 없으면 `legacy_unverified` placeholder를 냅니다.
 - `rss.xml`: 검증을 통과한 V3의 제목, 영구 링크, 상태, 근거 상태와 공개 요약만 제공합니다. V3가 없으면 item 없는 channel입니다.
 - 상세 공유 버튼: Web Share API를 우선하고, 사용할 수 없으면 URL 복사로 폴백합니다.
 - canonical/OG 메타데이터: production 상세 URL과 링크 미리보기를 위한 값입니다. 실제 production 배포와 카카오톡 unfurl은 별도 실측 대상입니다.
+
+### 5.1 날짜 4창구 카드 — Market Briefs 입력
+
+카드는 닫힌 V3 필드를 읽기만 한다. 새 JSON 필드를 만들지 않는다. HTML을 손대지 않는다.
+
+| 화면 | 채우는 곳 |
+|---|---|
+| 슬롯 published | `data/YYYY/MM/DD/<정본이름>.json`의 `status`: `published` (또는 `live`/`corrected`) |
+| 슬롯 partial | 같은 파일 `status`: `partial` |
+| 슬롯 missing | 해당 슬롯 파일 없음 (값을 지어 넣지 않음) |
+| 미확인 한 줄 | 없는 창구 이름 + 그날 레코드 `missing_data[].label` (reason·수치는 카드에 안 넣음) |
+
+머지 다음 슬롯부터 `scripts/publish_brief.sh` → `build.py`가 그날 `YYYY/MM/DD/index.html`과 홈 카드를 갱신한다.
 
 ## 6. 정정
 

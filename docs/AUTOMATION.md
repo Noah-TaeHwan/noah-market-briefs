@@ -97,7 +97,7 @@ market=US, window=close, timezone=America/New_York, scheduled_local_time=16:15
 1. 공식 1차 출처 직접 조회 기반 PublicBriefV3 후보 작성
 2. `python3 scripts/verify_brief.py --strict` — 실패하면 발행 중단 (아카이브 보호)
 3. `python3 scripts/gate_check.py` — 결과만 로그. exit 1은 계속, exit 2(사용법)는 중단
-4. `data/<date>-<slug>` 브랜치에 오늘 JSON + 생성 HTML + 이웃 adjacent-nav HTML + `index.html`/`latest.json`/`rss.xml`을 올린다
+4. `data/<date>-<slug>` 브랜치에 오늘 JSON + 생성 HTML + 이웃 adjacent-nav HTML + 해당 `YYYY/MM/DD/index.html`(4창구 상태 카드) + `index.html`/`latest.json`/`rss.xml`을 올린다
 5. required CI(`verify` 3.11/3.12/3.13)가 초록이면 `gh pr merge --squash` (사람 PR 클릭 없음, `--admin` 금지)
 
 자동화하지 않는다.

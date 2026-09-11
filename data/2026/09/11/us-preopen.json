@@ -1,0 +1,78 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-11-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-11",
+  "generated_at_utc": "2026-09-11T12:58:00Z",
+  "cutoff_at_utc": "2026-09-11T12:57:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "a5bd0edeb59279fd5ab0547c3a183534f0380948cdc5206bfbbc32ea3e487582",
+  "out_path": "2026/09/11/us-preopen.html",
+  "title": "미국 장전 — CPI 전월 +0.4% · 에너지 +2.1% · 국채 10년 4.95% · 2026-09-11",
+  "summary": "오늘은 CPI 날이다. BLS(USDL-26-1496)는 8월 전체 항목을 계절조정 전월 +0.4%, 전년비(비조정) +3.4%로 적었다. 식품·에너지 제외는 전월 +0.3%(전년비 +2.4%). 에너지는 +2.1%(휘발유 +3.9%), 식품은 +0.1%다. 국채 표에는 09/10 행이 있다(2년 4.56%·10년 4.95%). NYSE는 정규 개장일이다. S&P 500·VIX·원/달러 세션 값은 없다.",
+  "next_handoff": "장중·마감 세션 값. Real Earnings 본문 확인.",
+  "sources": [
+    {"source_id": "source-bls-cpi-202608", "publisher": "U.S. Bureau of Labor Statistics", "title": "Consumer Price Index Summary — August 2026 (USDL-26-1496)", "url": "https://www.bls.gov/news.release/cpi.nr0.htm", "as_of": "2026-09-11T12:30:00Z", "retrieved_at": "2026-09-11T12:55:00Z", "source_type": "economic_release", "status": "confirmed"},
+    {"source_id": "source-bls-schedule-202609", "publisher": "U.S. Bureau of Labor Statistics", "title": "Schedule of Selected Releases for September 2026 — Sep 11 CPI and Real Earnings", "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm", "as_of": "2026-09-11T12:54:00Z", "retrieved_at": "2026-09-11T12:55:00Z", "source_type": "economic_release", "status": "confirmed"},
+    {"source_id": "source-nyse-hours-calendars", "publisher": "New York Stock Exchange", "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7", "url": "https://www.nyse.com/markets/hours-calendars", "as_of": "2026-09-11T12:50:00Z", "retrieved_at": "2026-09-11T12:55:00Z", "source_type": "market_calendar", "status": "confirmed"},
+    {"source_id": "source-treasury-dyc-20260910", "publisher": "U.S. Department of the Treasury", "title": "Daily Treasury Par Yield Curve Rates — latest row 09/10/2026", "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026", "as_of": "2026-09-10T20:00:00Z", "retrieved_at": "2026-09-11T12:55:00Z", "source_type": "market_data", "status": "confirmed"},
+    {"source_id": "source-fed-h15-20260910", "publisher": "Board of Governors of the Federal Reserve System", "title": "H.15 Selected Interest Rates (Daily) — release September 10, 2026", "url": "https://www.federalreserve.gov/releases/h15/", "as_of": "2026-09-09T20:00:00Z", "retrieved_at": "2026-09-11T12:55:00Z", "source_type": "market_data", "status": "confirmed"}
+  ],
+  "metrics": [
+    {"metric_id": "metric-cpi-all-mom", "label": "CPI 전체 · 전월", "value": "+0.4%", "unit": "% SA MoM", "delta": "8월 · USDL-26-1496", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed", "tone": "up", "note": "seasonally adjusted all items. 08:30 ET 발표."},
+    {"metric_id": "metric-cpi-all-yoy", "label": "CPI 전체 · 전년", "value": "+3.4%", "unit": "% NSA YoY", "delta": "비조정 12개월", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed", "tone": "up", "note": "before seasonal adjustment."},
+    {"metric_id": "metric-cpi-core-mom", "label": "식품·에너지 제외 · 전월", "value": "+0.3%", "unit": "% SA MoM", "delta": "전년비 +2.4%", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed", "tone": "up", "note": "all items less food and energy."},
+    {"metric_id": "metric-cpi-energy", "label": "에너지", "value": "+2.1%", "unit": "% SA MoM", "delta": "휘발유 +3.9%", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed", "tone": "up", "note": "에너지가 헤드라인 상승을 키움."},
+    {"metric_id": "metric-cpi-food", "label": "식품", "value": "+0.1%", "unit": "% SA MoM", "delta": "외식 +0.3%", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed", "tone": "up", "note": "food at home 세부 미인용."},
+    {"metric_id": "metric-ust-2y", "label": "미국채 2년", "value": "4.56%", "unit": "%", "delta": "09/09 4.43% 대비 +0.13%p", "as_of": "2026-09-10T20:00:00Z", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed", "tone": "up", "note": "Treasury Daily Par Yield Curve 09/10/2026 행. 목요일 마감. 금요일 장전 시세 아님."},
+    {"metric_id": "metric-ust-5y", "label": "미국채 5년", "value": "4.75%", "unit": "%", "delta": "09/09 4.61% 대비 +0.14%p", "as_of": "2026-09-10T20:00:00Z", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed", "tone": "up", "note": "같은 09/10/2026 행."},
+    {"metric_id": "metric-ust-10y", "label": "미국채 10년", "value": "4.95%", "unit": "%", "delta": "09/09 4.83% 대비 +0.12%p", "as_of": "2026-09-10T20:00:00Z", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed", "tone": "up", "note": "같은 09/10/2026 행."},
+    {"metric_id": "metric-ust-30y", "label": "미국채 30년", "value": "5.37%", "unit": "%", "delta": "09/09 5.28% 대비 +0.09%p", "as_of": "2026-09-10T20:00:00Z", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed", "tone": "up", "note": "같은 09/10/2026 행."},
+    {"metric_id": "metric-fed-funds-effective", "label": "연준 유효연방기금금리", "value": "3.63%", "unit": "%", "delta": "H.15 Sep3–9 열 동일", "as_of": "2026-09-09T20:00:00Z", "source_ids": ["source-fed-h15-20260910"], "evidence_status": "confirmed", "tone": "flat", "note": "H.15 release September 10, 2026. 열 Sep3·4·Sep7*·Sep8·Sep9. Sep7*는 노동절."}
+  ],
+  "claims": [
+    {"claim_id": "claim-cpi-printed", "kind": "fact", "text": "BLS는 8월 CPI 전체를 계절조정 전월 +0.4%, 전년비(비조정) +3.4%로 적었다. USDL-26-1496, 08:30 ET 발표.", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed"},
+    {"claim_id": "claim-cpi-core-energy", "kind": "fact", "text": "식품·에너지 제외는 전월 +0.3%(전년비 +2.4%). 에너지는 +2.1%, 그중 휘발유 +3.9%. 식품은 +0.1%(외식 +0.3%).", "as_of": "2026-09-11T12:30:00Z", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed"},
+    {"claim_id": "claim-calendar-open", "kind": "fact", "text": "NYSE 2026 휴장 표의 Labor Day는 Monday, September 7이다. 9월 11일은 그 표에 없고 Tape A 정규장은 9:30–16:00 ET다.", "as_of": "2026-09-11T12:50:00Z", "source_ids": ["source-nyse-hours-calendars"], "evidence_status": "confirmed"},
+    {"claim_id": "claim-yield-row", "kind": "fact", "text": "Treasury 일별 액면 수익률 표의 마지막 행은 09/10/2026이다. 금요일 장전 시세가 아니다. 09/11 행은 없다.", "as_of": "2026-09-10T20:00:00Z", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed"},
+    {"claim_id": "claim-realearn-schedule", "kind": "fact", "text": "BLS 9월 일정표는 같은 날 08:30 ET에 Real Earnings(8월)도 적는다. CPI 요약 페이지에는 Real Earnings 본문이 없다.", "as_of": "2026-09-11T12:54:00Z", "source_ids": ["source-bls-schedule-202609", "source-bls-cpi-202608"], "evidence_status": "confirmed"}
+  ],
+  "changes": [
+    {"dir": "up", "text": "어제 PPI 장전에서 오늘은 8월 CPI 본문이 나왔다. 전체 +0.4%·전년비 +3.4%.", "source_ids": ["source-bls-cpi-202608", "source-bls-schedule-202609"], "evidence_status": "confirmed"},
+    {"dir": "up", "text": "국채 표에 09/10 행이 생겼다. 2년 4.56%·10년 4.95%로 09/09보다 12~14bp 높다.", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed"},
+    {"dir": "flat", "text": "S&P 500·VIX·원/달러 세션 값은 여전히 없다. CPI만으로 지수 방향을 적지 않는다.", "source_ids": ["source-nyse-hours-calendars"], "evidence_status": "partial"}
+  ],
+  "drivers": [
+    {"label": "왜 지금", "text": "금요일 아침의 일정은 CPI다. 8월 전체가 +0.4%로 찍혔고, 에너지(+2.1%)가 헤드라인을 키웠다. 코어는 +0.3%다.", "source_ids": ["source-bls-cpi-202608", "source-bls-schedule-202609"], "evidence_status": "confirmed"},
+    {"label": "금리 표", "text": "국채 09/10 행은 2년·10년이 전일 대비 두 자릿수 bp 올랐다. 금요일 장전 호가가 아니다.", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed"},
+    {"label": "시세 공백", "text": "S&P 500과 VIX, 원/달러 세션 값이 없다. CPI로 지수 방향을 말하지 않는다.", "source_ids": ["source-bls-cpi-202608", "source-nyse-hours-calendars"], "evidence_status": "partial"}
+  ],
+  "counterevidence": [
+    {"text": "코어(+0.3%)는 헤드라인(+0.4%)보다 낮다. 에너지·휘발유만으로 기조 가속을 단정하지 않는다.", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed"},
+    {"text": "식품은 +0.1%에 그쳤다. 에너지 반등만으로 전체 생활물가를 읽지 않는다.", "source_ids": ["source-bls-cpi-202608"], "evidence_status": "confirmed"},
+    {"text": "국채 09/10 행은 목요일 마감이다. 금요일 CPI 직후 장전 시세가 아니다.", "source_ids": ["source-treasury-dyc-20260910"], "evidence_status": "confirmed"}
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러 세션 값을 적지 않았다.",
+    "국채 숫자는 09/10 행이다. 금요일 장전 시세가 아니다.",
+    "Real Earnings는 일정표에만 있고 CPI 요약 페이지에는 없다.",
+    "FRED SP500·VIXCLS는 재배포 권리 미확인으로 사용하지 않았다."
+  ],
+  "missing_data": [
+    {"label": "S&P 500", "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음.", "evidence_status": "not_proven"},
+    {"label": "VIX", "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음.", "evidence_status": "not_proven"},
+    {"label": "USD/KRW", "reason": "세션 1차 시세 미확보. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음.", "evidence_status": "not_proven"}
+  ],
+  "quality": [
+    {"label": "BLS 공개 고지", "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."},
+    {"label": "왜 지금", "value": "8월 CPI 전체 +0.4%·전년비 +3.4%. 에너지 +2.1%. 코어 +0.3%."},
+    {"label": "세션 슬롯", "value": "S&P 500·VIX·USD/KRW 미확보. FRED SP500·VIXCLS·DEXKOUS 미사용. 국채는 09/10 행."},
+    {"label": "금리 기준일", "value": "Treasury Daily Par Yield Curve 09/10/2026. 2년 4.56, 5년 4.75, 10년 4.95, 30년 5.37. H.15 EFFR 3.63%."},
+    {"label": "캘린더", "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 11일(금) 정규 개장. 조기 종료 아님."}
+  ]
+}

@@ -54,6 +54,8 @@ class PublishBriefTests(unittest.TestCase):
         self.assertEqual(ok.stdout.strip(), "yes")
         html = _source('allowed_stage_path 2026/09/06/korea-close.html && echo yes')
         self.assertEqual(html.stdout.strip(), "yes")
+        day = _source('allowed_stage_path 2026/09/11/index.html && echo yes')
+        self.assertEqual(day.stdout.strip(), "yes")
         neighbor = _source('allowed_stage_path 2026/09/07/korea-preopen.html && echo yes')
         self.assertEqual(neighbor.stdout.strip(), "yes")
         bad = _source('if allowed_stage_path scripts/publish_brief.sh; then echo yes; else echo no; fi')

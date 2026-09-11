@@ -130,6 +130,8 @@ publish_main() {
   local html_rel year_dir
   html_rel=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("out_path",""))' "$dest")
   [ -n "$html_rel" ] && [ -f "$html_rel" ] && git add -- "$html_rel"
+  # P0: 해당 기준일 4창구 상태 카드. 다음 슬롯 publish가 갱신한다.
+  [ -f "$y/$m/$d/index.html" ] && git add -- "$y/$m/$d/index.html"
   [ -f index.html ] && git add -- index.html
   [ -f latest.json ] && git add -- latest.json
   [ -f rss.xml ] && git add -- rss.xml

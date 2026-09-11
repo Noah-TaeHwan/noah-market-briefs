@@ -46,6 +46,7 @@ GEN_ORDER_RANK = {
     ("US", "close"): 3,
 }
 LATEST_SLOT_ORDER = (("KR", "preopen"), ("KR", "close"), ("US", "preopen"), ("US", "close"))
+DAY_INDEX_NAME = "index.html"
 
 STATUS_LABELS = {
     "live": "공개", "published": "공개", "sample": "샘플", "partial": "부분 공개",
@@ -87,6 +88,28 @@ def recency_rank(rec: dict) -> int:
 def _record_date(rec: dict) -> str:
     """v3 세션 날짜를 우선하고, 기존 레코드는 date 호환 필드를 쓴다."""
     return str(rec.get("market_session_date", rec.get("date", "")))
+
+
+def _session_date_parts(date: str) -> tuple[str, str, str] | None:
+    """YYYY-MM-DD만 날짜 경로로 허용한다."""
+    parts = str(date or "").split("-")
+    if len(parts) != 3:
+        return None
+    year, month, day = parts
+    if (len(year), len(month), len(day)) != (4, 2, 2):
+        return None
+    if not (year.isdigit() and month.isdigit() and day.isdigit()):
+        return None
+    return year, month, day
+
+
+def _day_index_rel(date: str) -> str | None:
+    """기준일 4창구 카드 페이지의 정규 상대 경로."""
+    parts = _session_date_parts(date)
+    if parts is None:
+        return None
+    year, month, day = parts
+    return f"{year}/{month}/{day}/{DAY_INDEX_NAME}"
 
 
 def is_published(rec: dict) -> bool:
@@ -206,14 +229,26 @@ def _brief_page_parts(path: Path) -> tuple[str, str, str, str] | None:
     return parts
 
 
+def _expected_generated_html(records: list[dict]) -> set[tuple[str, ...]]:
+    """브리프 상세와 날짜 4창구 카드 페이지를 생성 대상으로 묶는다."""
+    expected: set[tuple[str, ...]] = set()
+    for rec in records:
+        if isinstance(rec.get("out_path"), str):
+            parts = _brief_page_parts(Path(rec["out_path"]))
+            if parts is not None:
+                expected.add(parts)
+        rel = _day_index_rel(_record_date(rec))
+        if rel:
+            parts = _brief_page_parts(Path(rel))
+            if parts is not None:
+                expected.add(parts)
+    return expected
+
+
 def _remove_orphan_brief_pages(records: list[dict], site_root: Path) -> None:
     """검증된 데이터에 없는 날짜형 브리프 HTML만 제거한다."""
     root = site_root.resolve()
-    expected = {
-        parts for rec in records
-        if isinstance(rec.get("out_path"), str)
-        if (parts := _brief_page_parts(Path(rec["out_path"]))) is not None
-    }
+    expected = _expected_generated_html(records)
     for year in root.iterdir():
         if year.is_symlink() or not year.is_dir() or len(year.name) != 4 or not year.name.isdigit():
             continue
@@ -349,16 +384,226 @@ def _latest_card(market: str, window: str, rec: dict | None, latest_date: str | 
     )
 
 
+def day_slots_for_date(records: list[dict], date: str) -> list[tuple[str, str, dict | None]]:
+    """한 기준일의 KR 장전→KR 마감→US 장전→US 마감 슬롯을 고정 순서로 고른다."""
+    day = [rec for rec in records if _record_date(rec) == date]
+    slots: list[tuple[str, str, dict | None]] = []
+    for market, window in LATEST_SLOT_ORDER:
+        matches = [
+            rec for rec in day
+            if rec.get("market_code") == market and rec.get("window_code") == window
+        ]
+        latest = max(
+            matches,
+            key=lambda rec: (recency_rank(rec), str(rec.get("out_path", ""))),
+            default=None,
+        )
+        slots.append((market, window, latest))
+    return slots
+
+
+def day_slot_state(rec: dict | None) -> str:
+    """카드 data-state: published / partial / missing. 그 외 상태는 원문 status."""
+    if rec is None:
+        return "missing"
+    status = str(rec.get("status") or "")
+    if status in {"published", "live", "corrected"}:
+        return "published"
+    if status == "partial":
+        return "partial"
+    if status:
+        return status
+    return "missing"
+
+
+def _slot_status_badge(rec: dict | None) -> str:
+    """슬롯 공개 상태 배지. 레코드가 없으면 기록 없음."""
+    if rec is None:
+        return '<span class="ar-badge missing status-badge">기록 없음</span>'
+    status = str(rec.get("status") or "failed")
+    return (
+        f'<span class="ar-badge {esc(status)} status-badge">'
+        f'{esc(STATUS_LABELS.get(status, status))}</span>'
+    )
+
+
+def day_missing_line(slots: list[tuple[str, str, dict | None]]) -> str:
+    """숫자 없이 누락 창구와 missing_data.label만 한 줄로 모은다."""
+    missing_slots: list[str] = []
+    labels: list[str] = []
+    seen: set[str] = set()
+    for market, window, rec in slots:
+        name = f"{MARKET_LABEL.get(market, market)} · {WINDOW_LABEL.get(window, window)}"
+        if rec is None:
+            missing_slots.append(name)
+            continue
+        items = rec.get("missing_data") if isinstance(rec.get("missing_data"), list) else []
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            label = str(item.get("label") or "").strip()
+            if label and label not in seen:
+                seen.add(label)
+                labels.append(label)
+    parts: list[str] = []
+    if missing_slots:
+        parts.append("누락 창구: " + " · ".join(missing_slots))
+    if labels:
+        parts.append("미확인: " + " · ".join(labels))
+    return " · ".join(parts) if parts else "미확인 항목 없음"
+
+
+def render_day_status_card(
+    date: str,
+    slots: list[tuple[str, str, dict | None]],
+    *,
+    slot_href,
+    page_href: str | None = None,
+    heading_id: str = "day-status-title",
+    heading_tag: str = "h2",
+) -> str:
+    """날짜 4창구 상태 카드 셸. 수치를 만들지 않고 status·missing만 표시한다."""
+    items: list[str] = []
+    for market, window, rec in slots:
+        slot = f"{market}-{window}"
+        name = f"{MARKET_LABEL.get(market, market)} · {WINDOW_LABEL.get(window, window)}"
+        href = slot_href(rec)
+        label_html = (
+            f'<a href="{esc(href)}">{esc(name)}</a>' if href else f"<span>{esc(name)}</span>"
+        )
+        items.append(
+            f'<li data-slot="{esc(slot)}" data-state="{esc(day_slot_state(rec))}">'
+            f"{label_html}{_slot_status_badge(rec)}</li>"
+        )
+    more = (
+        f'<a class="day-status-link" href="{esc(page_href)}">기준일 페이지 →</a>'
+        if page_href else ""
+    )
+    missing = day_missing_line(slots)
+    has_gap = "0" if missing == "미확인 항목 없음" else "1"
+    return (
+        f'<section class="day-status" data-date="{esc(date)}" aria-labelledby="{esc(heading_id)}">'
+        f'<p class="cutoff-line">기준일 {esc(date)}</p>'
+        f'<{heading_tag} id="{esc(heading_id)}">이날 4창구</{heading_tag}>'
+        f'<ul class="day-slots">{"".join(items)}</ul>'
+        f'<p class="day-missing" data-missing="{has_gap}">{esc(missing)}</p>'
+        f"{more}</section>"
+    )
+
+
+def _public_slot_href(rec: dict | None) -> str | None:
+    """홈·아카이브용 슬롯 공개 URL."""
+    if not rec or not rec.get("out_path"):
+        return None
+    return _public_href(str(rec["out_path"]))
+
+
+def _relative_slot_href(current_dir: str):
+    """날짜 페이지에서 같은 폴더 브리프로 가는 상대 링크."""
+
+    def href(rec: dict | None) -> str | None:
+        if not rec or not rec.get("out_path"):
+            return None
+        return posixpath.relpath(str(rec["out_path"]), current_dir)
+
+    return href
+
+
+def build_day_index_html(
+    date: str,
+    slots: list[tuple[str, str, dict | None]],
+    *,
+    css_rel: str,
+    index_rel: str,
+    slot_href,
+    canonical_url: str,
+) -> str:
+    """기준일 4창구 상태 페이지 HTML."""
+    card = render_day_status_card(
+        date, slots, slot_href=slot_href, heading_id="day-status-title", heading_tag="h1",
+    )
+    favicon_rel = css_rel.rsplit("/", 1)[0] + "/favicon.svg" if "/" in css_rel else "favicon.svg"
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>기준일 {esc(date)} · 4창구 상태</title>
+<meta name="description" content="한국 장전·한국 마감·미국 장전·미국 마감의 공개/부분/기록 없음 상태와 미확인 한 줄."/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="기준일 {esc(date)} · 4창구 상태"/>
+<meta property="og:description" content="한국 장전·한국 마감·미국 장전·미국 마감의 공개/부분/기록 없음 상태와 미확인 한 줄."/>
+<meta property="og:url" content="{esc(canonical_url)}"/>
+<meta property="og:image" content="{OG_IMAGE_URL}"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="{esc(canonical_url)}"/>
+<link rel="icon" type="image/svg+xml" href="{esc(favicon_rel)}"/>
+<link rel="stylesheet" href="{esc(css_rel)}"/>
+</head>
+<body>
+<a class="skip-link" href="#day-status-title">4창구 상태로 건너뛰기</a>
+<main class="shell">
+<header class="masthead compact-masthead"><a class="wordmark" href="{esc(index_rel)}">Noah <span class="tag">Market Briefs</span></a><nav class="site-nav" aria-label="주요 탐색"><a href="{esc(index_rel)}">브리프 목록</a></nav></header>
+{card}
+<footer class="footer"><span>data/ JSON에서 자동 생성.</span><span>투자 권유 아님.</span></footer>
+</main>
+</body>
+</html>'''
+
+
+def write_day_status_pages(records: list[dict], site_root: Path) -> int:
+    """기준일이 있는 날짜마다 4창구 상태 카드를 쓴다."""
+    root = site_root.resolve()
+    dates: list[str] = []
+    seen: set[str] = set()
+    for rec in records:
+        date = _record_date(rec)
+        if date in seen or _day_index_rel(date) is None:
+            continue
+        seen.add(date)
+        dates.append(date)
+    count = 0
+    for date in dates:
+        rel = _day_index_rel(date)
+        if rel is None:
+            continue
+        out = (site_root / rel).resolve()
+        if not out.is_relative_to(root):
+            raise ValueError(f"day index가 site_root를 벗어남: {rel!r}")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        current_dir = posixpath.dirname(rel) or "."
+        out.write_text(
+            build_day_index_html(
+                date,
+                day_slots_for_date(records, date),
+                css_rel=posixpath.relpath("assets/brief.css", current_dir),
+                index_rel=posixpath.relpath("index.html", current_dir),
+                slot_href=_relative_slot_href(current_dir),
+                canonical_url=f"{SITE_URL}/{rel}",
+            ),
+            encoding="utf-8",
+        )
+        count += 1
+    return count
+
+
 def _archive_groups(records: list) -> str:
     """날짜별 아카이브 그룹 HTML을 만든다."""
     grouped: dict[str, list[dict]] = {}
     for rec in records:
         grouped.setdefault(_record_date(rec), []).append(rec)
-    return "".join(
-        f'<section class="archive-group" data-date="{esc(date)}"><h3>{esc(date)}</h3>'
-        f'<ul class="archive-list">{"".join(_archive_card(rec) for rec in grouped[date])}</ul></section>'
-        for date in sorted(grouped, reverse=True)
-    )
+    chunks: list[str] = []
+    for date in sorted(grouped, reverse=True):
+        day_rel = _day_index_rel(date)
+        heading = (
+            f'<a href="{esc(_public_href(day_rel))}">{esc(date)}</a>'
+            if day_rel else esc(date)
+        )
+        chunks.append(
+            f'<section class="archive-group" data-date="{esc(date)}"><h3>{heading}</h3>'
+            f'<ul class="archive-list">{"".join(_archive_card(rec) for rec in grouped[date])}</ul></section>'
+        )
+    return "".join(chunks)
 
 
 def build_index_html(records: list) -> str:
@@ -402,6 +647,17 @@ def build_index_html(records: list) -> str:
             '</section>'
         )
     groups = _archive_groups(records)
+    day_status = ""
+    if latest_date:
+        day_rel = _day_index_rel(latest_date)
+        day_status = render_day_status_card(
+            latest_date,
+            day_slots_for_date(records, latest_date),
+            slot_href=_public_slot_href,
+            page_href=_public_href(day_rel) if day_rel else None,
+            heading_id="day-status-title",
+            heading_tag="h2",
+        )
     kr = sum(1 for r in records if r.get("market_code", "") == "KR")
     us = sum(1 for r in records if r.get("market_code", "") == "US")
     result_count = f"{len(records)}개 기록 · 한국 {kr} · 미국 {us}"
@@ -431,6 +687,7 @@ def build_index_html(records: list) -> str:
 <section class="compact-hero" aria-labelledby="home-title"><div><p class="eyebrow">Evidence-first market journal</p><h1 id="home-title">근거 상태와 함께 읽는 시장 브리프</h1></div><p class="status-strip">{esc(status_value)} · 정적 생성</p></section>
 <p class="home-note">출처·시각을 붙인 시장 기록 · 경로 YYYY / MM / DD / 시점</p>
 {latest_focus}
+{day_status}
 <section class="latest-section" id="latest" aria-labelledby="latest-title"><div class="section-head"><h2 id="latest-title">창구별 최신 기록</h2><p>한국 장전 → 한국 마감 → 미국 장전 → 미국 마감 고정 순서</p></div><div class="latest-grid">{latest}</div></section>
 <section class="section archive-section" id="archive">
 <div class="section-head"><h2>날짜별 아카이브</h2><p id="archive-result-count" class="result-count" role="status" aria-live="polite">{result_count}</p></div>
@@ -555,6 +812,7 @@ def build(repo_root: Path = REPO) -> dict:
     records, rejected = _load_records(repo_root / "data")
     _remove_orphan_brief_pages(records, repo_root)
     pages = write_brief_pages(records, repo_root)
+    write_day_status_pages(records, repo_root)
     (repo_root / "index.html").write_text(build_index_html(records), encoding="utf-8")
     (repo_root / "latest.json").write_text(build_latest_json(records), encoding="utf-8")
     (repo_root / "rss.xml").write_text(build_rss_xml(records), encoding="utf-8")

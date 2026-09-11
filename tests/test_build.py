@@ -439,6 +439,11 @@ class TestCssHasNewStyles(unittest.TestCase):
         self.assertIn('[data-freshness="latest"]', css)
         self.assertIn('[data-freshness="older"]', css)
 
+    def test_day_status_card_styles_exist(self):
+        css = (REPO / "assets" / "brief.css").read_text(encoding="utf-8")
+        for selector in (".day-status", ".day-slots", ".day-missing", ".status-badge.missing"):
+            self.assertIn(selector, css)
+
 
 class TestTemplateV2Robustness(unittest.TestCase):
     """v2 새 필드의 잘못된 모양이 빌드를 죽이지 않고 관대/안전하게 처리되는지(adversarial)."""
@@ -523,6 +528,7 @@ class TestBuildSummary(unittest.TestCase):
             self.assertEqual(summary, {"live": 1, "sample": 1, "pages": 2})
             self.assertTrue((root / "index.html").exists())
             self.assertTrue((root / "2026/06/23/korea-close.html").exists())
+            self.assertTrue((root / "2026/06/23/index.html").exists())
 
     def test_empty_data_dir_builds_index_with_zero_counts(self):
         with tempfile.TemporaryDirectory() as d:
@@ -693,10 +699,27 @@ class TestStaleBriefCleanup(unittest.TestCase):
 
             self.assertEqual(summary, {"live": 1, "sample": 0, "pages": 1})
             self.assertTrue((root / "2026/07/07/accepted.html").exists())
+            self.assertTrue((root / "2026/07/07/index.html").exists())
             self.assertFalse(stale.exists())
             self.assertEqual((root / "assets/keep.html").read_text(encoding="utf-8"), "keep")
             self.assertEqual((root / "docs/keep.html").read_text(encoding="utf-8"), "keep")
             self.assertTrue((outside / "orphan.html").exists())
+
+    def test_removes_orphan_day_index_when_date_has_no_records(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / "site"
+            data = root / "data" / "2026" / "07" / "07"
+            data.mkdir(parents=True)
+            (data / "accepted.json").write_text(json.dumps({
+                "schema_version": 2, "date": "2026-07-07", "market_code": "KR", "window_code": "close",
+                "status": "live", "out_path": "2026/07/07/accepted.html", "title": "정상 브리프",
+            }), encoding="utf-8")
+            orphan_day = root / "2026" / "08" / "01" / "index.html"
+            orphan_day.parent.mkdir(parents=True, exist_ok=True)
+            orphan_day.write_text("stale day card", encoding="utf-8")
+            B.build(root)
+            self.assertTrue((root / "2026/07/07/index.html").exists())
+            self.assertFalse(orphan_day.exists())
 
 
 class TestEvidenceFirstIndex(unittest.TestCase):
@@ -1029,6 +1052,87 @@ class TestEvidenceFeedsAndStatuses(unittest.TestCase):
             B.build(root)
             self.assertTrue((root / "latest.json").exists())
             self.assertTrue((root / "rss.xml").exists())
+
+
+class TestDayStatusCard(unittest.TestCase):
+    """P0: 기준일 4창구 상태 카드 + 미확인 한 줄. 수치는 만들지 않는다."""
+
+    def _rec(self, market, window, date, status="published", **extra):
+        rec = {
+            "schema_version": 3, "market_code": market, "window_code": window,
+            "market_session_date": date, "status": status,
+            "evidence_status": "partial", "title": f"{market} {window} {date}",
+            "out_path": f"{date.replace('-', '/')}/{market}-{window}.html",
+            "metrics": [{"label": "지수", "value": "99999.99"}],
+        }
+        rec.update(extra)
+        return rec
+
+    def test_four_slots_and_missing_line_without_invented_numbers(self):
+        records = [
+            self._rec("KR", "preopen", "2026-09-11", status="published"),
+            self._rec(
+                "KR", "close", "2026-09-11", status="partial",
+                missing_data=[{"label": "코스피", "reason": "미확보", "evidence_status": "not_proven"}],
+            ),
+        ]
+        slots = B.day_slots_for_date(records, "2026-09-11")
+        self.assertEqual([(m, w) for m, w, _ in slots], [
+            ("KR", "preopen"), ("KR", "close"), ("US", "preopen"), ("US", "close"),
+        ])
+        self.assertEqual(B.day_slot_state(slots[0][2]), "published")
+        self.assertEqual(B.day_slot_state(slots[1][2]), "partial")
+        self.assertEqual(B.day_slot_state(slots[2][2]), "missing")
+        self.assertEqual(B.day_slot_state(slots[3][2]), "missing")
+        line = B.day_missing_line(slots)
+        self.assertIn("누락 창구: 미국 · 장 시작 전 · 미국 · 장 마감", line)
+        self.assertIn("미확인: 코스피", line)
+        self.assertNotIn("99999.99", line)
+        self.assertNotIn("미확보", line)
+        card = B.render_day_status_card(
+            "2026-09-11", slots, slot_href=B._public_slot_href,
+            page_href="/market-briefs/2026/09/11/index.html",
+        )
+        self.assertIn('data-slot="KR-preopen" data-state="published"', card)
+        self.assertIn('data-slot="KR-close" data-state="partial"', card)
+        self.assertIn('data-slot="US-preopen" data-state="missing"', card)
+        self.assertIn('data-slot="US-close" data-state="missing"', card)
+        self.assertIn('class="cutoff-line">기준일 2026-09-11', card)
+        self.assertIn("기록 없음", card)
+        self.assertNotIn("99999.99", card)
+        for blocked in ("imnotai", "G-gate", "gate_check", "HUMAN-GATE", "파이프라인 일기"):
+            self.assertNotIn(blocked, card)
+
+    def test_home_and_day_page_wire_the_shell(self):
+        records = [
+            self._rec("US", "preopen", "2026-09-11", status="partial"),
+        ]
+        home = B.build_index_html(records)
+        self.assertIn('class="day-status" data-date="2026-09-11"', home)
+        self.assertIn('href="/market-briefs/2026/09/11/index.html"', home)
+        self.assertIn('class="archive-group" data-date="2026-09-11"', home)
+        self.assertLess(home.index('class="day-status"'), home.index('class="latest-section"'))
+        page = B.build_day_index_html(
+            "2026-09-11",
+            B.day_slots_for_date(records, "2026-09-11"),
+            css_rel="../../../assets/brief.css",
+            index_rel="../../../index.html",
+            slot_href=B._relative_slot_href("2026/09/11"),
+            canonical_url="https://noah-market-briefs.vercel.app/market-briefs/2026/09/11/index.html",
+        )
+        self.assertIn('href="US-preopen.html"', page)
+        self.assertIn("누락 창구: 한국 · 장 시작 전", page)
+        self.assertNotIn("imnotai", page)
+
+    def test_complete_day_missing_none_line(self):
+        records = [
+            self._rec("KR", "preopen", "2026-09-03"),
+            self._rec("KR", "close", "2026-09-03"),
+            self._rec("US", "preopen", "2026-09-03"),
+            self._rec("US", "close", "2026-09-03"),
+        ]
+        line = B.day_missing_line(B.day_slots_for_date(records, "2026-09-03"))
+        self.assertEqual(line, "미확인 항목 없음")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,63 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-12-close",
+  "market_code": "US",
+  "window_code": "close",
+  "market_session_date": "2026-09-12",
+  "generated_at_utc": "2026-09-12T20:23:35Z",
+  "cutoff_at_utc": "2026-09-12T20:22:35Z",
+  "market_timezone": "America/New_York",
+  "status": "skipped_market_closed",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "a6579075818ee3dad87cbf46c8dd20ca37ca0246947a97fbca77d5842306e808",
+  "out_path": "2026/09/12/us-close.html",
+  "title": "미국 장마감 · 토요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-12",
+  "summary": "장마감 창구 기준에서도 2026-09-12(토) NYSE 정규장은 열리지 않았다. 장전 이후에도 세션이 시작되지 않아 S&P 500·VIX 당일 종가는 없다. 다음 정규 개장은 2026-09-14(월)이다.",
+  "sources": [
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours (2026 holidays + core session hours ET)",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-12T20:22:35Z",
+      "retrieved_at": "2026-09-12T20:22:35Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [],
+  "claims": [
+    {
+      "claim_id": "claim-nyse-close-saturday-no-session",
+      "kind": "fact",
+      "text": "장마감 시점(16:15 ET) 기준으로도 2026-09-12는 토요일이라 NYSE 핵심 정규 세션(평일 09:30–16:00 ET)이 열리지 않았다. 장전 브리프 이후에도 세션이 시작되지 않아 당일 종가는 없으며, 다음 정규 개장은 2026-09-14(월)이다.",
+      "as_of": "2026-09-12T20:22:35Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "토요일 휴장이라 당일 세션 종가 없음",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "토요일 휴장이라 당일 세션 종가 없음(FRED VIXCLS 재배포 미확인)",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "토요일 휴장이라 당일 세션 종가·환율 없음",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "risks": [
+    "토요일 정규장 휴장이라 당일 종가·세션 수치는 없다.",
+    "다음 정규 개장은 2026-09-14(월)이다."
+  ]
+}

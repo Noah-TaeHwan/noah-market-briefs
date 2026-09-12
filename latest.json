@@ -13,11 +13,11 @@
     {
       "market": "KR",
       "window": "close",
-      "date": "2026-09-11",
-      "title": "한국 마감 · OpenDART 433건(+371)·SGC에너지 869억 출자·지엔씨 468억, 종가 미확보 · 2026-09-11",
-      "path": "2026/09/11/korea-close.html",
-      "status": "partial",
-      "evidence_status": "partial"
+      "date": "2026-09-12",
+      "title": "한국 장마감 · 토요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-12",
+      "path": "2026/09/12/korea-close.html",
+      "status": "skipped_market_closed",
+      "evidence_status": "confirmed"
     },
     {
       "market": "US",

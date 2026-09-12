@@ -1,0 +1,49 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-13-preopen",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-13",
+  "generated_at_utc": "2026-09-12T23:05:26Z",
+  "cutoff_at_utc": "2026-09-12T23:04:26Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "skipped_market_closed",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "651ae77f12580f8c78bb44a8d1c243e0b17bcf3c3f06acf60ccec8f35eff31d1",
+  "out_path": "2026/09/13/korea-preopen.html",
+  "title": "한국 장전 · 일요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-13",
+  "summary": "오늘은 일요일이다. 한국거래소 정규 주식시장은 월요일부터 금요일만 열린다. 다음 정규 개장은 2026-09-14(월)이다.",
+  "sources": [
+    {
+      "source_id": "source-global-krx-guide-trading-days",
+      "publisher": "한국거래소 (Global KRX)",
+      "title": "Guide to Trading in the Korean Stock Market · Trading Days and Holidays (Mon–Fri)",
+      "url": "https://global.krx.co.kr/contents/GLB/01/0109/0109000000/guide_to_trading_in_the_korean_stock_market.pdf",
+      "as_of": "2026-09-12T23:04:26Z",
+      "retrieved_at": "2026-09-12T23:04:26Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [],
+  "claims": [
+    {
+      "claim_id": "claim-krx-sunday-closed",
+      "kind": "fact",
+      "text": "한국 증권시장 정규 매매는 월요일부터 금요일까지다. 2026-09-13는 일요일이라 정규장이 없고, 다음 정규 개장은 2026-09-14(월)이다.",
+      "as_of": "2026-09-12T23:04:26Z",
+      "source_ids": ["source-global-krx-guide-trading-days"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {"label": "코스피", "reason": "2026-09-13는 일요일이라 KRX 정규 매매가 없어 당일 세션 종가가 없다", "evidence_status": "not_proven"},
+    {"label": "USD/KRW", "reason": "일요일 휴장일에는 당일 세션 환율을 적지 않는다(서울외국환중개 매매기준율은 전 영업일 TWAP)", "evidence_status": "not_proven"},
+    {"label": "VKOSPI", "reason": "2026-09-13는 일요일이라 KRX 정규 매매가 없어 당일 세션 종가가 없다", "evidence_status": "not_proven"}
+  ],
+  "risks": [
+    "일요일 정규장 휴장이라 코스피·VKOSPI·당일 USD/KRW 세션 수치는 없다.",
+    "다음 정규 개장은 2026-09-14(월)이다."
+  ]
+}

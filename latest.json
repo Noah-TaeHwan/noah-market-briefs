@@ -22,11 +22,11 @@
     {
       "market": "US",
       "window": "preopen",
-      "date": "2026-09-11",
-      "title": "미국 장전 — CPI 전월 +0.4% · 에너지 +2.1% · 국채 10년 4.95% · 2026-09-11",
-      "path": "2026/09/11/us-preopen.html",
-      "status": "partial",
-      "evidence_status": "partial"
+      "date": "2026-09-12",
+      "title": "미국 장전 · 토요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-12",
+      "path": "2026/09/12/us-preopen.html",
+      "status": "skipped_market_closed",
+      "evidence_status": "confirmed"
     },
     {
       "market": "US",

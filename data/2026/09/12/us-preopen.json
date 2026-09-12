@@ -1,0 +1,63 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-12-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-12",
+  "generated_at_utc": "2026-09-12T12:41:11Z",
+  "cutoff_at_utc": "2026-09-12T12:40:11Z",
+  "market_timezone": "America/New_York",
+  "status": "skipped_market_closed",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "6b00edff071107ffda15af2f9dda03a7bc309eb7de8b9708c425f305a6322d23",
+  "out_path": "2026/09/12/us-preopen.html",
+  "title": "미국 장전 · 토요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-12",
+  "summary": "오늘은 토요일이다. NYSE 정규 주식 세션은 평일(월–금) 핵심 거래시간에 열린다. 2026-09-12는 주말 휴장이라 당일 정규 개장 전 세션 수치가 없고, 다음 정규 개장은 2026-09-14(월)이다.",
+  "sources": [
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours (2026 holidays + core session hours ET)",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-12T12:40:11Z",
+      "retrieved_at": "2026-09-12T12:40:11Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [],
+  "claims": [
+    {
+      "claim_id": "claim-nyse-saturday-closed",
+      "kind": "fact",
+      "text": "NYSE 핵심 정규 거래는 평일 09:30–16:00 ET이며, 2026년 공식 휴장 목록에 토요일은 별도 휴일이 아니다. 2026-09-12는 토요일이라 정규장이 없고, 다음 정규 개장은 2026-09-14(월)이다.",
+      "as_of": "2026-09-12T12:40:11Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "2026-09-12는 토요일이라 NYSE 정규 매매가 없어 당일 세션 수치가 없다",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "토요일 휴장일에는 당일 세션 변동성 지수를 적지 않는다(FRED VIXCLS 재배포 미확인)",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "토요일 휴장일에는 당일 세션 환율을 적지 않는다",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "risks": [
+    "토요일 정규장 휴장이라 S&P 500·VIX·당일 USD/KRW 세션 수치는 없다.",
+    "다음 정규 개장은 2026-09-14(월)이다."
+  ]
+}

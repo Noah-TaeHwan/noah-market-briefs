@@ -211,16 +211,6 @@
         "source-samsung-bio-sum-20260914"
       ],
       "evidence_status": "confirmed"
-    },
-    {
-      "claim_id": "claim-ks-cb-terms",
-      "kind": "fact",
-      "text": "KS인더스트리 19회차는 무기명식 이권부 무보증 사모 전환사채다. 표면이자율 0%, 만기이자율 3%, 만기일 2029-09-11, 전환가액 1,440원, 납입일 2026-10-01이다.",
-      "as_of": "2026-09-13T23:00:00Z",
-      "source_ids": [
-        "source-ks-cb-body-20260914"
-      ],
-      "evidence_status": "confirmed"
     }
   ],
   "changes": [

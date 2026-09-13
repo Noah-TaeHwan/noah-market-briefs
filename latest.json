@@ -4,11 +4,11 @@
     {
       "market": "KR",
       "window": "preopen",
-      "date": "2026-09-13",
-      "title": "한국 장전 · 일요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-13",
-      "path": "2026/09/13/korea-preopen.html",
-      "status": "skipped_market_closed",
-      "evidence_status": "confirmed"
+      "date": "2026-09-14",
+      "title": "한국 장전 · 삼성바이오로직스 유증 투자설명서 효력 · 예정 모집 3.001조원 · 원/달러 1,346.40원 · 2026-09-14",
+      "path": "2026/09/14/korea-preopen.html",
+      "status": "partial",
+      "evidence_status": "partial"
     },
     {
       "market": "KR",

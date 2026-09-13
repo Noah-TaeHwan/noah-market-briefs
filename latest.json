@@ -13,9 +13,9 @@
     {
       "market": "KR",
       "window": "close",
-      "date": "2026-09-12",
-      "title": "한국 장마감 · 토요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-12",
-      "path": "2026/09/12/korea-close.html",
+      "date": "2026-09-13",
+      "title": "한국 장마감 · 일요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-13",
+      "path": "2026/09/13/korea-close.html",
       "status": "skipped_market_closed",
       "evidence_status": "confirmed"
     },

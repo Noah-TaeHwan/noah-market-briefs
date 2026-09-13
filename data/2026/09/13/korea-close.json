@@ -1,0 +1,79 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-13-close",
+  "market_code": "KR",
+  "window_code": "close",
+  "market_session_date": "2026-09-13",
+  "generated_at_utc": "2026-09-13T06:57:00Z",
+  "cutoff_at_utc": "2026-09-13T06:56:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "skipped_market_closed",
+  "evidence_status": "confirmed",
+  "methodology_version": "public-brief-v3",
+  "out_path": "2026/09/13/korea-close.html",
+  "title": "한국 장마감 · 일요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-13",
+  "summary": "장마감 창구(15:45 KST) 기준에서도 2026-09-13(일) 한국거래소 정규장은 열리지 않았다. 장전 브리프 이후에도 세션이 시작되지 않아 코스피·코스닥·VKOSPI 당일 종가는 없다. 다음 정규 개장은 2026-09-14(월)이다.",
+  "sources": [
+    {
+      "source_id": "source-global-krx-guide-trading-days",
+      "publisher": "한국거래소 (Global KRX)",
+      "title": "Guide to Trading in the Korean Stock Market · Trading Days and Holidays (Mon–Fri)",
+      "url": "https://global.krx.co.kr/contents/GLB/01/0109/0109000000/guide_to_trading_in_the_korean_stock_market.pdf",
+      "as_of": "2026-09-13T06:56:00Z",
+      "retrieved_at": "2026-09-13T06:56:00Z",
+      "source_type": "official",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-regulation-kosdaq-open-close",
+      "publisher": "한국거래소 (Regulation KRX)",
+      "title": "코스닥시장 · 시장의 개폐 · 휴장일(토요일·일요일 포함)",
+      "url": "https://regulation.krx.co.kr/contents/RGL/03/03020401/RGL03020401.jsp",
+      "as_of": "2026-09-13T06:56:00Z",
+      "retrieved_at": "2026-09-13T06:56:00Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [],
+  "claims": [
+    {
+      "claim_id": "claim-kr-close-sunday-no-session",
+      "kind": "fact",
+      "text": "장마감 시점(15:45 KST) 기준으로도 2026-09-13는 일요일이라 KRX 정규 매매가 없었고, 장전 브리프 이후에도 세션이 열리지 않았다. 당일 종가는 없으며 다음 정규 개장은 2026-09-14(월)이다.",
+      "as_of": "2026-09-13T06:56:00Z",
+      "source_ids": [
+        "source-global-krx-guide-trading-days",
+        "source-krx-regulation-kosdaq-open-close"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "일요일 휴장이라 당일 세션 종가 없음",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "코스닥",
+      "reason": "일요일 휴장이라 당일 세션 종가 없음",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "일요일 휴장이라 당일 세션 종가·환율 없음",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "일요일 휴장이라 당일 세션 종가 없음",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "risks": [
+    "일요일 정규장 휴장이라 당일 종가·세션 수치는 없다.",
+    "다음 정규 개장은 2026-09-14(월)이다."
+  ],
+  "public_receipt_sha256": "1a082b920389e94d1625b751ec37205190c60632bf0726b41e31f1c2d31bf9de"
+}

@@ -1,0 +1,336 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-14-preopen",
+  "market_code": "KR",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-14",
+  "generated_at_utc": "2026-09-13T23:26:24Z",
+  "cutoff_at_utc": "2026-09-13T23:25:24Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "0d1ca6fd033e35246ed1f8ffd4cb1e24322b7407e4d47b8bf946ce78a13b50a8",
+  "out_path": "2026/09/14/korea-preopen.html",
+  "title": "한국 장전 · 삼성바이오로직스 유증 투자설명서 효력 · 예정 모집 3.001조원 · 원/달러 1,346.40원 · 2026-09-14",
+  "summary": "주말 휴장 다음 첫 개장일이다. 삼성바이오로직스 유상증자 투자설명서 효력이 발생했다. 기명식 보통주 227만주, 예정 모집총액 3,000,940,000,000원, 예정 모집가 1,322,000원이다. 서울 원/달러 매매기준율은 1,346.40원으로 전일보다 8.20원 높다.",
+  "next_handoff": "코스피·VKOSPI·NXT 시간외단일가 제외 종목수는 아직 없다.",
+  "sources": [
+    {
+      "source_id": "source-samsung-bio-20260914",
+      "publisher": "삼성바이오로직스",
+      "title": "투자설명서 · 기명식 보통주 유상증자",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914000001",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-samsung-bio-sum-20260914",
+      "publisher": "삼성바이오로직스",
+      "title": "투자설명서 요약정보 · 보통주 2,270,000주 · 예정 모집가 1,322,000원 · 예정 모집총액 3,000,940,000,000원",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260914000001&dcmNo=11577506&eleId=4&offset=5988&length=52043&dtd=dart4.xsd",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-samsung-bio-part1-20260914",
+      "publisher": "삼성바이오로직스",
+      "title": "투자설명서 제1부 · 모집 일반사항 · 신주배정 비율·청약 일정",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260914000001&dcmNo=11577506&eleId=5&offset=58035&length=1070851&dtd=dart4.xsd",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-samsung-bio-hyoryeok-20260914",
+      "publisher": "금융감독원",
+      "title": "삼성바이오로직스 · 효력발생안내 (2026.8.28. 제출 증권신고서)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260828100005",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-ks-cb-20260914",
+      "publisher": "KS인더스트리",
+      "title": "주요사항보고서(전환사채권발행결정) · 19회차 사모 전환사채",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911000607",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-ks-cb-body-20260914",
+      "publisher": "KS인더스트리",
+      "title": "전환사채권 발행결정 본문 · 권면총액 7,000,000,000원 · 전환가액 1,440원",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260911000607&dcmNo=11577499&eleId=1&offset=0&length=0&dtd=HTML",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-list-20260914",
+      "publisher": "금융감독원",
+      "title": "2026년 9월 14일 공시 접수목록",
+      "url": "https://dart.fss.or.kr/dsac001/mainAll.do?selectDate=2026.09.14&sort=&series=&mdayCnt=0",
+      "as_of": "2026-09-13T23:25:24Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260914",
+      "publisher": "서울외국환중개",
+      "title": "오늘의 환율 · 매매기준율 (조회일 2026-09-14, USD 1,346.40원)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-11T07:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-global-krx-guide-trading-days",
+      "publisher": "한국거래소 (Global KRX)",
+      "title": "Guide to Trading in the Korean Stock Market · Trading Days and Holidays (Mon–Fri)",
+      "url": "https://global.krx.co.kr/contents/GLB/01/0109/0109000000/guide_to_trading_in_the_korean_stock_market.pdf",
+      "as_of": "2026-09-13T23:00:00Z",
+      "retrieved_at": "2026-09-13T23:25:24Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-samsung-bio-shares",
+      "label": "삼성바이오로직스 유증 주식수",
+      "value": "2,270,000주",
+      "unit": "주",
+      "delta": "기명식 보통주 · 예정",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "투자설명서 요약정보 모집 표. 기발행 보통주 46,290,951주의 약 4.90%에 해당한다고 적혀 있다."
+    },
+    {
+      "metric_id": "metric-samsung-bio-proceeds",
+      "label": "삼성바이오로직스 예정 모집총액",
+      "value": "3,000,940,000,000원",
+      "unit": "KRW",
+      "delta": "예정",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "모집가액×주식수 표의 예정 모집총액. 확정가액은 구주주 청약일 전 제3거래일(2026-11-04)에 정한다."
+    },
+    {
+      "metric_id": "metric-samsung-bio-offer",
+      "label": "삼성바이오로직스 예정 모집가",
+      "value": "1,322,000원",
+      "unit": "KRW",
+      "delta": "예정",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "요약정보 모집(매출)가액. 예정가이며 확정가액은 2026-11-04에 정한다."
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율",
+      "value": "1,346.40원",
+      "unit": "KRW per USD",
+      "delta": "전일 매매기준율 대비 +8.20원",
+      "as_of": "2026-09-11T07:00:00Z",
+      "source_ids": [
+        "source-smbs-fx-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "서울외국환중개 매매기준율. 사이트 정의상 전 영업일 16:00 시간가중평균. 당일 장중 시세가 아님. 조회일 2026-09-14."
+    },
+    {
+      "metric_id": "metric-ks-cb-face",
+      "label": "KS인더스트리 전환사채 권면총액",
+      "value": "7,000,000,000원",
+      "unit": "KRW",
+      "delta": "19회차 사모 · 전환가 1,440원",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-ks-cb-body-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "무기명식 이권부 무보증 사모 전환사채. 표면이자율 0%, 만기이자율 3%, 만기일 2029-09-11, 납입일 2026-10-01."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-session-first-open",
+      "kind": "fact",
+      "text": "한국 증권시장 정규 매매는 월요일부터 금요일까지다. 2026-09-12(토)·2026-09-13(일)은 휴장 기록이 이미 나와 있고, 2026-09-14(월)이 주말 다음 첫 정규 개장일이다. 알려진 한국 휴장일은 없다.",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-global-krx-guide-trading-days"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-bio-structure",
+      "kind": "fact",
+      "text": "금번 유상증자는 주주배정후 실권주 일반공모이며 잔액인수다. 증권신고 효력발생일은 2026-09-14다. 모집가액과 모집총액은 예정이고, 확정가액은 구주주 청약일 전 제3거래일(2026-11-04)에 정한다.",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914",
+        "source-samsung-bio-hyoryeok-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-bio-schedule",
+      "kind": "fact",
+      "text": "신주배정 기준일은 2026-10-06이고, 구주 1주당 신주 배정비율은 0.0392737657주다. 청약은 우리사주조합 2026-11-09, 구주주 2026-11-09~10, 일반공모 2026-11-12~13이다. 납입기일은 2026-11-17이다.",
+      "as_of": "2026-09-13T23:00:00Z",
+      "source_ids": [
+        "source-samsung-bio-part1-20260914",
+        "source-samsung-bio-sum-20260914"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "서울외국환중개 USD 매매기준율은 조회일 2026-09-14 기준 1,346.40원이다. 전일 매매기준율 대비 8.20원 높다. 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "2026-09-12·13 휴장 기록 다음으로, 2026-09-14 정규장이 다시 열린다.",
+      "source_ids": [
+        "source-global-krx-guide-trading-days"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "모집가액과 모집총액은 예정이다. 확정가액은 구주주 청약일 전 제3거래일(2026-11-04)에 정해지며 바뀔 수 있다.",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "증권신고서 효력 발생은 기재가 진실하다고 정부가 인정하거나 증권 가치를 보증·승인한 것이 아니다.",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914",
+        "source-samsung-bio-hyoryeok-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 서울 외환시장 장중 시세가 아니다.",
+      "source_ids": [
+        "source-smbs-fx-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "KS인더스트리 전환사채는 사모 발행이다. 삼성바이오로직스 유상증자와 규모·방식이 다르다.",
+      "source_ids": [
+        "source-ks-cb-body-20260914"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "장 재개와 유증 투자설명서",
+      "text": "주말 휴장 다음 첫 개장일에 삼성바이오로직스 유상증자 투자설명서 효력이 발생했다. 예정 모집총액은 3,000,940,000,000원이다.",
+      "source_ids": [
+        "source-samsung-bio-sum-20260914",
+        "source-samsung-bio-hyoryeok-20260914",
+        "source-global-krx-guide-trading-days"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "기준율 상승",
+      "text": "서울 매매기준율은 1,346.40원이다. 전일보다 8.20원 높고, 전 영업일 16:00 시간가중평균이다.",
+      "source_ids": [
+        "source-smbs-fx-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "사모 전환사채",
+      "text": "KS인더스트리는 19회차 사모 전환사채 권면총액 7,000,000,000원을 같은 날 공시했다.",
+      "source_ids": [
+        "source-ks-cb-body-20260914"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {
+      "label": "코스피",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VKOSPI",
+      "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "NXT 시간외단일가 제외 종목수",
+      "reason": "조회 시점 DART 접수목록에 당일 기타시장안내가 없어 종목수를 확보하지 못함",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "투자설명서",
+      "value": "접수번호 20260914000001 요약정보 표의 주식수·예정 모집가·모집총액을 인용했다."
+    },
+    {
+      "label": "효력",
+      "value": "효력발생안내 20260828100005. 문서 일자는 2026-09-14."
+    },
+    {
+      "label": "환율",
+      "value": "조회일 2026-09-14 매매기준율 1,346.40원. 페이지 전일대비 +8.20원. 전 영업일 16:00 시간가중평균."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "USD/KRW는 서울외국환중개 매매기준율. 코스피·VKOSPI·NXT 종목수는 미확보."
+    }
+  ],
+  "risks": [
+    "코스피·VKOSPI 공식 종가가 없어 지수 방향은 적지 않았다.",
+    "모집가액과 모집총액은 예정이며 확정가액은 2026-11-04에 정해진다.",
+    "투자설명서 효력을 공모 조건 확정이나 가치 보증으로 읽지 않는다.",
+    "서울 매매기준율은 전 영업일 16:00 시간가중평균이며 당일 장중 시세가 아니다.",
+    "KS인더스트리 전환사채는 사모이며 삼성바이오로직스 유상증자와 성격이 다르다.",
+    "NXT 시간외단일가 제외 종목수는 당일 기타시장안내를 확보하지 못해 적지 않았다."
+  ]
+}

@@ -4,35 +4,36 @@
   "market_code": "KR",
   "window_code": "preopen",
   "market_session_date": "2026-09-15",
-  "generated_at_utc": "2026-09-14T23:36:00Z",
-  "cutoff_at_utc": "2026-09-14T23:35:00Z",
+  "generated_at_utc": "2026-09-14T23:48:00Z",
+  "cutoff_at_utc": "2026-09-14T23:47:00Z",
   "market_timezone": "Asia/Seoul",
   "status": "partial",
   "evidence_status": "partial",
   "methodology_version": "public-brief-v3",
-  "public_receipt_sha256": "b1e58dfd3760b677bbd280a58b8a7b766a48b0d48aa98321bffdb83b67963dbb",
+  "public_receipt_sha256": "653b49946eca2530cda8656a64991662078a1edf1a24838c18d0161abad3489a",
   "out_path": "2026/09/15/korea-preopen.html",
-  "title": "한국 장전 · 한은 8월 수출물가 -3.7%(3년8개월 만 최대) · 교역조건 역대 최대 · 2026-09-15",
-  "summary": "한국은행이 06:00에 8월 수출입물가지수 및 무역지수(잠정)를 냈다. 원화 수출물가는 183.23으로 전월비 3.7% 내려 2022년 12월(-6.1%) 이후 3년8개월 만 최대 하락이다. 전년비는 42.4% 높다. 같은 달 순상품교역조건 119.9(+27.1% 전년비)와 소득교역조건 184.02(+60.0% 전년비)는 상승률이 역대 최대다. 계약통화 수출물가는 전월비 2.2% 올랐다. 8월 월평균 원/달러는 1,497.4원에서 1,406.3원으로 6.1% 낮았고 두바이유는 76.75달러에서 88.75달러로 15.6% 높았다. 이 환율은 당일 SMBS 매매기준율이 아니다. 같은 아침 DART 접수목록은 6건이고 E8 양수·유증 납입·최대주주 변경이 07:44에 겹친다. 12:00 통화 및 유동성은 일정만 있다.",
+  "title": "한국 장전 · 한은 공식 8월 수출물가(원화) -3.7%·전년비 +42.4% · 2026-09-15",
+  "summary": "한국은행 공식 공보 2026-09-06호는 2026년 8월 수출물가(원화)가 전월 대비 3.7% 하락·전년 동월 대비 42.4% 상승, 수입물가(원화)는 전월 대비 2.4% 하락·전년 동월 대비 15.6% 상승했다고 밝혔다. 수출물량지수는 전년 동월 대비 25.9%, 수입물량지수는 12.0% 올랐고 순상품교역조건은 27.1%, 소득교역조건은 60.0% 상승했다. 수출물가지수(2020=100)는 183.23(7월 190.32), 수입은 156.31(7월 160.14)이다. 계약통화기준 수출물가는 전월 대비 2.2% 올랐다. 월평균 원/달러는 7월 1,497.43원에서 8월 1,406.30원으로 6.1% 낮았다. 이 환율은 당일 SMBS 매매기준율이 아니다. 연합뉴스는 원화 수출물가 전월 하락을 3년 8개월 만의 최대라고 부가 보도했으나 공식 PDF 본문에는 그 순위 표현이 없다. 같은 아침 DART 접수목록은 6건이고 E8 양수·유증 납입·최대주주 변경이 07:44에 겹친다. 12:00 통화 및 유동성은 일정만 있다.",
   "next_handoff": "코스피·VKOSPI·USD/KRW(SMBS)·NXT 시간외단일가 제외 종목수는 아직 없다.",
+  "correction_note": "2026-09-14 23:36Z 게시본은 한은 8월 수출입물가 수치를 연합뉴스 2차 보도에 주로 기대 작성했다. 06:00 KST 이후 열람 가능한 한은 공식 보도자료(공보 2026-09-06호, nttId=11064729)와 PDF를 1차 출처로 바꿔 지수(수출 183.23/전월 190.32, 수입 156.31/전월 160.14)와 월평균 환율(1,497.43→1,406.30)을 공식 표에 맞췄다. 피크아웃 표현은 공식 PDF에 없어 본문에서 뺐다. USD/KRW 당일 매매기준율은 SMBS를 재확인했으나 인증서 오류로 여전히 미수록(1,346.40 재사용 없음).",
   "sources": [
     {
-      "source_id": "source-yna-bok-xpi-20260915",
-      "publisher": "연합뉴스",
-      "title": "환율 하락에 8월 수출물가 3.7%↓…3년 8개월 만에 최대폭 (한국은행 발표 인용)",
-      "url": "https://www.yna.co.kr/view/AKR20260914158700002",
+      "source_id": "source-bok-xpi-202608-view",
+      "publisher": "한국은행",
+      "title": "2026년 8월 수출입물가지수 및 무역지수(잠정) 보도자료 페이지",
+      "url": "https://www.bok.or.kr/portal/bbs/B0000501/view.do?menuNo=201264&nttId=11064729",
       "as_of": "2026-09-14T21:00:00Z",
-      "retrieved_at": "2026-09-14T23:35:00Z",
+      "retrieved_at": "2026-09-14T23:46:00Z",
       "source_type": "economic_release",
       "status": "confirmed"
     },
     {
-      "source_id": "source-mt-bok-xpi-20260915",
-      "publisher": "머니투데이",
-      "title": "원화 강세에 8월 수출물가 3.7%↓…3년8개월 만에 최대 하락 (한국은행 발표 인용, 전년비 42.4%)",
-      "url": "https://www.mt.co.kr/economy/2026/09/15/2026091416325560613",
+      "source_id": "source-bok-xpi-202608-pdf",
+      "publisher": "한국은행",
+      "title": "2026년 8월 수출입물가지수 및 무역지수(잠정) PDF · 공보 2026-09-06호",
+      "url": "https://www.bok.or.kr/fileSrc/portal/c7bb39af02834eeb90ede85affee64e3/3/922763eec996487895acca1b89ce8f39.pdf",
       "as_of": "2026-09-14T21:00:00Z",
-      "retrieved_at": "2026-09-14T23:35:00Z",
+      "retrieved_at": "2026-09-14T23:46:00Z",
       "source_type": "economic_release",
       "status": "confirmed"
     },
@@ -44,6 +45,16 @@
       "as_of": "2026-09-14T21:00:00Z",
       "retrieved_at": "2026-09-14T23:35:00Z",
       "source_type": "official",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-yna-bok-xpi-20260915",
+      "publisher": "연합뉴스",
+      "title": "환율 하락에 8월 수출물가 3.7%↓…3년 8개월 만에 최대폭 (부가 보도)",
+      "url": "https://www.yna.co.kr/view/AKR20260914158700002",
+      "as_of": "2026-09-14T21:00:00Z",
+      "retrieved_at": "2026-09-14T23:46:00Z",
+      "source_type": "economic_release",
       "status": "confirmed"
     },
     {
@@ -100,7 +111,7 @@
       "source_id": "source-e8-maxsh-body-20260915",
       "publisher": "E8",
       "title": "최대주주변경 본문 · 이팔(E8)밸류업1호투자조합 23.08%",
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260915900012&dcmNo=11578996&eleId=0&offset=0&length=0&dtd=HTML",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915900012&dcmNo=11578996&eleId=0&offset=0&length=0&dtd=HTML",
       "as_of": "2026-09-14T22:44:00Z",
       "retrieved_at": "2026-09-14T23:35:00Z",
       "source_type": "disclosure",
@@ -136,96 +147,111 @@
       "delta": "전월비 -3.7% · 전년비 +42.4%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915",
-        "source-mt-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf",
+        "source-bok-xpi-202608-view"
       ],
       "evidence_status": "confirmed",
       "tone": "down",
-      "note": "7월 190.32. 2022-12(-6.1%) 이후 3년8개월 만 최대 하락. 품목 전월비: 화학 -5.3%, 컴퓨터·전자·광학 -3.1%, 운송장비 -5.4%. 잠정."
+      "note": "7월 190.32. 품목 전월비: 화학제품 -5.3%, 컴퓨터·전자및광학기기 -3.1%, 운송장비 -5.4%. 잠정. 한은 공식 PDF."
     },
     {
       "metric_id": "metric-bok-export-price-ccy",
       "label": "8월 수출물가(계약통화)",
       "value": "+2.2%",
       "unit": "전월비",
-      "delta": "전월비",
+      "delta": "전년비 +41.0%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "원화 기준 하락과 방향이 갈린다. 환율 효과를 뺀 계약통화 기준."
+      "note": "원화 기준 하락과 방향이 갈린다. 한은 공식 PDF 각주."
     },
     {
       "metric_id": "metric-bok-import-price",
-      "label": "8월 수입물가",
+      "label": "8월 수입물가(원화)",
       "value": "156.31",
       "unit": "2020=100",
       "delta": "전월비 -2.4% · 전년비 +15.6%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf",
+        "source-bok-xpi-202608-view"
       ],
       "evidence_status": "confirmed",
       "tone": "down",
-      "note": "7월 160.14. 3개월 연속 하락. 잠정."
+      "note": "7월 160.14. 원화 전월비는 6월 -4.2%, 7월 -1.0%, 8월 -2.4%. 잠정. 한은 공식 PDF."
     },
     {
       "metric_id": "metric-bok-nbtt",
       "label": "8월 순상품교역조건",
-      "value": "119.9",
-      "unit": "지수",
-      "delta": "전년비 +27.1% · 역대 최대 상승률",
+      "value": "119.90",
+      "unit": "2020=100",
+      "delta": "전년비 +27.1%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "잠정. 상승률 기준 역대 최대."
+      "note": "잠정. 한은 공식 PDF 표. 순위 표현은 공식 본문에 없다."
     },
     {
       "metric_id": "metric-bok-income-tot",
       "label": "8월 소득교역조건",
       "value": "184.02",
-      "unit": "지수",
-      "delta": "전년비 +60.0% · 역대 최대 상승률",
+      "unit": "2020=100",
+      "delta": "전년비 +60.0%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "잠정. 상승률 기준 역대 최대."
+      "note": "잠정. 한은 공식 PDF 표. 순위 표현은 공식 본문에 없다."
     },
     {
       "metric_id": "metric-bok-export-volume",
       "label": "8월 수출물량지수",
       "value": "153.48",
-      "unit": "지수",
-      "delta": "전년비 +25.9% · 10개월 연속 상승",
+      "unit": "2020=100",
+      "delta": "전년비 +25.9%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed",
       "tone": "up",
-      "note": "수입물량 126.61(+12.0% 전년비). 달러 기준 무역지수. 잠정."
+      "note": "달러 기준 무역지수. 잠정. 한은 공식 PDF."
+    },
+    {
+      "metric_id": "metric-bok-import-volume",
+      "label": "8월 수입물량지수",
+      "value": "126.61",
+      "unit": "2020=100",
+      "delta": "전년비 +12.0%",
+      "as_of": "2026-09-14T21:00:00Z",
+      "source_ids": [
+        "source-bok-xpi-202608-pdf"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "달러 기준 무역지수. 잠정. 한은 공식 PDF."
     },
     {
       "metric_id": "metric-bok-fx-aug-avg",
       "label": "8월 월평균 원/달러",
-      "value": "1,406.3원",
+      "value": "1,406.30원",
       "unit": "KRW per USD",
-      "delta": "7월 월평균 1,497.4원 대비 -6.1%",
+      "delta": "7월 월평균 1,497.43원 대비 -6.1%",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed",
       "tone": "down",
-      "note": "한은 8월 통계의 월평균 맥락. 당일 SMBS 매매기준율이 아니다. 같은 달 월평균 두바이유 88.75달러(7월 76.75달러, +15.6%)."
+      "note": "한은 공식 PDF 각주 월평균. 당일 SMBS 매매기준율이 아니다. 같은 달 월평균 두바이유 88.75달러(7월 76.75달러, +15.6%)."
     },
     {
       "metric_id": "metric-e8-yangsu",
@@ -259,26 +285,36 @@
   ],
   "claims": [
     {
-      "claim_id": "claim-bok-why-now",
-      "kind": "analysis",
-      "text": "장전을 가르는 점은 한은 8월 원화 수출물가 전월비 -3.7%가 2022년 12월(-6.1%) 이후 3년8개월 만 최대 하락이고, 같은 공표에서 순상품·소득 교역조건 상승률이 역대 최대라는 조합이다. 지수 종가는 없다.",
+      "claim_id": "claim-bok-official-headline",
+      "kind": "fact",
+      "text": "한은 공식 PDF(공보 2026-09-06호)는 8월 수출물가(원화) 전월비 -3.7%·전년비 +42.4%, 수입물가(원화) 전월비 -2.4%·전년비 +15.6%, 수출물량 +25.9% 전년비, 수입물량 +12.0% 전년비, 순상품교역조건 +27.1% 전년비, 소득교역조건 +60.0% 전년비라고 적는다. 지수는 잠정이다.",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915",
-        "source-mt-bok-xpi-20260915",
-        "source-bok-schedule-202609"
+        "source-bok-xpi-202608-pdf",
+        "source-bok-xpi-202608-view"
       ],
       "evidence_status": "confirmed"
     },
     {
       "claim_id": "claim-fx-split",
       "kind": "analysis",
-      "text": "원화 수출물가 하락과 계약통화 수출물가 전월비 +2.2%가 갈린다. 8월 월평균 원/달러가 6.1% 낮아진 환산과 맞는다. 수출물량은 전년비 25.9% 늘어 10개월 연속 증가라서 물량 위축으로 읽지 않는다.",
+      "text": "원화 수출물가 하락과 계약통화 수출물가 전월비 +2.2%가 갈린다. 공식 PDF 각주는 원/달러 월평균이 7월 1,497.43원에서 8월 1,406.30원으로 6.1% 낮아졌다고 적는다. 수출물량 전년비 +25.9%라서 물량 위축으로 읽지 않는다.",
       "as_of": "2026-09-14T21:00:00Z",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-yna-rank-secondary",
+      "kind": "analysis",
+      "text": "연합뉴스는 원화 수출물가 전월 하락을 3년 8개월 만의 최대폭으로 제목에 적는다. 한은 공식 PDF 본문에는 3년 8개월·역대 최대 같은 순위 표현이 없다.",
+      "as_of": "2026-09-14T21:00:00Z",
+      "source_ids": [
+        "source-yna-bok-xpi-20260915",
+        "source-bok-xpi-202608-pdf"
+      ],
+      "evidence_status": "partial"
     },
     {
       "claim_id": "claim-e8-cluster",
@@ -302,22 +338,33 @@
         "source-bok-schedule-202609"
       ],
       "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-session-open",
+      "kind": "fact",
+      "text": "한국 증권시장 정규 매매는 월요일부터 금요일까지다. 2026-09-15(화)은 알려진 한국 휴장일이 아닌 정규 개장일이다.",
+      "as_of": "2026-09-14T23:35:00Z",
+      "source_ids": [
+        "source-global-krx-guide-trading-days"
+      ],
+      "evidence_status": "confirmed"
     }
   ],
   "changes": [
     {
       "dir": "down",
-      "text": "8월 원화 수출물가는 전월비 3.7% 내렸다. 2022년 12월 이후 3년8개월 만 최대 하락이다.",
+      "text": "한은 공식: 8월 원화 수출물가는 전월비 3.7% 내렸고 수입물가(원화)는 전월비 2.4% 내렸다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf",
+        "source-bok-xpi-202608-view"
       ],
       "evidence_status": "confirmed"
     },
     {
       "dir": "up",
-      "text": "8월 순상품교역조건과 소득교역조건 상승률은 역대 최대다. 수출물량은 10개월 연속 늘었다.",
+      "text": "한은 공식: 수출물량 전년비 +25.9%, 수입물량 +12.0%, 순상품교역조건 +27.1%, 소득교역조건 +60.0%.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
     },
@@ -335,24 +382,23 @@
   ],
   "counterevidence": [
     {
-      "text": "계약통화 기준 수출물가는 전월비 올랐다. 한은 물가통계팀은 원화 기준 하락만으로 반도체 업황 정점으로 읽기 어렵다고 했다.",
+      "text": "계약통화 기준 수출물가는 전월비 2.2% 올랐다. 공식 PDF는 원/달러 월평균 하락(1,497.43→1,406.30, −6.1%)을 함께 적는다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915",
-        "source-mt-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
     },
     {
       "text": "8월 월평균 원/달러와 두바이유는 한은 통계의 월평균 맥락이다. 당일 서울 외환시장 매매기준율이 아니다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
     },
     {
       "text": "수출입물가지수와 무역지수는 잠정이다. 코스피·VKOSPI 공식 종가가 없어 세션 방향은 적지 않았다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915",
+        "source-bok-xpi-202608-pdf",
         "source-bok-schedule-202609"
       ],
       "evidence_status": "confirmed"
@@ -368,17 +414,17 @@
   "drivers": [
     {
       "label": "원화 환산 수출물가",
-      "text": "원화 수출물가 전월비 -3.7%와 계약통화 +2.2%가 갈린다. 8월 월평균 원/달러 -6.1%가 환산 경로로 읽힌다.",
+      "text": "원화 수출물가 전월비 -3.7%와 계약통화 +2.2%가 갈린다. 8월 월평균 원/달러 -6.1%(1,497.43→1,406.30)가 환산 경로로 읽힌다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
     },
     {
       "label": "교역조건",
-      "text": "순상품교역조건 +27.1% 전년비, 소득교역조건 +60.0% 전년비로 상승률이 역대 최대다. 수출물량도 전년비 늘었다.",
+      "text": "순상품교역조건 +27.1% 전년비, 소득교역조건 +60.0% 전년비다. 수출물량도 전년비 늘었다. 공식 PDF는 순위 표현을 쓰지 않는다.",
       "source_ids": [
-        "source-yna-bok-xpi-20260915"
+        "source-bok-xpi-202608-pdf"
       ],
       "evidence_status": "confirmed"
     },
@@ -401,7 +447,7 @@
       "invalidation": "계약통화 기준 수출물가가 전월비 하락으로 돌아서면 환율 환산만으로 설명하기 어렵다",
       "horizon": "다음 수출입물가 공표(일정 2026-10-16)",
       "source_ids": [
-        "source-yna-bok-xpi-20260915",
+        "source-bok-xpi-202608-pdf",
         "source-bok-schedule-202609"
       ],
       "evidence_status": "confirmed"
@@ -420,7 +466,7 @@
     },
     {
       "label": "USD/KRW",
-      "reason": "서울외국환중개 매매기준율 조회가 TLS 인증 오류로 실패함. 2026-09-14 매매기준율 1,346.40원을 당일 값으로 쓰지 않음",
+      "reason": "서울외국환중개 매매기준율 조회가 TLS 인증 오류로 다시 실패함. 2026-09-14 매매기준율 1,346.40원을 당일 값으로 쓰지 않음",
       "evidence_status": "not_proven"
     },
     {

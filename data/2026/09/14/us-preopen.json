@@ -1,0 +1,376 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-14-preopen",
+  "market_code": "US",
+  "window_code": "preopen",
+  "market_session_date": "2026-09-14",
+  "generated_at_utc": "2026-09-14T13:20:00Z",
+  "cutoff_at_utc": "2026-09-14T13:18:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "bf06142691afe7efc1f41b773de9052a07a52e92930ddb0be55aa299af4a49e0",
+  "out_path": "2026/09/14/us-preopen.html",
+  "title": "미국 장전 — FOMC 주간 개막 · 국채 09/11 행 · CPI 잔향 · 2026-09-14",
+  "summary": "오늘은 FOMC 주간 첫 정규장이다. 연준 캘린더는 9월 15-16일 이틀 회의를 적고, 16일 14:30 ET에 기자회견이 있다. 오늘 BLS 공표는 없다. 다음 숫자는 수요일(16일) 08:30 ET 수출입물가다. 금요일 CPI(전체 +0.4%·전년 +3.4%)가 마지막 대형 발표다. 국채 표에는 금요일(09/11) 행이 있다(2년 4.63%·10년 4.96%). S&P 500·VIX·원/달러 세션 값은 없다.",
+  "next_handoff": "장중·마감 세션 값. FOMC day1. 수요일 수출입물가·기자회견.",
+  "sources": [
+    {
+      "source_id": "source-fed-cal-202609",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "Calendar: September 2026 — FOMC meeting September 15-16; Press Conference September 16 2:30 p.m.",
+      "url": "https://www.federalreserve.gov/newsevents/2026-september.htm",
+      "as_of": "2026-09-14T13:12:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fomc-calendars-2026",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "FOMC Meeting calendars — 2026 September 15-16* (* SEP)",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "as_of": "2026-09-14T13:12:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-schedule-202609",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Schedule of Selected Releases for September 2026 — no Sep 14 release; next Import and Export Price Indexes Sep 16 08:30 AM",
+      "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm",
+      "as_of": "2026-09-14T13:08:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-cpi-202608",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Consumer Price Index Summary — August 2026 (USDL-26-1496)",
+      "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+      "as_of": "2026-09-11T12:30:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "economic_release",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-treasury-dyc-20260911",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — latest row 09/11/2026 (yield.xml)",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-11T20:00:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyfed-effr-20260911",
+      "publisher": "Federal Reserve Bank of New York",
+      "title": "Reference Rates — EFFR effectiveDate 2026-09-11 percentRate 3.63",
+      "url": "https://markets.newyorkfed.org/api/rates/all/latest.json",
+      "as_of": "2026-09-11T20:00:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "New York Stock Exchange",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7; core session 9:30-16:00 ET",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-14T13:10:00Z",
+      "retrieved_at": "2026-09-14T13:20:00Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.63%",
+      "unit": "%",
+      "delta": "09/10 4.56% 대비 +0.07%p",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury yield.xml 09/11/2026 행. 월요일 장전 시세 아님."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.78%",
+      "unit": "%",
+      "delta": "09/10 4.75% 대비 +0.03%p",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/11/2026 행."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.96%",
+      "unit": "%",
+      "delta": "09/10 4.95% 대비 +0.01%p",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "같은 09/11/2026 행."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.35%",
+      "unit": "%",
+      "delta": "09/10 5.37% 대비 -0.02%p",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "같은 09/11/2026 행. 단기 상승·장기 소폭 하락."
+    },
+    {
+      "metric_id": "metric-effr",
+      "label": "유효연방기금금리 (EFFR)",
+      "value": "3.63%",
+      "unit": "%",
+      "delta": "목표 3.50-3.75 · 거래량 $105B",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-nyfed-effr-20260911"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "NY Fed reference rates. effectiveDate 2026-09-11. 월요일 개장 전 호가가 아님."
+    },
+    {
+      "metric_id": "metric-cpi-all-mom",
+      "label": "CPI 전체 · 전월 (8월)",
+      "value": "+0.4%",
+      "unit": "% SA MoM",
+      "delta": "전년비 +3.4% · 금요일 발표",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "USDL-26-1496. 오늘 아침 숫자가 아님. FOMC 주간 직전 마지막 대형 물가."
+    },
+    {
+      "metric_id": "metric-cpi-core-mom",
+      "label": "식품·에너지 제외 · 전월 (8월)",
+      "value": "+0.3%",
+      "unit": "% SA MoM",
+      "delta": "전년비 +2.4%",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "금요일 본문. 오늘 속보 아님."
+    },
+    {
+      "metric_id": "metric-cpi-energy",
+      "label": "에너지 · 전월 (8월)",
+      "value": "+2.1%",
+      "unit": "% SA MoM",
+      "delta": "휘발유 +3.9%",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "헤드라인 상승의 큰 축. 금요일 수치."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-fomc-week",
+      "kind": "fact",
+      "text": "연준 9월 캘린더는 FOMC를 9월 15-16일 이틀 회의로 적고, 16일 14:30 ET 기자회견을 적는다. FOMC 캘린더에 이 회의는 SEP(*) 표기다.",
+      "as_of": "2026-09-14T13:12:00Z",
+      "source_ids": [
+        "source-fed-cal-202609",
+        "source-fomc-calendars-2026"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-no-bls-today",
+      "kind": "fact",
+      "text": "BLS 9월 일정표에 9월 14일(월) 공표는 없다. 다음 숫자는 9월 16일(수) 08:30 ET 수출입물가(8월)다.",
+      "as_of": "2026-09-14T13:08:00Z",
+      "source_ids": [
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-cpi-prior",
+      "kind": "fact",
+      "text": "직전 대형 발표는 금요일(9/11) 08:30 ET CPI다. 8월 전체 전월 +0.4%·전년비 +3.4%, 코어 +0.3%·전년비 +2.4%, 에너지 +2.1%(휘발유 +3.9%). 오늘 아침 속보가 아니다.",
+      "as_of": "2026-09-11T12:30:00Z",
+      "source_ids": [
+        "source-bls-cpi-202608",
+        "source-bls-schedule-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-treasury-0911",
+      "kind": "fact",
+      "text": "Treasury 일별 액면 수익률 표의 마지막 행은 09/11/2026이다. 2년 4.63%·5년 4.78%·10년 4.96%·30년 5.35%. 금요일 마감 행이며 월요일 장전 호가가 아니다. 09/14 행은 없다.",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-nyse-open",
+      "kind": "fact",
+      "text": "NYSE 2026 휴장 표의 Labor Day는 Monday, September 7이다. 9월 14일은 그 표에 없고 Tape A 정규장은 9:30-16:00 ET다.",
+      "as_of": "2026-09-14T13:10:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "주말 휴장 스텁에서 오늘은 정규 개장일로 바뀌었다. FOMC 주간(15-16일) 첫날이다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-fed-cal-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "up",
+      "text": "금요일 마감 브리프에 없던 국채 09/11 행이 표에 있다. 2년 4.63%·10년 4.96%.",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "오늘 BLS 숫자는 없다. 금요일 CPI가 마지막 대형 물가이고, 다음 일정은 수요일 수출입물가다.",
+      "source_ids": [
+        "source-bls-schedule-202609",
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "월요일 정규장이 FOMC 이틀 회의(15-16일) 주간에 열린다. 오늘 BLS는 없고, 금요일 CPI(+0.4%)가 직전 대형 물가다.",
+      "source_ids": [
+        "source-fed-cal-202609",
+        "source-bls-schedule-202609",
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "금리 표",
+      "text": "국채 표에 09/11 행이 생겼다. 2년은 09/10 대비 +7bp, 10년은 +1bp다. 월요일 호가가 아니다.",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "S&P 500·VIX·원/달러 세션 값이 없다. FOMC 주간만으로 지수 방향을 적지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "국채 2년은 올랐지만 30년은 09/10 대비 -2bp다. 곡선 전체가 같은 방향으로 움직인 것은 아니다.",
+      "source_ids": [
+        "source-treasury-dyc-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "CPI 코어(+0.3%)는 헤드라인(+0.4%)보다 낮다. 에너지·휘발유만으로 기조 가속을 단정하지 않는다.",
+      "source_ids": [
+        "source-bls-cpi-202608"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러 세션 값을 적지 않았다.",
+    "국채·EFFR 숫자는 09/11 기준이다. 월요일 장전 시세가 아니다.",
+    "오늘 BLS 속보가 없다. 금요일 CPI를 오늘 숫자처럼 읽지 않는다.",
+    "FRED SP500·VIXCLS·DGS 계열은 재배포 권리 미확인으로 공개 수치에 쓰지 않았다."
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "세션 1차 시세 미확보. FRED DEXKOUS는 재배포 권리 미확인으로 사용하지 않음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "BLS 공개 고지",
+      "value": "BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."
+    },
+    {
+      "label": "왜 지금",
+      "value": "FOMC 주간(15-16일) 첫 정규장. 오늘 BLS 없음. 금요일 CPI +0.4% 잔향. 국채 09/11 행."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "S&P 500·VIX·USD/KRW 미확보. FRED SP500·VIXCLS·DEXKOUS 미사용."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury yield.xml 09/11/2026. 2년 4.63, 5년 4.78, 10년 4.96, 30년 5.35. NY Fed EFFR 3.63% (09/11)."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 14일(월) 정규 개장. FOMC Sep 15-16 + presser Sep 16 2:30 p.m."
+    }
+  ]
+}

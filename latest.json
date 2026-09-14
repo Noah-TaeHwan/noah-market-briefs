@@ -22,11 +22,11 @@
     {
       "market": "US",
       "window": "preopen",
-      "date": "2026-09-13",
-      "title": "미국 장전 · 일요일 정규장 휴장 · 다음 개장 9/14(월) · 2026-09-13",
-      "path": "2026/09/13/us-preopen.html",
-      "status": "skipped_market_closed",
-      "evidence_status": "confirmed"
+      "date": "2026-09-14",
+      "title": "미국 장전 — FOMC 주간 개막 · 국채 09/11 행 · CPI 잔향 · 2026-09-14",
+      "path": "2026/09/14/us-preopen.html",
+      "status": "partial",
+      "evidence_status": "partial"
     },
     {
       "market": "US",

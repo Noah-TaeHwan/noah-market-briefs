@@ -13,11 +13,11 @@
     {
       "market": "KR",
       "window": "close",
-      "date": "2026-09-13",
-      "title": "한국 장마감 · 일요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-13",
-      "path": "2026/09/13/korea-close.html",
-      "status": "skipped_market_closed",
-      "evidence_status": "confirmed"
+      "date": "2026-09-14",
+      "title": "한국 마감 · 삼성중공업 LNG운반선 4척 1.408조(13.2%)·OpenDART 272건, 종가 미확보 · 2026-09-14",
+      "path": "2026/09/14/korea-close.html",
+      "status": "partial",
+      "evidence_status": "partial"
     },
     {
       "market": "US",

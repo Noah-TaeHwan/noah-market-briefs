@@ -1,0 +1,247 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-kr-2026-09-14-close",
+  "market_code": "KR",
+  "window_code": "close",
+  "market_session_date": "2026-09-14",
+  "generated_at_utc": "2026-09-14T07:08:00Z",
+  "cutoff_at_utc": "2026-09-14T07:07:00Z",
+  "market_timezone": "Asia/Seoul",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "out_path": "2026/09/14/korea-close.html",
+  "title": "한국 마감 · 삼성중공업 LNG운반선 4척 1.408조(13.2%)·OpenDART 272건, 종가 미확보 · 2026-09-14",
+  "summary": "공식 지수 종가는 없다. 달라진 점은 공시다. 삼성중공업이 LNG운반선 4척을 1,407,800,000,000원(매출액 대비 13.2%, 오세아니아 선주)에 수주했다고 공시했다. 세보엠이씨는 삼성물산과 평택 배관공사3 공급계약 105,729,000,000원(매출액 대비 14.77%)을 적었다. 우리로는 데이터센터향 부품 원자재 공급계약 13,601,464,800원(매출액 대비 32.0%)을 공시했다. 당일 OpenDART 접수는 272건이다. 코스피·VKOSPI·코스닥 공식 종가는 KRX Data Marketplace 로그인 벽으로 적지 않았다. 서울 원/달러 1,346.40원은 장전 조회·당일 공시 인용과 같고 당일 종가가 아니다.",
+  "sources": [
+    {
+      "source_id": "source-opendart-api-20260914-close",
+      "publisher": "금융감독원 OpenDART",
+      "title": "공시정보 목록 API — 2026년 9월 14일 접수 272건(마감)",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrp=AA01&apiId=API001",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-shi-20260914800075",
+      "publisher": "금융감독원 DART",
+      "title": "삼성중공업 — 단일판매ㆍ공급계약체결 (LNG운반선 4척)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914800075",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-sebo-20260914900175",
+      "publisher": "금융감독원 DART",
+      "title": "세보엠이씨 — 단일판매ㆍ공급계약체결 (평택 배관공사3)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914900175",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-woori-20260914900259",
+      "publisher": "금융감독원 DART",
+      "title": "우리로 — 단일판매ㆍ공급계약체결 (데이터센터향 부품 원자재)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914900259",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-dart-skbp-20260914800220",
+      "publisher": "금융감독원 DART",
+      "title": "에스케이바이오팜 — 단일판매ㆍ공급계약체결 (세노바메이트 내부거래, 환율 인용)",
+      "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914800220",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "disclosure",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-smbs-fx-20260914-close",
+      "publisher": "서울외국환중개",
+      "title": "매매기준율 — 조회일 2026-09-14 USD 1,346.40원(당일 종가 아님; StdExRate_xml 오류·공시·장전 교차확인)",
+      "url": "https://www.smbs.co.kr/ExRate/TodayExRate.jsp",
+      "as_of": "2026-09-11T07:00:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "market_data",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-krx-mdc-20260914-close",
+      "publisher": "한국거래소 Data Marketplace",
+      "title": "전체지수 시세 — 로그인 벽으로 종가 미확보",
+      "url": "https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201030101",
+      "as_of": "2026-09-14T07:07:00Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "market_data",
+      "status": "partial"
+    },
+    {
+      "source_id": "source-kr-preopen-20260914",
+      "publisher": "Noah Market Briefs",
+      "title": "한국 장전 2026-09-14 (삼성바이오로직스 유증 투자설명서 효력 · 원/달러 1,346.40원)",
+      "url": "https://noah-market-briefs.vercel.app/market-briefs/2026/09/14/korea-preopen.html",
+      "as_of": "2026-09-13T23:25:24Z",
+      "retrieved_at": "2026-09-14T07:07:00Z",
+      "source_type": "official",
+      "status": "confirmed"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-shi-lng",
+      "label": "삼성중공업 LNG운반선 4척",
+      "value": "1,407,800,000,000원",
+      "unit": "KRW",
+      "delta": "매출액 대비 13.2%",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-dart-shi-20260914800075"],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "공사수주. 계약상대 오세아니아 지역 선주. 계약(수주)일 2026-09-11, 공시 접수 2026-09-14. 환율 @1,338.2/$ 적용. 억원 미만 반올림."
+    },
+    {
+      "metric_id": "metric-sebo-pyeongtaek",
+      "label": "세보엠이씨 평택 배관공사3",
+      "value": "105,729,000,000원",
+      "unit": "KRW",
+      "delta": "매출액 대비 14.77%",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-dart-sebo-20260914900175"],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "계약상대 삼성물산. 부가세 제외. 계약(수주)일 2026-09-14."
+    },
+    {
+      "metric_id": "metric-woori-dc",
+      "label": "우리로 데이터센터향 부품 원자재",
+      "value": "13,601,464,800원",
+      "unit": "KRW",
+      "delta": "매출액 대비 32.0%",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-dart-woori-20260914900259"],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "USD 10,164,000을 2026-09-11 매매기준율 1,338.20원으로 환산. 계약상대 Vsunlight Photonic Technology Inc. 조달원가 변동 시 금액 변경 가능."
+    },
+    {
+      "metric_id": "metric-opendart-count",
+      "label": "당일 OpenDART 접수",
+      "value": "272",
+      "unit": "건",
+      "delta": "신규 단일판매·공급계약(기재정정·해지 제외) 5건",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-opendart-api-20260914-close"],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "OpenDART list.json total_count. 장전 브리프에는 건수 메트릭이 없어 증감 수치는 적지 않았다."
+    },
+    {
+      "metric_id": "metric-session-fx",
+      "label": "USD/KRW 매매기준율 · 당일 종가 아님",
+      "value": "1,346.40원",
+      "unit": "KRW per USD",
+      "delta": "장전 조회와 동일",
+      "as_of": "2026-09-11T07:00:00Z",
+      "source_ids": ["source-smbs-fx-20260914-close", "source-dart-skbp-20260914800220", "source-kr-preopen-20260914"],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "서울외국환중개 전 영업일 16:00 TWAP. 마감 창 StdExRate_xml은 오류. 에스케이바이오팜 당일 공시가 1,346.40원을 인용. 당일 장중·종가 시세 아님."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-change-shi",
+      "kind": "fact",
+      "text": "장전은 삼성바이오로직스 유증 투자설명서 효력이 중심이었다. 마감 창에서 새로 잡힌 대형 공시는 삼성중공업 LNG운반선 4척 1,407,800,000,000원(매출액 대비 13.2%)이다.",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-kr-preopen-20260914", "source-dart-shi-20260914800075"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-no-close",
+      "kind": "fact",
+      "text": "코스피·VKOSPI·코스닥 공식 종가는 KRX Data Marketplace 로그인 벽으로 확보하지 못했다. 거래소 홈페이지 지연 티커는 종가로 쓰지 않았다.",
+      "as_of": "2026-09-14T07:07:00Z",
+      "source_ids": ["source-krx-mdc-20260914-close"],
+      "evidence_status": "partial"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "삼성중공업이 LNG운반선 4척 수주 1,407,800,000,000원(매출액 대비 13.2%)을 당일 공시했다. 장전 브리프에는 없던 항목이다.",
+      "source_ids": ["source-dart-shi-20260914800075", "source-kr-preopen-20260914"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "up",
+      "text": "세보엠이씨·우리로 공급계약이 마감 창에 접수됐다(각각 105,729,000,000원·13,601,464,800원).",
+      "source_ids": ["source-dart-sebo-20260914900175", "source-dart-woori-20260914900259"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "서울 매매기준율 1,346.40원은 장전 조회와 같고, 코스피·VKOSPI·코스닥 공식 종가는 여전히 없다.",
+      "source_ids": ["source-smbs-fx-20260914-close", "source-krx-mdc-20260914-close", "source-kr-preopen-20260914"],
+      "evidence_status": "partial"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "마감 후 공시",
+      "text": "달라진 점은 지수 종가가 아니라 공시다. 삼성중공업 LNG운반선 4척과 세보엠이씨·우리로 공급계약이 정규장 전후에 접수됐다. 종가가 없어 주가 반응은 적지 않는다.",
+      "source_ids": ["source-dart-shi-20260914800075", "source-dart-sebo-20260914900175", "source-dart-woori-20260914900259"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "삼성중공업 수주",
+      "text": "LNG운반선 4척, 계약금액 1,407,800,000,000원, 매출액 대비 13.2%. 계약상대는 오세아니아 지역 선주. 계약일은 2026-09-11이고 공시는 2026-09-14에 접수됐다.",
+      "source_ids": ["source-dart-shi-20260914800075"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "서울 매매기준율은 전 영업일 16:00 시간가중평균이다. 당일 오후 현물이나 뉴스·포털 환율을 대체하지 않는다.",
+      "source_ids": ["source-smbs-fx-20260914-close"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "에스케이바이오팜 71,593,161,451원 공급계약은 미국 자회사 SK Life Science,Inc.와의 내부거래라 연결 매출로 잡히지 않는다. 대형 외부 수주로 합산하지 않았다.",
+      "source_ids": ["source-dart-skbp-20260914800220"],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "장전 브리프의 삼성바이오로직스 유증 투자설명서 효력은 마감 창에서 새로 생긴 변화가 아니다. 마감에서는 삼성중공업·세보엠이씨·우리로만 변화로 적었다.",
+      "source_ids": ["source-kr-preopen-20260914", "source-dart-shi-20260914800075"],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "missing_data": [
+    {"label": "코스피", "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함", "evidence_status": "not_proven"},
+    {"label": "VKOSPI", "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함", "evidence_status": "not_proven"},
+    {"label": "코스닥", "reason": "KRX Data Marketplace 로그인 벽으로 공식 종가를 확보하지 못함", "evidence_status": "not_proven"}
+  ],
+  "quality": [
+    {"label": "세션 슬롯", "value": "USD/KRW는 서울외국환중개 매매기준율이며 당일 종가가 아니다. 코스피·VKOSPI·코스닥 공식 종가는 Data Marketplace 로그인 벽으로 미확보. 홈페이지 지연 티커·네이버 재배포는 종가로 쓰지 않았다."},
+    {"label": "환율 조회", "value": "장전 조회 1,346.40원과 동일. 마감 창 SMBS StdExRate_xml은 오류. 에스케이바이오팜 공시 본문이 2026-09-14 기준 1,346.40원을 인용. 공개 SourceRef URL은 https://www.smbs.co.kr/ExRate/TodayExRate.jsp 를 유지한다."},
+    {"label": "공시 건수", "value": "OpenDART 목록 API total_count는 마감 조회 272건. 장전 브리프에 건수 메트릭이 없어 증감 수치는 적지 않았다. 신규 단일판매·공급계약(기재정정·해지 제외) 5건."},
+    {"label": "공시 인용", "value": "삼성중공업·세보엠이씨·우리로·에스케이바이오팜은 공시 본문 수치만 인용했다. 계약서 원문과 전체 목록은 재배포하지 않았다."}
+  ],
+  "risks": [
+    "코스피·VKOSPI·코스닥 공식 종가가 없어 지수·주가 반응은 적지 않았다.",
+    "서울 매매기준율은 전 영업일 TWAP이며 당일 종가가 아니다.",
+    "에스케이바이오팜 공급계약은 자회사 내부거래다."
+  ],
+  "next_handoff": "코스피·VKOSPI·코스닥 공식 종가는 아직 없다.",
+  "public_receipt_sha256": "7025a0435264e310d79b7a81d553c5dc03431f28013f4f33ecf1bba6589dbfb2"
+}

@@ -1,0 +1,327 @@
+{
+  "schema_version": 3,
+  "brief_id": "brief-us-2026-09-14-close",
+  "market_code": "US",
+  "window_code": "close",
+  "market_session_date": "2026-09-14",
+  "generated_at_utc": "2026-09-14T20:49:34Z",
+  "cutoff_at_utc": "2026-09-14T20:25:00Z",
+  "market_timezone": "America/New_York",
+  "status": "partial",
+  "evidence_status": "partial",
+  "methodology_version": "public-brief-v3",
+  "public_receipt_sha256": "db37c75425ad3ce1a8a27e1442e8e598fdccb0437aa8fb11d0c87b17b1a07500",
+  "out_path": "2026/09/14/us-close.html",
+  "title": "미국 마감 — 국채 09/14 행 · H.15 9/14 공개 · EFFR는 09/11 · 2026-09-14",
+  "summary": "장전에 없던 국채 09/14 행이 표에 들어왔다. 2년 4.65%·10년 4.97%로, 금요일(09/11) 행보다 2년 +2bp·10년 +1bp다. 30년은 5.34%로 금요일 대비 -1bp다. Fed H.15는 9월 14일 공개본이고, 열은 9월 11일까지 유효연방기금금리 3.63%다. NY Fed EFFR도 최신이 09/11 3.63%다. NYSE는 정규 마감했다. S&P 500·VIX·원/달러 세션 값은 없다.",
+  "next_handoff": "FOMC day1(15일). 16일 수출입물가·기자회견. 세션 지수·VIX·원/달러.",
+  "sources": [
+    {
+      "source_id": "source-treasury-dyc-20260914",
+      "publisher": "U.S. Department of the Treasury",
+      "title": "Daily Treasury Par Yield Curve Rates — latest row 09/14/2026 (2y 4.65 · 10y 4.97 · 30y 5.34)",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026",
+      "as_of": "2026-09-14T20:00:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "official_print",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-h15-20260914",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "H.15 Selected Interest Rates — Release date September 14, 2026; daily columns through September 11",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "as_of": "2026-09-14T20:00:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "official_print",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyfed-effr-20260911",
+      "publisher": "Federal Reserve Bank of New York",
+      "title": "Reference Rates — EFFR effectiveDate 2026-09-11 percentRate 3.63 (no 09/14 EFFR row yet)",
+      "url": "https://markets.newyorkfed.org/api/rates/unsecured/effr/last/10.json",
+      "as_of": "2026-09-11T20:00:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "official_print",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-fed-cal-202609",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "title": "Calendar: September 2026 — FOMC meeting September 15-16; Press Conference September 16 2:30 p.m.",
+      "url": "https://www.federalreserve.gov/newsevents/2026-september.htm",
+      "as_of": "2026-09-14T20:20:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-nyse-hours-calendars",
+      "publisher": "NYSE",
+      "title": "Holidays & Trading Hours — 2026 Labor Day Monday, September 7; September 14 regular session",
+      "url": "https://www.nyse.com/markets/hours-calendars",
+      "as_of": "2026-09-14T20:20:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "market_calendar",
+      "status": "confirmed"
+    },
+    {
+      "source_id": "source-bls-schedule-202609",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "title": "Schedule of Selected Releases for September 2026 — no Sep 14 BLS release in morning brief; next IEPA Wed Sep 16",
+      "url": "https://www.bls.gov/schedule/2026/09_sched_list.htm",
+      "as_of": "2026-09-14T13:08:00Z",
+      "retrieved_at": "2026-09-14T20:49:34Z",
+      "source_type": "market_calendar",
+      "status": "partial"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "metric-ust-2y",
+      "label": "미국채 2년",
+      "value": "4.65%",
+      "unit": "%",
+      "delta": "09/11 4.63% 대비 +0.02%p",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury yield.xml 09/14/2026 행. 장전(09/11 행) 대비 신규."
+    },
+    {
+      "metric_id": "metric-ust-5y",
+      "label": "미국채 5년",
+      "value": "4.80%",
+      "unit": "%",
+      "delta": "09/11 4.78% 대비 +0.02%p",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury yield.xml 09/14/2026 행."
+    },
+    {
+      "metric_id": "metric-ust-10y",
+      "label": "미국채 10년",
+      "value": "4.97%",
+      "unit": "%",
+      "delta": "09/11 4.96% 대비 +0.01%p",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "up",
+      "note": "Treasury yield.xml 09/14/2026 행."
+    },
+    {
+      "metric_id": "metric-ust-30y",
+      "label": "미국채 30년",
+      "value": "5.34%",
+      "unit": "%",
+      "delta": "09/11 5.35% 대비 -0.01%p",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "down",
+      "note": "Treasury yield.xml 09/14/2026 행. 단기·중기와 방향이 다름."
+    },
+    {
+      "metric_id": "metric-effr",
+      "label": "유효연방기금금리 (EFFR)",
+      "value": "3.63%",
+      "unit": "%",
+      "delta": "09/11 열; 09/14 EFFR 행 없음",
+      "as_of": "2026-09-11T20:00:00Z",
+      "source_ids": [
+        "source-nyfed-effr-20260911",
+        "source-fed-h15-20260914"
+      ],
+      "evidence_status": "confirmed",
+      "tone": "flat",
+      "note": "NY Fed 최신 EFFR effectiveDate 2026-09-11. H.15 9/14 공개본 열도 9/11까지 3.63%."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim-treasury-0914-new",
+      "kind": "fact",
+      "text": "장전 브리프의 마지막 국채 행은 09/11이었다. 마감 기준 yield.xml에는 09/14 행이 있다.",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-h15-release-0914",
+      "kind": "fact",
+      "text": "H.15 공개일이 9월 14일이다. 표의 일별 열은 9월 11일까지이고, 유효연방기금금리는 3.63%다.",
+      "as_of": "2026-09-14T20:00:00Z",
+      "source_ids": [
+        "source-fed-h15-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-fomc-eve",
+      "kind": "fact",
+      "text": "내일(15일)부터 FOMC 이틀 회의가 시작되고, 16일 14:30 ET에 기자회견이 있다. 오늘 마감은 회의 전날 정규장이다.",
+      "as_of": "2026-09-14T20:20:00Z",
+      "source_ids": [
+        "source-fed-cal-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "claim_id": "claim-no-session-prints",
+      "kind": "fact",
+      "text": "S&P 500·VIX·원/달러 세션 값은 장전과 같이 없다. 국채·H.15만으로 지수 마감을 적지 않는다.",
+      "as_of": "2026-09-14T20:20:00Z",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "changes": [
+    {
+      "dir": "up",
+      "text": "장전에 없던 국채 09/14 행이 들어왔다. 2년 4.65%·5년 4.80%·10년 4.97%로 금요일 행보다 각각 +2·+2·+1bp다.",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "down",
+      "text": "같은 09/14 행에서 30년은 5.34%로 금요일 5.35% 대비 -1bp다. 곡선 전체가 같은 방향은 아니다.",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "H.15 공개일이 9월 14일로 바뀌었다. 열은 9월 11일까지이고 EFFR 3.63%는 장전(09/11)과 같다. 09/14 EFFR 행은 아직 없다.",
+      "source_ids": [
+        "source-fed-h15-20260914",
+        "source-nyfed-effr-20260911"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "dir": "flat",
+      "text": "S&P 500·VIX·원/달러는 장전과 같이 없다. 국채 움직임만으로 월요일 지수 마감을 말하지 않는다.",
+      "source_ids": [
+        "source-nyse-hours-calendars"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "drivers": [
+    {
+      "label": "왜 지금",
+      "text": "마감에서 새로 찍힌 것은 장전에 없던 국채 09/14 행과 H.15 9월 14일 공개본이다. FOMC는 내일부터다.",
+      "source_ids": [
+        "source-treasury-dyc-20260914",
+        "source-fed-h15-20260914",
+        "source-fed-cal-202609"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "곡선",
+      "text": "2·5·10년은 금요일 대비 올랐고 30년만 소폭 내렸다. 한 줄로 전 구간 상승이라고 적지 않는다.",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "label": "시세 공백",
+      "text": "지수·VIX·원/달러가 없다. EFFR도 월요일 값이 아니라 09/11이다.",
+      "source_ids": [
+        "source-nyse-hours-calendars",
+        "source-nyfed-effr-20260911"
+      ],
+      "evidence_status": "partial"
+    }
+  ],
+  "counterevidence": [
+    {
+      "text": "2·5·10년은 올랐지만 30년은 -1bp다. 곡선 전체가 같은 방향으로 움직인 것은 아니다.",
+      "source_ids": [
+        "source-treasury-dyc-20260914"
+      ],
+      "evidence_status": "confirmed"
+    },
+    {
+      "text": "H.15 공개일은 바뀌었지만 EFFR 숫자 자체(3.63%)는 장전과 같다. 공개일 변경만으로 금리 방향이 바뀐 것은 아니다.",
+      "source_ids": [
+        "source-fed-h15-20260914",
+        "source-nyfed-effr-20260911"
+      ],
+      "evidence_status": "confirmed"
+    }
+  ],
+  "risks": [
+    "S&P 500과 VIX가 없어 지수 방향은 적지 않았다.",
+    "원/달러 세션 값을 적지 않았다.",
+    "EFFR은 09/11 기준이다. 월요일 마감 시세가 아니다.",
+    "국채 09/14 행은 공식 일별 수익률표이며, 장중 실시간 시세가 아니다.",
+    "FRED SP500·VIXCLS·DGS 계열은 재배포 권리 미확인으로 공개 수치에 쓰지 않았다."
+  ],
+  "missing_data": [
+    {
+      "label": "S&P 500",
+      "reason": "NYSE proprietary 시세는 라이선스 확인 전 재배포하지 않음. FRED SP500은 재배포 권리 미확인으로 사용하지 않음. 애그리게이터 값으로 메우지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "VIX",
+      "reason": "proprietary 지수는 라이선스 확인 전 재배포하지 않음. FRED VIXCLS는 재배포 권리 미확인으로 사용하지 않음.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "USD/KRW",
+      "reason": "당일 서울 원/달러 공식 시세 미확보. FRED DEXKOUS 미사용.",
+      "evidence_status": "not_proven"
+    },
+    {
+      "label": "EFFR 09/14",
+      "reason": "NY Fed EFFR 최신 effectiveDate는 2026-09-11. 09/14 행 없음.",
+      "evidence_status": "not_proven"
+    }
+  ],
+  "quality": [
+    {
+      "label": "왜 지금",
+      "value": "장전 대비 국채 09/14 행·H.15 9/14 공개. FOMC 전날 마감. 지수·VIX·원/달러 없음."
+    },
+    {
+      "label": "세션 슬롯",
+      "value": "S&P 500·VIX·USD/KRW 미확보. FRED SP500·VIXCLS·DEXKOUS 미사용."
+    },
+    {
+      "label": "금리 기준일",
+      "value": "Treasury yield.xml 09/14/2026. 2년 4.65, 5년 4.80, 10년 4.97, 30년 5.34. NY Fed EFFR 3.63% (09/11). H.15 release 9/14."
+    },
+    {
+      "label": "캘린더",
+      "value": "NYSE: 2026 Labor Day Monday, September 7 휴장. 9월 14일(월) 정규 마감. FOMC Sep 15-16 + presser Sep 16 2:30 p.m."
+    },
+    {
+      "label": "BLS",
+      "value": "월요일 장전 일정 기준 당일 BLS 속보 없음(부분). 금요일 CPI·수요일 수출입물가는 장전 맥락."
+    }
+  ]
+}

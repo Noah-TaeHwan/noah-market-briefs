@@ -31,11 +31,11 @@
     {
       "market": "US",
       "window": "close",
-      "date": "2026-09-13",
-      "title": "미국 장마감 · 일요일 정규장 없어 종가 없음 · 다음 개장 9/14(월) · 2026-09-13",
-      "path": "2026/09/13/us-close.html",
-      "status": "skipped_market_closed",
-      "evidence_status": "confirmed"
+      "date": "2026-09-14",
+      "title": "미국 마감 — 국채 09/14 행 · H.15 9/14 공개 · EFFR는 09/11 · 2026-09-14",
+      "path": "2026/09/14/us-close.html",
+      "status": "partial",
+      "evidence_status": "partial"
     }
   ]
 }
